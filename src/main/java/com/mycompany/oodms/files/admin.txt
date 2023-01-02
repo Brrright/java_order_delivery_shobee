@@ -1,0 +1,2 @@
+AdminId;AdminName;AdminEmail;Password;Age;Gender;PhoneNumber;Picture
+ADM00001;Christy;admin@gmail.com;asAS12@#;29;Female;019922332;
