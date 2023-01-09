@@ -8,8 +8,32 @@ package com.mycompany.oodms;
  *
  * @author mingl
  */
-public class User {
-    private String userId;
-    private String password;
-    private boolean isLogin;
+enum UserGender{
+    MALE,
+    FEMALE
+}
+
+abstract class User {
+    protected String userId;
+    protected String userEmail;
+    protected String password;
+    protected int age;
+    protected UserGender gender;
+    protected String phoneNum;
+    protected String picturePath;
+    protected boolean isLogin = false;
+    
+    User(String userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath){
+        this.userId = userId;
+        this.userEmail = userEmail;
+        this.password = password;
+        this.age = age;
+        this.gender = gender;
+        this.phoneNum = phoneNum;
+        this.picturePath = picturePath;
+    }
+    
+    abstract void login();
+    
+    abstract void updateProfile();
 }

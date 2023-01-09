@@ -43,6 +43,9 @@ public class FileHandleMaster {
         }
     }
     // fetch data
+        // fetch by id
+        // fetch by linked key (pk + fk)
+        // fetch all record from given file
     
     // insert data
     
