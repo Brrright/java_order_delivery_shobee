@@ -1,1 +1,1 @@
-MemberId;Address;
+MemberId;StreetName;City;State;Postcode
