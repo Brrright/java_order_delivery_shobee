@@ -11,11 +11,18 @@ import java.io.FileReader;
  *
  * @author mingl
  */
+abstract class FileHelper{
+    File file;
+    String filePath;
+    Object[] response = null;
+}
+
 public class ReadFileHelper {
         File file;
         FileReader fReader;
         BufferedReader bReader;
         String filePath;
+        Object[] response = null;
         
         public ReadFileHelper(String filePath) {
             try{
@@ -23,14 +30,21 @@ public class ReadFileHelper {
                 this.file = new File(filePath);
                 this.fReader = new FileReader(file);
                 this.bReader = new BufferedReader(fReader);
-            }
+                this.response[0] = ResponseStatus.SUCCESS;
+            }   
             catch(IOException e){
                 e.printStackTrace();
+                this.response[0] = ResponseStatus.FAIL;
+                this.response[1] = "Error occured during reading file: " + e.getMessage();
             }
         }
         
         BufferedReader getBufferedReader(){
             return this.bReader;
+        }
+        
+        Object[] getResponseMessage(){
+            return this.response;
         }
 
 }
