@@ -21,7 +21,6 @@ abstract class User {
     protected UserGender gender;
     protected String phoneNum;
     protected String picturePath;
-    protected boolean isLogin = false;
     
     User(String userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath){
         this.userId = userId;
@@ -32,8 +31,6 @@ abstract class User {
         this.phoneNum = phoneNum;
         this.picturePath = picturePath;
     }
-    
-    abstract void login();
-    
+        
     abstract void updateProfile();
 }
