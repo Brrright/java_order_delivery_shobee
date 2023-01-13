@@ -9,11 +9,11 @@ package com.mycompany.oodms;
  * @author mingl
  */
 
-enum PostCode{
-//    "51600",
-    
-}
+// 1 postcode can have multiple city
 
 public class Address {
-    
+    private String streetName;
+    private String City;
+    private String State;
+    private String Postcode;
 }
