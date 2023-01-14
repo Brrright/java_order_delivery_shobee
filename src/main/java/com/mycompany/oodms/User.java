@@ -13,6 +13,12 @@ enum UserGender{
     FEMALE
 }
 
+enum UserIdPrefix{
+    ADM,
+    MEM,
+    DEL,
+}
+
 abstract class User {
     protected String userId;
     protected String userEmail;

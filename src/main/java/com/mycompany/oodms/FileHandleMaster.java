@@ -28,21 +28,20 @@ enum ResponseStatus{
 //    }
 }
 
-enum UserIdPrefix{
-    ADM,
-    MEM,
-    DEL,
-}
+
+
+
 
 public class FileHandleMaster {
+    String filePathPrefix = "src\\main\\java\\com\\mycompany\\oodms\\files\\";
     public static void main(String[] args) {
         // TESTING
         // Object[] response = CreateFile("src\\main\\java\\com\\mycompany\\oodms\\files\\product.txt");
         // System.out.println(Arrays.toString(response));
         
         // FETCH
-        Object[] fetchProduct = FetchRecord("src\\main\\java\\com\\mycompany\\oodms\\files\\product.txt");
-        System.out.println(Arrays.toString(fetchProduct));
+//        Object[] fetchProduct = FetchRecord("src\\main\\java\\com\\mycompany\\oodms\\files\\product.txt");
+//        System.out.println(Arrays.toString(fetchProduct));
     }
     
     // -------------------------------------------------------
