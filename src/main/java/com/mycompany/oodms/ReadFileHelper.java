@@ -19,7 +19,7 @@ public class ReadFileHelper extends FileHelper{
         public ReadFileHelper(String filePath) {
             super(filePath);
             try{
-                this.fReader = new FileReader(file);
+                this.fReader = new FileReader(super.file);
                 this.bReader = new BufferedReader(fReader);
                 Object[] res = {ResponseStatus.SUCCESS};
                 super.setResponseMessage(res);
