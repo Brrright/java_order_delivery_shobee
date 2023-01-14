@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Arrays;
 
 /**
  *
@@ -35,10 +36,16 @@ enum UserIdPrefix{
 
 public class FileHandleMaster {
     public static void main(String[] args) {
-        //test
-//        Object[] response = CreateFile("src\\main\\java\\com\\mycompany\\oodms\\files\\product.txt");
-//        System.out.println(Arrays.toString(response));
+        // TESTING
+        // Object[] response = CreateFile("src\\main\\java\\com\\mycompany\\oodms\\files\\product.txt");
+        // System.out.println(Arrays.toString(response));
+        
+        // FETCH
+        Object[] fetchProduct = FetchRecord("src\\main\\java\\com\\mycompany\\oodms\\files\\product.txt");
+        System.out.println(Arrays.toString(fetchProduct));
     }
+    
+    // -------------------------------------------------------
     // create new file
     public static Object[] CreateFile(String filePath) {
         try{
@@ -61,19 +68,16 @@ public class FileHandleMaster {
     // fetch data
         // fetch all data from a file
     public static Object[] FetchRecord(String filePath){
-        try {
-            File file = new File(filePath);
-            Object[] response;
-            try (FileReader freader = new FileReader(file); BufferedReader breader = new BufferedReader(freader)) {
-                response = breader.lines().toArray();
-            }
+        Object[] response = {};
+        ReadFileHelper readFile = new ReadFileHelper(filePath);
+        Object[] res = readFile.getResponseMessage();
+        System.out.println(Arrays.toString(res));
+        if(res[0] == ResponseStatus.SUCCESS){
+            BufferedReader bReader = readFile.getBufferedReader();
+            response = bReader.lines().toArray();
             return response;
         }
-        catch (IOException e){
-            e.printStackTrace();
-            Object[] response = {ResponseStatus.FAIL, "Error occured while fetching records. Messages: " + e.getMessage()};
-            return response;
-        }
+        return response;
     }
     
         // fetch  by primary key
@@ -90,7 +94,8 @@ public class FileHandleMaster {
             }
         }
         if (response == null) {
-            response = {ResponseStatus.FAIL, "No record found."};
+            response[0] = ResponseStatus.FAIL;
+            response[1] = "No record found.";
             return response;
         }
         return response;
@@ -98,8 +103,8 @@ public class FileHandleMaster {
     
         // fetch by linked key (pk + fk)
     public static Object[] FetchRecord(String filePath1, String filePath2, String primaryKey,String foreignKey){
-//           Object[] allRecord = FetchRecord(filePath, primaryKey);
-
+        Object[] allRecord = FetchRecord(filePath1, primaryKey);
+        return allRecord;
     }
     
     // insert data
