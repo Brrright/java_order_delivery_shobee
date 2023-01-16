@@ -1,1 +1,1 @@
-ProductId;ProductName;Price;Stock;Picture;CategoryId
+ProductID;Product Name;Price;Stock Quantity;Picture;CategoryID

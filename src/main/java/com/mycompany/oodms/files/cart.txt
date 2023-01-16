@@ -1,1 +1,1 @@
-CartId;ProductID;Quantity;CustId
+CartID;CustID;ProductID;Quantity

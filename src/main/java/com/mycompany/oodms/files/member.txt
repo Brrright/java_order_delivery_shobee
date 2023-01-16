@@ -1,2 +1,2 @@
-MemberId;MemberName;MemberEmail;Password;Age;Gender;PhoneNumber;Picture
+MemberID;Member Name;Member Email;Password;Age;Gender;Phone Number;Picture
 MEM00001;Bung Shang;member123@gmail.com;asAS12@#;20;Male;0127729912;
