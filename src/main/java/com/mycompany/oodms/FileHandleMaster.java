@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -19,6 +20,7 @@ import java.util.Arrays;
 enum ResponseStatus{
     SUCCESS,
     FAIL,
+    NONE
     
 //    public String message;
 //    
@@ -29,13 +31,11 @@ enum ResponseStatus{
 }
 
 
-
-
-
 public class FileHandleMaster {
     String filePathPrefix = "src\\main\\java\\com\\mycompany\\oodms\\files\\";
     public static void main(String[] args) {
         // TESTING
+        // CREATE FILE
         // Object[] response = CreateFile("src\\main\\java\\com\\mycompany\\oodms\\files\\product.txt");
         // System.out.println(Arrays.toString(response));
         
@@ -44,7 +44,8 @@ public class FileHandleMaster {
 //        System.out.println(Arrays.toString(fetchProduct));
     }
     
-    // -------------------------------------------------------
+    // ------------------------------------------------------------------------------
+    
     // create new file
     public static Object[] CreateFile(String filePath) {
         try{
@@ -66,23 +67,24 @@ public class FileHandleMaster {
     }
     // fetch data
         // fetch all data from a file
-    public static Object[] FetchRecord(String filePath){
-        Object[] response = {};
+    public static Object[] FetchRecord(String filePath) throws IOException{
+        Object[] response = {ResponseStatus.NONE};
         ReadFileHelper readFile = new ReadFileHelper(filePath);
         Object[] res = readFile.getResponseMessage();
         System.out.println(Arrays.toString(res));
         if(res[0] == ResponseStatus.SUCCESS){
             BufferedReader bReader = readFile.getBufferedReader();
             response = bReader.lines().toArray();
+            readFile.closeReader();
             return response;
         }
         return response;
     }
     
         // fetch  by primary key
-    public static Object[] FetchRecord(String filePath, String primaryKey){
+    public static Object[] FetchRecord(String filePath, String primaryKey) throws IOException{
         Object[] allRecord = FetchRecord(filePath);
-        Object[] response = null;
+        Object[] response = {ResponseStatus.NONE};
         for (Object record : allRecord){
             String line = record.toString().trim();
             String[] dataRow = line.split(";");
@@ -101,15 +103,57 @@ public class FileHandleMaster {
     }
     
         // fetch by linked key (pk + fk)
-    public static Object[] FetchRecord(String filePath1, String filePath2, String primaryKey,String foreignKey){
-        Object[] allRecord = FetchRecord(filePath1, primaryKey);
+    public static Object[] FetchRecord(String filePath, String primaryKey,String[] foreignKeyList) throws IOException{
+        for (String fkey : foreignKeyList) {
+            System.out.println(fkey);
+            // get prefix
+            // loop thru array see match mou?
+        }
+        Object[] allRecord = FetchRecord(filePath, primaryKey);
         return allRecord;
     }
     
     // insert data
+    public static Object[] InsertRecord(String filePath, String[] fileContent, String fileHeader, boolean isAppend) throws IOException{
+        Object[] response = {ResponseStatus.NONE};
+        WriteFileHelper writeFile = new WriteFileHelper(filePath, isAppend);
+        ReadFileHelper readFile = new ReadFileHelper(filePath);
+        Object[] res1 = writeFile.getResponseMessage();
+        Object[] res2 = readFile.getResponseMessage();
+        if(res1[0] == ResponseStatus.SUCCESS && res2[0] == ResponseStatus.SUCCESS){
+            BufferedWriter bWriter = writeFile.getBufferedWriter();
+            BufferedReader bReader = readFile.getBufferedReader();
+            Object[] fetchedContent = bReader.lines().toArray();
+            
+            if(fetchedContent.length == 0){
+                String firstLine = fileHeader;
+                bWriter.write(firstLine + "\n");
+            }
+            for (String content : fileContent){
+                bWriter.write(content);
+                bWriter.newLine();
+            }
+            response[0] = ResponseStatus.SUCCESS;
+            readFile.closeReader();
+            writeFile.closeWriter();
+        }
+        else{
+            response[0] = ResponseStatus.FAIL;
+            response[1] = "Error occured during writing to file.";
+        }
+        return response;
+    }
     
     // update data
     
     // delete data
-    
+    public static Object[] DeleteRecord(String filePath, Object[] toBeDelete) throws IOException {
+        boolean isRemoved = false;
+        ArrayList<String> listOfOriginalRecord = new ArrayList<>();
+        Object[] origainalRecords = FetchRecord(filePath);
+        for (Object record : origainalRecords){
+            //
+        }
+        return origainalRecords;
+    }
 }
