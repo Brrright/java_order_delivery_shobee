@@ -31,7 +31,12 @@ public class WriteFileHelper extends FileHelper{
         }
     }
 
-    BufferedWriter getBufferedWritter(){
+    BufferedWriter getBufferedWriter(){
         return this.bWriter;
+    }
+    
+    void closeWriter() throws IOException{
+        this.fWriter.close();
+        this.bWriter.close();
     }
 }

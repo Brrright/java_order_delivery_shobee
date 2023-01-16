@@ -34,5 +34,10 @@ public class ReadFileHelper extends FileHelper{
         BufferedReader getBufferedReader(){
             return this.bReader;
         }
+        
+        void closeReader() throws IOException{
+            this.fReader.close();
+            this.bReader.close();
+        }
 
 }
