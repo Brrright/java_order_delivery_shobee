@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.oodms;
+package com.mycompany.oodms.FileHandler;
 import java.io.File;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,8 +22,7 @@ import java.util.logging.Logger;
 enum ResponseStatus{
     SUCCESS,
     FAIL,
-    NONE
-    
+    NONE   
 //    public String message;
 //    
 //    private ResponseStatus(String message) {
@@ -32,54 +33,79 @@ enum ResponseStatus{
 
 
 public class FileHandleMaster {
-    String filePathPrefix = "src\\main\\java\\com\\mycompany\\oodms\\files\\";
-    public static void main(String[] args) {
-        // TESTING
-        // CREATE FILE
-        // Object[] response = CreateFile("src\\main\\java\\com\\mycompany\\oodms\\files\\product.txt");
-        // System.out.println(Arrays.toString(response));
-        
-        // FETCH
-//        Object[] fetchProduct = FetchRecord("src\\main\\java\\com\\mycompany\\oodms\\files\\product.txt");
-//        System.out.println(Arrays.toString(fetchProduct));
+    private String filePathPrefix = "src\\main\\java\\com\\mycompany\\oodms\\files\\";
+    private String fileName;
+    private String filePath;
+    private Object[] response = new Object[2];
+    
+    FileHandleMaster(String fileName) {
+        this.fileName = fileName;
+        this.filePath = filePathPrefix + fileName;
     }
     
+    private void setFileName(String fileName){
+        this.fileName = fileName; 
+    }
+    
+    private String getFilePath(){
+        return this.filePath;
+    }
+    
+    private String getFileName(){
+        return this.fileName;
+    }
+    
+    public static void main(String[] args) {
+//        // TESTING
+//        FileHandleMaster handler = new FileHandleMaster("product.txt");
+//        // CREATE FILE
+//        Object[] res = handler.CreateFile();
+//         System.out.println(Arrays.toString(res));
+//        
+//        // FETCH
+//        Object[] fetchProduct = handler.FetchRecord();
+//        System.out.println(Arrays.toString(fetchProduct));
+        
+        
+    }    
     // ------------------------------------------------------------------------------
     
     // create new file
-    public static Object[] CreateFile(String filePath) {
+    public  Object[] CreateFile() {
         try{
-            File file = new File(filePath);
+            File file = new File(this.filePath);
             if(file.createNewFile()) {
-                Object[] response = {ResponseStatus.SUCCESS};
-                return response;
+                this.response[0] = ResponseStatus.SUCCESS;
+                return this.response;
             }
             else{
-                Object[] response = {ResponseStatus.FAIL, "File name exist"};
-                return response;
+                this.response[0] = ResponseStatus.FAIL;
+                this.response[1] = "File name exist";
+                return this.response;
             }
         }
         catch (IOException e){
-            Object[] response = {ResponseStatus.FAIL};
+            this.response[0] = ResponseStatus.FAIL;
             e.printStackTrace();
             return response;
         }
     }
+    
     // fetch data
         // fetch all data from a file
-    public static Object[] FetchRecord(String filePath){
-        Object[] response = {ResponseStatus.NONE};
-        ReadFileHelper readFile = new ReadFileHelper(filePath);
+    public Object[] FetchRecord(){
+        this.response[0] = ResponseStatus.NONE;
+        ReadFileHelper readFile = new ReadFileHelper(this.filePath);
         Object[] res = readFile.getResponseMessage();
         System.out.println(Arrays.toString(res));
         if(res[0] == ResponseStatus.SUCCESS){
             BufferedReader bReader = readFile.getBufferedReader();
-            response = bReader.lines().toArray();
+            this.response = bReader.lines().toArray();
             try {
                 readFile.closeReader();
             } catch (IOException ex) {
-                response[0] = ResponseStatus.FAIL;
-                response[1] = ex.getMessage();
+                this.response[0] = ResponseStatus.FAIL;
+                this.response[1] = ex.getMessage();
                 Logger.getLogger(FileHandleMaster.class.getName()).log(Level.SEVERE, null, ex);
             }
             return response;
@@ -87,10 +113,15 @@ public class FileHandleMaster {
         return response;
     }
     
-        // fetch  by primary key
-    public static Object[] FetchRecord(String filePath, String primaryKey){
-        Object[] allRecord = FetchRecord(filePath);
-        Object[] response = {ResponseStatus.NONE};
+    // fetch  by unique key
+    public Object[] FetchRecord(String primaryKey){
+        Object[] allRecord = FetchRecord();
+        if (allRecord[0] == ResponseStatus.FAIL){
+            response[0] = ResponseStatus.FAIL;
+            response[1] = allRecord;
+            return response;
+        }
+        this.response[0] = ResponseStatus.NONE;
         for (Object record : allRecord){
             String line = record.toString().trim();
             String[] dataRow = line.split(";");
@@ -108,21 +139,9 @@ public class FileHandleMaster {
         return response;
     }
     
-    // to fetch by using more than 1 key, fetch record multiple times by using diff key
-//        // fetch by linked key (pk + fk)
-//    public static Object[] FetchRecord(String filePath, String primaryKey,String[] foreignKeyList){
-//        for (String fkey : foreignKeyList) {
-//            System.out.println(fkey);
-//            // get prefix
-//            // loop thru array see match mou?
-//        }
-//        Object[] allRecord = FetchRecord(filePath, primaryKey);
-//        return allRecord;
-//    }
-    
     // insert data
-    public static Object[] InsertRecord(String filePath, String[] fileContent, String fileHeader, boolean isAppend){
-        Object[] response = {ResponseStatus.NONE};
+    public Object[] InsertRecord(String[] fileContent, String fileHeader, boolean isAppend){
+        response[0] = ResponseStatus.NONE;
         WriteFileHelper writeFile = new WriteFileHelper(filePath, isAppend);
         ReadFileHelper readFile = new ReadFileHelper(filePath);
         Object[] res1 = writeFile.getResponseMessage();
@@ -158,13 +177,54 @@ public class FileHandleMaster {
     }
     
     // update data
+    public Object[] UpdateRecord(String id, String field, String newValue) {
+        Object[] allRecords = FetchRecord();
+        if (allRecords[0] == ResponseStatus.FAIL){
+            response[0] = ResponseStatus.FAIL;
+            response[1] = allRecords;
+            return response;
+        }
+        String header = (String) allRecords[0];
+        List<String> convertedList = new ArrayList(Arrays.asList(allRecords));
+        
+
+        for(int x = 0; x < convertedList.size(); x++) {
+            String[] fields  = convertedList.get(x).split(";");
+            if (fields [0].equals(id)){
+                fields[Integer.parseInt(field)] = newValue;
+                convertedList.set(x, String.join(";", fields));
+                this.response[0] = ResponseStatus.SUCCESS;
+            }
+            else{
+                this.response[0] = ResponseStatus.FAIL;
+                this.response[1] = "Record not found.";
+                return response;
+            }
+        }
+        // write files
+        
+        String[] fileContent = convertedList.toArray(String[]::new);
+        Object[] insertMessage = InsertRecord(fileContent, header, false);
+        if (insertMessage[0] == ResponseStatus.FAIL){
+            response[0] = ResponseStatus.FAIL;
+            response[1] = insertMessage;
+            return response;
+        }
+        return response;
+    }
+    
     
     // delete data
-    public static Object[] DeleteRecord(String filePath, Object[] toBeDelete) throws IOException {
-        Object[] response = {};
+    public Object[] DeleteRecord(Object[] toBeDelete) throws IOException {
+        this.response[0] = ResponseStatus.NONE;
         boolean isRemoved = false;
         ArrayList<String> originalRecordList = new ArrayList<>();
         Object[] origainalRecords = FetchRecord(filePath);
+        if (origainalRecords[0] == ResponseStatus.FAIL){
+            response[0] = ResponseStatus.FAIL;
+            response[1] = origainalRecords;
+            return response;
+        }
          for (Object record : origainalRecords){
             if(record != ResponseStatus.FAIL){
                 originalRecordList.add((String) record);
@@ -195,13 +255,19 @@ public class FileHandleMaster {
         try{
             WriteFileHelper writeFile = new WriteFileHelper(filePath, true);
             BufferedWriter bWriter = writeFile.getBufferedWriter();
-            for (String eachLine :  modifiedRecord){
-                bWriter.write(eachLine + "\n");
+             Object[] res = writeFile.getResponseMessage();
+            if(res[0] == ResponseStatus.SUCCESS){
+                for (String eachLine :  modifiedRecord){
+                    bWriter.write(eachLine + "\n");
+                }
+                writeFile.closeWriter();
+                response[0] = ResponseStatus.SUCCESS;
+                response[1] = "Record deleted successfully.";     
             }
-            writeFile.closeWriter();
-            response[0] = ResponseStatus.SUCCESS;
-            response[1] = "Record deleted successfully.";
-            
+            else{
+                response[0] = ResponseStatus.FAIL;
+                response[1] = res;
+            }     
         } catch (IOException ex) {
             response[0] = ResponseStatus.FAIL;
             response[1] = ex.getMessage();
