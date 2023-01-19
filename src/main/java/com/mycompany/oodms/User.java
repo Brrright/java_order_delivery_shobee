@@ -37,6 +37,66 @@ abstract class User {
         this.phoneNum = phoneNum;
         this.picturePath = picturePath;
     }
+    
+    private void setID(String id){
+        this.userId = id;
+    }
+    
+    private void setEmail(String email){
+        this.userEmail = email;
+    }
+    
+    private void setPassword(String pw){
+        this.password = pw;
+    }
+    
+    private void setAge(int age) {
+        this.age = age;
+    }
+    
+    private void setGender(UserGender gender) {
+        this.gender = gender;
+    }
+    
+    private void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+    
+    private void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
+    
+    private String getID()
+    {
+        return this.userId;
+    }
+    
+    
+    private String getEmail()
+    {
+        return this.userEmail;
+    }
+    
+    private String getPassword()
+    {
+        return this.password;
+    }
+    
+    private int getAge(){
+        return this.age;
+    }
+    
+    private UserGender getGender(){
+        return this.gender;
+    }
+    
+    private String getPhoneNum(){
+        return this.password;
+    }
+    
+    private String getPicturePath(){
+        return this.picturePath;
+    }
         
     abstract void updateProfile();
 }
