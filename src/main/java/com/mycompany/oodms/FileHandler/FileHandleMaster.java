@@ -57,15 +57,22 @@ public class FileHandleMaster {
     
     public static void main(String[] args) {
 //        // TESTING
-//        FileHandleMaster handler = new FileHandleMaster("product.txt");
+        FileHandleMaster handler = new FileHandleMaster("admin.txt");
 //        // CREATE FILE
 //        Object[] res = handler.CreateFile();
 //         System.out.println(Arrays.toString(res));
 //        
-//        // FETCH
-//        Object[] fetchProduct = handler.FetchRecord();
+        // FETCH
+//        Object[] fetchProduct = handler.FetchRecord("ADM00001");
+//        Obect
 //        System.out.println(Arrays.toString(fetchProduct));
-        
+//        if(fetchProduct[0] != ResponseStatus.SUCCESS) return;
+
+        //  INSERT
+        String[] content = {"PD0001", "Hongwei", "100", "1", "x", "ct01"};
+        String fileHeader = FileHeader.product;
+        Object[] insertProduct = handler.InsertRecord(content, fileHeader, true);
+        System.out.println(Arrays.toString(insertProduct));
         
     }    
     // ------------------------------------------------------------------------------
@@ -139,6 +146,32 @@ public class FileHandleMaster {
         return response;
     }
     
+//    // fetch  by unique key + with passed content
+//    public Object[] FetchRecord(String primaryKey, Object[] content){
+//        Object[] allRecord = content;
+//        if (allRecord[0] == ResponseStatus.FAIL){
+//            response[0] = ResponseStatus.FAIL;
+//            response[1] = allRecord;
+//            return response;
+//        }
+//        this.response[0] = ResponseStatus.NONE;
+//        for (Object record : allRecord){
+//            String line = record.toString().trim();
+//            String[] dataRow = line.split(";");
+//            for (int i = 0; i < dataRow.length; i++) {
+//                    if (dataRow[0].equals(primaryKey)) {
+//                        response = dataRow;
+//                    }
+//            }
+//        }
+//        if (response == null) {
+//            response[0] = ResponseStatus.FAIL;
+//            response[1] = "No record found.";
+//            return response;
+//        }
+//        return response;
+//    }
+    
     // insert data
     public Object[] InsertRecord(String[] fileContent, String fileHeader, boolean isAppend){
         response[0] = ResponseStatus.NONE;
@@ -187,7 +220,6 @@ public class FileHandleMaster {
         String header = (String) allRecords[0];
         List<String> convertedList = new ArrayList(Arrays.asList(allRecords));
         
-
         for(int x = 0; x < convertedList.size(); x++) {
             String[] fields  = convertedList.get(x).split(";");
             if (fields [0].equals(id)){
