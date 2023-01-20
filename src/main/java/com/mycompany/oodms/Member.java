@@ -9,14 +9,19 @@ package com.mycompany.oodms;
  * @author mingl
  */
 public class Member extends User {
-        public Member(String userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath) {
+        Member(String userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath) {
         super(userId, userEmail, password, age, gender, phoneNum, picturePath);
     }
 
 
     @Override
-    void updateProfile() {
+    void login(String email, String password) {
         //
+    }
+
+    @Override
+    void logout() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

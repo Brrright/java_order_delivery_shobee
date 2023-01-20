@@ -98,5 +98,7 @@ abstract class User {
         return this.picturePath;
     }
         
-    abstract void updateProfile();
+    abstract void login(String email, String password);
+    
+    abstract void logout();
 }

@@ -10,12 +10,17 @@ package com.mycompany.oodms;
  */
 public class DeliveryStaff  extends User{
 
-    public DeliveryStaff(String userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath) {
+    DeliveryStaff(String userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath) {
         super(userId, userEmail, password, age, gender, phoneNum, picturePath);
     }
 
     @Override
-    void updateProfile() {
+    void login(String email, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    void logout() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
