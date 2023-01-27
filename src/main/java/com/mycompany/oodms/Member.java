@@ -9,8 +9,10 @@ package com.mycompany.oodms;
  * @author mingl
  */
 public class Member extends User {
+    private Cart cart;
         Member(String userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath) {
         super(userId, userEmail, password, age, gender, phoneNum, picturePath);
+//        this.cart = new Cart();
     }
 
 
