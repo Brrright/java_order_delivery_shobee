@@ -1,1 +1,1 @@
-OrderID;Date;DeliveryAddress;TotalPrice;Paid;Change
+OrderID;DateTime;DeliveryAddressID;TotalPrice;Paid;Change
