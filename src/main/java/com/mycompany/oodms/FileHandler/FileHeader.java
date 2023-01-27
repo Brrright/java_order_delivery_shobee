@@ -21,6 +21,6 @@ public class FileHeader {
     
     final static String member_address = "AddressID;MemberID;StreetName;City;State;Postcode";
     final static String cart = "CartID;CustID;ProductID;Quantity";
-    final static String order = "OrderID;Date;DeliveryAddress;TotalPrice;Paid;Change";
+    final static String order = "OrderID;DateTime;DeliveryAddressID;TotalPrice;Paid;Change";
     final static String order_item = "ProductID;Quantity;OrderID";
 }
