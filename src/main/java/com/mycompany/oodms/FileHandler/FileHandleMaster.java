@@ -74,6 +74,8 @@ public class FileHandleMaster {
         Object[] insertProduct = handler.InsertRecord(content, fileHeader, true);
         System.out.println(Arrays.toString(insertProduct));
         
+        // UPDATE
+        Object[] updateProduct = handler.UpdateRecord("PD0001", "x", "x");
     }    
     // ------------------------------------------------------------------------------
     
@@ -194,8 +196,6 @@ public class FileHandleMaster {
                     bWriter.newLine();
                 }
                 response[0] = ResponseStatus.SUCCESS;
-                readFile.closeReader();
-                writeFile.closeWriter();
             } catch (IOException ex) {
                 response[0] = ResponseStatus.FAIL;
                 response[1] = "Error occured during writing : "+ ex.getMessage();
@@ -247,7 +247,7 @@ public class FileHandleMaster {
     
     
     // delete data
-    public Object[] DeleteRecord(Object[] toBeDelete) throws IOException {
+    public Object[] DeleteRecord(Object[] toBeDelete) {
         this.response[0] = ResponseStatus.NONE;
         boolean isRemoved = false;
         ArrayList<String> originalRecordList = new ArrayList<>();
