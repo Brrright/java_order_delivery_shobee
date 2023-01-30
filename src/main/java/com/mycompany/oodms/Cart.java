@@ -8,7 +8,7 @@ package com.mycompany.oodms;
  *
  * @author mingl
  */
-class Cart {
+public class Cart {
     private String cartID;
     private Product product;
     private int quantity;

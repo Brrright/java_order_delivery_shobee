@@ -23,12 +23,6 @@ enum ResponseStatus{
     SUCCESS,
     FAIL,
     NONE   
-//    public String message;
-//    
-//    private ResponseStatus(String message) {
-//        this.message = message;
-//        
-//    }
 }
 
 
