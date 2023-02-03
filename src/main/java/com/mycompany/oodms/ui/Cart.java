@@ -6,7 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Cart extends JFrame {
-    heading heading = new heading();
+    Heading heading = new Heading();
 
     JLabel cartTitle;
     JPanel cartTitlePanel;

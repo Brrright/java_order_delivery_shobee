@@ -8,8 +8,8 @@ import java.awt.font.ImageGraphicAttribute;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Allproducts extends JFrame {
-    heading heading = new heading();
+public class AllProducts extends JFrame {
+    Heading heading = new Heading();
     JPanel mainContainer; // container for category and items
     JPanel catContainer;
     JPanel allCategories;
@@ -21,7 +21,7 @@ public class Allproducts extends JFrame {
     ArrayList<String> tempContainer;
 
     //!! should have get data from parameter (2d arraylist or array of all categories and items)
-    public Allproducts() {
+    public AllProducts() {
         // ------------------------------ category JLabel ------------------------------ //
         // TITLE - the word "category"
         JLabel cattitle = new JLabel("Category");

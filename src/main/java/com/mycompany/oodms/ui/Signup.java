@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Signup extends JFrame{
-    heading heading = new heading();
+    Heading heading = new Heading();
 
     public Signup(){
 

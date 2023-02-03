@@ -5,14 +5,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class heading extends JPanel{
+public class Heading extends JPanel{
     JLabel logo;
     JButton allProduct;
     JButton login;
     JButton signup;
 
 
-    public heading() {
+    public Heading() {
         // JLabel - logo
         logo = new JLabel("ShoBee");
         logo.setFont(new Font("MV Boli",Font.BOLD,25));

@@ -3,7 +3,7 @@ package com.company.ui;
 import javax.swing.*;
 import java.awt.*;
 
-public class login extends JFrame {
+public class Login extends JFrame {
 
     // left component //
     // image for shop btn
@@ -26,7 +26,7 @@ public class login extends JFrame {
 
 
 
-    public login() {
+    public Login() {
         // ------------------------------ LEFT ------------------------------ //
         // JLabel - left
         left = new JLabel(productPage);
@@ -40,7 +40,7 @@ public class login extends JFrame {
         leftContainer.add(left);
 
         // ------------------------------ RIGHT ------------------------------ //
-        // JLabel - login header
+        // JLabel - Login header
         heading = new JLabel("Login");
         heading.setFont(new Font("MV Boli",Font.BOLD,45));
         heading.setBounds(942, 290, 136, 61);
@@ -75,7 +75,7 @@ public class login extends JFrame {
         signup.setBounds(1118,665,112,49);
         signup.setFocusable(false);
 
-        // JButton - login
+        // JButton - Login
         login = new JButton("login");
         login.setBounds(1248,665,112,49);
         login.setFocusable(false);
