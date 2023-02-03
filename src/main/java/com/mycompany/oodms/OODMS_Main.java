@@ -4,6 +4,8 @@
  */
 package com.mycompany.oodms;
 
+import com.mycompany.oodms.ui.Main_Frame;
+
 /**
  *
  * @author mingl
