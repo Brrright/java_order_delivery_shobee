@@ -25,6 +25,19 @@ public class FileHandler {
     }
     
     public static void main(String[] args) {
+        
+    /**
+     *  To use this, you need to 
+     *         create new FileHandler('"filename");
+     * 
+     *  for fetching record, you may just 
+     *          use .FetchRecord() or .FetchRecord(id)
+     * 
+     *  for insert, update, and delete record, you will have to 
+     *          create new FileRecord(id, "data");
+     * */
+        
+        
         FileHandler fHandler = new FileHandler("product");
 //      //  FETCH RECORD
 //        List<FileRecord> records = fHandler.FetchRecord();
@@ -38,7 +51,7 @@ public class FileHandler {
         
         
 //       // INSERT RECORD
-        FileRecord record2 = new FileRecord(3, "3;3RD Puduct;100;102;xxx;1");
+        FileRecord record2 = new FileRecord(3, "3;3RD Update;100;102;xxx;1");
 //        fHandler.InsertRecord(record2);
         
 //      //  UPDATE RECORD
@@ -47,11 +60,6 @@ public class FileHandler {
 
 //      //  DELETE RECORD
 //            fHandler.DeleteRecord(record2);
-
-//List<FileRecord> records = fHandler.FetchRecord();
-//records.forEach(record -> {
-//    System.out.println(record.getRecord());
-//});
     }
 
     public List<FileRecord> FetchRecord() {
