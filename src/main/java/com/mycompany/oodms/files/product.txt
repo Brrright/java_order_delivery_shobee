@@ -1,1 +1,2 @@
-ProductID;Product Name;Price;Stock Quantity;Picture;CategoryID
+1;Maggie;100;1;x;1
+2;NewProduct;100;102;xxx;1

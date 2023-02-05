@@ -1,2 +1,1 @@
-StaffID;Staff Name;Staff Email;Password;Age;Gender;State;Phone Number;Picture
-STF00001;Alif Huang;staff@gmail.com;asAS12@#;22;Male;Johor;0122222111;
+1;Alif Huang;staff@gmail.com;asAS12@#;22;Male;Johor;0122222111;
