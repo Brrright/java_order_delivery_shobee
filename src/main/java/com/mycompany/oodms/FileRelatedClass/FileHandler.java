@@ -32,6 +32,8 @@ public class FileHandler {
      * 
      *  for fetching record, you may just 
      *          use .FetchRecord() or .FetchRecord(id)
+     *          REMEMBER: to print the record, use the getters provided
+     *                             Eg. record.getRecord() || record.getRecordList()
      * 
      *  for insert, update, and delete record, you will have to 
      *          create new FileRecord(id, "data");
