@@ -17,7 +17,11 @@ public class OODMS_Main {
     public static User current_user;
     
      public void initialize(){
-        // setup 
+         // setup Records (fetch necessary record first)
+         
+         
+         
+        // setup UI screen
 //        this.frame = new Main_Frame(new JPanel);
         new Login();
         
