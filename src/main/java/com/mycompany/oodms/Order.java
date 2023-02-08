@@ -10,14 +10,15 @@ package com.mycompany.oodms;
  * @author mingl
  */
 public class Order {
-    private String orderID;
+    private int orderID;
     private String date_time;
     private String addressID;
     private double totalPrice;
     private double paid;
     private double change;
+    private Member customer;
     
-    public String getOrderID() {
+    public int getOrderID() {
         return this.orderID;
     }
 

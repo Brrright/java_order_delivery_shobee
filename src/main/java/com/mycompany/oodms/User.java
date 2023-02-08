@@ -20,7 +20,7 @@ enum UserIdPrefix{
 }
 
 abstract class User {
-    protected String userId;
+    protected int userId;
     protected String userEmail;
     protected String password;
     protected int age;
@@ -28,7 +28,7 @@ abstract class User {
     protected String phoneNum;
     protected String picturePath;
     
-    User(String userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath){
+    User(int userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath){
         this.userId = userId;
         this.userEmail = userEmail;
         this.password = password;
@@ -38,7 +38,7 @@ abstract class User {
         this.picturePath = picturePath;
     }
     
-    private void setID(String id){
+    private void setID(int id){
         this.userId = id;
     }
     
@@ -66,7 +66,7 @@ abstract class User {
         this.picturePath = picturePath;
     }
     
-    private String getID()
+    private int getID()
     {
         return this.userId;
     }
