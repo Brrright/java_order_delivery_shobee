@@ -10,7 +10,7 @@ package com.mycompany.oodms;
  */
 public class Admin extends User{
 
-    Admin(String userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath) {
+    Admin(int userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath) {
         super(userId, userEmail, password, age, gender, phoneNum, picturePath);
     }
 

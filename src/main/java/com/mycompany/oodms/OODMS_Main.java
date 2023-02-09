@@ -4,7 +4,7 @@
  */
 package com.mycompany.oodms;
 
-import com.company.ui.Login;
+import com.company.oodms.ui.Login;
 import com.mycompany.oodms.ui.Main_Frame;
 import javax.swing.JPanel;
 

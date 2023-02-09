@@ -1,4 +1,4 @@
-package com.company.ui;
+package com.mycompany.oodms.ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Cart extends JFrame {
-    Heading heading = new Heading();
+    UI_Header heading = new UI_Header();
 
     JLabel cartTitle;
     JPanel cartTitlePanel;

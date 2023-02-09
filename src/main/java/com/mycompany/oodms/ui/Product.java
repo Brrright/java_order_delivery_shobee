@@ -1,4 +1,4 @@
-package com.company.ui;
+package com.mycompany.oodms.ui;
 
 import org.w3c.dom.ls.LSOutput;
 

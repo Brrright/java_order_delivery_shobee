@@ -1,18 +1,18 @@
-package com.company.ui;
+package com.mycompany.oodms.ui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class Heading extends JPanel{
+public class UI_Header extends JPanel{
     JLabel logo;
     JButton allProduct;
     JButton login;
     JButton signup;
 
 
-    public Heading() {
+    public UI_Header() {
         // JLabel - logo
         logo = new JLabel("ShoBee");
         logo.setFont(new Font("MV Boli",Font.BOLD,25));

@@ -1,10 +1,10 @@
-package com.company.ui;
+package com.mycompany.oodms.ui;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Signup extends JFrame{
-    Heading heading = new Heading();
+    UI_Header heading = new UI_Header();
 
     public Signup(){
 

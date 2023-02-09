@@ -1,4 +1,4 @@
-package com.company.ui;
+package com.mycompany.oodms.ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AllProducts extends JFrame {
-    Heading heading = new Heading();
+    UI_Header heading = new UI_Header();
     JPanel mainContainer; // container for category and items
     JPanel catContainer;
     JPanel allCategories;

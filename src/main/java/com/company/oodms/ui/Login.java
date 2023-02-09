@@ -1,4 +1,4 @@
-package com.mycompany.oodms.ui;
+package com.company.oodms.ui;
 
 import javax.swing.*;
 import java.awt.*;
