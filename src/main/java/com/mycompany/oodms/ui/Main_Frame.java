@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 public class Main_Frame extends JFrame{
      public JPanel currentPanel;
     
-    Main_Frame(JPanel panel) {
+    public Main_Frame(JPanel panel) {
         this.currentPanel = panel;
         // set layout, and add it to this class, default operation, pack, set visible, location
         this.setLayout(new BorderLayout());
