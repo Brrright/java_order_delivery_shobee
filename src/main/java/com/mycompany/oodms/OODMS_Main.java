@@ -4,9 +4,8 @@
  */
 package com.mycompany.oodms;
 
-import com.company.oodms.ui.Login;
+import com.mycompany.oodms.ui.Login;
 import com.mycompany.oodms.ui.Main_Frame;
-import javax.swing.JPanel;
 
 /**
  *
@@ -23,7 +22,7 @@ public class OODMS_Main {
          
         // setup UI screen
 //        this.frame = new Main_Frame(new JPanel);
-        new Login();
+        
         
     }
     

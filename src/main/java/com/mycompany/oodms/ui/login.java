@@ -1,5 +1,6 @@
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.OODMS_Main;
 import javax.swing.*;
 import java.awt.*;
 
@@ -110,5 +111,8 @@ public class Login extends JFrame {
 
         this.setVisible(true);
     }
-
+//    example of usage
+//    public void LoginToCustomer(){
+//        OODMS_Main.frame.replacePanel(new JPanel());
+//    }
 }
