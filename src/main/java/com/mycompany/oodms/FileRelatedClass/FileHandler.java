@@ -25,8 +25,8 @@ public class FileHandler {
     }
     
 //    public static void main(String[] args) {
-//        
-//    /**
+
+//    /** ============================================
 //     *  To use this, you need to 
 //     *         create new FileHandler('"filename");
 //     * 
@@ -37,9 +37,10 @@ public class FileHandler {
 //     * 
 //     *  for insert, update, and delete record, you will have to 
 //     *          create new FileRecord(id, "data");
-//     * */
-//        
-//        
+//     * */ ===========================================
+
+    
+//        Example Usage: -------------------------------------------------------------------
 //        FileHandler fHandler = new FileHandler("product");
 ////      //  FETCH RECORD
 ////        List<FileRecord> records = fHandler.FetchRecord();
@@ -62,6 +63,7 @@ public class FileHandler {
 //
 ////      //  DELETE RECORD
 ////            fHandler.DeleteRecord(record2);
+// ---------------------------------------------------------------------------------------------
 //    }
 
     public List<FileRecord> FetchRecord() {
