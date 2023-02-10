@@ -5,6 +5,7 @@
 package com.mycompany.oodms.Services;
 
 import com.mycompany.oodms.Cart;
+import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,6 +18,8 @@ public class CartService {
     private List<Cart> carts;
     
     public CartService(){
+//        FileHandler fHandler = new FileHandler("cart");
+//        fHandler.FetchRecord();
         this.carts = new ArrayList<>();
     }
     
