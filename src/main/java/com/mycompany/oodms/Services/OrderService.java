@@ -26,7 +26,8 @@ public class OrderService {
 
     public void updateOrder(Order order) {
         for (int i = 0; i < orders.size(); i++) {
-            if (orders.get(i).getOrderID().equals(order.getOrderID())) {
+            String orderID = Integer.toString(orders.get(i).getOrderID());
+            if (orderID.equals(order.getOrderID())) {
                 orders.set(i, order);
                 break;
             }
@@ -37,7 +38,8 @@ public class OrderService {
         Iterator<Order> iterator = orders.iterator();
         while (iterator.hasNext()) {
             Order order = iterator.next();
-            if (order.getOrderID().equals(orderId)) {
+            String orderID = Integer.toString(order.getOrderID());
+            if (orderID.equals(orderId)) {
                 iterator.remove();
                 break;
             }
@@ -50,7 +52,8 @@ public class OrderService {
 
     public Order getOrder(String orderId) {
         for (Order order : orders) {
-            if (order.getOrderID().equals(orderId)) {
+            String orderID = Integer.toString(order.getOrderID());
+            if (orderID.equals(orderId)) {
                 return order;
             }
         }
