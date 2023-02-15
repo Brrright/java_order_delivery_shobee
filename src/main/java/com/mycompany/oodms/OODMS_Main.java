@@ -6,6 +6,7 @@ package com.mycompany.oodms;
 
 import com.mycompany.oodms.ui.Login;
 import com.mycompany.oodms.ui.Main_Frame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -13,16 +14,14 @@ import com.mycompany.oodms.ui.Main_Frame;
  */
 public class OODMS_Main {
     public static Main_Frame frame;
-    public static User current_user;
+//    public static User current_user;
     
      public void initialize(){
-         // setup Records (fetch necessary record first)
-         
-         
+        // setup Records (fetch necessary record first)
+        
          
         // setup UI screen
-//        this.frame = new Main_Frame(new JPanel);
-        
+        frame = new Main_Frame(new Login());
         
     }
     
