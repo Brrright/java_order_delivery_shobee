@@ -4,12 +4,16 @@
  */
 package com.mycompany.oodms;
 
+import java.util.List;
+
 /**
  *
  * @author mingl
  */
 public class Member extends User {
-    private Cart cart;
+    private List<Order> orders;
+    private List<Cart> carts;
+    
         Member(int userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath) {
         super(userId, userEmail, password, age, gender, phoneNum, picturePath);
 //        this.cart = new Cart();
