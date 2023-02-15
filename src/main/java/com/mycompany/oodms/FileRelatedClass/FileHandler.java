@@ -42,6 +42,9 @@ public class FileHandler {
     
 //        Example Usage: -------------------------------------------------------------------
 //        FileHandler fHandler = new FileHandler("product");
+        
+//        System.out.println("id: " +  fHandler.GenerateID());
+        
 ////      //  FETCH RECORD
 ////        List<FileRecord> records = fHandler.FetchRecord();
 ////        records.forEach(record -> {
@@ -54,6 +57,7 @@ public class FileHandler {
 //        
 //        
 ////       // INSERT RECORD
+        //// manual calculate record for id
 //        FileRecord record2 = new FileRecord(3, "3;3RD Update;100;102;xxx;1");
 ////        fHandler.InsertRecord(record2);
 //        
@@ -65,6 +69,10 @@ public class FileHandler {
 ////            fHandler.DeleteRecord(record2);
 // ---------------------------------------------------------------------------------------------
 //    }
+        
+    public int GenerateID(){
+        return this.records.size() + 1;
+    }
 
     public List<FileRecord> FetchRecord() {
         return records;
