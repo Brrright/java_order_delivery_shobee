@@ -5,6 +5,7 @@
 package com.mycompany.oodms.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 /**
@@ -31,9 +32,16 @@ public class Main_Frame extends JFrame{
     }
     
     public void replacePanel(JPanel new_panel){
-        // remove old panel
-        // change panel variable
-        // add new panel
+        // get the content pane of JFrame
+        Container contentPane = this.getContentPane();
+        contentPane.removeAll();
+        
+        //  Refresh the JFrame to reflect the changes
+        this.revalidate();
+        this.repaint();
+        
+        this.add(new_panel);
+        this.setVisible(true);
         // set bg color
         // refresh jpanel, adjust panel size and change the element
         // set panel position to middle
