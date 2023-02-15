@@ -4,23 +4,21 @@
  */
 package com.mycompany.oodms;
 
+import java.util.List;
+
 /**
  *
  * @author mingl
  */
 public class Cart {
     private String cartID;
-    private Product product;
+    private List<Product> products;
     private int quantity;
     
-    Cart(String id){
+    Cart(String id, int quantity, Product product){
         this.cartID = id;
-    }
-    
-    Cart(String id, int quantity){
-        this.cartID = id;
-        this.product = new Product();//?
         this.quantity = quantity;
+        this.products.add(product);
     }
     
     
@@ -30,5 +28,9 @@ public class Cart {
     
     public int getQuantity(){
         return this.quantity;
+    }
+    
+    public List<Product> getCartProducts(){
+        return this.products;
     }
 }
