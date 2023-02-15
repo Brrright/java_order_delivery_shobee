@@ -1,6 +1,7 @@
 package com.mycompany.oodms.ui;
 
 import com.mycompany.oodms.OODMS_Main;
+import static com.mycompany.oodms.OODMS_Main.frame;
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +10,7 @@ public class Login extends JPanel {
     // left component //
     // image for shop btn
     ImageIcon productPage = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/shopbtn.png");
-    JLabel left ;
+    JLabel left;
     JPanel leftContainer;
 
     // right component //
@@ -72,8 +73,12 @@ public class Login extends JPanel {
         signup = new JButton("sign up");
         signup.setBounds(722,550,112,49);
         signup.setFocusable(false);
+        signup.addActionListener(e -> {
+            frame.replacePanel(new UI_Header());
+        });
 
         // JButton - Login
+        
         login = new JButton("login");
         login.setBounds(853,550,112,49);
         login.setFocusable(false);
