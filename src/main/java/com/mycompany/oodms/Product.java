@@ -9,6 +9,66 @@ package com.mycompany.oodms;
  * @author mingl
  */
 public class Product {
-    private int ProductID;
+    private int productID;
+    private String productName;
+    private double price;
+    private int stock_qty;
+    private String product_pic;
+    private Category category;
     
+    public Product(int id, String pro_name, double price, int stock_qty, String pro_pic, Category category) {
+        this.productID = id;
+        this.productName = pro_name;
+        this.price = price;
+        this.stock_qty = stock_qty;
+        this.product_pic = pro_pic;
+        this.category = category;
+    }
+    
+    public int getProductID(){
+        return this.productID;
+    }
+    
+    public String getProductName(){
+        return this.productName;
+    }
+    
+    public double getProductPrice(){
+        return this.price;
+    }
+    
+    public int getStockQty(){
+        return this.stock_qty;
+    }
+    
+    public String getProcuctPicture(){
+        return this.product_pic;
+    }
+    public Category getCategory(){
+        return this.category;
+    }
+    
+    public void setProductID(int id){
+        this.productID = id;
+    }
+    
+    public void setProductName(String pro_name) {
+        this.productName = pro_name;
+    }
+    
+    public void setProductPrice(double price) {
+        this.price = price;
+    }
+    
+    public void setProductStock(int qty) {
+        this.stock_qty = qty;
+    }
+    
+    public void setProductPicture(String pro_pic){
+        this.product_pic = pro_pic;
+    }
+
+    public void setCategory(Category cate) {
+        this.category = cate;
+    }
 }
