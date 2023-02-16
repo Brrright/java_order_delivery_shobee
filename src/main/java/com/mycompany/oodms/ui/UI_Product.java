@@ -1,6 +1,7 @@
 package com.mycompany.oodms.ui;
 
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Product;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class UI_Product extends JPanel {
-
+    Product product;
     JButton backBtn;
     JLabel productImg;
     JLabel name;
@@ -19,10 +20,11 @@ public class UI_Product extends JPanel {
     JButton addToCartBtn;
     JButton ratings;
 
-    public UI_Product(){
+    public UI_Product(Product product){
         // REQUIRED DATA
         // ID, PICTURE, NAME, DESCRIPTION, STOCK, PRICE, SOLD
-
+        
+        this.product = product;
         ArrayList<String> productDetails = new ArrayList<>();
         productDetails.add("ITEM1");
         productDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
