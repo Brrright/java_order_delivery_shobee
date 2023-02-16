@@ -5,7 +5,7 @@ import static com.mycompany.oodms.OODMS_Main.frame;
 import javax.swing.*;
 import java.awt.*;
 
-public class Login extends JPanel {
+public class UI_Login extends JPanel {
 
     // left component //
     // image for shop btn
@@ -26,7 +26,7 @@ public class Login extends JPanel {
 
 
 
-    public Login() {
+    public UI_Login() {
         // ------------------------------ LEFT ------------------------------ //
         // JLabel - left
         left = new JLabel(productPage);

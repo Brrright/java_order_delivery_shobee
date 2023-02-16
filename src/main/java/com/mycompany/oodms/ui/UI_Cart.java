@@ -5,7 +5,7 @@ import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Cart extends JFrame {
+public class UI_Cart extends JFrame {
     UI_Header heading = new UI_Header();
 
     JLabel cartTitle;
@@ -18,7 +18,7 @@ public class Cart extends JFrame {
 
 
 
-    public Cart() {
+    public UI_Cart() {
         // ------------------------------ Cart Title ------------------------------ //
         cartTitle = new JLabel("Cart");
         cartTitle.setForeground(new Color(0, 0, 0));
