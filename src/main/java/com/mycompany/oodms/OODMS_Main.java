@@ -4,14 +4,13 @@
  */
 package com.mycompany.oodms;
 
-import com.mycompany.oodms.ui.Login;
-import com.mycompany.oodms.ui.Main_Frame;
+import com.mycompany.oodms.ui.*;
 import javax.swing.JPanel;
 
 /**
  *
  * @author mingl
- */
+ */ 
 public class OODMS_Main {
     public static Main_Frame frame;
 //    public static User current_user;
@@ -21,7 +20,7 @@ public class OODMS_Main {
         
          
         // setup UI screen
-        frame = new Main_Frame(new Login());
+        frame = new Main_Frame(new UI_Product());
         
     }
     
