@@ -16,10 +16,10 @@ public class OODMS_Main {
     
      public void initialize(){
         // setup Records (fetch necessary record first)
-        
-         
+        Category cat = new Category(1, "hi");
+         Product sampleProduct = new Product(1, "Name",3.0, 2, "src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg", cat);
         // setup UI screen
-        frame = new Main_Frame(new UI_Product());
+        frame = new Main_Frame(new UI_Product(sampleProduct));
         
     }
     
