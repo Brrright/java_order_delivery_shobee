@@ -10,7 +10,7 @@ package com.mycompany.oodms;
  */
 public class DeliveryStaff  extends User{
 
-    DeliveryStaff(int userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath) {
+    DeliveryStaff(int userId, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
         super(userId, userEmail, password, age, gender, phoneNum, picturePath);
     }
 

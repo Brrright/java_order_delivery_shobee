@@ -8,7 +8,7 @@ package com.mycompany.oodms;
  *
  * @author mingl
  */
-enum UserGender{
+enum Gender{
     MALE,
     FEMALE
 }
@@ -24,11 +24,11 @@ abstract class User {
     protected String userEmail;
     protected String password;
     protected int age;
-    protected UserGender gender;
+    protected Gender gender;
     protected String phoneNum;
     protected String picturePath;
     
-    User(int userId, String userEmail, String password, int age, UserGender gender, String phoneNum, String picturePath){
+    User(int userId, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath){
         this.userId = userId;
         this.userEmail = userEmail;
         this.password = password;
@@ -54,7 +54,7 @@ abstract class User {
         this.age = age;
     }
     
-    private void setGender(UserGender gender) {
+    private void setGender(Gender gender) {
         this.gender = gender;
     }
     
@@ -86,7 +86,7 @@ abstract class User {
         return this.age;
     }
     
-    private UserGender getGender(){
+    private Gender getGender(){
         return this.gender;
     }
     
