@@ -5,7 +5,6 @@
 package com.mycompany.oodms;
 
 import com.mycompany.oodms.ui.*;
-import javax.swing.JPanel;
 
 /**
  *
