@@ -1,2 +1,2 @@
-1;Maggie;100;1;x;1
-2;NewProduct;100;102;xxx;1
+1;Maggie;100;1;src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg;1
+2;NewProduct;100;102;src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg;1
