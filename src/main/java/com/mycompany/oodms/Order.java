@@ -25,7 +25,7 @@ public class Order {
     private List<OrderItem> orderItems;
     private List<Delivery> deliveries;
     
-    static final String PRODUCT_FILE = "product";
+    static final String ORDER_FILE = "order";
     
     public Order(int orderID, LocalDateTime date_time, int address_ID, double totalPrice, double paid, double change, Member customer){
 //        FileHandler fHandler = new FileHandler(PRODUCT_FILE);
