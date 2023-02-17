@@ -25,7 +25,9 @@ public class UI_Product extends JPanel {
         // ID, PICTURE, NAME, DESCRIPTION, STOCK, PRICE, SOLD
         
         this.product = product;
-        ArrayList<String> productDetails = new ArrayList<>();
+        
+        String productName = "ITEM1";
+        ArrayList<String> productDetails = new ArrayList<>(); 
         productDetails.add("ITEM1");
         productDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
         productDetails.add("Nameg");
@@ -54,7 +56,7 @@ public class UI_Product extends JPanel {
         productImg.setBounds(145,182,370,426);
 
         // JLabel - name
-        name = new JLabel(productDetails.get(2));
+        name = new JLabel(product.getProductName());
         name.setFont(new Font("MV Boli",Font.BOLD,30));
         name.setBounds(576,182,342,35);
 
