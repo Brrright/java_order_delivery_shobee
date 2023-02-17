@@ -4,6 +4,8 @@
  */
 package com.mycompany.oodms;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author User
@@ -12,13 +14,15 @@ package com.mycompany.oodms;
 public class Delivery {
     private int id;
     private Order order;
+    private LocalDateTime date_time;
     private DeliveryStaff deliveryStaff;
     private DeliveryStatus status;
 
   // constructor, getters, and setters
-    public Delivery(int id, Order order, String delivery, DeliveryStaff deliveryStaff, DeliveryStatus status){
+    public Delivery(int id, Order order, LocalDateTime date_time, DeliveryStaff deliveryStaff, DeliveryStatus status){
         this.id = id;
         this.order = order;
+        this.date_time = date_time;
         this.deliveryStaff = deliveryStaff;
         this.status = status;
     }
