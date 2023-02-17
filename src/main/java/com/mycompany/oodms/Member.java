@@ -14,8 +14,8 @@ public class Member extends User {
     private List<Order> orders;
     private List<Cart> carts;
     
-        Member(int userId, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
-        super(userId, userEmail, password, age, gender, phoneNum, picturePath);
+        public Member(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
+        super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath);
 //        this.cart = new Cart();
     }
 

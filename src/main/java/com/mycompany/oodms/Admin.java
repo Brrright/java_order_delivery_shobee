@@ -10,8 +10,8 @@ package com.mycompany.oodms;
  */
 public class Admin extends User{
 
-    Admin(int userId, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
-        super(userId, userEmail, password, age, gender, phoneNum, picturePath);
+    Admin(int userId,String userName , String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
+        super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath);
     }
 
     @Override

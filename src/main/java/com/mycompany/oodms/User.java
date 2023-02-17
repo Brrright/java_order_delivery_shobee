@@ -8,10 +8,7 @@ package com.mycompany.oodms;
  *
  * @author mingl
  */
-enum Gender{
-    MALE,
-    FEMALE
-}
+
 
 enum UserIdPrefix{
     ADM,
@@ -21,6 +18,7 @@ enum UserIdPrefix{
 
 abstract class User {
     protected int userId;
+    protected String userName;
     protected String userEmail;
     protected String password;
     protected int age;
@@ -28,8 +26,9 @@ abstract class User {
     protected String phoneNum;
     protected String picturePath;
     
-    User(int userId, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath){
+    User(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath){
         this.userId = userId;
+        this.userName = userName;
         this.userEmail = userEmail;
         this.password = password;
         this.age = age;
