@@ -19,8 +19,8 @@ public class OODMS_Main {
         
          
         // setup UI screen
-        frame = new Main_Frame(new UI_Product());
-        
+        frame = new Main_Frame(new UI_OrderDetails());
+//        frame = new Main_Frame(new UI_AllProducts());
     }
     
     public static void main(String[] args) {

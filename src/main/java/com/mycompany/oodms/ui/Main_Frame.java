@@ -25,7 +25,7 @@ public class Main_Frame extends JFrame{
         this.setLayout(new BorderLayout());
         this.getContentPane().setBackground(new Color(255, 255, 255));
         
-        this.add(panel);
+        this.add(panel,BorderLayout.CENTER);
         
         this.setVisible(true);
         
