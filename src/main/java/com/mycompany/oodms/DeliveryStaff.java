@@ -13,10 +13,9 @@ public class DeliveryStaff  extends User{
     public DeliveryStaff(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
         super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath);
     }
-
-    @Override
-    void login(String email, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public DeliveryStaff(int userId) {
+        super(userId);
     }
 
     @Override
