@@ -4,6 +4,10 @@
  */
 package com.mycompany.oodms;
 
+import com.mycompany.oodms.FileRelatedClass.FileHandler;
+import com.mycompany.oodms.FileRelatedClass.FileName;
+import com.mycompany.oodms.FileRelatedClass.FileRecord;
+
 /**
  *
  * @author mingl
@@ -35,6 +39,10 @@ abstract class User {
         this.gender = gender;
         this.phoneNum = phoneNum;
         this.picturePath = picturePath;
+    }
+    
+    User(int userId){
+        this.userId = userId;
     }
     
     private void setID(int id){
@@ -97,7 +105,31 @@ abstract class User {
         return this.picturePath;
     }
         
-    abstract void login(String email, String password);
+    public static void login(String email, String password, String fileName){
+        FileHandler fHandler = new FileHandler(fileName);
+        FileRecord user_record = fHandler.FetchRecord(email, 2);
+        int user_id = user_record.getID();
+        String[] splitted_user_record = user_record.getRecordList();
+        
+        if(fileName == null ? FileName.ADMIN == null : fileName.equals(FileName.ADMIN)){
+            OODMS_Main.current_user = new Admin(user_id);
+        }
+        
+        if(fileName == null ? FileName.DELIVERY_STAFF == null : fileName.equals(FileName.DELIVERY_STAFF)){
+            OODMS_Main.current_user = new DeliveryStaff(user_id);
+        }
+        
+        if(fileName == null ? FileName.MEMBER == null : fileName.equals(FileName.MEMBER)){
+            OODMS_Main.current_user = new Member(user_id);
+        }
+        
+        OODMS_Main.current_user.setAge(Integer.parseInt(splitted_user_record[4]));
+        OODMS_Main.current_user.setEmail(splitted_user_record[2]);
+        OODMS_Main.current_user.setGender(Gender.valueOf(splitted_user_record[5]));
+        OODMS_Main.current_user.setPassword(splitted_user_record[3]);
+        OODMS_Main.current_user.setPhoneNum(splitted_user_record[6]);
+        OODMS_Main.current_user.setPicturePath(splitted_user_record[7]);
+    }
     
     abstract void logout();
 }
