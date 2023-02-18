@@ -18,7 +18,13 @@ public class Member extends User {
         super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath);
 //        this.cart = new Cart();
     }
-        
+
+
+    @Override
+    void login(String email, String password) {
+        //
+    }
+
     @Override
     void logout() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
