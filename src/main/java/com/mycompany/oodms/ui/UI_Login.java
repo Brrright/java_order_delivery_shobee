@@ -1,6 +1,11 @@
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.Admin;
+import com.mycompany.oodms.DeliveryStaff;
 import com.mycompany.oodms.OODMS_Main;
+import com.mycompany.oodms.UserRole;
+import com.mycompany.oodms.FileRelatedClass.FileName;
+import com.mycompany.oodms.Member;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +20,6 @@ public class UI_Login extends JPanel {
 
     // right component //
     JLabel heading;
-    JLabel smallHeading;
     JLabel emailLabel;
     JLabel passwordLabel;
     JTextField emailTF;
@@ -23,7 +27,10 @@ public class UI_Login extends JPanel {
     JButton signup;
     JButton login;
     JPanel rightContainer = new JPanel();
-
+    
+    // login credential purpose
+    UserRole[] user_roles = {UserRole.MEMBER, UserRole.DELIVERY_STAFF, UserRole.ADMIN};
+    String fileName;
 
 
     public UI_Login() {
@@ -46,10 +53,10 @@ public class UI_Login extends JPanel {
         heading.setBounds(478, 155, 136, 61);
 
         // JLabel - small heading
-        smallHeading = new JLabel("Customer");
-        smallHeading.setFont(new Font("MV Boli",Font.PLAIN,17));
-        smallHeading.setForeground(new Color(255, 151, 98, 124));
-        smallHeading.setBounds(478, 222, 105, 22);
+        JComboBox userRoleComboBox = new JComboBox(user_roles);
+        userRoleComboBox.setFont(new Font("MV Boli",Font.PLAIN,17));
+        userRoleComboBox.setForeground(new Color(255, 151, 98, 124));
+        userRoleComboBox.setBounds(478, 222, 105, 22);
 
         // JLabel - email
         emailLabel = new JLabel("Email :");
@@ -82,7 +89,32 @@ public class UI_Login extends JPanel {
         login = new JButton("login");
         login.setBounds(853,550,112,49);
         login.setFocusable(false);
-
+        
+        login.addActionListener(e -> {
+            // validation needed.
+            // is email or null
+            
+            Object user_role = userRoleComboBox.getSelectedItem();
+            String user_email = emailTF.getText();
+            String user_password = passwordTF.getText();
+            
+            if(user_role == UserRole.ADMIN){
+                fileName = FileName.ADMIN;
+                Admin.login(user_email, user_password, fileName);
+            }
+            else if(user_role == UserRole.DELIVERY_STAFF){
+                fileName = FileName.DELIVERY_STAFF;
+                DeliveryStaff.login(user_email, user_password, fileName);
+            }
+            else if(user_role == UserRole.MEMBER){
+                fileName = FileName.MEMBER;
+                Member.login(user_email, user_password, fileName);
+            } else{
+                JOptionPane.showMessageDialog(OODMS_Main.frame,"No user role selected.","Alert",JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+        });
+        
         // JPanel - right component
         rightContainer = new JPanel();
         rightContainer.setBounds(863, 0, 711, 766);
@@ -100,7 +132,7 @@ public class UI_Login extends JPanel {
 
         // right component
         this.add(heading);
-        this.add(smallHeading);
+        this.add(userRoleComboBox);
         this.add(emailLabel);
         this.add(passwordLabel);
         this.add(emailTF);
@@ -108,8 +140,4 @@ public class UI_Login extends JPanel {
         this.add(signup);
         this.add(login);
     }
-//    example of usage
-//    public void LoginToCustomer(){
-//        OODMS_Main.frame.replacePanel(new JPanel());
-//    }
 }
