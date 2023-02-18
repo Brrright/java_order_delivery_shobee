@@ -45,7 +45,7 @@ public class UI_Product extends JPanel {
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        //image
+        //image (edited scale)
         ImageIcon itemPic = new ImageIcon(productDetails.get(1));
         Image image = itemPic.getImage();
         Image newImage = image.getScaledInstance(370, 426, Image.SCALE_SMOOTH);
@@ -112,7 +112,7 @@ public class UI_Product extends JPanel {
 
 
         // ------------------------------ this main JPanel ------------------------------ //
-        this.setSize(1440, 1024);
+        this.setSize(1080, 768);
         this.setBackground(Color.white);
         this.setLayout(null);
 

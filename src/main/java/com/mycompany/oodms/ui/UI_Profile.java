@@ -67,25 +67,25 @@ public class UI_Profile extends JPanel {
         idHeader = new JLabel("ID :");
         idHeader.setFont(new Font("MV Boli",Font.PLAIN,12));
         idHeader.setForeground(new Color(152, 152, 152, 255));
-        idHeader.setBounds(577,249,49,26);
+        idHeader.setBounds(577,239,49,26);
 
         // JLabel - ID
         id = new JLabel(profileDetails.get(0));
         id.setFont(new Font("MV Boli",Font.PLAIN,16));
         id.setForeground(new Color(0, 0, 0, 255));
-        id.setBounds(577,275,90,31);
+        id.setBounds(577,265,90,31);
 
         // JLabel - gender header
         genderHeader = new JLabel("Gender :");
         genderHeader.setFont(new Font("MV Boli",Font.PLAIN,12));
         genderHeader.setForeground(new Color(152, 152, 152, 255));
-        genderHeader.setBounds(708,249,70,26);
+        genderHeader.setBounds(708,239,70,26);
 
         // Jlabel - gender
         gender = new JLabel(profileDetails.get(3));
         gender.setFont(new Font("MV Boli",Font.PLAIN,16));
         gender.setForeground(new Color(0, 0, 0, 255));
-        gender.setBounds(708,275,90,31);
+        gender.setBounds(708,265,90,31);
 
         /////////
         
@@ -93,37 +93,37 @@ public class UI_Profile extends JPanel {
         dobHeader = new JLabel("Date of Birth :");
         dobHeader.setFont(new Font("MV Boli",Font.PLAIN,12));
         dobHeader.setForeground(new Color(152, 152, 152, 255));
-        dobHeader.setBounds(577,322,90,26);
+        dobHeader.setBounds(577,312,90,26);
 
         // Jlabel - dob
         dob = new JLabel(profileDetails.get(4));
         dob.setFont(new Font("MV Boli",Font.PLAIN,16));
         dob.setForeground(new Color(0, 0, 0, 255));
-        dob.setBounds(577,348,180,31);
+        dob.setBounds(577,338,180,31);
 
         // JLabel - email header
         emailHeader = new JLabel("Email :");
         emailHeader.setFont(new Font("MV Boli",Font.PLAIN,12));
         emailHeader.setForeground(new Color(152, 152, 152, 255));
-        emailHeader.setBounds(577,395,50,26);
+        emailHeader.setBounds(577,385,50,26);
 
         // JLabel - email
         email = new JLabel(profileDetails.get(5));
         email.setFont(new Font("MV Boli",Font.PLAIN,16));
         email.setForeground(new Color(0, 0, 0));
-        email.setBounds(577,421,340,31);
+        email.setBounds(577,411,340,31);
 
         // JLabel - phone no header
         phoneNoHeader = new JLabel("Phone Number :");
         phoneNoHeader.setFont(new Font("MV Boli",Font.PLAIN,12));
         phoneNoHeader.setForeground(new Color(152, 152, 152, 255));
-        phoneNoHeader.setBounds(577,468,200,26);
+        phoneNoHeader.setBounds(577,458,200,26);
 
         // JLabel - phoneNo
         phoneNo = new JLabel(profileDetails.get(6));
         phoneNo.setFont(new Font("MV Boli",Font.PLAIN,16));
         phoneNo.setForeground(new Color(0, 0, 0));
-        phoneNo.setBounds(577,494,200,31);
+        phoneNo.setBounds(577,484,200,31);
         
         
         ///////////////////////////////////////////////////////////////////////////
