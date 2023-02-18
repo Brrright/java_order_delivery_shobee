@@ -2,163 +2,175 @@ package com.mycompany.oodms.ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.awt.font.ImageGraphicAttribute;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class UI_AllProducts extends JFrame {
+public class UI_AllProducts extends JPanel {
+    
+    // HEADING AND TITLE OBJECTS
     UI_Header heading = new UI_Header();
-    JPanel mainContainer; // container for category and items
-    JPanel catContainer;
-    JPanel allCategories;
-    JPanel allItems;
-    JButton[] categories;
-    JButton[] items;
-    ArrayList<ArrayList<String>> categoryArray;
-    ArrayList<ArrayList<String>> itemArray;
-    ArrayList<String> tempContainer;
-
-    //!! should have get data from parameter (2d arraylist or array of all categories and items)
+    JLabel title;
+    JLabel subTitle;
+    
+    // SEARCH AND FILTER OBJECTS
+    JTextField searchBar;
+    String[] categoryList;
+    JComboBox<String> categories;
+    JButton searchBtn;
+    
+    // ITEM OBJECT
+    ArrayList<ArrayList<String>> tempProduct = new ArrayList<>(); // should store object instead 
+    ArrayList<String> tempProductContainer = new ArrayList<>();
+    JButton[] products;
+    
+    // TEMP : add temp product into temp arraylist
+    int loopCount;
+    private void tempProductGenerator(int productAmt) {
+        for (int i = 0; i < productAmt; i++) {
+            tempProductContainer.add("Product Name");
+            tempProductContainer.add("RM 10.00");
+            tempProductContainer.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
+            tempProduct.add(tempProductContainer);
+        }   
+    }
+    
+     
+    // ALL REQUIRED PANELS
+    JScrollPane scrollPane;
+    JPanel title_panel;
+    JPanel subTitle_panel;
+    JPanel searchFilter_panel;
+    JPanel products_panel;
+    JPanel searchNproduct_Panel;
+    
+    
     public UI_AllProducts() {
-        // ------------------------------ category JLabel ------------------------------ //
-        // TITLE - the word "category"
-        JLabel cattitle = new JLabel("Category");
-        cattitle.setForeground(new Color(0, 0, 0));
-        cattitle.setFont(new Font("Sarif", Font.BOLD, 30));
-
-        JPanel catTitle = new JPanel();
-        catTitle.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 70));
-        catTitle.add(cattitle);
-        catTitle.setBackground(Color.WHITE);
-
-
-        // Create category array by using data from txt file
-        // Required data = category name, category ID
-        // *sample*
-
-        tempContainer = new ArrayList<>();
-        categoryArray = new ArrayList<>();// the 2d array with all category (ID, cat name)
-
-        for (int i = 0; i < 12; i++) {
-            tempContainer.add("ID");
-            tempContainer.add("cat");
-            categoryArray.add(tempContainer);
+        
+        // Title
+        title = new JLabel("Products");
+        title.setFont(new Font("MV Boli",Font.BOLD,30));
+        title.setPreferredSize(new Dimension(1080,150));
+        title.setHorizontalAlignment(JLabel.CENTER);
+        title.setVerticalAlignment(JLabel.BOTTOM);
+        
+        
+        // subtitle
+        subTitle = new JLabel("We only sell best product");
+        subTitle.setFont(new Font("MV Boli",Font.PLAIN,10));
+        subTitle.setForeground(Color.GRAY);
+        subTitle.setPreferredSize(new Dimension(1080,55));
+        subTitle.setHorizontalAlignment(JLabel.CENTER);
+        subTitle.setVerticalAlignment(JLabel.TOP);
+        
+        
+        // Search bar 
+        // searchBar.getText()
+        searchBar = new JTextField();
+        searchBar.setPreferredSize(new Dimension(382,45));
+        searchBar.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        
+        
+        // filter 
+        categories = new JComboBox<>(new String[] {"Option 1", "Option 2", "Option 3"});
+        categories.setPreferredSize(new Dimension(150,45));
+        
+        
+        // search button
+        ImageIcon searchIcon = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/searchIcon.png");
+        searchBtn = new JButton(searchIcon);
+        searchBtn.setPreferredSize(new Dimension(45,45));
+        searchBtn.setFocusPainted(false);
+        searchBtn.setBorderPainted(false);
+        
+        
+        // Panel for search n filter section
+        searchFilter_panel = new JPanel();
+        searchFilter_panel.setSize(1080, 60);
+        searchFilter_panel.setBackground(Color.WHITE);
+        searchFilter_panel.setLayout(new FlowLayout());
+        searchFilter_panel.add(searchBar);
+        searchFilter_panel.add(categories);
+        searchFilter_panel.add(searchBtn);
+        
+        
+        // Products
+        loopCount = 2;
+        tempProductGenerator(loopCount); // temp product generator
+        
+        products = new JButton[tempProduct.size()];
+        for (int i = 0; i < tempProduct.size(); i++) {
+           
+            products[i] = new JButton();
+            
+            // add product name, price
+            products[i].setText(tempProduct.get(i).get(0) + " " + tempProduct.get(i).get(1));
+            
+            
+            // add image
+            ImageIcon productImg = new ImageIcon(tempProduct.get(i).get(2));
+            Image image = productImg.getImage();
+            Image scaleImage = image.getScaledInstance(331, 365, Image.SCALE_SMOOTH);
+            ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
+            products[i].setIcon(scaleImageIcon);
+            
+            
+            // Button looking configuration
+            products[i].setIconTextGap(20);
+            products[i].setPreferredSize(new Dimension(332, 470));
+            products[i].setHorizontalTextPosition(JLabel.CENTER);
+            products[i].setVerticalTextPosition(JLabel.BOTTOM);
+            products[i].setBorder(BorderFactory.createEmptyBorder());
+            products[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            
         }
-
-
-        // JLabel - buttons (get from array)
-        categories = new JButton[categoryArray.size()];
-        ImageIcon orangeCircle = new ImageIcon("src/com/company/ui/pictures/orangecircle.png");
-        // create JLabel with the array
-        for (int i = 0; i < categoryArray.size(); i++) {
-            categories[i] = new JButton();
-            categories[i].setText(categoryArray.get(i).get(1));
-            categories[i].setFont(new Font("Sarif", Font.PLAIN, 20));
-            categories[i].setIcon(orangeCircle);
-            categories[i].setHorizontalTextPosition(JLabel.CENTER);
-            categories[i].setVerticalTextPosition(JLabel.CENTER);
-            categories[i].setBorder(BorderFactory.createEmptyBorder());
-            categories[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//            categories[i].setFocusable(false);
+        
+        
+        // Panel for products
+        float rowCount = (float)tempProduct.size()/2;
+        int products_panel_height = 490 * (int)Math.ceil(rowCount);
+        
+        products_panel = new JPanel();
+        products_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 1));
+        products_panel.setPreferredSize(new Dimension(780, products_panel_height));
+        products_panel.setBackground(Color.WHITE);
+        
+        for (JButton product : products){
+            products_panel.add(product);
         }
+        
+        
+        // Panel for search bar and products
+        searchNproduct_Panel = new JPanel();
+        searchNproduct_Panel.setLayout(new BorderLayout());
+        searchNproduct_Panel.setBackground(Color.WHITE); 
+        searchNproduct_Panel.add(searchFilter_panel, BorderLayout.NORTH);
+        searchNproduct_Panel.add(products_panel, BorderLayout.CENTER); 
+        
+        
+        // Panel for subtitle
+        subTitle_panel = new JPanel();
+        subTitle_panel.setLayout(new BorderLayout());
+        subTitle_panel.setBackground(Color.WHITE);
+        subTitle_panel.add(subTitle, BorderLayout.NORTH);
+        subTitle_panel.add(searchNproduct_Panel, BorderLayout.CENTER);
+        
+        // Panel for title
+        title_panel = new JPanel();
+        title_panel.setLayout(new BorderLayout());
+        title_panel.setBackground(Color.WHITE);
+        title_panel.add(title, BorderLayout.NORTH);
+        title_panel.add(subTitle_panel, BorderLayout.CENTER);
+        
+        // Panel - scrollPane
+        scrollPane = new JScrollPane(title_panel);
+        scrollPane.setSize(780, products_panel_height);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-
-        // ------------------------------ category JPanel ------------------------------ //
-        // get all data from txt file
-        allCategories = new JPanel();
-        allCategories.setBackground(Color.WHITE);
-        allCategories.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 20));
-
-        // category column height
-        int catHeight = (((categoryArray.size() / 7) + 1) * 210);
-
-        allCategories.setPreferredSize(new Dimension(0, catHeight));
-
-        for (JButton category : categories) {
-            allCategories.add(category);
-        }
-
-
-        // ------------------------------ Item JLabel ------------------------------ //
-        // REQUIRED DATA = ID, name, price, data
-
-        // Create ITEM array by using data from txt file
-        // *sample*
-
-        itemArray = new ArrayList<>();// the 2d array with all category (ID, name, price, pictureFile)
-
-        for (int i = 0; i < 6; i++) {
-            tempContainer.clear();
-            tempContainer.add("ID");
-            tempContainer.add("hutao");
-            tempContainer.add("RM 30.00");
-            tempContainer.add("src/com/company/ui/pictures/hudao.jpg");
-            itemArray.add(tempContainer);
-        }
-
-
-        // JLabel - buttons (get from array)
-        items = new JButton[itemArray.size()];
-        // create JLabel with the array
-        for (int i = 0; i < itemArray.size(); i++) {
-            items[i] = new JButton();
-            items[i].setText(itemArray.get(i).get(1) + "  " + itemArray.get(i).get(2));
-            items[i].setFont(new Font("Sarif", Font.PLAIN, 20));
-
-            ImageIcon itemPic = new ImageIcon(itemArray.get(i).get(3));
-            Image image = itemPic.getImage();
-            Image newImage = image.getScaledInstance(300, 400, Image.SCALE_SMOOTH);
-            ImageIcon newIcon = new ImageIcon(newImage);
-            items[i].setIcon(newIcon);
-            items[i].setHorizontalTextPosition(JLabel.CENTER);
-            items[i].setVerticalTextPosition(JLabel.BOTTOM);
-            items[i].setBorder(BorderFactory.createEmptyBorder());
-            items[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        }
-
-            // ------------------------------ Item JPanel ------------------------------ //
-            allItems = new JPanel();
-            allItems.setBackground(Color.WHITE);
-            allItems.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 40));
-            int extraHeight = (items.length%3 == 0) ? 0 : 1;
-            allItems.setPreferredSize(new Dimension(1000,500 * (items.length/3 + extraHeight)));
-            for (JButton item : items) {
-                allItems.add(item);
-            }
-
-
-
-        // cat container
-            catContainer = new JPanel();
-            catContainer.setLayout(new BorderLayout());
-            catContainer.add(catTitle, BorderLayout.NORTH);
-            catContainer.add(allCategories, BorderLayout.CENTER);
-
-
-            // ------------------------------ cat and item container ------------------------------ //
-            mainContainer = new JPanel();
-            mainContainer.setLayout(new BorderLayout());
-            mainContainer.add(catContainer, BorderLayout.NORTH);
-            mainContainer.add(allItems, BorderLayout.CENTER);
-
-            JScrollPane scroll = new JScrollPane(mainContainer);
-
-
-
-            // ------------------------------ this JFrame ------------------------------ //
-
-            this.setSize(1440, 1024);
-            this.setTitle("Shobee");
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.setResizable(false);
-            this.getContentPane().setBackground(new Color(255, 255, 255));
-            this.setLayout(new BorderLayout());
-            this.add(heading, BorderLayout.NORTH);
-            this.add(scroll, BorderLayout.CENTER);
-//            this.add(mainContainer, BorderLayout.CENTER);
-            this.setVisible(true);
-
-        }
+        
+        // Main Panel
+        this.setLayout(new BorderLayout());
+        this.add(heading, BorderLayout.NORTH);
+        this.add(scrollPane, BorderLayout.CENTER);
+        this.setBackground(Color.WHITE);
+    }
 }
