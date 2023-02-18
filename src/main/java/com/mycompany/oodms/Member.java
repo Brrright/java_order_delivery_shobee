@@ -14,15 +14,13 @@ public class Member extends User {
     private List<Order> orders;
     private List<Cart> carts;
     
-        public Member(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
+    public Member(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
         super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath);
 //        this.cart = new Cart();
     }
-
-
-    @Override
-    void login(String email, String password) {
-        //
+    
+    public Member(int userId){
+        super(userId);
     }
 
     @Override
