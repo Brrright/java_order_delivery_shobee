@@ -98,11 +98,25 @@ public class FileHandler {
      public FileRecord FetchRecord(int id, int col){
         FileRecord response = null;
         for(int i = 0; i < records.size(); i ++) {
-//            if(records.get(i).getID() == id){
-//                response = records.get(i);
-//                break;
-//            }
-            System.out.println(records.get(i).getRecordList()[col]);  
+            if(Integer.parseInt(records.get(i).getRecordList()[col]) == id){
+                response = records.get(i);
+                break;
+            }
+        }
+        if(response == null){
+            System.out.println("not such record in this file. FIND A WAY TO HANDLE**");
+        }
+        return response;
+    }
+     
+     public FileRecord FetchRecord(String data, int col){
+        FileRecord response = null;
+        for(int i = 0; i < records.size(); i ++) {
+            String fetched_data = records.get(i).getRecordList()[col];
+            if(data == null ? fetched_data == null : data.equals(fetched_data)){
+                response = records.get(i);
+                break;
+            }
         }
         if(response == null){
             System.out.println("not such record in this file. FIND A WAY TO HANDLE**");
