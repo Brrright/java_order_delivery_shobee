@@ -18,7 +18,7 @@ import javax.swing.*;
  *
  * @author hw
  */
-public class UI_Cart extends JPanel{
+public class UI_MyOrder extends JPanel{
   UI_Header heading = new UI_Header();
   
   JScrollPane scrollPane;
@@ -40,7 +40,7 @@ public class UI_Cart extends JPanel{
   JPanel orders_panel;
   JButton[] orders; // with product image, name and purchased quantity
   
-  public UI_Cart() {
+  public UI_MyOrder() {
     
       // JLabel - title
       title = new JLabel("My order");
