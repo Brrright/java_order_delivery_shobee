@@ -7,6 +7,7 @@ package com.mycompany.oodms;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
+import com.mycompany.oodms.ui.UI_Login;
 
 /**
  *
@@ -45,65 +46,97 @@ abstract class User {
         this.userId = userId;
     }
     
-    private void setID(int id){
-        this.userId = id;
-    }
+    abstract void setID(int id);
     
-    private void setEmail(String email){
-        this.userEmail = email;
-    }
+    abstract void setEmail(String email);
     
-    private void setPassword(String pw){
-        this.password = pw;
-    }
+    abstract void setName(String name);
     
-    private void setAge(int age) {
-        this.age = age;
-    }
+    abstract void setPassword(String password);
     
-    private void setGender(Gender gender) {
-        this.gender = gender;
-    }
+    abstract void setAge(int age);
     
-    private void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
+    abstract void setGender(Gender gender);
     
-    private void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
-    }
+    abstract void setPhoneNum(String phononeNum);
     
-    private int getID()
-    {
-        return this.userId;
-    }
+    abstract void setPicturePath(String picturecturePath);
     
+    abstract int getID();
     
-    private String getEmail()
-    {
-        return this.userEmail;
-    }
+    abstract String getName();
     
-    private String getPassword()
-    {
-        return this.password;
-    }
+    abstract String getEmail();
     
-    private int getAge(){
-        return this.age;
-    }
+    abstract String getPassword();
     
-    private Gender getGender(){
-        return this.gender;
-    }
+    abstract int getAge();
     
-    private String getPhoneNum(){
-        return this.password;
-    }
+    abstract Gender getGender();
     
-    private String getPicturePath(){
-        return this.picturePath;
-    }
+    abstract String getPhoneNum();
+    
+    abstract String getPicturePath();
+    
+//    private void setID(int id){
+//        this.userId = id;
+//    }
+//    
+//    private void setEmail(String email){
+//        this.userEmail = email;
+//    }
+//    
+//    private void setPassword(String pw){
+//        this.password = pw;
+//    }
+//    
+//    private void setAge(int age) {
+//        this.age = age;
+//    }
+//    
+//    private void setGender(Gender gender) {
+//        this.gender = gender;
+//    }
+//    
+//    private void setPhoneNum(String phoneNum) {
+//        this.phoneNum = phoneNum;
+//    }
+//    
+//    private void setPicturePath(String picturePath) {
+//        this.picturePath = picturePath;
+//    }
+//    
+//    private int getID()
+//    {
+//        return this.userId;
+//    }
+//    
+//    
+//    private String getEmail()
+//    {
+//        return this.userEmail;
+//    }
+//    
+//    private String getPassword()
+//    {
+//        return this.password;
+//    }
+//    
+//    private int getAge(){
+//        return this.age;
+//    }
+//    
+//    private Gender getGender(){
+//        return this.gender;
+//    }
+//    
+//    private String getPhoneNum(){
+//        return this.password;
+//    }
+//    
+//    private String getPicturePath(){
+//        return this.picturePath;
+//    }
         
     public static void login(String email, String password, String fileName){
         FileHandler fHandler = new FileHandler(fileName);
@@ -129,7 +162,18 @@ abstract class User {
         OODMS_Main.current_user.setPassword(splitted_user_record[3]);
         OODMS_Main.current_user.setPhoneNum(splitted_user_record[6]);
         OODMS_Main.current_user.setPicturePath(splitted_user_record[7]);
+        
+        System.out.println("User login successfully");
+        
+        // need to setup user related data
     }
     
-    abstract void logout();
+    public static void logout(){
+        OODMS_Main.current_user = null;
+        // think what should do when logging out.
+        OODMS_Main.frame.currentPanel = new UI_Login();
+    }
+    
+    
+    
 }
