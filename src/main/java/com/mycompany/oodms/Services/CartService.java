@@ -15,7 +15,7 @@ import java.util.Iterator;
  *
  * @author mingl
  */
-public class CartService {
+public class CartService { //might no use le, since 1 person 1 cart, no place for us to show all cart oso, but CART ITEM SERVICE IS NEEDED
     private List<Cart> carts;
     
     public CartService(){
