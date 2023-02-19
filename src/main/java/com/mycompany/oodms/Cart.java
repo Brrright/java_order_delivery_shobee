@@ -13,21 +13,15 @@ import java.util.List;
 public class Cart {
     private String cartID;
     private List<Product> products;
-    private int quantity;
     
-    Cart(String id, int quantity, Product product){
+    Cart(String id, Product product){
         this.cartID = id;
-        this.quantity = quantity;
         this.products.add(product);
     }
     
     
     public String getCartID(){
         return this.cartID;
-    }
-    
-    public int getQuantity(){
-        return this.quantity;
     }
     
     public List<Product> getCartProducts(){
