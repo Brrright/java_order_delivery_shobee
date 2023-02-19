@@ -16,27 +16,24 @@ import java.util.List;
 public class Order {
     private int orderID;
     private LocalDateTime date_time;
-    private int addressID;
     private double totalPrice;
     private double paid;
     private double change;
+    
     private Member customer;
+    private Address address;
     
     private List<OrderItem> orderItems;
     private List<Delivery> deliveries;
     
-    static final String ORDER_FILE = "order";
-    
-    public Order(int orderID, LocalDateTime date_time, int address_ID, double totalPrice, double paid, double change, Member customer){
-//        FileHandler fHandler = new FileHandler(PRODUCT_FILE);
-//        this.orderID = fHandler.GenerateID();
+    public Order(int orderID, LocalDateTime date_time, double totalPrice, double paid, double change, Member customer, Address address){
         this.orderID = orderID;
         this.date_time = date_time;
-        this.addressID = address_ID;
         this.totalPrice = totalPrice;
         this.paid  = paid;
         this.change = change;
         this.customer = customer;
+        this.address = address;
     }
     
     public int getOrderID() {
@@ -45,10 +42,6 @@ public class Order {
     
     public LocalDateTime getOrderDateTime() {
         return this.date_time;
-    }
-    
-    public int getAddressID(){
-        return this.addressID;
     }
     
     public double getTotalPrice(){
@@ -62,13 +55,13 @@ public class Order {
     public Member getCustomer(){
         return this.customer;
     }
+    
+    public Address getAddress(){
+        return this.address;
+    }
 
     public void setOrderDateTime(LocalDateTime date_time){
         this.date_time = date_time;
-    }
-    
-    public void setAddressID(int add_id){
-        this.addressID = add_id;
     }
     
     public void setTotalPrice(double paid){
@@ -81,5 +74,9 @@ public class Order {
     
     public void setCustomer(Member cust) {
         this.customer = cust;
+    }
+    
+    public void setAddress(Address address){
+        this.address = address;
     }
 }
