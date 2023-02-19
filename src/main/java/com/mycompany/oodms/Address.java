@@ -19,14 +19,52 @@ public class Address {
     private String city;
     private String state;
     private String postcode;
-    static final String ADDRESS_FILE = "address";
     
-    Address(String streetName, String city, String state, String postcode){
-        FileHandler fHandler = new FileHandler(ADDRESS_FILE);
-        this.addressID = fHandler.GenerateID();
+    public Address(int id, String streetName, String city, String state, String postcode){
+        this.addressID = id;
         this.streetName = streetName;
         this.city = city;
         this.state = state;
         this.postcode = postcode;
+    }
+    
+    public int getAddressID(){
+        return this.addressID;
+    }
+    
+    public String getStreetName(){
+        return this.streetName;
+    }
+    
+    public String getCity(){
+        return this.city;
+    }
+    
+    public String getState(){
+        return this.state;
+    }
+    
+    public String getPostcode(){
+        return this.postcode;
+    }
+    
+    public void setAddressID(int id){
+        this.addressID = id;
+    }
+    
+    public void setStreetName(String streetname) {
+        this.streetName = streetname;
+    }
+    
+    public void setCity(String city){
+        this.city = city;
+    }
+    
+    public void setState(String state){
+        this.state = state;
+    }
+    
+    public void setPostCode(String pcode) {
+        this.postcode = pcode;
     }
 }
