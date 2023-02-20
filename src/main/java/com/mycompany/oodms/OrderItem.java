@@ -14,7 +14,7 @@ public class OrderItem {
     private Product product;
     private Order order;
     
-    OrderItem(int quantity, double price, Product product, Order order){
+    public OrderItem(int quantity, double price, Product product, Order order){
         this.quantity = quantity;
         this.price = price;
         this.product = product;
@@ -32,5 +32,7 @@ public class OrderItem {
     public Product getProduct(){
         return this.product;
     }
-    
+     public Order getOrder(){
+         return this.order;
+     }
 }
