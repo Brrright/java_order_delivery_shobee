@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.Services;
 
+import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.Address;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.Delivery;
@@ -13,7 +14,6 @@ import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
-import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Order;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class DeliveryService {
             System.out.println(Arrays.toString(delivery_data));
             System.out.println(Arrays.toString(order_data));
             
-            return new Delivery(delivery_id, order, delivery_date_time,staff, status);
+            return new Delivery(delivery_id, order, delivery_date_time,staff, status, address_object);
     }
     
     public List<Delivery>getDeliveries(){
