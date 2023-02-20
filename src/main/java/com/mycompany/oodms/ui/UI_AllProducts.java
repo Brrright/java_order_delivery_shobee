@@ -1,5 +1,7 @@
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.ProductService;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,6 +20,9 @@ public class UI_AllProducts extends JPanel {
     JButton searchBtn;
     
     // ITEM OBJECT
+    ProductService product_service = new ProductService();
+    ArrayList<Product> product_list = product_service.getProducts();
+    
     ArrayList<ArrayList<String>> tempProduct = new ArrayList<>(); // should store object instead 
     ArrayList<String> tempProductContainer = new ArrayList<>();
     JButton[] products;
@@ -96,8 +101,8 @@ public class UI_AllProducts extends JPanel {
         loopCount = 2;
         tempProductGenerator(loopCount); // temp product generator
         
-        products = new JButton[tempProduct.size()];
-        for (int i = 0; i < tempProduct.size(); i++) {
+        products = new JButton[product_list.size()];
+        for (int i = 0; i < product_list.size(); i++) {
            
             products[i] = new JButton();
             
