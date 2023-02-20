@@ -24,6 +24,10 @@ public class Main_Frame extends JFrame{
         this.setResizable(false);
         this.setLayout(new BorderLayout());
         this.getContentPane().setBackground(new Color(255, 255, 255));
+         
+        // center jFrame
+        this.setLocationRelativeTo(null);
+        
         
         this.add(panel,BorderLayout.CENTER);
         
@@ -39,6 +43,7 @@ public class Main_Frame extends JFrame{
         //  Refresh the JFrame to reflect the changes
         this.revalidate();
         this.repaint();
+        
         
         this.add(new_panel);
         this.setVisible(true);
