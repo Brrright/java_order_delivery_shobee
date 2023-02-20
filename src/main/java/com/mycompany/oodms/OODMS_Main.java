@@ -17,10 +17,7 @@ public class OODMS_Main {
      public void initialize(){
         // setup Records (fetch necessary record first) NOT USER RELATED DATA
         // setup UI screen
-        frame = new Main_Frame(new UI_Login());
-        
-//        Category cat = new Category(1, "hi");
-//         Product sampleProduct = new Product(1, "Fish",3.0, 2, "src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg", cat);
+        frame = new Main_Frame(new UI_MyOrder());
 //        frame = new Main_Frame(new UI_Product(sampleProduct));
 //        frame = new Main_Frame(new UI_OrderDetails());
 //        frame = new Main_Frame(new UI_AllProducts());
