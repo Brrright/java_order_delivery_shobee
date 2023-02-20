@@ -51,7 +51,7 @@ public class UI_OrderDetails extends JPanel{
     
     public UI_OrderDetails() { 
         // adding information (temp)
-        orderDetails.add("Packing");
+        orderDetails.add("Delivered");
         orderDetails.add("Shobee's warehouse");
         orderDetails.add("ORD001");
         orderDetails.add("23/1/2023");
@@ -97,14 +97,24 @@ public class UI_OrderDetails extends JPanel{
         orderReceivedBtn.setForeground(Color.WHITE);
         orderReceivedBtn.addActionListener(e -> {
             String feedback = JOptionPane.showInputDialog("Feedback on the delivery service :");
-            
+
             // have to read if user entered or not
-            if (!"".equals(feedback))
+            if (feedback == null || feedback.trim().isEmpty())
             {
-                orderReceivedBtn.setText(null);
-                orderReceivedBtn.setBounds(0,0,0,0);
-            }
+                System.out.print("user clicked cancel");
+            } 
+            else 
+            {
+
+                // have to read if user entered or not
+                if (!"".equals(feedback))
+                {
+                    orderReceivedBtn.setText(null);
+                    orderReceivedBtn.setBounds(0,0,0,0);
+                }
             
+            } 
+                
         });
         
         
