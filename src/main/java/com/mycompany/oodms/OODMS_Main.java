@@ -17,7 +17,8 @@ public class OODMS_Main {
      public void initialize(){
         // setup Records (fetch necessary record first) NOT USER RELATED DATA
         // setup UI screen
-        frame = new Main_Frame(new UI_MyOrder());
+        frame = new Main_Frame(new UI_Login());
+//        frame = new Main_Frame(new UI_MyOrder());
 //        frame = new Main_Frame(new UI_Product(sampleProduct));
 //        frame = new Main_Frame(new UI_OrderDetails());
 //        frame = new Main_Frame(new UI_AllProducts());
