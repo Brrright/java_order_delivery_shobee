@@ -9,6 +9,7 @@ import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.OODMS_Main;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  * @author mingl
  */
 public class AddressService {
-    private List<Address> addresses;
+    private ArrayList<Address> addresses;
     
     public AddressService(){
         FileHandler address_file = new FileHandler(FileName.MEMBER_ADDRESS);
@@ -36,7 +37,7 @@ public class AddressService {
         return new Address(r.getID(), address_data[1], address_data[2], address_data[3], address_data[4]);
     }
     
-    public List<Address> getAddresses() {
+    public ArrayList<Address> getAddresses() {
         return this.addresses;
     }
     

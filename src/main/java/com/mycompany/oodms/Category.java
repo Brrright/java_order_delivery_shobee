@@ -14,7 +14,7 @@ import java.util.List;
 public class Category {
     private int categoryID;
     private String categoryName;
-    private List<Product> products;
+    private ArrayList<Product> products;
     
     public Category(int id,String name){
         this.categoryID = id;
@@ -30,7 +30,7 @@ public class Category {
         return this.categoryName;
     }
     
-    public List<Product> getProducts(){
+    public ArrayList<Product> getProducts(){
         return this.products;
     }
     
@@ -42,7 +42,7 @@ public class Category {
         this.categoryName = name;
     }
     
-    public void setProducts(List<Product> products) {
+    public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
 

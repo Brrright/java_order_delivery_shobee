@@ -6,6 +6,7 @@ package com.mycompany.oodms;
 
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,8 +24,8 @@ public class Order {
     private Member customer;
     private Address address;
     
-    private List<OrderItem> orderItems;
-    private List<Delivery> deliveries;
+    private ArrayList<OrderItem> orderItems;
+    private ArrayList<Delivery> deliveries;
     
     public Order(int orderID, LocalDateTime date_time, double totalPrice, double paid, double change, Member customer, Address address){
         this.orderID = orderID;

@@ -9,6 +9,7 @@ import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.Member;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  * @author mingl
  */
 public class MemberService {
-    private List<Member> members;
+    private ArrayList<Member> members;
     
     public MemberService(){
         FileHandler member_file = new FileHandler(FileName.MEMBER);
@@ -44,7 +45,7 @@ public class MemberService {
         return new Member(member_id, member_name, member_email, member_password, member_age, member_gender, member_phone_num, member_picture);
     }
     
-    public List<Member> getMembers(){
+    public ArrayList<Member> getMembers(){
         return this.members;
     }
     

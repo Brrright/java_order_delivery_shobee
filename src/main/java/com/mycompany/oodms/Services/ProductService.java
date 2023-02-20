@@ -48,7 +48,7 @@ public class ProductService {
             return new Product(product_id, product_name, product_price, product_stock, product_picture, category);
     }
     
-    public List<Product> getProducts(){
+    public ArrayList<Product> getProducts(){
         return this.products;
     }
     

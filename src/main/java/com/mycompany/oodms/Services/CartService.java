@@ -8,6 +8,7 @@ import com.mycompany.oodms.Cart;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
@@ -16,7 +17,7 @@ import java.util.Iterator;
  * @author mingl
  */
 public class CartService { //might no use le, since 1 person 1 cart, no place for us to show all cart oso, but CART ITEM SERVICE IS NEEDED
-    private List<Cart> carts;
+    private ArrayList<Cart> carts;
     
     public CartService(){
         FileHandler cart_file = new FileHandler(FileName.CART);
@@ -38,7 +39,7 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
         
     }
     
-     public List<Cart> getCarts() {
+     public ArrayList<Cart> getCarts() {
         return carts;
     }
 

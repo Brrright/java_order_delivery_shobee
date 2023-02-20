@@ -4,7 +4,7 @@
  */
 package com.mycompany.oodms;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Cart {
     private String cartID;
-    private List<Product> products;
+    private ArrayList<Product> products;
     
     Cart(String id, Product product){
         this.cartID = id;
@@ -24,7 +24,7 @@ public class Cart {
         return this.cartID;
     }
     
-    public List<Product> getCartProducts(){
+    public ArrayList<Product> getCartProducts(){
         return this.products;
     }
 }

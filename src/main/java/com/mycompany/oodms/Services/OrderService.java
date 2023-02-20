@@ -11,6 +11,7 @@ import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Order;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
  * @author mingl
  */
 public class OrderService {
-     private List<Order> orders;
+     private ArrayList<Order> orders;
 
     public OrderService() {
         FileHandler order_file = new FileHandler(FileName.ORDER);
@@ -55,7 +56,7 @@ public class OrderService {
             return new Order(order_id, order_date_time, order_total_price, order_paid, order_change,member_object, address_object);
     }
     
-    public List<Order> getOrders() {
+    public ArrayList<Order> getOrders() {
         return orders;
     }
     

@@ -4,15 +4,15 @@
  */
 package com.mycompany.oodms;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author mingl
  */
 public class Member extends User {
-    private List<Order> orders;
-    private List<Cart> carts;
+    private ArrayList<Order> orders;
+    private ArrayList<Cart> carts;
     
     public Member(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
         super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath);
