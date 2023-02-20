@@ -4,10 +4,12 @@
  */
 package com.mycompany.oodms.Services;
 
+import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.Cart;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
+import com.mycompany.oodms.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -36,7 +38,12 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
         
         // Cart data
         int cart_id = r.getID();
+        int member_id= Integer.parseInt(cart_data[1]);
         
+        MemberService member_service = new MemberService();
+        Member member_object = member_service.getMember(member_id);
+        
+        return new Cart(cart_id, member_object);
     }
     
      public ArrayList<Cart> getCarts() {
@@ -45,7 +52,7 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
 
     public Cart getOrder(String orderId) {
         for (Cart cart : carts) {
-            if (cart.getCartID().equals(orderId)) {
+            if (Integer.toString(cart.getCartID()).equals(orderId)) {
                 return cart;
             }
         }
@@ -58,7 +65,7 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
 
     public void updateOrder(Cart cart) {
         for (int i = 0; i < carts.size(); i++) {
-            if (carts.get(i).getCartID().equals(cart.getCartID())) {
+            if (Integer.toString(cart.getCartID()).equals(cart.getCartID())) {
                 carts.set(i, cart);
                 break;
             }
@@ -69,7 +76,7 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
         Iterator<Cart> iterator = carts.iterator();
         while (iterator.hasNext()) {
             Cart order = iterator.next();
-            if (order.getCartID().equals(orderId)) {
+            if (Integer.toString(order.getCartID()).equals(orderId)) {
                 iterator.remove();
                 break;
             }
