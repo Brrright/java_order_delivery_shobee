@@ -81,7 +81,7 @@ public class UI_Login extends JPanel {
         signup.setBounds(722,550,112,49);
         signup.setFocusable(false);
         signup.addActionListener(e -> {
-            frame.replacePanel(new UI_Header());
+            frame.replacePanel(new UI_Signup());
         });
 
         // JButton - Login
@@ -119,7 +119,6 @@ public class UI_Login extends JPanel {
         rightContainer = new JPanel();
         rightContainer.setBounds(863, 0, 711, 766);
         rightContainer.setLayout(null);
-
 
 
         // ------------------------------ this.JPanel ------------------------------ //
