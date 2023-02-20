@@ -61,10 +61,10 @@ public class OrderService {
         return orders;
     }
     
-    public Order getOrder(String orderId) {
+    public Order getOrder(int orderId) {
         for (Order order : orders) {
-            String orderID = Integer.toString(order.getOrderID());
-            if (orderID.equals(orderId)) {
+            int orderID = order.getOrderID();
+            if (orderID == orderId) {
                 return order;
             }
         }
