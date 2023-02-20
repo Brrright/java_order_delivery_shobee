@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class ProductService {
     private ArrayList<Product> products;
-    
+    FileHandler product_file = new FileHandler(FileName.PRODUCT);
+
     public ProductService(){
-        FileHandler product_file = new FileHandler(FileName.PRODUCT);
         List<FileRecord> product_records = product_file.FetchRecord();
         product_records.forEach((record) -> {
             Product product_object = convertToObject(record);
@@ -48,6 +48,11 @@ public class ProductService {
             return new Product(product_id, product_name, product_price, product_stock, product_picture, category);
     }
     
+    private FileRecord convertToFileRecord(Product product){
+        String product_record_string = product.getProductID() + ";" + product.getProductName() + ";" + product.getProductPrice() + ";" + product.getStockQty() + ";" + product.getProcuctPicture() + ";" + product.getCategory().getCategoryID();
+        return new FileRecord(product.getProductID(), product_record_string);
+    }
+    
     public ArrayList<Product> getProducts(){
         return this.products;
     }
@@ -64,5 +69,32 @@ public class ProductService {
             System.out.println("not such record in this \"products\".  FIND A WAY TO HANDLE**");
         }
         return response;
+    }
+    
+    public void addProduct(Product product) {
+        this.products.add(product);
+        FileRecord product_record = convertToFileRecord(product);
+        product_file.InsertRecord(product_record);
+    }
+    
+    public void updateProduct(Product product){
+        for(int i=0; i < products.size(); i++){
+            if(products.get(i).getProductID() == product.getProductID()){
+                products.set(i, product);
+                FileRecord product_record = convertToFileRecord(product);
+                product_file.UpdateRecord(product_record);
+                break;
+            }
+        }
+    }
+    
+    public void deleteProduct(Product product){
+        for(int i = 0; i < products.size(); i++){
+            if(products.get(i).getProductID() == product.getProductID()){
+                products.remove(products.get(i));
+                FileRecord product_record = convertToFileRecord(product);
+                product_file.DeleteRecord(product_record);
+            }
+        }
     }
 }
