@@ -14,8 +14,8 @@ public class UI_Login extends JPanel {
 
     // left component //
     // image for shop btn
-    ImageIcon productPage = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/shopbtn.png");
-    JLabel left;
+    ImageIcon productPage = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/logo.png");
+    JButton left;
     JPanel leftContainer;
 
     // right component //
@@ -36,14 +36,30 @@ public class UI_Login extends JPanel {
     public UI_Login() {
         // ------------------------------ LEFT ------------------------------ //
         // JLabel - left
-        left = new JLabel(productPage);
-        left.setBackground(new Color(255, 165, 127));
-        left.setOpaque(true);
+        left = new JButton(productPage);
+        left.setText("View Prodoct");
+        left.setFont(new Font("MV Boli",Font.BOLD,17));
+        left.setForeground(Color.WHITE);
+        left.setHorizontalAlignment(JLabel.CENTER);
+        left.setHorizontalAlignment(JLabel.CENTER);
+        left.setHorizontalTextPosition(JLabel.CENTER);
+        left.setVerticalTextPosition(JLabel.BOTTOM);
+        left.setOpaque(false);
+        left.setBorder(BorderFactory.createEmptyBorder());
+        left.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        left.setBounds(74,230,221,270);
+        left.setIconTextGap(17);
+        left.addActionListener(e -> {
+            frame.replacePanel(new UI_AllProducts());
+        });
+
 
         // JPanel - left component
         leftContainer = new JPanel();
         leftContainer.setBounds(0, 0, 367, 768);
-        leftContainer.setLayout(new BorderLayout());
+        leftContainer.setLayout(null);
+        leftContainer.setBackground(new Color(255, 151, 98, 255));
+        leftContainer.setOpaque(true);
         leftContainer.add(left);
 
         // ------------------------------ RIGHT ------------------------------ //
@@ -52,11 +68,10 @@ public class UI_Login extends JPanel {
         heading.setFont(new Font("MV Boli",Font.BOLD,45));
         heading.setBounds(478, 155, 136, 61);
 
-        // JLabel - small heading
+        // JLabel - user role combobox 
         JComboBox userRoleComboBox = new JComboBox(user_roles);
-        userRoleComboBox.setFont(new Font("MV Boli",Font.PLAIN,17));
-        userRoleComboBox.setForeground(new Color(255, 151, 98, 124));
-        userRoleComboBox.setBounds(478, 222, 105, 22);
+        userRoleComboBox.setFont(new Font("MV Boli",Font.PLAIN,13));
+        userRoleComboBox.setBounds(473, 230, 200, 25);
 
         // JLabel - email
         emailLabel = new JLabel("Email :");
