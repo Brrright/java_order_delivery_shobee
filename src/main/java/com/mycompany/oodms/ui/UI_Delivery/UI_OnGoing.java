@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.ui.UI_Delivery;
 
+import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -36,8 +37,9 @@ public class UI_OnGoing extends JPanel{
     JButton upComingPage;
     JButton onGoingPage;
     JButton completedPage;
-    JButton delete;
-    JButton checkout;
+    JButton orderDelivered;
+    
+    boolean isSelected = false;
     
     public UI_OnGoing() {
         
@@ -77,8 +79,11 @@ public class UI_OnGoing extends JPanel{
         upComingPage.setBounds(563,135,90,90);
         upComingPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         upComingPage.setForeground(Color.GRAY);
+        upComingPage.addActionListener(e -> {
+                frame.replacePanel(new UI_UpComing());
+        });
         
-        // JButton - completed (direct to upcoming page)
+        // JButton - on going (direct to upcoming page)
         onGoingPage = new JButton("on going");
         onGoingPage.setIcon(orangeCircle);
         onGoingPage.setBorder(BorderFactory.createEmptyBorder());
@@ -89,7 +94,7 @@ public class UI_OnGoing extends JPanel{
         onGoingPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         onGoingPage.setForeground(Color.WHITE);
         
-        // JButton - upComingPage (direct to upcoming page)
+        // JButton - completed (direct to upcoming page)
         completedPage = new JButton("completed");
         completedPage.setIcon(grayCircle2);
         completedPage.setBorder(BorderFactory.createEmptyBorder());
@@ -99,6 +104,9 @@ public class UI_OnGoing extends JPanel{
         completedPage.setBounds(803,135,90,90);
         completedPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         completedPage.setForeground(Color.GRAY);
+        completedPage.addActionListener(e -> {
+                frame.replacePanel(new UI_Completed());
+        });
         
         
         
@@ -121,6 +129,14 @@ public class UI_OnGoing extends JPanel{
                     default:
                         return String.class;
                 }
+            }
+            
+            // to make JTable uneditable accept the checkbox
+            @Override 
+            public boolean isCellEditable(int row, int column) 
+            {
+                // Make column other than checkbox read-only
+                return column == 0;
             }
         };
         
@@ -164,72 +180,38 @@ public class UI_OnGoing extends JPanel{
         scrollPane.setBounds(193,245,700,290);
         
         
-                
-        // JButton - delete
-        delete = new JButton("Remove");
-        delete.setBorder(BorderFactory.createEmptyBorder());
-        delete.setHorizontalTextPosition(JLabel.CENTER);
-        delete.setVerticalTextPosition(JLabel.CENTER);
-        delete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        delete.setBackground(new Color(255, 151, 98, 255));
-        delete.setOpaque(true);
-        delete.setBounds(655,545,115,45);
-        delete.setFont(new Font("MV Boli",Font.PLAIN,12));
-        delete.setForeground(Color.WHITE);
-        delete.addActionListener(e -> {
-            int removeConfirmation = JOptionPane.showOptionDialog(null, "Confirm to remove selected product?", "Confirmation",
-            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-
-            if (removeConfirmation == JOptionPane.OK_OPTION) {
-                // User clicked the "OK" button
-                // get the selected product
-                
-                for (int i = 0; i < cart.getRowCount(); i++)
-                {
-                    if ((boolean)cart.getValueAt(i, 0) == true)
-                    {
-                        System.out.print(cart.getValueAt(i, 1) + " is ture");
-                    }
-                }
-                
-                // remove selected product and update to the txt file
-                // remove cart panel and redirect to the same panel with updated cart
-                
-                System.out.println("item removed");
-            }
-
-        });
         
-        
-        // JButton - Checkout
-        checkout = new JButton("Checkout");
-        checkout.setBorder(BorderFactory.createEmptyBorder());
-        checkout.setHorizontalTextPosition(JLabel.CENTER);
-        checkout.setVerticalTextPosition(JLabel.CENTER);
-        checkout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        checkout.setBackground(new Color(255, 151, 98, 255));
-        checkout.setOpaque(true);
-        checkout.setBounds(778,545,115,45);
-        checkout.setFont(new Font("MV Boli",Font.PLAIN,12));
-        checkout.setForeground(Color.WHITE);
-        checkout.addActionListener(e -> {
+        // JButton - order delivered
+        orderDelivered = new JButton("Delivered");
+        orderDelivered.setBorder(BorderFactory.createEmptyBorder());
+        orderDelivered.setHorizontalTextPosition(JLabel.CENTER);
+        orderDelivered.setVerticalTextPosition(JLabel.CENTER);
+        orderDelivered.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        orderDelivered.setBackground(new Color(255, 151, 98, 255));
+        orderDelivered.setOpaque(true);
+        orderDelivered.setBounds(778,545,115,45);
+        orderDelivered.setFont(new Font("MV Boli",Font.PLAIN,12));
+        orderDelivered.setForeground(Color.WHITE);
+        orderDelivered.addActionListener(e -> {
             
-            // checkout confirmation
-            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to checkout?", "Confirmation",
+            // deliver product confirmation
+            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to deliver?", "Confirmation",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             if (checkoutConfirmation == JOptionPane.OK_OPTION) {
+                
                 // User clicked the "OK" button
                 for (int i = 0; i < cart.getRowCount(); i++)
                 {
                     if ((boolean)cart.getValueAt(i, 0) == true)
                     {
-                        System.out.print(cart.getValueAt(i, 1) + " is ture");
+                        System.out.println(cart.getValueAt(i, 1) + " is true");
                     }
                 }
-                // get the selected product
-                //direct to checkout page
-                System.out.println("go to checkout page");
+                
+                // if something is picked (get the size of arraylist of what)
+                
+                
             }
 
         });
@@ -248,8 +230,7 @@ public class UI_OnGoing extends JPanel{
         this.add(completedPage);
         
         this.add(scrollPane);
-        this.add(delete);
-        this.add(checkout);
+        this.add(orderDelivered);
         
     }
     
