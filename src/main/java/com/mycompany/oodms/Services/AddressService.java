@@ -8,6 +8,8 @@ import com.mycompany.oodms.Address;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
+import com.mycompany.oodms.Member;
+import com.mycompany.oodms.Services.User.MemberService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +19,9 @@ import java.util.List;
  */
 public class AddressService {
     private ArrayList<Address> addresses;
+    FileHandler address_file = new FileHandler(FileName.MEMBER_ADDRESS);
     
     public AddressService(){
-        FileHandler address_file = new FileHandler(FileName.MEMBER_ADDRESS);
         List<FileRecord> address_record = address_file.FetchRecord();
         address_record.forEach((record) -> {
             Address order_object = convertToObject(record);
@@ -32,8 +34,14 @@ public class AddressService {
         if (address_data.length == 0){
             return null;
         }
-        
-        return new Address(r.getID(), address_data[1], address_data[2], address_data[3], address_data[4]);
+        MemberService member_service = new MemberService();
+        Member member = member_service.getMember(Integer.valueOf(address_data[5]));
+        return new Address(r.getID(), address_data[1], address_data[2], address_data[3], address_data[4], member);
+    }
+    
+    private FileRecord convertToFileRecord(Address address) {
+        String address_record_string = address.getAddressID()+ ";" + address.getStreetName() + ";" + address.getCity() + ";" + address.getState() + ";" + address.getPostcode() + ";" + address.getMember().getID();
+         return new FileRecord(address.getAddressID(), address_record_string);
     }
     
     public ArrayList<Address> getAddresses() {
@@ -52,5 +60,33 @@ public class AddressService {
             System.out.println("not such record in this \"addresses\".  FIND A WAY TO HANDLE**");
         }
         return response;
+    }
+    
+      public void addAddress(Address address){
+        this.addresses.add(address);
+        FileRecord address_record = convertToFileRecord(address);
+        address_file.InsertRecord(address_record);
+    }
+      
+      public void updateAddress(Address address){
+        for(int i=0; i < addresses.size(); i++){
+            if(addresses.get(i).getAddressID()== address.getAddressID()){
+                addresses.set(i, address);
+                FileRecord address_record = convertToFileRecord(address);
+                address_file.UpdateRecord(address_record);
+                break;
+            }
+        }
+    }
+      
+      public void deleteAddress(Address address){
+        for(int i=0; i < addresses.size(); i++){
+            if(addresses.get(i).getAddressID()== address.getAddressID()){
+                addresses.remove(addresses.get(i));
+                FileRecord address_record = convertToFileRecord(address);
+                address_file.DeleteRecord(address_record);
+                break;
+            }
+        }
     }
 }
