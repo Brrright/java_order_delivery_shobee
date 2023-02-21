@@ -5,6 +5,8 @@
 package com.mycompany.oodms;
 
 import com.mycompany.oodms.ui.*;
+import com.mycompany.oodms.ui.UI_Admin.*;
+import com.mycompany.oodms.ui.UI_Delivery.*;
 
 /**
  *
@@ -17,11 +19,37 @@ public class OODMS_Main {
      public void initialize(){
         // setup Records (fetch necessary record first) NOT USER RELATED DATA
         // setup UI screen
-        frame = new Main_Frame(new UI_Login());
-//        frame = new Main_Frame(new UI_MyOrder());
-//        frame = new Main_Frame(new UI_Product(sampleProduct));
-//        frame = new Main_Frame(new UI_OrderDetails());
+        
+
+        // Customer interface
+        // unregistered
+//        frame = new Main_Frame(new UI_Login());
+//        frame = new Main_Frame(new UI_Signup());
 //        frame = new Main_Frame(new UI_AllProducts());
+//        frame = new Main_Frame(new UI_Product(sampleProduct));
+
+        // registered
+//        frame = new Main_Frame(new UI_Profile());
+//        frame = new Main_Frame(new UI_MyOrder());
+//        frame = new Main_Frame(new UI_OrderDetails());
+//        frame = new Main_Frame(new UI_Cart());
+//        frame = new Main_Frame(new UI_Payment());
+
+
+        // Delivery interface
+//        frame = new Main_Frame(new UI_UpComing());
+//        frame = new Main_Frame(new UI_OnGoing());
+//        frame = new Main_Frame(new UI_Completed());
+
+
+        // Admin interface
+//        frame = new Main_Frame(new UI_AdminMain());
+//        frame = new Main_Frame(new UI_UserManagement());        
+//        frame = new Main_Frame(new UI_UserManagementProfile());        
+        frame = new Main_Frame(new UI_UserManagementProfileEdit());        
+//        frame = new Main_Frame(new UI_CategoryManagement());        
+
+
     }
     
     public static void main(String[] args) {
