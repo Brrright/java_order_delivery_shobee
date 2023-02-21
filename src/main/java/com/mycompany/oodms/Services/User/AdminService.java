@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class AdminService {
     private ArrayList<Admin> admins;
+    FileHandler admin_file = new FileHandler(FileName.ADMIN);
     
     public AdminService(){
-        FileHandler admin_file = new FileHandler(FileName.ADMIN);
         List<FileRecord> admin_records = admin_file.FetchRecord();
         admin_records.forEach((record) -> {
             Admin admin_object = convertToObject(record);
@@ -45,6 +45,11 @@ public class AdminService {
         return new Admin(admin_id, admin_name, admin_email, admin_password, admin_age, admin_gender, admin_phone_num, admin_picture);
     }
     
+    private FileRecord convertToFileRecord(Admin admin){
+         String admin_record_string = admin.getID() + ";" + admin.getName()+ ";" + admin.getEmail() + ";" + admin.getPassword()+ ";" + admin.getAge() + ";" +admin.getGender() + ";" + admin.getPhoneNum() + ";" + admin.getPicturePath();
+         return new FileRecord(admin.getID(), admin_record_string);
+    }
+    
     public ArrayList<Admin> getAdmins(){
         return this.admins;
     }
@@ -61,5 +66,33 @@ public class AdminService {
             System.out.println("not such record in this \"admins\".  FIND A WAY TO HANDLE**");
         }
         return response;
+    }
+    
+    public void addAdmin(Admin admin){
+        this.admins.add(admin);
+        FileRecord admin_record = convertToFileRecord(admin);
+        admin_file.InsertRecord(admin_record);
+    }
+    
+    public void updateAdmin(Admin admin){
+        for(int i=0; i < admins.size(); i++){
+            if(admins.get(i).getID()== admin.getID()){
+                admins.set(i, admin);
+                FileRecord admin_record = convertToFileRecord(admin);
+                admin_file.UpdateRecord(admin_record);
+                break;
+            }
+        }
+    }
+    
+    public void deleteAdmin(Admin admin) {
+         for(int i=0; i < admins.size(); i++){
+            if(admins.get(i).getID()== admin.getID()){
+                admins.remove(admins.get(i));
+                FileRecord admin_record = convertToFileRecord(admin);
+                admin_file.DeleteRecord(admin_record);
+                break;
+            }
+        }
     }
 }

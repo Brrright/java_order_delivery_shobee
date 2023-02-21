@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class DeliveryStaffService {
     private ArrayList<DeliveryStaff> delivery_staffs;
+    FileHandler staff_file = new FileHandler(FileName.DELIVERY_STAFF);
     
     public DeliveryStaffService(){
-        FileHandler staff_file = new FileHandler(FileName.DELIVERY_STAFF);
         List<FileRecord> staff_records = staff_file.FetchRecord();
         staff_records.forEach((record) -> {
             DeliveryStaff staff_object = convertToObject(record);
@@ -45,6 +45,11 @@ public class DeliveryStaffService {
         return new DeliveryStaff(staff_id, staff_name, staff_email, staff_password, staff_age, staff_gender, staff_phone_num, staff_picture);
     }
     
+    private FileRecord convertToFileRecord(DeliveryStaff staff){
+         String staff_record_string = staff.getID() + ";" + staff.getName()+ ";" + staff.getEmail() + ";" + staff.getPassword()+ ";" + staff.getAge() + ";" +staff.getGender() + ";" + staff.getPhoneNum() + ";" + staff.getPicturePath();
+         return new FileRecord(staff.getID(), staff_record_string);
+    }
+    
     public ArrayList<DeliveryStaff> getStaffs(){
         return this.delivery_staffs;
     }
@@ -61,5 +66,33 @@ public class DeliveryStaffService {
             System.out.println("not such record in this \"delivery_staffs\".  FIND A WAY TO HANDLE**");
         }
         return response;
+    }
+    
+    public void addStaff(DeliveryStaff staff){
+        this.delivery_staffs.add(staff);
+        FileRecord staff_record = convertToFileRecord(staff);
+        staff_file.InsertRecord(staff_record);
+    }
+    
+    public void updateStaff(DeliveryStaff staff){
+        for(int i=0; i < delivery_staffs.size(); i++){
+            if(delivery_staffs.get(i).getID()== staff.getID()){
+                delivery_staffs.set(i, staff);
+                FileRecord staff_record = convertToFileRecord(staff);
+                staff_file.UpdateRecord(staff_record);
+                break;
+            }
+        }
+    }
+    
+    public void deleteStaff(DeliveryStaff staff) {
+         for(int i=0; i < delivery_staffs.size(); i++){
+            if(delivery_staffs.get(i).getID()== staff.getID()){
+                delivery_staffs.remove(delivery_staffs.get(i));
+                FileRecord staff_record = convertToFileRecord(staff);
+                staff_file.DeleteRecord(staff_record);
+                break;
+            }
+        }
     }
 }

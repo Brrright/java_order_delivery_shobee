@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class MemberService {
     private ArrayList<Member> members;
+    FileHandler member_file = new FileHandler(FileName.MEMBER);
     
     public MemberService(){
-        FileHandler member_file = new FileHandler(FileName.MEMBER);
         List<FileRecord> member_records = member_file.FetchRecord();
         member_records.forEach((record) -> {
             Member member_object = convertToObject(record);
@@ -45,6 +45,11 @@ public class MemberService {
         return new Member(member_id, member_name, member_email, member_password, member_age, member_gender, member_phone_num, member_picture);
     }
     
+    private FileRecord convertToFileRecord(Member member){
+         String member_record_string = member.getID() + ";" + member.getName()+ ";" + member.getEmail() + ";" + member.getPassword()+ ";" + member.getAge() + ";" +member.getGender() + ";" + member.getPhoneNum() + ";" + member.getPicturePath();
+         return new FileRecord(member.getID(), member_record_string);
+    }
+    
     public ArrayList<Member> getMembers(){
         return this.members;
     }
@@ -61,5 +66,33 @@ public class MemberService {
             System.out.println("not such record in this \"members\".  FIND A WAY TO HANDLE**");
         }
         return response;
+    }
+    
+    public void addMember(Member member){
+        this.members.add(member);
+        FileRecord member_record = convertToFileRecord(member);
+        member_file.InsertRecord(member_record);
+    }
+    
+    public void updateMember(Member member){
+        for(int i=0; i < members.size(); i++){
+            if(members.get(i).getID()== member.getID()){
+                members.set(i, member);
+                FileRecord member_record = convertToFileRecord(member);
+                member_file.UpdateRecord(member_record);
+                break;
+            }
+        }
+    }
+    
+    public void deleteMember(Member member) {
+         for(int i=0; i < members.size(); i++){
+            if(members.get(i).getID()== member.getID()){
+                members.remove(members.get(i));
+                FileRecord member_record = convertToFileRecord(member);
+                member_file.DeleteRecord(member_record);
+                break;
+            }
+        }
     }
 }
