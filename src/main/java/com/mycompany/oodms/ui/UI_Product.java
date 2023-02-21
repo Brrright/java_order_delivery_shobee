@@ -18,7 +18,6 @@ public class UI_Product extends JPanel {
     JLabel stocks;
     JLabel price;
     JButton addToCartBtn;
-    JButton ratings;
 
     public UI_Product(Product product){
         // REQUIRED DATA
@@ -100,15 +99,6 @@ public class UI_Product extends JPanel {
             frame.replacePanel(new UI_Profile());
         });
 
-        
-        // JButton - show reviews
-        ratings = new JButton("Show Reviews");
-        ratings.setFont(new Font("MV Boli",Font.PLAIN,10));
-        ratings.setForeground(new Color(243, 143, 93, 255));
-        ratings.setBounds(826,620,95,11);
-        ratings.setBorder(BorderFactory.createEmptyBorder());
-        ratings.setFocusable(false);
-        ratings.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
         // ------------------------------ this main JPanel ------------------------------ //
@@ -124,6 +114,5 @@ public class UI_Product extends JPanel {
         this.add(stocks);
         this.add(price);
         this.add(addToCartBtn);
-        this.add(ratings);
     }
 }
