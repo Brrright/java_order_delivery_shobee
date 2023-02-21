@@ -18,7 +18,6 @@ import com.mycompany.oodms.Order;
 import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,6 +47,7 @@ public class DeliveryService {
         int delivery_id  = d.getID();
         LocalDateTime delivery_date_time = LocalDateTime.parse(delivery_data[2]);
         DeliveryStatus status = DeliveryStatus.valueOf(delivery_data[1]);
+        int address_id = Integer.parseInt(delivery_data[3]);
         int staff_id = Integer.parseInt(delivery_data[4]);
         int member_id = Integer.parseInt(delivery_data[5]);
         int order_id = Integer.parseInt(delivery_data[6]);
@@ -88,5 +88,33 @@ public class DeliveryService {
             System.out.println("not such record in this \"deliveries\".  FIND A WAY TO HANDLE**");
         }
         return response;
+    }
+    
+    public void addDelivery(Delivery delivery) {
+        deliveries.add(delivery);
+        FileRecord dellivery_record = convertToFileRecord(delivery);
+        delivery_file.InsertRecord(dellivery_record);
+    }
+    
+    public void updateDelivery(Delivery delivery) {
+        for (int i = 0; i < deliveries.size(); i++) {
+            if (deliveries.get(i).getDeliveryID()== delivery.getDeliveryID()) {
+                deliveries.set(i, delivery);
+                FileRecord delivery_record = convertToFileRecord(delivery);
+                delivery_file.UpdateRecord(delivery_record);
+                break;
+            }
+        }
+    }
+
+    public void deleteDelivery(Delivery delivery) {
+        for (int i = 0; i < deliveries.size(); i++) {
+            if (deliveries.get(i).getDeliveryID()== delivery.getDeliveryID()) {
+                deliveries.remove(deliveries.get(i));
+                FileRecord delivery_record = convertToFileRecord(delivery);
+                delivery_file.DeleteRecord(delivery_record);
+                break;
+            }
+        }
     }
 }
