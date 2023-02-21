@@ -37,9 +37,13 @@ public class Cart {
         return totalPrice;
     }
     
-     public void addItem(CartItem item) {
-        cart_items.add(item);
+    public Member getMember(){
+        return this.member;
     }
+    
+//     public void addItem(CartItem item) {
+//        cart_items.add(item);
+//    }
      
 //     public void removeItem(CartItem item) {
 //        cart_items.remove(item);
