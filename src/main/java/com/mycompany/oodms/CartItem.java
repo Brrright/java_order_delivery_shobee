@@ -12,12 +12,14 @@ package com.mycompany.oodms;
 public class CartItem {
     Member member;
     Product product;
+    Cart cart;
     int quantity;
     
-    public CartItem(Member member, Product product, int qty){
+    public CartItem(Cart cart, Member member, Product product, int qty){
         this.member = member;
         this.product = product;
         this.quantity = qty;
+        this.cart = cart;
     }
     
     public Member getMember(){
@@ -27,6 +29,11 @@ public class CartItem {
     public Product getProduct(){
         return this.product;
     }
+    
+    public Cart getCart(){
+        return this.cart;
+    }
+    
     public int getQuantity(){
         return this.quantity;
     }
@@ -45,5 +52,9 @@ public class CartItem {
     
     public void setQuantity(int qty) {
         this.quantity = qty;
+    }
+    
+    public void setCart(Cart cart){
+        this.cart = cart;
     }
 }
