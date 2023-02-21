@@ -34,7 +34,7 @@ public class CategoryService {
     
     private FileRecord convertToFileRecord(Category cate){
          String category_record_string = cate.getCategoryID() + ";" + cate.getCategoryName();
-         return new FileRecord(1, category_record_string);
+         return new FileRecord(cate.getCategoryID(), category_record_string);
     }
     
     public List<Category> getCategories(){
@@ -50,6 +50,7 @@ public class CategoryService {
                 break;
             }
         }
+        
          if(response == null){
             System.out.println("not such record in this \"categories\".  FIND A WAY TO HANDLE**");
         }
