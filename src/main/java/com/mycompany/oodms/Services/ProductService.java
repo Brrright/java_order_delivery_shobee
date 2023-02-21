@@ -94,6 +94,7 @@ public class ProductService {
                 products.remove(products.get(i));
                 FileRecord product_record = convertToFileRecord(product);
                 product_file.DeleteRecord(product_record);
+                break;
             }
         }
     }
