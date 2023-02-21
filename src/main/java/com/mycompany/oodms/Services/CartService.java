@@ -21,9 +21,9 @@ import java.util.Iterator;
  */
 public class CartService { //might no use le, since 1 person 1 cart, no place for us to show all cart oso, but CART ITEM SERVICE IS NEEDED
     private ArrayList<Cart> carts;
+    FileHandler cart_file = new FileHandler(FileName.CART);
     
     public CartService(){
-        FileHandler cart_file = new FileHandler(FileName.CART);
         List<FileRecord> order_records = cart_file.FetchRecord();
         order_records.forEach((record) -> {
             Cart cart_object = convertToObject(record);
@@ -46,40 +46,54 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
         
         return new Cart(cart_id, member_object);
     }
-     
-     public ArrayList<CartItem> getCartItems(Cart cart){
-          CartItemService cart_item_service = new CartItemService();
-            return cart_item_service.getCartItems(cart.getMember().getID());
-     }
-
-    public Cart getOrder(String orderId) {
-        for (Cart cart : carts) {
-            if (Integer.toString(cart.getCartID()).equals(orderId)) {
-                return cart;
-            }
-        }
-        return null;
-    }
     
-     public void addOrder(Cart cart) {
+      private FileRecord convertToFileRecord(Cart cart){
+         String cart_record_string = cart.getCartID() + ";" + cart.getMember().getID();
+         return new FileRecord(cart.getCartID(), cart_record_string);
+    }
+     
+      public ArrayList<CartItem> getCartItems(Cart cart){
+          CartItemService cart_item_service = new CartItemService();
+           return cart_item_service.getCartItems(cart.getMember().getID());
+     }
+      
+     public Cart getCart(int cartID){
+         Cart response = null;
+         for (int i = 0; i < carts.size(); i++) {
+             if(carts.get(i).getCartID() == cartID){
+                 response = carts.get(i);
+                 break;
+             }
+         }
+         if(response == null){
+            System.out.println("not such record in this \"carts\".  FIND A WAY TO HANDLE**");
+        }
+        return response;
+     }
+    
+     public void addCartRecord(Cart cart) {
         carts.add(cart);
+        FileRecord cart_record = convertToFileRecord(cart);
+        cart_file.InsertRecord(cart_record);
     }
 
-    public void updateOrder(Cart cart) {
+    public void updateCartRecord(Cart cart) {
         for (int i = 0; i < carts.size(); i++) {
-            if (Integer.toString(cart.getCartID()).equals(cart.getCartID())) {
+            if (carts.get(i).getCartID() == cart.getCartID()) {
                 carts.set(i, cart);
+                FileRecord cart_record = convertToFileRecord(cart);
+                cart_file.UpdateRecord(cart_record);
                 break;
             }
         }
     }
 
-    public void deleteOrder(String orderId) {
-        Iterator<Cart> iterator = carts.iterator();
-        while (iterator.hasNext()) {
-            Cart order = iterator.next();
-            if (Integer.toString(order.getCartID()).equals(orderId)) {
-                iterator.remove();
+    public void deleteCartRecord(Cart cart) {
+        for (int i = 0; i < carts.size(); i++) {
+            if (carts.get(i).getCartID() == cart.getCartID()) {
+                carts.set(i, cart);
+                FileRecord cart_record = convertToFileRecord(cart);
+                cart_file.DeleteRecord(cart_record);
                 break;
             }
         }
