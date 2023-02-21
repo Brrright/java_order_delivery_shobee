@@ -15,7 +15,6 @@ public class UI_AllProducts extends JPanel {
     
     // SEARCH AND FILTER OBJECTS
     JTextField searchBar;
-    String[] categoryList;
     JComboBox<String> categories;
     JButton searchBtn;
     
@@ -75,7 +74,7 @@ public class UI_AllProducts extends JPanel {
         
         
         // filter 
-        categories = new JComboBox<>(new String[] {"Option 1", "Option 2", "Option 3"});
+        categories = new JComboBox<>(new String[] {"Food and beverage", "Electronics", "Furnitures"});
         categories.setPreferredSize(new Dimension(150,45));
         
         
@@ -101,8 +100,8 @@ public class UI_AllProducts extends JPanel {
         loopCount = 2;
         tempProductGenerator(loopCount); // temp product generator
         
-        products = new JButton[product_list.size()];
-        for (int i = 0; i < product_list.size(); i++) {
+        products = new JButton[tempProduct.size()];
+        for (int i = 0; i < tempProduct.size(); i++) {
            
             products[i] = new JButton();
             
