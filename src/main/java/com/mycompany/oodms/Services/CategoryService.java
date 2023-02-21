@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class CategoryService {
     private ArrayList<Category> categories;
+    FileHandler category_file = new FileHandler(FileName.CATEGORY);
     
     public CategoryService(){
-        FileHandler category_file = new FileHandler(FileName.CATEGORY);
         List<FileRecord>  category_records = category_file.FetchRecord();
         category_records.forEach((c) -> {
             Category category_object = convertToObject(c);
@@ -30,6 +30,11 @@ public class CategoryService {
     private Category convertToObject(FileRecord r) {
         String[] category_data = r.getRecordList();
         return new Category(r.getID(), category_data[1]);
+    }
+    
+    private FileRecord convertToFileRecord(Category cate){
+         String category_record_string = cate.getCategoryID() + ";" + cate.getCategoryName();
+         return new FileRecord(1, category_record_string);
     }
     
     public List<Category> getCategories(){
@@ -49,5 +54,33 @@ public class CategoryService {
             System.out.println("not such record in this \"categories\".  FIND A WAY TO HANDLE**");
         }
         return response;
+    }
+    
+    public void addCategory(Category category){
+         this.categories.add(category);
+        FileRecord category_record = convertToFileRecord(category);
+        category_file.InsertRecord(category_record);
+    }
+    
+    public void updateCategory(Category category){
+        for(int i=0; i < categories.size(); i++){
+            if(categories.get(i).getCategoryID()== category.getCategoryID()){
+                categories.set(i, category);
+                FileRecord category_record = convertToFileRecord(category);
+                category_file.UpdateRecord(category_record);
+                break;
+            }
+        }
+    }
+    
+    public void deleteCategory(Category category){
+        for(int i = 0; i < categories.size(); i++){
+            if(categories.get(i).getCategoryID() == category.getCategoryID()){
+                categories.remove(categories.get(i));
+                FileRecord category_record = convertToFileRecord(category);
+                category_file.DeleteRecord(category_record);
+                break;
+            }
+        }
     }
 }
