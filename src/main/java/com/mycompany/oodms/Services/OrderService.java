@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class OrderService {
      private ArrayList<Order> orders;
+    FileHandler order_file = new FileHandler(FileName.ORDER);
 
     public OrderService() {
-        FileHandler order_file = new FileHandler(FileName.ORDER);
         List<FileRecord> order_records = order_file.FetchRecord();
         order_records.forEach((record) -> {
             Order order_object = convertToObject(record);
@@ -57,6 +57,11 @@ public class OrderService {
             return new Order(order_id, order_date_time, order_total_price, order_paid, order_change,member_object, address_object);
     }
     
+     private FileRecord convertToFileRecord(Order order){
+        String order_record_string = order.getOrderID() + ";" + order.getOrderDateTime() + ";" + order.getTotalPrice() + ";" + order.getPaid() + ";" + order.getChange() + ";" + order.getCustomer().getID() + ";" + order.getAddress().getAddressID();
+        return new FileRecord(order.getOrderID(), order_record_string);
+    }
+    
     public ArrayList<Order> getOrders() {
         return orders;
     }
@@ -74,6 +79,8 @@ public class OrderService {
 
     public void addOrder(Order order) {
         orders.add(order);
+        FileRecord order_record = convertToFileRecord(order);
+        order_file.InsertRecord(order_record);
     }
 
     public void updateOrder(Order order) {
@@ -81,6 +88,8 @@ public class OrderService {
             String orderID = Integer.toString(orders.get(i).getOrderID());
             if (orderID.equals(order.getOrderID())) {
                 orders.set(i, order);
+                FileRecord order_record = convertToFileRecord(order);
+                order_file.UpdateRecord(order_record);
                 break;
             }
         }
@@ -93,6 +102,8 @@ public class OrderService {
             String orderID = Integer.toString(order.getOrderID());
             if (orderID.equals(orderId)) {
                 iterator.remove();
+                FileRecord order_record = convertToFileRecord(order);
+                order_file.DeleteRecord(order_record);
                 break;
             }
         }
