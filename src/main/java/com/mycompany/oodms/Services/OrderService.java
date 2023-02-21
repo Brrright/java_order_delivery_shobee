@@ -85,8 +85,7 @@ public class OrderService {
 
     public void updateOrder(Order order) {
         for (int i = 0; i < orders.size(); i++) {
-            String orderID = Integer.toString(orders.get(i).getOrderID());
-            if (orderID.equals(order.getOrderID())) {
+            if (orders.get(i).getOrderID() == order.getOrderID()) {
                 orders.set(i, order);
                 FileRecord order_record = convertToFileRecord(order);
                 order_file.UpdateRecord(order_record);
