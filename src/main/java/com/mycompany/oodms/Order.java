@@ -53,6 +53,10 @@ public class Order {
         return this.paid;
     }
     
+    public double getChange(){
+        return this.change;
+    }
+    
     public Member getCustomer(){
         return this.customer;
     }
