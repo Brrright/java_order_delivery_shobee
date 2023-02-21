@@ -6,6 +6,7 @@ package com.mycompany.oodms.Services;
 
 import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.Cart;
+import com.mycompany.oodms.CartItem;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
@@ -45,10 +46,11 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
         
         return new Cart(cart_id, member_object);
     }
-    
-     public ArrayList<Cart> getCarts() {
-        return carts;
-    }
+     
+     public ArrayList<CartItem> getCartItems(Cart cart){
+          CartItemService cart_item_service = new CartItemService();
+            return cart_item_service.getCartItems(cart.getMember().getID());
+     }
 
     public Cart getOrder(String orderId) {
         for (Cart cart : carts) {
