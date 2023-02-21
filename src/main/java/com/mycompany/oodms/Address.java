@@ -19,13 +19,15 @@ public class Address {
     private String city;
     private String state;
     private String postcode;
+    private Member member;
     
-    public Address(int id, String streetName, String city, String state, String postcode){
+    public Address(int id, String streetName, String city, String state, String postcode, Member member){
         this.addressID = id;
         this.streetName = streetName;
         this.city = city;
         this.state = state;
         this.postcode = postcode;
+        this.member = member;
     }
     
     public int getAddressID(){
@@ -48,6 +50,10 @@ public class Address {
         return this.postcode;
     }
     
+    public Member getMember(){
+        return this.member;
+    }
+    
     public void setAddressID(int id){
         this.addressID = id;
     }
@@ -66,5 +72,9 @@ public class Address {
     
     public void setPostCode(String pcode) {
         this.postcode = pcode;
+    }
+    
+    public void setMember(Member member) {
+        this.member = member;
     }
 }
