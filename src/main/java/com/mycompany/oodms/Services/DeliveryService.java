@@ -15,6 +15,7 @@ import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Order;
+import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,9 +27,9 @@ import java.util.List;
  */
 public class DeliveryService {
     private ArrayList<Delivery> deliveries;
+    FileHandler delivery_file = new FileHandler(FileName.DELIVERY);
     
     public DeliveryService(){
-        FileHandler delivery_file = new FileHandler(FileName.DELIVERY);
         List<FileRecord> delivery_records = delivery_file.FetchRecord();
         delivery_records.forEach((d) -> {
             Delivery delivery_object = convertToObject(d);
@@ -49,51 +50,26 @@ public class DeliveryService {
         DeliveryStatus status = DeliveryStatus.valueOf(delivery_data[1]);
         int staff_id = Integer.parseInt(delivery_data[4]);
         int member_id = Integer.parseInt(delivery_data[5]);
-
         int order_id = Integer.parseInt(delivery_data[6]);
-        FileHandler order_file = new FileHandler("order");
-        FileRecord order_record = order_file.FetchRecord(order_id);
-        String[] order_data = order_record.getRecordList();
-        if (order_data.length == 0){
-            System.out.println("in convert to object: cant find order data for the delivery");
-            return null;
-        }
+        
+        OrderService order_service = new OrderService();
+        Order order = order_service.getOrder(order_id);
             
-        // Order data
-            LocalDateTime order_date_time = LocalDateTime.parse(order_data[1]);
-            int address_id = Integer.parseInt(order_data[6]);
-            double total_price = Double.parseDouble(order_data[2]);
-            double paid  = Double.parseDouble(order_data[3]);
-            double change  = Double.parseDouble(order_data[4]);
-
         MemberService member_service = new MemberService();
         Member member_object = member_service.getMember(member_id);
 
         AddressService address_service = new AddressService();
         Address address_object = address_service.getAddress(address_id);
             
-        // Delivery staff data
-              FileHandler staff_file = new FileHandler("delivery_staff");
-              FileRecord staff_record = staff_file.FetchRecord(staff_id);
-              String[] staff_data = staff_record.getRecordList();
-              String staff_name = staff_data[1];
-              String staff_email = staff_data[2];
-              String staff_password = staff_data[3];
-              int staff_age = Integer.parseInt(staff_data[4]);
-              Gender staff_gender = Gender.valueOf(staff_data[5]);
-              String staff_phoneNum = staff_data[6];
-              String staff_picture = staff_data[7];
-                
-                
-           // Create object
-            Order order = new Order(order_id, order_date_time, total_price, paid, change, member_object, address_object);
-            DeliveryStaff staff  = new DeliveryStaff( staff_id, staff_name, staff_email, staff_password, staff_age, staff_gender, staff_phoneNum, staff_picture);
+        DeliveryStaffService staff_service = new DeliveryStaffService();
+        DeliveryStaff staff = staff_service.getStaff(staff_id);
             
-// need to wait till i have login details setup data
-            System.out.println(Arrays.toString(delivery_data));
-            System.out.println(Arrays.toString(order_data));
-            
-            return new Delivery(delivery_id, order, delivery_date_time,staff, status, address_object);
+        return new Delivery(delivery_id, order, delivery_date_time,staff, status, address_object, member_object);
+    }
+    
+    private FileRecord convertToFileRecord(Delivery delivery){
+        String delivery_record_string = delivery.getDeliveryID() + ";" + delivery.getStatus() + ";" + delivery.getDateTime() +";" + delivery.getStaff().getID() +";" + delivery.getMember().getID() +";" + delivery.getOrder().getOrderID();
+        return new FileRecord(delivery.getDeliveryID(), delivery_record_string);
     }
     
     public List<Delivery>getDeliveries(){
