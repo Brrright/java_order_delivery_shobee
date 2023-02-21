@@ -20,7 +20,6 @@ public class UI_OrderDetails extends JPanel{
     
     JLabel orderStatus;
     JLabel currentLocation;
-    JButton orderReceivedBtn;
     
     
     ImageIcon lineImg = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/Line.png");
@@ -81,41 +80,8 @@ public class UI_OrderDetails extends JPanel{
         // JLabel - current Location 
         currentLocation = new JLabel("Locating at : " + orderDetails.get(1));
         currentLocation.setFont(new Font("MV Boli",Font.BOLD,13));
-        currentLocation.setForeground(Color.LIGHT_GRAY);
+        currentLocation.setForeground(new Color(255, 151, 98, 255));
         currentLocation.setBounds(158,154,500,15);
-        
-        // JButton - order reveiced button
-        orderReceivedBtn = new JButton("Feedback");
-        orderReceivedBtn.setBorder(BorderFactory.createEmptyBorder());
-        orderReceivedBtn.setHorizontalTextPosition(JLabel.CENTER);
-        orderReceivedBtn.setVerticalTextPosition(JLabel.CENTER);
-        orderReceivedBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        orderReceivedBtn.setBackground(new Color(255, 151, 98, 255));
-        orderReceivedBtn.setOpaque(true);
-        orderReceivedBtn.setBounds(808,117,115,45);
-        orderReceivedBtn.setFont(new Font("MV Boli",Font.PLAIN,12));
-        orderReceivedBtn.setForeground(Color.WHITE);
-        orderReceivedBtn.addActionListener(e -> {
-            String feedback = JOptionPane.showInputDialog("Feedback on the delivery service :");
-
-            // have to read if user entered or not
-            if (feedback == null || feedback.trim().isEmpty())
-            {
-                System.out.print("user clicked cancel");
-            } 
-            else 
-            {
-
-                // have to read if user entered or not
-                if (!"".equals(feedback))
-                {
-                    orderReceivedBtn.setText(null);
-                    orderReceivedBtn.setBounds(0,0,0,0);
-                }
-            
-            } 
-                
-        });
         
         
         //////////////////////////////////////////////////////////////////////////////////
@@ -318,12 +284,6 @@ public class UI_OrderDetails extends JPanel{
         this.add(back);
         this.add(orderStatus);
         this.add(currentLocation);
-        
-        // display feedback button when only the product is delivered 
-        if ("Delivered".equals(orderDetails.get(0)))
-        {
-           this.add(orderReceivedBtn);
-        }
         
         this.add(packingIndicator);
         this.add(packedIndicator);
