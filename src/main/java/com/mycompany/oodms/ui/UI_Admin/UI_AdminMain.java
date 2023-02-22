@@ -5,8 +5,8 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.ui.Main_Frame;
 import com.mycompany.oodms.ui.UI_Header;
-import com.mycompany.oodms.ui.UI_Profile;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -65,7 +65,7 @@ public class UI_AdminMain extends JPanel{
         
         // JButton - delivery management btn
         deliveryManagementBtn = new JButton(deliverytBtn_Icon);
-        deliveryManagementBtn.setText("<html>delivery<br>management</html>");
+        deliveryManagementBtn.setText("<html>delivery<br>(Pack and assign orders)</html>");
         deliveryManagementBtn.setFont(new Font("MV Boli",Font.PLAIN,12));
         deliveryManagementBtn.setForeground(Color.GRAY);
         deliveryManagementBtn.setHorizontalAlignment(JLabel.CENTER);
@@ -79,7 +79,7 @@ public class UI_AdminMain extends JPanel{
         deliveryManagementBtn.setOpaque(false);
         deliveryManagementBtn.setBorder(BorderFactory.createEmptyBorder()); 
         deliveryManagementBtn.addActionListener(e -> {
-            // direct to general management interface
+            frame = new Main_Frame(new UI_AdminDelivery());        
         });
         
         
