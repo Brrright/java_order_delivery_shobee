@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.Services;
 
+import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import com.mycompany.oodms.Category;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
@@ -44,8 +45,7 @@ public class ProductService {
             int product_cate_id = Integer.parseInt(product_data[5]);
           
         // Category object
-            CategoryService category_service = new CategoryService();
-            Category category = category_service.getCategory(product_cate_id);
+            Category category = Provider_Product_Category.category_service.getCategory(product_cate_id);
             
             return new Product(product_id, product_name, product_price, product_stock, product_picture, category);
     }
