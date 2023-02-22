@@ -13,6 +13,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -25,7 +26,7 @@ public class UI_ReportOrders extends JPanel{
     
     // first section (management selection)
     JLabel generalManagementIcon_label;
-    ImageIcon generalManagementIcon = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/generalManagementIcon.png");
+    ImageIcon generalManagementIcon = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/reportIcon.png");
     
     
     JButton orderBtn;
@@ -43,14 +44,14 @@ public class UI_ReportOrders extends JPanel{
     
     
     // 3rd section (users)
-    JButton[] categories;
-    ArrayList<ArrayList<String>> allCategory = new ArrayList<>();
-    ArrayList<String> category = new ArrayList<>();
+    JButton[] reports;
+    ArrayList<ArrayList<String>> allReports = new ArrayList<>();
+    ArrayList<String> report = new ArrayList<>();
     
     // panels
-     JPanel product_panel;
+     JPanel report_panel;
      JPanel search_panel;
-     JPanel managementSelection_panel;
+     JPanel reportSelection_panel;
      
      // container
      JPanel title_container;
@@ -68,39 +69,39 @@ public class UI_ReportOrders extends JPanel{
         generalManagementIcon_label = new JLabel(generalManagementIcon);
         generalManagementIcon_label.setPreferredSize(new Dimension(1080, 175));
         
-        // JButton - user management button
-        orderBtn = new JButton("Category");
+        // JButton - Order button
+        orderBtn = new JButton("Order");
         orderBtn.setIcon(orangeCircle);
         orderBtn.setBorder(BorderFactory.createEmptyBorder());
         orderBtn.setHorizontalTextPosition(JLabel.CENTER);
         orderBtn.setVerticalTextPosition(JLabel.CENTER);
         orderBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        orderBtn.setBackground(new Color(0, 0, 0, 0));
+        orderBtn.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,0)));
         orderBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         orderBtn.setForeground(Color.WHITE);
         
-        
-        // JButton - Category management button
-        paymentBtn = new JButton("Category");
+        // JButton - payment button
+        paymentBtn = new JButton("Payment");
         paymentBtn.setIcon(grayCircle1);
-        paymentBtn.setBorder(BorderFactory.createEmptyBorder());
         paymentBtn.setHorizontalTextPosition(JLabel.CENTER);
         paymentBtn.setVerticalTextPosition(JLabel.CENTER);
         paymentBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        paymentBtn.setBackground(new Color(0, 0, 0, 0));
+        paymentBtn.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,0)));
         paymentBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         paymentBtn.setForeground(Color.GRAY);
         paymentBtn.addActionListener(e -> {
-            frame.replacePanel(new UI_UserManagement());
+            frame.replacePanel(new UI_ReportPayments());
         });
         
-        
         // JPanel - Management Selection panel
-        managementSelection_panel = new JPanel();
-        managementSelection_panel.setLayout(new FlowLayout(FlowLayout.CENTER,20,2));
-        managementSelection_panel.setPreferredSize(new Dimension(1080, 150));
-        managementSelection_panel.setBackground(Color.WHITE);
-        managementSelection_panel.add(orderBtn);
-        managementSelection_panel.add(paymentBtn);
-        
+        reportSelection_panel = new JPanel();
+        reportSelection_panel.setLayout(new FlowLayout(FlowLayout.CENTER,20,2));
+        reportSelection_panel.setPreferredSize(new Dimension(1080, 150));
+        reportSelection_panel.setBackground(Color.WHITE);
+        reportSelection_panel.add(orderBtn);
+        reportSelection_panel.add(paymentBtn);
         
         // JTextField - search bar
         search_textfield = new JTextField();
@@ -118,7 +119,7 @@ public class UI_ReportOrders extends JPanel{
             // search user
         });
         
-        // JPanel - search panel (add, search, filter)
+        // JPanel - search panel (search)
         search_panel = new JPanel();
         search_panel.setLayout(new FlowLayout(FlowLayout.CENTER,20,2));
         search_panel.setPreferredSize(new Dimension(1080, 70));
@@ -126,45 +127,52 @@ public class UI_ReportOrders extends JPanel{
         search_panel.add(search_textfield);
         search_panel.add(search_btn);
         
-        
         // JButton[] - users
         // create temp user 
         for (int i = 0; i < 5; i++){
-            category.add("Foods and beverage");
-            allCategory.add(category);
+            report.add("ORD001");
+            report.add("2/2/2022"); // order date
+            report.add("packed"); // status
+            report.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg"); // picture
+            allReports.add(report);
         }
         
-        categories = new JButton[allCategory.size()];
+        reports = new JButton[allReports.size()];
         
-        for (int i = 0; i < allCategory.size();i++){
+        for (int i = 0; i < allReports.size();i++){
             
-            // button (category)
-            categories[i] = new JButton();
-            categories[i].setText(i + 1 + ". " + allCategory.get(i).get(1));
-            categories[i].setPreferredSize(new Dimension(700,120));
-            categories[i].setOpaque(false);
-            categories[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-            categories[i].setHorizontalAlignment(JLabel.LEFT);
-            categories[i].setVerticalAlignment(JLabel.CENTER);
-            categories[i].setHorizontalTextPosition(JLabel.RIGHT);
-            categories[i].setVerticalTextPosition(JLabel.CENTER);
-            categories[i].setIconTextGap(40);
-            categories[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            categories[i].addActionListener(e -> {
-                frame = new Main_Frame(new UI_CategoryManagementCategory());        
+            ImageIcon originalIcon = new ImageIcon(allReports.get(i).get(3));
+            Image originalImage = originalIcon.getImage();
+            Image scaledImage = originalImage.getScaledInstance(105, 110, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            
+            // button (order)
+            reports[i] = new JButton(scaledIcon);
+            reports[i].setText("<html>Order ID : " + allReports.get(i).get(0) + "<br>Order date : " + allReports.get(i).get(1) + "<br>Status : " + allReports.get(i).get(2));
+            reports[i].setPreferredSize(new Dimension(600,120));
+            reports[i].setBackground(new Color(0, 0, 0, 0));
+            reports[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
+            reports[i].setHorizontalAlignment(JLabel.LEFT);
+            reports[i].setVerticalAlignment(JLabel.CENTER);
+            reports[i].setHorizontalTextPosition(JLabel.RIGHT);
+            reports[i].setVerticalTextPosition(JLabel.CENTER);
+            reports[i].setIconTextGap(40);
+            reports[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            reports[i].addActionListener(e -> {
+                frame = new Main_Frame(new UI_ReportOrder());        
             });
         }
         
-        // Panel for users
-        int product_panel_height = (150 * allCategory.size()) + 30;
+        // Panel for report
+        int product_panel_height = (150 * allReports.size()) + 30;
         
-        product_panel = new JPanel();
-        product_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
-        product_panel.setPreferredSize(new Dimension(700, product_panel_height));
-        product_panel.setBackground(Color.WHITE);
+        report_panel = new JPanel();
+        report_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
+        report_panel.setPreferredSize(new Dimension(700, product_panel_height));
+        report_panel.setBackground(Color.WHITE);
         
-        for (JButton theCategory : categories){
-            product_panel.add(theCategory);
+        for (JButton theCategory : reports){
+            report_panel.add(theCategory);
         }
         
         // third container (search container)
@@ -172,13 +180,13 @@ public class UI_ReportOrders extends JPanel{
         search_container.setLayout(new BorderLayout());
         search_container.setBackground(Color.WHITE);
         search_container.add(search_panel, BorderLayout.NORTH);
-        search_container.add(product_panel, BorderLayout.CENTER);
+        search_container.add(report_panel, BorderLayout.CENTER);
         
-        // second container (management selection)
+        // second container (report selection)
         selection_container = new JPanel();
         selection_container.setLayout(new BorderLayout());
         selection_container.setBackground(Color.WHITE);
-        selection_container.add(managementSelection_panel, BorderLayout.NORTH);
+        selection_container.add(reportSelection_panel, BorderLayout.NORTH);
         selection_container.add(search_container, BorderLayout.CENTER);
         
         // first Container (title - the icon)
