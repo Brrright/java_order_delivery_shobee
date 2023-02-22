@@ -5,6 +5,7 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.ui.Main_Frame;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -123,7 +124,7 @@ public class UI_CategoryManagement extends JPanel{
         managementSelection_panel.add(categoryManagementBtn);
         
         
-        // JButton - Add user button
+        // JButton - Add category button
         addCategory = new JButton(addBtn);
         addCategory.setPreferredSize(new Dimension(59,48));
         addCategory.setOpaque(false);
@@ -132,7 +133,24 @@ public class UI_CategoryManagement extends JPanel{
         addCategory.setVerticalAlignment(JLabel.CENTER);
         addCategory.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addCategory.addActionListener(e -> {
-            // direct to the add user page
+            String categotyInput = JOptionPane.showInputDialog("Enter new category:");
+
+            // read if user entered or not
+            if (categotyInput == null || categotyInput.trim().isEmpty())
+            {
+                // cancel clicked / null input
+                System.out.print("user clicked cancel");
+            } 
+            else 
+            {
+                // have to read if user entered or not
+                if (!"".equals(categotyInput))
+                {
+                    // create new category
+                    System.out.println("input: " + categotyInput);
+                }
+            
+            } 
         });
         
         // JTextField - search bar
@@ -181,8 +199,8 @@ public class UI_CategoryManagement extends JPanel{
             
             
             // button (category) 
-            categories[i] = new JButton(xBtn);
-            categories[i].setText(allCategory.get(i).get(1));
+            categories[i] = new JButton();
+            categories[i].setText(i + 1 + ". " + allCategory.get(i).get(1));
             categories[i].setPreferredSize(new Dimension(700,120));
             categories[i].setOpaque(false);
             categories[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
@@ -193,12 +211,7 @@ public class UI_CategoryManagement extends JPanel{
             categories[i].setIconTextGap(40);
             categories[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             categories[i].addActionListener(e -> {
-                int removeConfirmation = JOptionPane.showOptionDialog(null, "Confirm to remove category" + "?", "Confirmation",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-
-                if (removeConfirmation == JOptionPane.OK_OPTION) {
-                    // remove category
-                }
+                frame = new Main_Frame(new UI_CategoryManagementCategory());        
             });
         }
         
