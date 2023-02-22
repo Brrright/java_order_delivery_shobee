@@ -17,7 +17,6 @@ import javax.swing.*;
 public class UI_Payment extends JPanel {
     
     JButton back;
-    ImageIcon backBtn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/backBtn.png");
     
     JLabel orderAmt_header;
     JLabel orderAmt;
