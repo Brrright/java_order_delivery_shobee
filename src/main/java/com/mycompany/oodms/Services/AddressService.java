@@ -22,6 +22,7 @@ public class AddressService {
     FileHandler address_file = new FileHandler(FileName.MEMBER_ADDRESS);
     
     public AddressService(){
+        this.addresses = new ArrayList<Address>();
         List<FileRecord> address_record = address_file.FetchRecord();
         address_record.forEach((record) -> {
             Address order_object = convertToObject(record);

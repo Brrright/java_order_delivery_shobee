@@ -25,6 +25,7 @@ public class OrderService {
     FileHandler order_file = new FileHandler(FileName.ORDER);
 
     public OrderService() {
+        this.orders = new ArrayList<Order>();
         List<FileRecord> order_records = order_file.FetchRecord();
         order_records.forEach((record) -> {
             Order order_object = convertToObject(record);

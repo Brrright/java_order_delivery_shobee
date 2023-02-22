@@ -21,6 +21,7 @@ public class AdminService {
     FileHandler admin_file = new FileHandler(FileName.ADMIN);
     
     public AdminService(){
+        this.admins = new ArrayList<Admin>();
         List<FileRecord> admin_records = admin_file.FetchRecord();
         admin_records.forEach((record) -> {
             Admin admin_object = convertToObject(record);

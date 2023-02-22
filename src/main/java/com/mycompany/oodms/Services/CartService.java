@@ -23,6 +23,7 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
     FileHandler cart_file = new FileHandler(FileName.CART);
     
     public CartService(){
+        this.carts = new ArrayList<Cart>();
         List<FileRecord> order_records = cart_file.FetchRecord();
         order_records.forEach((record) -> {
             Cart cart_object = convertToObject(record);

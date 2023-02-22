@@ -21,12 +21,14 @@ public class ProductService {
     FileHandler product_file = new FileHandler(FileName.PRODUCT);
 
     public ProductService(){
+        this.products = new ArrayList<Product>();
         List<FileRecord> product_records = product_file.FetchRecord();
         product_records.forEach((record) -> {
             Product product_object = convertToObject(record);
             this.products.add(product_object);
         });
     }
+    
     private Product convertToObject(FileRecord p){
         String[] product_data = p.getRecordList();
             if (product_data.length == 0){

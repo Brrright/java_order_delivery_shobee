@@ -25,49 +25,50 @@ public class FileHandler {
     }
     
 //    public static void main(String[] args) {
-
-//    /** ============================================
-//     *  To use this, you need to 
-//     *         create new FileHandler('"filename");
-//     * 
-//     *  for fetching record, you may just 
-//     *          use .FetchRecord() or .FetchRecord(id)
-//     *          REMEMBER: to print the record, use the getters provided
-//     *                             Eg. record.getRecord() || record.getRecordList()
-//     * 
-//     *  for insert, update, and delete record, you will have to 
-//     *          create new FileRecord(id, "data");
-//     * */ ===========================================
-
-    
-//        Example Usage: -------------------------------------------------------------------
-//        FileHandler fHandler = new FileHandler("product");
-        
-//        System.out.println("id: " +  fHandler.GenerateID());
-        
-////      //  FETCH RECORD
+//
+////    /** ============================================
+////     *  To use this, you need to 
+////     *         create new FileHandler('"filename");
+////     * 
+////     *  for fetching record, you may just 
+////     *          use .FetchRecord() or .FetchRecord(id)
+////     *          REMEMBER: to print the record, use the getters provided
+////     *                             Eg. record.getRecord() || record.getRecordList()
+////     * 
+////     *  for insert, update, and delete record, you will have to 
+////     *          create new FileRecord(id, "data");
+////     * */ ===========================================
+//
+//    
+////        Example Usage: -------------------------------------------------------------------
+////        FileHandler fHandler = new FileHandler(FileName.CATEGORY);
+//        
+////            GENERATE ID
+////        System.out.println("id: " +  fHandler.GenerateID());
+//        
+//////      //  FETCH RECORD
 ////        List<FileRecord> records = fHandler.FetchRecord();
 ////        records.forEach(record -> {
 ////            System.out.println(record.getRecord());
 ////        });
-//
-////       // FETCH ONE RECORD
-////        FileRecord record = fHandler.FetchRecord(1);
-////        System.out.println(record.getRecord());
-//        
-//        
-////       // INSERT RECORD
-        //// manual calculate record for id
-//        FileRecord record2 = new FileRecord(3, "3;3RD Update;100;102;xxx;1");
-////        fHandler.InsertRecord(record2);
-//        
-////      //  UPDATE RECORD
-////       fHandler.UpdateRecord(record2);
-//
-//
-////      //  DELETE RECORD
-////            fHandler.DeleteRecord(record2);
-// ---------------------------------------------------------------------------------------------
+////
+//////       // FETCH ONE RECORD
+//////        FileRecord record = fHandler.FetchRecord(1);
+//////        System.out.println(record.getRecord());
+////        
+////        
+//////       // INSERT RECORD
+//        //// manual calculate record for id
+////        FileRecord record2 = new FileRecord(3, "3;3RD Update;100;102;xxx;1");
+//////        fHandler.InsertRecord(record2);
+////        
+//////      //  UPDATE RECORD
+//////       fHandler.UpdateRecord(record2);
+////
+////
+//////      //  DELETE RECORD
+//////            fHandler.DeleteRecord(record2);
+//// ---------------------------------------------------------------------------------------------
 //    }
         
     public int GenerateID(){

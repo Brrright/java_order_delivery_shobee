@@ -125,7 +125,7 @@ public class UI_Login extends JPanel {
                 fileName = FileName.MEMBER;
                 Member.login(user_email, user_password, fileName);
             } else{
-                JOptionPane.showMessageDialog(OODMS_Main.frame,"No user role selected.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(frame,"No user role selected.","Alert",JOptionPane.INFORMATION_MESSAGE);
             }
             
         });

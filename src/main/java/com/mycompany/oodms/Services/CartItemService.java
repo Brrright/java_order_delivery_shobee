@@ -25,6 +25,7 @@ public class CartItemService {
     FileHandler cart_item_file = new FileHandler(FileName.CART_ITEM);
     
     public CartItemService(){
+            this.cart_items = new ArrayList<CartItem>();
             List<FileRecord> item_records = cart_item_file.FetchRecord();
             item_records.forEach((record) -> {
             CartItem cart_item_object = convertToObject(record);

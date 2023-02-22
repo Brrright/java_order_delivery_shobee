@@ -21,7 +21,8 @@ public class OrderItemService {
     private ArrayList<OrderItem> order_items;
     
     
-    public OrderItemService() {
+    public OrderItemService() {        
+        this.order_items = new ArrayList<OrderItem>();
         FileHandler order_item_file = new FileHandler(FileName.ORDER_ITEM);
         List<FileRecord> order_item_records = order_item_file.FetchRecord();
         order_item_records.forEach((record) -> {

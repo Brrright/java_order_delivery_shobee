@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms;
 
+import com.mycompany.oodms.Services.CategoryService;
 import com.mycompany.oodms.ui.*;
 import com.mycompany.oodms.ui.UI_Admin.*;
 import com.mycompany.oodms.ui.UI_Delivery.*;
@@ -18,6 +19,9 @@ public class OODMS_Main {
     
      public void initialize(){
         // setup Records (fetch necessary record first) NOT USER RELATED DATA
+        CategoryService category_service  = new CategoryService();
+        
+        
         // setup UI screen
         
 
@@ -46,7 +50,7 @@ public class OODMS_Main {
 //        frame = new Main_Frame(new UI_AdminMain());
 //        frame = new Main_Frame(new UI_UserManagement());        
 //        frame = new Main_Frame(new UI_UserManagementProfile());        
-        frame = new Main_Frame(new UI_UserManagementProfileEdit());        
+//        frame = new Main_Frame(new UI_UserManagementProfileEdit());        
 //        frame = new Main_Frame(new UI_CategoryManagement());        
 
 

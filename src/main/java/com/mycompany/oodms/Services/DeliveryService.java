@@ -9,7 +9,6 @@ import com.mycompany.oodms.Address;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.Delivery;
 import com.mycompany.oodms.DeliveryStaff;
-import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
@@ -29,6 +28,7 @@ public class DeliveryService {
     FileHandler delivery_file = new FileHandler(FileName.DELIVERY);
     
     public DeliveryService(){
+        this.deliveries = new ArrayList<Delivery>();
         List<FileRecord> delivery_records = delivery_file.FetchRecord();
         delivery_records.forEach((d) -> {
             Delivery delivery_object = convertToObject(d);

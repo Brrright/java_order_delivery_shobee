@@ -21,6 +21,7 @@ public class DeliveryStaffService {
     FileHandler staff_file = new FileHandler(FileName.DELIVERY_STAFF);
     
     public DeliveryStaffService(){
+        this.delivery_staffs = new ArrayList<DeliveryStaff>();
         List<FileRecord> staff_records = staff_file.FetchRecord();
         staff_records.forEach((record) -> {
             DeliveryStaff staff_object = convertToObject(record);
