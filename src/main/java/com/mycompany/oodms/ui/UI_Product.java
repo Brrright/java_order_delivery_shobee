@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class UI_Product extends JPanel {
-    Product product;
+
     JButton backBtn;
     JLabel productImg;
     JLabel name;
@@ -19,13 +19,11 @@ public class UI_Product extends JPanel {
     JLabel price;
     JButton addToCartBtn;
 
-    public UI_Product(Product product){
+    public UI_Product(){
         // REQUIRED DATA
         // ID, PICTURE, NAME, DESCRIPTION, STOCK, PRICE, SOLD
         
-        this.product = product;
         
-        String productName = "ITEM1";
         ArrayList<String> productDetails = new ArrayList<>(); 
         productDetails.add("ITEM1");
         productDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
@@ -55,7 +53,7 @@ public class UI_Product extends JPanel {
         productImg.setBounds(145,182,370,426);
 
         // JLabel - name
-        name = new JLabel(product.getProductName());
+        name = new JLabel(productDetails.get(2));
         name.setFont(new Font("MV Boli",Font.BOLD,30));
         name.setBounds(576,182,342,35);
 
@@ -66,9 +64,9 @@ public class UI_Product extends JPanel {
         sold.setBounds(577,230,80,11);
 
         // Jlabel - description
-        description = new JLabel("<html>" + productDetails.get(3) + "</html>");
+        description = new JLabel("<html>Shobee is a trusted online store that provides quality assurance to its customers. They sell only high-quality products and work with reputable suppliers and manufacturers.</html>");
         description.setFont(new Font("MV Boli",Font.PLAIN,15));
-        description.setForeground(new Color(121, 121, 121, 124));
+        description.setForeground(Color.LIGHT_GRAY);
         description.setBounds(576,290,360,320);
         description.setVerticalAlignment(JLabel.TOP);
 
