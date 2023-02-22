@@ -11,6 +11,8 @@ import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Order;
+import com.mycompany.oodms.Services.Provider.Provider_Address;
+import com.mycompany.oodms.Services.Provider.Provider_Member;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,7 +33,6 @@ public class OrderService {
             Order order_object = convertToObject(record);
             this.orders.add(order_object);
         });
-        
     }
     
     private Order convertToObject(FileRecord r){
@@ -49,11 +50,8 @@ public class OrderService {
             int order_member_id = Integer.parseInt(order_data[5]);
             int order_address_id = Integer.parseInt(order_data[6]);
             
-            AddressService address_service = new AddressService();
-            Address address_object = address_service.getAddress(order_address_id);
-            
-            MemberService member_service = new MemberService();
-            Member member_object = member_service.getMember(order_member_id);
+            Address address_object = Provider_Address.address_service.getAddress(order_address_id);
+            Member member_object = Provider_Member.member_service.getMember(order_member_id);
             
             return new Order(order_id, order_date_time, order_total_price, order_paid, order_change,member_object, address_object);
     }

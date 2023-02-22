@@ -9,7 +9,7 @@ import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
-import com.mycompany.oodms.Services.User.MemberService;
+import com.mycompany.oodms.Services.Provider.Provider_Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +35,7 @@ public class AddressService {
         if (address_data.length == 0){
             return null;
         }
-        MemberService member_service = new MemberService();
-        Member member = member_service.getMember(Integer.valueOf(address_data[5]));
+        Member member = Provider_Member.member_service.getMember(Integer.parseInt(address_data[5]));
         return new Address(r.getID(), address_data[1], address_data[2], address_data[3], address_data[4], member);
     }
     
