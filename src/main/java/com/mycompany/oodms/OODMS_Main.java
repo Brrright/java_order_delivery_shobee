@@ -26,7 +26,7 @@ public class OODMS_Main {
 //        frame = new Main_Frame(new UI_Login());
 //        frame = new Main_Frame(new UI_Signup());
 //        frame = new Main_Frame(new UI_AllProducts());
-//        frame = new Main_Frame(new UI_Product(sampleProduct));
+//        frame = new Main_Frame(new UI_Product());
 
         // registered
 //        frame = new Main_Frame(new UI_Profile());
@@ -46,8 +46,21 @@ public class OODMS_Main {
 //        frame = new Main_Frame(new UI_AdminMain());
 //        frame = new Main_Frame(new UI_UserManagement());        
 //        frame = new Main_Frame(new UI_UserManagementProfile());        
-        frame = new Main_Frame(new UI_UserManagementProfileEdit());        
+//        frame = new Main_Frame(new UI_UserManagementProfileEdit());        
+//        frame = new Main_Frame(new UI_UserManagementProfileOrderList());        
+//        frame = new Main_Frame(new UI_UserManagementAdd());
+
+//        frame = new Main_Frame(new UI_ProductManagement());        
+//        frame = new Main_Frame(new UI_ProductManagementProduct());        
+//        frame = new Main_Frame(new UI_ProductManagementProductEdit());        
+//        frame = new Main_Frame(new UI_ProductManagementAdd());        
+
 //        frame = new Main_Frame(new UI_CategoryManagement());        
+        frame = new Main_Frame(new UI_CategoryManagementCategory());        
+
+          // delivery
+//          frame = new Main_Frame(new UI_AdminDelivery());        
+
 
 
     }
