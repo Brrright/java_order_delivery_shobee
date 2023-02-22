@@ -85,8 +85,18 @@ abstract class User {
     public static void login(String email, String password, String fileName){
         FileHandler fHandler = new FileHandler(fileName);
         FileRecord user_record = fHandler.FetchRecord(email, 2);
+        if(user_record == null){
+            JOptionPane.showMessageDialog(frame,"Login credential incorrect.","Oops",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int user_id = user_record.getID();
         String[] splitted_user_record = user_record.getRecordList();
+        
+        if(!(email == null ? splitted_user_record[2] == null : email.equals(splitted_user_record[2]) && password == null ? splitted_user_record[3] == null : password.equals(splitted_user_record[3])))
+        {
+            JOptionPane.showMessageDialog(frame,"Login credential incorrect.","Oops",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         
         if(fileName == null ? FileName.ADMIN == null : fileName.equals(FileName.ADMIN)){
             OODMS_Main.current_user = new Admin(user_id);
@@ -132,7 +142,4 @@ abstract class User {
         // think what should do when logging out.
         OODMS_Main.frame.currentPanel = new UI_Login();
     }
-    
-    
-    
 }
