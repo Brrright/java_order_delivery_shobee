@@ -1,11 +1,15 @@
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.FileRelatedClass.FileHandler;
+import com.mycompany.oodms.FileRelatedClass.FileName;
+import com.mycompany.oodms.FileRelatedClass.FileRecord;
+import com.mycompany.oodms.Gender;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Services.Provider.Provider_Member;
 import javax.swing.*;
 import java.awt.*;
 
 public class UI_Signup extends JPanel{
-    
     JButton back;
     
     JLabel title;
@@ -28,9 +32,11 @@ public class UI_Signup extends JPanel{
     JPasswordField confirmPwd;
     
     JButton signup;
+    
+    // default profile image path
+    String default_profile_image_path = "src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg";
 
     public UI_Signup(){
-        
         // JButton - back (to login page)
         back = new JButton("< back");
         back.setFont(new Font("MV Boli",Font.PLAIN,12));
@@ -69,7 +75,7 @@ public class UI_Signup extends JPanel{
         gender_header.setBounds(763,213,100,20);
         
         // JTextField - gender
-        String[] genderList = {"Male","Female"};
+        String[] genderList = {Gender.MALE.name(),Gender.FEMALE.name()};
         gender = new JComboBox(genderList);
         gender.setBounds(759,233,174,48);
         
@@ -131,7 +137,19 @@ public class UI_Signup extends JPanel{
         signup.setFont(new Font("MV Boli",Font.PLAIN,12));
         signup.setForeground(Color.WHITE);
         signup.addActionListener(e -> {
-            
+             if(name.getText().isBlank() ||  phoneNo.getText().isBlank() || email.getText().isBlank() || pwd.getPassword().length < 8 || confirmPwd.getPassword().length < 8){
+                 JOptionPane.showMessageDialog(frame,"Please enter valid input. Make sure every field is filled and password is more then 7 character.","Oops",JOptionPane.WARNING_MESSAGE);
+                 return;
+             }
+             
+            String input_name = name.getText();
+            Gender input_gender = Gender.valueOf(String.valueOf(gender.getSelectedItem()));
+            int input_age = Integer.valueOf(age.getText());
+            String input_phonenum = phoneNo.getText();
+            String input_email = email.getText();
+            String input_pw = String.valueOf(pwd.getPassword());
+            String input_confirm_pw = String.valueOf(confirmPwd.getPassword());
+            signUp(input_name, input_gender, input_age, input_phonenum, input_email, input_pw, input_confirm_pw);
         });
         
         ////////////////////////////////////////////////////////////////////////
@@ -164,5 +182,28 @@ public class UI_Signup extends JPanel{
         
         this.add(signup);
         
+    }
+    
+    public void signUp(String input_name, Gender input_gender, int input_age, String input_phonenum, String input_email, String input_pw, String input_confirm_pw){
+        FileHandler fHandler = new FileHandler(FileName.MEMBER);
+        FileRecord user_record = fHandler.FetchRecord(input_email, 2);
+        if(user_record != null){
+            JOptionPane.showMessageDialog(frame,"User email already registered.","Oops",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(input_pw == null ? input_confirm_pw == null : !input_pw.equals(input_confirm_pw)){
+            System.out.println(input_pw);
+            System.out.println(input_confirm_pw);
+            JOptionPane.showMessageDialog(frame,"Password entered not matched.","Oops",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+       
+        // write to text file
+        int newMemberID = fHandler.GenerateID();
+        String newMemberString = newMemberID + ";" + input_name + ";" + input_email + ";" + input_pw + ";" + input_age + ";" + input_gender + ";" + input_phonenum + ";" + default_profile_image_path;
+        FileRecord newMemberRecord = new FileRecord(newMemberID, newMemberString);
+        fHandler.InsertRecord(newMemberRecord);
+        JOptionPane.showMessageDialog(frame,"Sign up successfully.","Congratz",JOptionPane.INFORMATION_MESSAGE);
+        frame.replacePanel(new UI_Login());
     }
 }

@@ -7,6 +7,7 @@ package com.mycompany.oodms;
 import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import com.mycompany.oodms.ui.*;
 import com.mycompany.oodms.ui.UI_Admin.UI_AdminMain;
+import com.mycompany.oodms.ui.UI_Admin.UI_ReportOrders;
 
 /**
  *
@@ -62,7 +63,7 @@ public class OODMS_Main {
 //          frame = new Main_Frame(new UI_AdminDelivery());
 
           // reports
-          frame = new Main_Frame(new UI_ReportOrders());
+//          frame = new Main_Frame(new UI_ReportOrders());
 
 
 
