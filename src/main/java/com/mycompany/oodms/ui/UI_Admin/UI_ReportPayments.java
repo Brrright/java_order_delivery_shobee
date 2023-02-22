@@ -21,7 +21,7 @@ import javax.swing.*;
  *
  * @author hw
  */
-public class UI_ReportOrders extends JPanel{
+public class UI_ReportPayments extends JPanel{
     UI_Header heading;
     
     // first section (management selection)
@@ -60,7 +60,7 @@ public class UI_ReportOrders extends JPanel{
      JScrollPane main_container;
      
     
-    public UI_ReportOrders() {
+    public UI_ReportPayments() {
         // heading
         heading = new UI_Header();
         
@@ -71,7 +71,7 @@ public class UI_ReportOrders extends JPanel{
         
         // JButton - Order button
         orderBtn = new JButton("Order");
-        orderBtn.setIcon(orangeCircle);
+        orderBtn.setIcon(grayCircle1);
         orderBtn.setBorder(BorderFactory.createEmptyBorder());
         orderBtn.setHorizontalTextPosition(JLabel.CENTER);
         orderBtn.setVerticalTextPosition(JLabel.CENTER);
@@ -79,21 +79,22 @@ public class UI_ReportOrders extends JPanel{
         orderBtn.setBackground(new Color(0, 0, 0, 0));
         orderBtn.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,0)));
         orderBtn.setFont(new Font("MV Boli",Font.BOLD,12));
-        orderBtn.setForeground(Color.WHITE);
+        orderBtn.setForeground(Color.GRAY);
+        orderBtn.addActionListener(e -> {
+            frame.replacePanel(new UI_ReportOrders());
+        });
         
         // JButton - payment button
         paymentBtn = new JButton("Payment");
-        paymentBtn.setIcon(grayCircle1);
+        paymentBtn.setIcon(orangeCircle);
         paymentBtn.setHorizontalTextPosition(JLabel.CENTER);
         paymentBtn.setVerticalTextPosition(JLabel.CENTER);
         paymentBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         paymentBtn.setBackground(new Color(0, 0, 0, 0));
         paymentBtn.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,0)));
         paymentBtn.setFont(new Font("MV Boli",Font.BOLD,12));
-        paymentBtn.setForeground(Color.GRAY);
-        paymentBtn.addActionListener(e -> {
-            frame.replacePanel(new UI_ReportPayments());
-        });
+        paymentBtn.setForeground(Color.WHITE);
+        
         
         // JPanel - Management Selection panel
         reportSelection_panel = new JPanel();
@@ -130,25 +131,25 @@ public class UI_ReportOrders extends JPanel{
         // JButton[] - users
         // create temp user 
         for (int i = 0; i < 5; i++){
-            report.add("ORD001");
+            report.add("PYM001");
             report.add("2/2/2022"); // order date
-            report.add("packed"); // status
-            report.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg"); // picture
+            report.add("23.00"); // status
+//            report.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg"); // picture
             allReports.add(report);
         }
         
         reports = new JButton[allReports.size()];
         
         for (int i = 0; i < allReports.size();i++){
-            
-            ImageIcon originalIcon = new ImageIcon(allReports.get(i).get(3));
-            Image originalImage = originalIcon.getImage();
-            Image scaledImage = originalImage.getScaledInstance(105, 110, Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaledImage);
-            
+//            
+//            ImageIcon originalIcon = new ImageIcon(allReports.get(i).get(3));
+//            Image originalImage = originalIcon.getImage();
+//            Image scaledImage = originalImage.getScaledInstance(105, 110, Image.SCALE_SMOOTH);
+//            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+//            
             // button (order)
-            reports[i] = new JButton(scaledIcon);
-            reports[i].setText("<html>Order ID : " + allReports.get(i).get(0) + "<br>Order date : " + allReports.get(i).get(1) + "<br>Status : " + allReports.get(i).get(2));
+            reports[i] = new JButton();
+            reports[i].setText("<html>Payment ID : " + allReports.get(i).get(0) + "<br>Payment date : " + allReports.get(i).get(1) + "<br>Amount : RM " + allReports.get(i).get(2));
             reports[i].setPreferredSize(new Dimension(600,120));
             reports[i].setBackground(new Color(0, 0, 0, 0));
             reports[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
@@ -159,7 +160,7 @@ public class UI_ReportOrders extends JPanel{
             reports[i].setIconTextGap(40);
             reports[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             reports[i].addActionListener(e -> {
-                frame = new Main_Frame(new UI_ReportOrder());        
+                frame = new Main_Frame(new UI_ReportPayment());        
             });
         }
         

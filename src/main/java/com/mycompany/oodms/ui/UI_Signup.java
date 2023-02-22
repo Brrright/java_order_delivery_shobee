@@ -114,6 +114,7 @@ public class UI_Signup extends JPanel{
         // JPasswordField - Password
         pwd = new JPasswordField();
         pwd.setBounds(140,525,378,48);
+        // more than 7 words
         
         // JLabel - Confirm password header
         confirmPwd_header = new JLabel("Confirm Password :");

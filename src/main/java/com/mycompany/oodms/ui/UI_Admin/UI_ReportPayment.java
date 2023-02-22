@@ -2,8 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.oodms.ui;
+package com.mycompany.oodms.ui.UI_Admin;;
 
+import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.ui.Main_Frame;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -14,7 +26,7 @@ import javax.swing.*;
  *
  * @author hw
  */
-public class UI_Payment extends JPanel {
+public class UI_ReportPayment extends JPanel {
     
     JButton back;
     
@@ -31,24 +43,25 @@ public class UI_Payment extends JPanel {
     JLabel billingAddress_header;
     JLabel billingAddress;
    
-    JButton paymentBtn;
-    ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
-
 
     JPanel panel;
 
    
-   public UI_Payment(){
+   public UI_ReportPayment(){
        
        // JButton - back
        back = new JButton("< back");
        back.setBounds(76,76,65,30);
+       back.setForeground(new Color(77, 77, 77, 124));
        back.setBorderPainted(false);
        back.setContentAreaFilled(false);
        back.setFont(new Font("Sarif",Font.PLAIN,15));
        back.setBorder(BorderFactory.createEmptyBorder());
        back.setFocusable(false);
        back.setCursor(new Cursor(Cursor.HAND_CURSOR));
+       back.addActionListener(e -> {
+            frame = new Main_Frame(new UI_ReportPayments());
+        });
        
        
        // JLabel - order amount header
@@ -125,21 +138,6 @@ public class UI_Payment extends JPanel {
        billingAddress.setBounds(480, 474, 380, 60);
        
        
-       // JButton - Payment button
-       paymentBtn = new JButton(orangeRect);
-       paymentBtn.setText("<html>continue<br>checkout</html>");
-       paymentBtn.setFont(new Font("Sarif",Font.PLAIN,12));
-       paymentBtn.setForeground(Color.WHITE);
-       paymentBtn.setHorizontalAlignment(JLabel.CENTER);
-       paymentBtn.setVerticalAlignment(JLabel.CENTER);
-       paymentBtn.setHorizontalTextPosition(JLabel.CENTER);
-       paymentBtn.setVerticalTextPosition(JLabel.CENTER);
-       paymentBtn.setBounds(805,590,125,58);
-       paymentBtn.setBorder(BorderFactory.createEmptyBorder());
-       paymentBtn.setFocusable(false);
-       paymentBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-       
-       
        // JPanel - container
        panel = new JPanel();
        panel.setSize(1080,768);
@@ -159,7 +157,6 @@ public class UI_Payment extends JPanel {
        panel.add(payment);
        panel.add(billingAddress_header);
        panel.add(billingAddress);
-       panel.add(paymentBtn);
        
        
        // JPanel - this
