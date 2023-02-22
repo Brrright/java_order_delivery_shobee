@@ -19,13 +19,6 @@ import javax.swing.JOptionPane;
  * @author mingl
  */
 
-
-enum UserIdPrefix{
-    ADM,
-    MEM,
-    DEL,
-}
-
 abstract class User {
     protected int userId;
     protected String userName;
@@ -35,8 +28,9 @@ abstract class User {
     protected Gender gender;
     protected String phoneNum;
     protected String picturePath;
+    protected UserRole role;
     
-    User(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath){
+    User(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath, UserRole role){
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -45,6 +39,7 @@ abstract class User {
         this.gender = gender;
         this.phoneNum = phoneNum;
         this.picturePath = picturePath;
+        this.role = role;
     }
     
     User(int userId){
@@ -67,6 +62,8 @@ abstract class User {
     
     abstract void setPicturePath(String picturecturePath);
     
+    abstract void setRole(UserRole role);
+    
     abstract int getID();
     
     abstract String getName();
@@ -82,6 +79,8 @@ abstract class User {
     abstract String getPhoneNum();
     
     abstract String getPicturePath();
+    
+    abstract UserRole getRole();
         
     public static void login(String email, String password, String fileName){
         FileHandler fHandler = new FileHandler(fileName);

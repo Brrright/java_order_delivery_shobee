@@ -14,8 +14,8 @@ public class Member extends User {
     private ArrayList<Order> orders;
     private ArrayList<Cart> carts;
     
-    public Member(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
-        super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath);
+    public Member(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath, UserRole role) {
+        super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath, role);
 //        this.cart = new Cart();
     }
     
@@ -61,6 +61,16 @@ public class Member extends User {
     @Override
     public void setPicturePath(String picturePath) {
         super.picturePath = picturePath;
+    }
+    
+    @Override
+    public void setRole(UserRole role) {
+        super.role = role;
+    }
+    
+     @Override
+    public UserRole getRole(){
+        return super.role;
     }
     
     @Override

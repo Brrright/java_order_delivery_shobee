@@ -9,6 +9,7 @@ import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.Admin;
+import com.mycompany.oodms.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class AdminService {
         String admin_phone_num = admin_data[6];
         String admin_picture = admin_data[7];
         
-        return new Admin(admin_id, admin_name, admin_email, admin_password, admin_age, admin_gender, admin_phone_num, admin_picture);
+        return new Admin(admin_id, admin_name, admin_email, admin_password, admin_age, admin_gender, admin_phone_num, admin_picture, UserRole.ADMIN);
     }
     
     private FileRecord convertToFileRecord(Admin admin){

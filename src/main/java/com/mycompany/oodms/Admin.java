@@ -10,8 +10,8 @@ package com.mycompany.oodms;
  */
 public class Admin extends User{
 
-    public Admin(int userId,String userName , String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
-        super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath);
+    public Admin(int userId,String userName , String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath, UserRole role) {
+        super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath, role);
     }
     
     public Admin(int userId){
@@ -59,6 +59,11 @@ public class Admin extends User{
     }
     
     @Override
+    public void setRole(UserRole role) {
+        super.role = role;
+    }
+    
+    @Override
     public int getID()
     {
         return super.userId;
@@ -99,5 +104,10 @@ public class Admin extends User{
     @Override
     public String getPicturePath(){
         return super.picturePath;
+    }
+    
+    @Override
+    public UserRole getRole(){
+        return super.role;
     }
 }
