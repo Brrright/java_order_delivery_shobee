@@ -160,7 +160,7 @@ public class UI_ReportPayments extends JPanel{
             reports[i].setIconTextGap(40);
             reports[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             reports[i].addActionListener(e -> {
-                frame = new Main_Frame(new UI_ReportOrder());        
+                frame = new Main_Frame(new UI_ReportPayment());        
             });
         }
         

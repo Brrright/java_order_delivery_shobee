@@ -4,6 +4,18 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;;
 
+import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.ui.Main_Frame;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -40,12 +52,16 @@ public class UI_ReportPayment extends JPanel {
        // JButton - back
        back = new JButton("< back");
        back.setBounds(76,76,65,30);
+       back.setForeground(new Color(77, 77, 77, 124));
        back.setBorderPainted(false);
        back.setContentAreaFilled(false);
        back.setFont(new Font("Sarif",Font.PLAIN,15));
        back.setBorder(BorderFactory.createEmptyBorder());
        back.setFocusable(false);
        back.setCursor(new Cursor(Cursor.HAND_CURSOR));
+       back.addActionListener(e -> {
+            frame = new Main_Frame(new UI_ReportPayments());
+        });
        
        
        // JLabel - order amount header
