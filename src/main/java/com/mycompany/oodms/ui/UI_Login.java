@@ -44,7 +44,7 @@ public class UI_Login extends JPanel {
         left.setHorizontalAlignment(JLabel.CENTER);
         left.setHorizontalTextPosition(JLabel.CENTER);
         left.setVerticalTextPosition(JLabel.BOTTOM);
-        left.setOpaque(false);
+        left.setBackground(new Color(255, 151, 98, 0));
         left.setBorder(BorderFactory.createEmptyBorder());
         left.setCursor(new Cursor(Cursor.HAND_CURSOR));
         left.setBounds(74,230,221,270);
