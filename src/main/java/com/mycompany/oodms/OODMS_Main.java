@@ -31,9 +31,9 @@ public class OODMS_Main {
         // registered
 //        frame = new Main_Frame(new UI_Profile());
 //        frame = new Main_Frame(new UI_MyOrder());
-        frame = new Main_Frame(new UI_OrderDetails());
+//        frame = new Main_Frame(new UI_OrderDetails());
 //        frame = new Main_Frame(new UI_Cart());
-        frame = new Main_Frame(new UI_Payment());
+//        frame = new Main_Frame(new UI_Payment());
 
 
         // Delivery interface
@@ -43,7 +43,7 @@ public class OODMS_Main {
 
 
         // Admin interface
-        frame = new Main_Frame(new UI_AdminMain());
+//        frame = new Main_Frame(new UI_AdminMain());
 //        frame = new Main_Frame(new UI_UserManagement());        
 //        frame = new Main_Frame(new UI_UserManagementProfile());        
 //        frame = new Main_Frame(new UI_UserManagementProfileEdit());        
@@ -59,7 +59,10 @@ public class OODMS_Main {
 //        frame = new Main_Frame(new UI_CategoryManagementCategory());        
 
           // delivery
-//          frame = new Main_Frame(new UI_AdminDelivery());        
+//          frame = new Main_Frame(new UI_AdminDelivery());
+
+          // reports
+          frame = new Main_Frame(new UI_ReportOrders());
 
 
 
