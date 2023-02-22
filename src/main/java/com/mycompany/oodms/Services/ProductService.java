@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.Services;
 
+import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import com.mycompany.oodms.Category;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
@@ -21,12 +22,14 @@ public class ProductService {
     FileHandler product_file = new FileHandler(FileName.PRODUCT);
 
     public ProductService(){
+        this.products = new ArrayList<Product>();
         List<FileRecord> product_records = product_file.FetchRecord();
         product_records.forEach((record) -> {
             Product product_object = convertToObject(record);
             this.products.add(product_object);
         });
     }
+    
     private Product convertToObject(FileRecord p){
         String[] product_data = p.getRecordList();
             if (product_data.length == 0){
@@ -42,8 +45,7 @@ public class ProductService {
             int product_cate_id = Integer.parseInt(product_data[5]);
           
         // Category object
-            CategoryService category_service = new CategoryService();
-            Category category = category_service.getCategory(product_cate_id);
+            Category category = Provider_Product_Category.category_service.getCategory(product_cate_id);
             
             return new Product(product_id, product_name, product_price, product_stock, product_picture, category);
     }

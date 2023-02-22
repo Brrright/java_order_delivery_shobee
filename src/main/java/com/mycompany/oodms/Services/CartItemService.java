@@ -6,13 +6,15 @@ package com.mycompany.oodms.Services;
 
 
 import com.mycompany.oodms.Cart;
-import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.CartItem;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.Provider.Provider_Cart;
+import com.mycompany.oodms.Services.Provider.Provider_Member;
+import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class CartItemService {
     FileHandler cart_item_file = new FileHandler(FileName.CART_ITEM);
     
     public CartItemService(){
+            this.cart_items = new ArrayList<CartItem>();
             List<FileRecord> item_records = cart_item_file.FetchRecord();
             item_records.forEach((record) -> {
             CartItem cart_item_object = convertToObject(record);
@@ -43,14 +46,10 @@ public class CartItemService {
         int member_id = Integer.parseInt(cart_item_data[3]);
         int cart_id = Integer.parseInt(cart_item_data[0]);
         
-        MemberService member_service = new MemberService();
-        Member member = member_service.getMember(member_id);
+        Member member = Provider_Member.member_service.getMember(member_id);
+        Product product = Provider_Product_Category.product_service.getProduct(product_id);
+        Cart cart = Provider_Cart.cart_service.getCart(cart_id);
         
-        ProductService product_service = new ProductService();
-        Product product = product_service.getProduct(product_id);
-        
-        CartService cart_service = new CartService();
-        Cart cart = cart_service.getCart(cart_id);
         return new CartItem(cart, member, product, qty);
     }
     

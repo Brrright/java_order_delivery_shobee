@@ -10,8 +10,8 @@ package com.mycompany.oodms;
  */
 public class DeliveryStaff  extends User{
 
-    public DeliveryStaff(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath) {
-        super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath);
+    public DeliveryStaff(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath, UserRole role) {
+        super(userId, userName, userEmail, password, age, gender, phoneNum, picturePath, role);
     }
     
     public DeliveryStaff(int userId) {
@@ -56,6 +56,16 @@ public class DeliveryStaff  extends User{
     @Override
     public void setPicturePath(String picturePath) {
         super.picturePath = picturePath;
+    }
+    
+    @Override
+    public void setRole(UserRole role) {
+        super.role = role;
+    }
+    
+     @Override
+    public UserRole getRole(){
+        return super.role;
     }
     
     @Override

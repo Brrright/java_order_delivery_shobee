@@ -7,19 +7,17 @@ package com.mycompany.oodms;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
+import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.ui.UI_Admin.UI_AdminMain;
+import com.mycompany.oodms.ui.UI_AllProducts;
+import com.mycompany.oodms.ui.UI_Delivery.UI_UpComing;
 import com.mycompany.oodms.ui.UI_Login;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author mingl
  */
-
-
-enum UserIdPrefix{
-    ADM,
-    MEM,
-    DEL,
-}
 
 abstract class User {
     protected int userId;
@@ -30,8 +28,9 @@ abstract class User {
     protected Gender gender;
     protected String phoneNum;
     protected String picturePath;
+    protected UserRole role;
     
-    User(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath){
+    User(int userId, String userName, String userEmail, String password, int age, Gender gender, String phoneNum, String picturePath, UserRole role){
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -40,6 +39,7 @@ abstract class User {
         this.gender = gender;
         this.phoneNum = phoneNum;
         this.picturePath = picturePath;
+        this.role = role;
     }
     
     User(int userId){
@@ -62,6 +62,8 @@ abstract class User {
     
     abstract void setPicturePath(String picturecturePath);
     
+    abstract void setRole(UserRole role);
+    
     abstract int getID();
     
     abstract String getName();
@@ -78,71 +80,23 @@ abstract class User {
     
     abstract String getPicturePath();
     
-//    private void setID(int id){
-//        this.userId = id;
-//    }
-//    
-//    private void setEmail(String email){
-//        this.userEmail = email;
-//    }
-//    
-//    private void setPassword(String pw){
-//        this.password = pw;
-//    }
-//    
-//    private void setAge(int age) {
-//        this.age = age;
-//    }
-//    
-//    private void setGender(Gender gender) {
-//        this.gender = gender;
-//    }
-//    
-//    private void setPhoneNum(String phoneNum) {
-//        this.phoneNum = phoneNum;
-//    }
-//    
-//    private void setPicturePath(String picturePath) {
-//        this.picturePath = picturePath;
-//    }
-//    
-//    private int getID()
-//    {
-//        return this.userId;
-//    }
-//    
-//    
-//    private String getEmail()
-//    {
-//        return this.userEmail;
-//    }
-//    
-//    private String getPassword()
-//    {
-//        return this.password;
-//    }
-//    
-//    private int getAge(){
-//        return this.age;
-//    }
-//    
-//    private Gender getGender(){
-//        return this.gender;
-//    }
-//    
-//    private String getPhoneNum(){
-//        return this.password;
-//    }
-//    
-//    private String getPicturePath(){
-//        return this.picturePath;
-//    }
+    abstract UserRole getRole();
         
     public static void login(String email, String password, String fileName){
         FileHandler fHandler = new FileHandler(fileName);
         FileRecord user_record = fHandler.FetchRecord(email, 2);
+        if(user_record == null){
+            JOptionPane.showMessageDialog(frame,"Login credential incorrect.","Oops",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int user_id = user_record.getID();
         String[] splitted_user_record = user_record.getRecordList();
+        
+        if(!(email == null ? splitted_user_record[2] == null : email.equals(splitted_user_record[2]) && password == null ? splitted_user_record[3] == null : password.equals(splitted_user_record[3])))
+        {
+            JOptionPane.showMessageDialog(frame,"Login credential incorrect.","Oops",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         
         if(fileName == null ? FileName.ADMIN == null : fileName.equals(FileName.ADMIN)){
             OODMS_Main.current_user = new Admin(user_id);
@@ -163,9 +117,24 @@ abstract class User {
         OODMS_Main.current_user.setPhoneNum(splitted_user_record[6]);
         OODMS_Main.current_user.setPicturePath(splitted_user_record[7]);
         
-        System.out.println("User login successfully");
         
+        switch(fileName) {
+            case FileName.ADMIN -> {
+                frame.replacePanel(new UI_AdminMain());
+            }
+            case FileName.MEMBER -> {
+                frame.replacePanel(new UI_AllProducts());
+            }
+            case FileName.DELIVERY_STAFF -> {                
+                frame.replacePanel(new UI_UpComing());
+            }
+        }
+        
+        System.out.println("User login successfully");
+
+        JOptionPane.showMessageDialog(frame,"Welcome to Shobee!","Successfully Login",JOptionPane.INFORMATION_MESSAGE);
         // need to setup user related data
+
     }
     
     public static void logout(){
@@ -173,7 +142,4 @@ abstract class User {
         // think what should do when logging out.
         OODMS_Main.frame.currentPanel = new UI_Login();
     }
-    
-    
-    
 }

@@ -4,18 +4,19 @@
  */
 package com.mycompany.oodms.Services;
 
-import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.Address;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.Delivery;
 import com.mycompany.oodms.DeliveryStaff;
-import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Order;
-import com.mycompany.oodms.Services.User.DeliveryStaffService;
+import com.mycompany.oodms.Services.Provider.Provider_Address;
+import com.mycompany.oodms.Services.Provider.Provider_DeliveryStaff;
+import com.mycompany.oodms.Services.Provider.Provider_Member;
+import com.mycompany.oodms.Services.Provider.Provider_Order_OrderItem;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,12 @@ import java.util.List;
  * @author mingl
  */
 public class DeliveryService {
+//    public static boolean isCreated = false;
     private ArrayList<Delivery> deliveries;
     FileHandler delivery_file = new FileHandler(FileName.DELIVERY);
     
     public DeliveryService(){
+        this.deliveries = new ArrayList<Delivery>();
         List<FileRecord> delivery_records = delivery_file.FetchRecord();
         delivery_records.forEach((d) -> {
             Delivery delivery_object = convertToObject(d);
@@ -45,26 +48,21 @@ public class DeliveryService {
             
         // Delivery data
         int delivery_id  = d.getID();
-        LocalDateTime delivery_date_time = LocalDateTime.parse(delivery_data[2]);
+        LocalDateTime delivery_date_time = LocalDateTime.parse(delivery_data[3]);
         DeliveryStatus status = DeliveryStatus.valueOf(delivery_data[1]);
-        int address_id = Integer.parseInt(delivery_data[3]);
-        int staff_id = Integer.parseInt(delivery_data[4]);
-        int member_id = Integer.parseInt(delivery_data[5]);
-        int order_id = Integer.parseInt(delivery_data[6]);
+        int rating = Integer.parseInt(delivery_data[2]);
+        int address_id = Integer.parseInt(delivery_data[4]);
+        int staff_id = Integer.parseInt(delivery_data[5]);
+        int member_id = Integer.parseInt(delivery_data[6]);
+        int order_id = Integer.parseInt(delivery_data[7]);
         
-        OrderService order_service = new OrderService();
-        Order order = order_service.getOrder(order_id);
+        Order order = Provider_Order_OrderItem.order_service.getOrder(order_id);
             
-        MemberService member_service = new MemberService();
-        Member member_object = member_service.getMember(member_id);
-
-        AddressService address_service = new AddressService();
-        Address address_object = address_service.getAddress(address_id);
+        Member member_object = Provider_Member.member_service.getMember(member_id);
+        Address address_object = Provider_Address.address_service.getAddress(address_id);
+        DeliveryStaff staff =Provider_DeliveryStaff. staff_service.getStaff(staff_id);
             
-        DeliveryStaffService staff_service = new DeliveryStaffService();
-        DeliveryStaff staff = staff_service.getStaff(staff_id);
-            
-        return new Delivery(delivery_id, order, delivery_date_time,staff, status, address_object, member_object);
+        return new Delivery(delivery_id, order, delivery_date_time,staff, status, rating, address_object, member_object);
     }
     
     private FileRecord convertToFileRecord(Delivery delivery){

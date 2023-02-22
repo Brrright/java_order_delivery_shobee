@@ -20,6 +20,7 @@ public class CategoryService {
     FileHandler category_file = new FileHandler(FileName.CATEGORY);
     
     public CategoryService(){
+        this.categories = new ArrayList<Category>();
         List<FileRecord>  category_records = category_file.FetchRecord();
         category_records.forEach((c) -> {
             Category category_object = convertToObject(c);
@@ -29,6 +30,9 @@ public class CategoryService {
     
     private Category convertToObject(FileRecord r) {
         String[] category_data = r.getRecordList();
+            if (category_data.length == 0){
+                return null;
+            }
         return new Category(r.getID(), category_data[1]);
     }
     

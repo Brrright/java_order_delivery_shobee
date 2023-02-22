@@ -4,9 +4,9 @@
  */
 package com.mycompany.oodms;
 
+import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import com.mycompany.oodms.ui.*;
-import com.mycompany.oodms.ui.UI_Admin.*;
-import com.mycompany.oodms.ui.UI_Delivery.*;
+import com.mycompany.oodms.ui.UI_Admin.UI_AdminMain;
 
 /**
  *
@@ -17,13 +17,13 @@ public class OODMS_Main {
     public static User current_user; // make user detail globally accessible
     
      public void initialize(){
-        // setup Records (fetch necessary record first) NOT USER RELATED DATA
-        // setup UI screen
+        // setup Records (necessary record ) NOT USER RELATED DATA
+        Provider_Product_Category provider_product  = new Provider_Product_Category();
         
-
+        // setup UI screen
         // Customer interface
         // unregistered
-//        frame = new Main_Frame(new UI_Login());
+        frame = new Main_Frame(new UI_Login());
 //        frame = new Main_Frame(new UI_Signup());
 //        frame = new Main_Frame(new UI_AllProducts());
 //        frame = new Main_Frame(new UI_Product());

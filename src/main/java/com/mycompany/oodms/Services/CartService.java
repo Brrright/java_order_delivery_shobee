@@ -4,13 +4,13 @@
  */
 package com.mycompany.oodms.Services;
 
-import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.Cart;
 import com.mycompany.oodms.CartItem;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
+import com.mycompany.oodms.Services.Provider.Provider_Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +23,7 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
     FileHandler cart_file = new FileHandler(FileName.CART);
     
     public CartService(){
+        this.carts = new ArrayList<Cart>();
         List<FileRecord> order_records = cart_file.FetchRecord();
         order_records.forEach((record) -> {
             Cart cart_object = convertToObject(record);
@@ -40,8 +41,7 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
         int cart_id = r.getID();
         int member_id= Integer.parseInt(cart_data[1]);
         
-        MemberService member_service = new MemberService();
-        Member member_object = member_service.getMember(member_id);
+        Member member_object = Provider_Member.member_service.getMember(member_id);
         
         return new Cart(cart_id, member_object);
     }

@@ -9,6 +9,7 @@ import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.Member;
+import com.mycompany.oodms.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class MemberService {
     FileHandler member_file = new FileHandler(FileName.MEMBER);
     
     public MemberService(){
+        this.members = new ArrayList<Member>();
         List<FileRecord> member_records = member_file.FetchRecord();
         member_records.forEach((record) -> {
             Member member_object = convertToObject(record);
@@ -42,7 +44,7 @@ public class MemberService {
         String member_phone_num = member_data[6];
         String member_picture = member_data[7];
         
-        return new Member(member_id, member_name, member_email, member_password, member_age, member_gender, member_phone_num, member_picture);
+        return new Member(member_id, member_name, member_email, member_password, member_age, member_gender, member_phone_num, member_picture, UserRole.MEMBER);
     }
     
     private FileRecord convertToFileRecord(Member member){

@@ -10,6 +10,8 @@ import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Order;
 import com.mycompany.oodms.OrderItem;
 import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.Provider.Provider_Order_OrderItem;
+import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,8 @@ public class OrderItemService {
     private ArrayList<OrderItem> order_items;
     
     
-    public OrderItemService() {
+    public OrderItemService() {        
+        this.order_items = new ArrayList<OrderItem>();
         FileHandler order_item_file = new FileHandler(FileName.ORDER_ITEM);
         List<FileRecord> order_item_records = order_item_file.FetchRecord();
         order_item_records.forEach((record) -> {
@@ -40,13 +43,10 @@ public class OrderItemService {
         int product_id = Integer.parseInt(order_item_data[0]);
         int quantity = Integer.parseInt(order_item_data[1]);
         int order_id  = Integer.parseInt(order_item_data[2]);
-        int member_id  = Integer.parseInt(order_item_data[3]);
-        
-        ProductService product_service = new ProductService();
-        Product product = product_service.getProduct(product_id);
-        
-        OrderService order_service = new OrderService();
-        Order order = order_service.getOrder(order_id);
+//        int member_id  = Integer.parseInt(order_item_data[3]);
+
+        Order order = Provider_Order_OrderItem.order_service.getOrder(order_id);
+        Product product = Provider_Product_Category.product_service.getProduct(product_id);
         
         return new OrderItem(quantity, product.getProductPrice(), product, order);
     }

@@ -17,16 +17,18 @@ public class Delivery {
     private LocalDateTime date_time;
     private DeliveryStaff deliveryStaff;
     private DeliveryStatus status;
+    private int deliveryRating;
     private Address address;
     private Member member;
 
     // constructor, getters, and setters
-    public Delivery(int id, Order order, LocalDateTime date_time, DeliveryStaff deliveryStaff, DeliveryStatus status, Address address, Member member) {
+    public Delivery(int id, Order order, LocalDateTime date_time, DeliveryStaff deliveryStaff, DeliveryStatus status, int deliveryRating, Address address, Member member) {
         this.id = id;
         this.order = order;
         this.date_time = date_time;
         this.deliveryStaff = deliveryStaff;
         this.status = status;
+        this.deliveryRating = deliveryRating;
         this.address = address;
         this.member = member;
     }
@@ -81,5 +83,13 @@ public class Delivery {
     
     public void setMember(Member member) {
         this.member = member;
+    }
+    
+    public int getDeliveryRating(){
+        return this.deliveryRating;
+    }
+    
+    public void setDeliveryRating(int deliveryRating){
+        this.deliveryRating = deliveryRating;
     }
 }

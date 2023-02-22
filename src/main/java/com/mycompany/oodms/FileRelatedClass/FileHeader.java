@@ -13,7 +13,7 @@ public class FileHeader {
     final static String DELIVERY_STAFF_HEADER = "StaffID;Staff Name;Staff Email;Password;Age;Gender;Phone Number;Picture";
     final static String MEMBER_HEARDER = "MemberID;Member Name;Member Email;Password;Age;Gender;Phone Number;Picture";
     
-    final static String DELIVERY_HEADER = "DeliveryID;Status;Date;AddressID;StaffID;MemberID;OrderID";
+    final static String DELIVERY_HEADER = "DeliveryID;Status;Rating;Date;AddressID;StaffID;MemberID;OrderID";
     final static String MEMBER_ADDRESS_HEADER = "AddressID;StreetName;City;State;Postcode;MemberID";
     final static String CART_HEADER = "CartID;MemberID";
     final static String CART_ITEM_HEADER = "CartID;ProductID;Quantity;MemberID";

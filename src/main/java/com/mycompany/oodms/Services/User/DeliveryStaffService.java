@@ -9,6 +9,7 @@ import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class DeliveryStaffService {
     FileHandler staff_file = new FileHandler(FileName.DELIVERY_STAFF);
     
     public DeliveryStaffService(){
+        this.delivery_staffs = new ArrayList<DeliveryStaff>();
         List<FileRecord> staff_records = staff_file.FetchRecord();
         staff_records.forEach((record) -> {
             DeliveryStaff staff_object = convertToObject(record);
@@ -42,7 +44,7 @@ public class DeliveryStaffService {
         String staff_phone_num = staff_data[6];
         String staff_picture = staff_data[7];
         
-        return new DeliveryStaff(staff_id, staff_name, staff_email, staff_password, staff_age, staff_gender, staff_phone_num, staff_picture);
+        return new DeliveryStaff(staff_id, staff_name, staff_email, staff_password, staff_age, staff_gender, staff_phone_num, staff_picture, UserRole.DELIVERY_STAFF);
     }
     
     private FileRecord convertToFileRecord(DeliveryStaff staff){
