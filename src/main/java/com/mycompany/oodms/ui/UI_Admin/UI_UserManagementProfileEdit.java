@@ -5,7 +5,9 @@ import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.ui.UI_Login;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class UI_UserManagementProfileEdit extends JPanel {
 
@@ -28,7 +30,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
     JTextField email;
     JButton profilePic_upload;
     
-    JButton signup;
+    JButton update;
     JButton cancel;
     
     public UI_UserManagementProfileEdit(){
@@ -120,30 +122,41 @@ public class UI_UserManagementProfileEdit extends JPanel {
         profilePic_header.setFont(new Font("MV Boli",Font.PLAIN,12));
         profilePic_header.setBounds(144,505,100,20);
         
+        // JLabel - Profile Picture file name
+        profilePic_fileName = new JLabel();
+        profilePic_fileName.setBounds(230,521,378,40);
+        
         // JButton - Profile Picture
-        profilePic_upload = new JButton("Upload Profile Image");
-        profilePic_upload.setBounds(140,525,60,25);
+        profilePic_upload = new JButton("Upload");
+        profilePic_upload.setBounds(136,530,80,25);
         profilePic_upload.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "gif");
+            fileChooser.setFileFilter(filter);
+            int result = fileChooser.showOpenDialog(null);
             
+            if (result == JFileChooser.APPROVE_OPTION){
+                    File file = fileChooser.getSelectedFile();
+                    profilePic_fileName.setText(file.getName());
+                    // get file path
+//                    imagePath[0] = file.getAbsolutePath();
+//                    uploadImgDir = imagePath[0].split("\\.");
+                }
         });
 
-        
-        // JLabel - Profile Picture file name
-        pwd = new JPasswordField();
-        pwd.setBounds(140,525,378,48);
 
         // JButton - sign up button
-        signup = new JButton("update");
-        signup.setBorder(BorderFactory.createEmptyBorder());
-        signup.setHorizontalTextPosition(JLabel.CENTER);
-        signup.setVerticalTextPosition(JLabel.CENTER);
-        signup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        signup.setBackground(new Color(255, 151, 98, 255));
-        signup.setOpaque(true);
-        signup.setBounds(850,141,84,42);
-        signup.setFont(new Font("MV Boli",Font.PLAIN,12));
-        signup.setForeground(Color.WHITE);
-        signup.addActionListener(e -> {
+        update = new JButton("update");
+        update.setBorder(BorderFactory.createEmptyBorder());
+        update.setHorizontalTextPosition(JLabel.CENTER);
+        update.setVerticalTextPosition(JLabel.CENTER);
+        update.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        update.setBackground(new Color(255, 151, 98, 255));
+        update.setOpaque(true);
+        update.setBounds(850,141,84,42);
+        update.setFont(new Font("MV Boli",Font.PLAIN,12));
+        update.setForeground(Color.WHITE);
+        update.addActionListener(e -> {
             
         });
         
@@ -159,7 +172,8 @@ public class UI_UserManagementProfileEdit extends JPanel {
         cancel.setFont(new Font("MV Boli",Font.PLAIN,12));
         cancel.setForeground(Color.WHITE);
         cancel.addActionListener(e -> {
-            
+            frame.replacePanel(new UI_UserManagementProfile());
+            // with profile object or id ??
         });
         
         ////////////////////////////////////////////////////////////////////////
@@ -179,15 +193,16 @@ public class UI_UserManagementProfileEdit extends JPanel {
         this.add(phoneNo_header);
         this.add(email_header);
         this.add(profilePic_header);
-        
+        this.add(profilePic_fileName);
+
         this.add(name);
         this.add(gender);
         this.add(age);
         this.add(phoneNo);
         this.add(email);
-        this.add(pwd);
+        this.add(profilePic_upload);
         
-        this.add(signup);
+        this.add(update);
         this.add(cancel);
     }
 }

@@ -24,6 +24,7 @@ public class UI_UserManagementProfile extends JPanel {
 
     JButton myOrder;
     JButton editProfile;
+    JButton removeUser;
 
     ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
 
@@ -36,7 +37,7 @@ public class UI_UserManagementProfile extends JPanel {
         profileDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
         profileDetails.add("Hong Wei");
         profileDetails.add("Male");
-        profileDetails.add("2/2/2002"); // stock
+        profileDetails.add("24"); // age
         profileDetails.add("hw@gmail.com");
         profileDetails.add("0192583948"); //sold
 
@@ -97,7 +98,7 @@ public class UI_UserManagementProfile extends JPanel {
         /////////
         
         // JLabel - dob header
-        dobHeader = new JLabel("Date of Birth :");
+        dobHeader = new JLabel("Age :");
         dobHeader.setFont(new Font("MV Boli",Font.PLAIN,12));
         dobHeader.setForeground(new Color(152, 152, 152, 255));
         dobHeader.setBounds(577,312,90,26);
@@ -138,7 +139,7 @@ public class UI_UserManagementProfile extends JPanel {
         ///////////////////////////////////////////////////////////////////////////
 
         // JButton - myOrder
-        myOrder = new JButton("<html><body>User<br>order</html>");
+        myOrder = new JButton("<html><body>Delivery<br>list</html>");
         myOrder.setFont(new Font("MV Boli",Font.PLAIN,12));
         myOrder.setForeground(new Color(255, 255, 255));
         myOrder.setIcon(orangeRect);
@@ -149,6 +150,9 @@ public class UI_UserManagementProfile extends JPanel {
         myOrder.setBorder(BorderFactory.createEmptyBorder());
         myOrder.setFocusable(false);
         myOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        myOrder.addActionListener(e -> {
+            frame.replacePanel(new UI_UserManagementProfileDeliveryList());
+        });
         
         // JButton - editProfile
         editProfile = new JButton("<html><body>Edit<br>profile</html>");
@@ -162,6 +166,32 @@ public class UI_UserManagementProfile extends JPanel {
         editProfile.setBorder(BorderFactory.createEmptyBorder());
         editProfile.setFocusable(false);
         editProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        editProfile.addActionListener(e -> {
+            frame.replacePanel(new UI_UserManagementProfileEdit());
+        });
+        
+        // JButton - remove user
+        removeUser = new JButton("<html><body>Remove<br>user</html>");
+        removeUser.setFont(new Font("MV Boli",Font.PLAIN,12));
+        removeUser.setForeground(new Color(255, 255, 255));
+        removeUser.setIcon(orangeRect);
+        removeUser.setHorizontalTextPosition(JLabel.CENTER);
+        removeUser.setVerticalAlignment(JLabel.CENTER);
+        removeUser.setHorizontalAlignment(JLabel.CENTER);
+        removeUser.setBounds(807,555,112,53);
+        removeUser.setBorder(BorderFactory.createEmptyBorder());
+        removeUser.setFocusable(false);
+        removeUser.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        removeUser.addActionListener(e -> {
+            
+            int removeConfirmation = JOptionPane.showOptionDialog(null, "Confirm to remove user" + "?", "Confirmation",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+                if (removeConfirmation == JOptionPane.OK_OPTION) {
+                    // remove user
+                }
+        });
+
 
 
 
@@ -186,6 +216,7 @@ public class UI_UserManagementProfile extends JPanel {
 
         this.add(myOrder);
         this.add(editProfile);
+        this.add(removeUser);
 
     }
 }

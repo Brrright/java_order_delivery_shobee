@@ -135,7 +135,7 @@ public class UI_UserManagement extends JPanel{
         addUser.setVerticalAlignment(JLabel.CENTER);
         addUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addUser.addActionListener(e -> {
-            // direct to the add user page
+            frame.replacePanel(new UI_UserManagementAdd());
         });
         
         // JTextField - search bar
