@@ -59,7 +59,10 @@ public class OODMS_Main {
 //        frame = new Main_Frame(new UI_CategoryManagementCategory());        
 
           // delivery
-//          frame = new Main_Frame(new UI_AdminDelivery());        
+//          frame = new Main_Frame(new UI_AdminDelivery());
+
+          // reports
+          frame = new Main_Frame(new UI_ReportOrders());
 
 
 

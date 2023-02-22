@@ -198,7 +198,7 @@ public class UI_CategoryManagement extends JPanel{
         for (int i = 0; i < allCategory.size();i++){
             
             
-            // button (category) 
+            // button (category)
             categories[i] = new JButton();
             categories[i].setText(i + 1 + ". " + allCategory.get(i).get(1));
             categories[i].setPreferredSize(new Dimension(700,120));
@@ -228,7 +228,6 @@ public class UI_CategoryManagement extends JPanel{
             product_panel.add(theCategory);
         }
         
-        
         // third container (search container)
         search_container = new JPanel();
         search_container.setLayout(new BorderLayout());
@@ -236,14 +235,12 @@ public class UI_CategoryManagement extends JPanel{
         search_container.add(search_panel, BorderLayout.NORTH);
         search_container.add(product_panel, BorderLayout.CENTER);
         
-        
         // second container (management selection)
         selection_container = new JPanel();
         selection_container.setLayout(new BorderLayout());
         selection_container.setBackground(Color.WHITE);
         selection_container.add(managementSelection_panel, BorderLayout.NORTH);
         selection_container.add(search_container, BorderLayout.CENTER);
-        
         
         // first Container (title - the icon)
         title_container = new JPanel();
@@ -257,7 +254,6 @@ public class UI_CategoryManagement extends JPanel{
         main_container.setBorder(BorderFactory.createEmptyBorder());
         main_container.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        
         // this panel
         this.setLayout(new BorderLayout());
         this.add(heading, BorderLayout.NORTH);
