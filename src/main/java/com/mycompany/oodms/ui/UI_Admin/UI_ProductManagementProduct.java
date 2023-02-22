@@ -1,4 +1,9 @@
-package com.mycompany.oodms.ui;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.oodms.ui.UI_Admin;
+
 
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Product;
@@ -8,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class UI_Product extends JPanel {
+public class UI_ProductManagementProduct extends JPanel {
 
     JButton backBtn;
     JLabel productImg;
@@ -17,9 +22,11 @@ public class UI_Product extends JPanel {
     JLabel description;
     JLabel stocks;
     JLabel price;
-    JButton addToCartBtn;
+    
+    JButton edit;
+    JButton remove;
 
-    public UI_Product(){
+    public UI_ProductManagementProduct(){
         // REQUIRED DATA
         // ID, PICTURE, NAME, DESCRIPTION, STOCK, PRICE, SOLD
         
@@ -31,7 +38,7 @@ public class UI_Product extends JPanel {
         productDetails.add("Lorem ipsum dolor sit amet consectetur. Non habitant volutpat fames vel amet mollis. Massa sed sem diam tortor praesento");
         productDetails.add("22"); // stock
         productDetails.add("45.50");
-        productDetails.add("10"); //sold
+        productDetails.add("Electronics"); //sold
 
         // JLabel - back
         backBtn = new JButton("< back");
@@ -41,6 +48,10 @@ public class UI_Product extends JPanel {
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backBtn.addActionListener(e -> {
+            frame.replacePanel(new UI_ProductManagement());
+        });
+        
 
         //image (edited scale)
         ImageIcon itemPic = new ImageIcon(productDetails.get(1));
@@ -58,7 +69,7 @@ public class UI_Product extends JPanel {
         name.setBounds(576,182,342,35);
 
         // Jlabel - sold
-        sold = new JLabel(productDetails.get(6)+ " " + "sold");
+        sold = new JLabel(productDetails.get(6));
         sold.setFont(new Font("MV Boli",Font.PLAIN,12));
         sold.setForeground(new Color(255, 151, 98, 124));
         sold.setBounds(577,230,80,11);
@@ -83,18 +94,38 @@ public class UI_Product extends JPanel {
         price.setForeground(new Color(0, 0, 0));
         price.setBounds(576,575,200,25);
 
-        // JButton - addToCartBtn
-        addToCartBtn = new JButton("Add to Cart");
-        addToCartBtn.setFont(new Font("MV Boli",Font.PLAIN,12));
-        addToCartBtn.setForeground(new Color(255, 255, 255));
-        addToCartBtn.setBounds(808,561,129,47);
-        addToCartBtn.setBorder(BorderFactory.createEmptyBorder());
-        addToCartBtn.setBackground(new Color(255, 151, 98, 255));
-        addToCartBtn.setOpaque(true);
-        addToCartBtn.setFocusable(false);
-        addToCartBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        addToCartBtn.addActionListener(e -> {
-            frame.replacePanel(new UI_Profile());
+        // JButton - edit
+        edit = new JButton("Edit");
+        edit.setFont(new Font("MV Boli",Font.PLAIN,12));
+        edit.setForeground(new Color(255, 255, 255));
+        edit.setBounds(751,561,85,47);
+        edit.setBorder(BorderFactory.createEmptyBorder());
+        edit.setBackground(new Color(255, 151, 98, 255));
+        edit.setOpaque(true);
+        edit.setFocusable(false);
+        edit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        edit.addActionListener(e -> {
+            frame.replacePanel(new UI_ProductManagementProductEdit());
+        });
+        
+        // JButton - remove
+        remove = new JButton("Remove");
+        remove.setFont(new Font("MV Boli",Font.PLAIN,12));
+        remove.setForeground(new Color(255, 255, 255));
+        remove.setBounds(842,561,85,47);
+        remove.setBorder(BorderFactory.createEmptyBorder());
+        remove.setBackground(new Color(255, 151, 98, 255));
+        remove.setOpaque(true);
+        remove.setFocusable(false);
+        remove.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        remove.addActionListener(e -> {
+            
+            int removeConfirmation = JOptionPane.showOptionDialog(null, "Confirm to remove product" + "?", "Confirmation",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+                if (removeConfirmation == JOptionPane.OK_OPTION) {
+                    // remove product
+                }
         });
 
 
@@ -111,6 +142,7 @@ public class UI_Product extends JPanel {
         this.add(description);
         this.add(stocks);
         this.add(price);
-        this.add(addToCartBtn);
+        this.add(edit);
+        this.add(remove);
     }
 }

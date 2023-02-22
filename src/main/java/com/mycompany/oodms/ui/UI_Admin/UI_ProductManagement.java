@@ -135,7 +135,7 @@ public class UI_ProductManagement extends JPanel{
         addProduct.setVerticalAlignment(JLabel.CENTER);
         addProduct.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addProduct.addActionListener(e -> {
-            // direct to the add user page
+            frame.replacePanel(new UI_ProductManagementAdd());
         });
         
         // JTextField - search bar
@@ -202,7 +202,7 @@ public class UI_ProductManagement extends JPanel{
             products[i].setIconTextGap(15);
             products[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             products[i].addActionListener(e -> {
-                // search user
+                frame.replacePanel(new UI_ProductManagementProduct());
             });
         }
         

@@ -5,8 +5,8 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.ui.Main_Frame;
 import com.mycompany.oodms.ui.UI_Header;
-import com.mycompany.oodms.ui.UI_Profile;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -31,6 +31,9 @@ public class UI_AdminMain extends JPanel{
     
     JButton deliveryManagementBtn;
     ImageIcon deliverytBtn_Icon = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/deliveryBtn.png");
+    
+    JButton adminReportBtn;
+    ImageIcon adminReportBtn_Icon = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/reportBtn.png");
 
     
     public UI_AdminMain() {
@@ -53,7 +56,7 @@ public class UI_AdminMain extends JPanel{
         generalManagementBtn.setHorizontalTextPosition(JLabel.CENTER);
         generalManagementBtn.setVerticalTextPosition(JLabel.BOTTOM);
         generalManagementBtn.setIconTextGap(15);
-        generalManagementBtn.setBounds(324,300,183,235);
+        generalManagementBtn.setBounds(198,300,183,235);
         generalManagementBtn.setFocusable(false);
         generalManagementBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         generalManagementBtn.setOpaque(false);
@@ -65,7 +68,7 @@ public class UI_AdminMain extends JPanel{
         
         // JButton - delivery management btn
         deliveryManagementBtn = new JButton(deliverytBtn_Icon);
-        deliveryManagementBtn.setText("<html>delivery<br>management</html>");
+        deliveryManagementBtn.setText("<html>Delivery<br>(Pack and assign orders)</html>");
         deliveryManagementBtn.setFont(new Font("MV Boli",Font.PLAIN,12));
         deliveryManagementBtn.setForeground(Color.GRAY);
         deliveryManagementBtn.setHorizontalAlignment(JLabel.CENTER);
@@ -73,15 +76,34 @@ public class UI_AdminMain extends JPanel{
         deliveryManagementBtn.setHorizontalTextPosition(JLabel.CENTER);
         deliveryManagementBtn.setVerticalTextPosition(JLabel.BOTTOM);
         deliveryManagementBtn.setIconTextGap(15);
-        deliveryManagementBtn.setBounds(592,300,165,235);
+        deliveryManagementBtn.setBounds(466,300,165,235);
         deliveryManagementBtn.setFocusable(false);
         deliveryManagementBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         deliveryManagementBtn.setOpaque(false);
         deliveryManagementBtn.setBorder(BorderFactory.createEmptyBorder()); 
         deliveryManagementBtn.addActionListener(e -> {
-            // direct to general management interface
+            frame = new Main_Frame(new UI_AdminDelivery());        
         });
         
+        
+        // JButton - admin report btn
+        adminReportBtn = new JButton(adminReportBtn_Icon);
+        adminReportBtn.setText("<html>Records<br>(orders and payments)</html>");
+        adminReportBtn.setFont(new Font("MV Boli",Font.PLAIN,12));
+        adminReportBtn.setForeground(Color.GRAY);
+        adminReportBtn.setHorizontalAlignment(JLabel.CENTER);
+        adminReportBtn.setVerticalAlignment(JLabel.CENTER);
+        adminReportBtn.setHorizontalTextPosition(JLabel.CENTER);
+        adminReportBtn.setVerticalTextPosition(JLabel.BOTTOM);
+        adminReportBtn.setIconTextGap(15);
+        adminReportBtn.setBounds(716,300,165,235);
+        adminReportBtn.setFocusable(false);
+        adminReportBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        adminReportBtn.setOpaque(false);
+        adminReportBtn.setBorder(BorderFactory.createEmptyBorder()); 
+        adminReportBtn.addActionListener(e -> {
+            frame = new Main_Frame(new UI_AdminDelivery());        
+        });
         
         // this JPanel
         this.setSize(1080, 768);
@@ -93,6 +115,7 @@ public class UI_AdminMain extends JPanel{
         
         this.add(generalManagementBtn);
         this.add(deliveryManagementBtn);
+        this.add(adminReportBtn);
     }
     
 }
