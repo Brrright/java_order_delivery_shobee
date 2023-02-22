@@ -48,12 +48,13 @@ public class DeliveryService {
             
         // Delivery data
         int delivery_id  = d.getID();
-        LocalDateTime delivery_date_time = LocalDateTime.parse(delivery_data[2]);
+        LocalDateTime delivery_date_time = LocalDateTime.parse(delivery_data[3]);
         DeliveryStatus status = DeliveryStatus.valueOf(delivery_data[1]);
-        int address_id = Integer.parseInt(delivery_data[3]);
-        int staff_id = Integer.parseInt(delivery_data[4]);
-        int member_id = Integer.parseInt(delivery_data[5]);
-        int order_id = Integer.parseInt(delivery_data[6]);
+        int rating = Integer.parseInt(delivery_data[2]);
+        int address_id = Integer.parseInt(delivery_data[4]);
+        int staff_id = Integer.parseInt(delivery_data[5]);
+        int member_id = Integer.parseInt(delivery_data[6]);
+        int order_id = Integer.parseInt(delivery_data[7]);
         
         Order order = Provider_Order_OrderItem.order_service.getOrder(order_id);
             
@@ -61,7 +62,7 @@ public class DeliveryService {
         Address address_object = Provider_Address.address_service.getAddress(address_id);
         DeliveryStaff staff =Provider_DeliveryStaff. staff_service.getStaff(staff_id);
             
-        return new Delivery(delivery_id, order, delivery_date_time,staff, status, address_object, member_object);
+        return new Delivery(delivery_id, order, delivery_date_time,staff, status, rating, address_object, member_object);
     }
     
     private FileRecord convertToFileRecord(Delivery delivery){
