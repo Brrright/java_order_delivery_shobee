@@ -29,6 +29,8 @@ public class Provider_Order_OrderItem {
         if(Provider_Product_Category.product_service.getProducts().isEmpty()){
             new Provider_Product_Category();
         }
-        Provider_Order_OrderItem.order_item_service = new OrderItemService();
+        if(Provider_Order_OrderItem.order_service.getOrders().isEmpty()) {
+            Provider_Order_OrderItem.order_item_service = new OrderItemService();
+        }
     }
 }

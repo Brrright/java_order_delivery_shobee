@@ -28,7 +28,8 @@ public class Provider_Delivery {
         if(Provider_DeliveryStaff.staff_service.getStaffs().isEmpty()) {
             new Provider_DeliveryStaff();
         }
-        
-        Provider_Delivery.delivery_service = new DeliveryService();
+        if(Provider_Delivery.delivery_service.getDeliveries().isEmpty()) {
+            Provider_Delivery.delivery_service = new DeliveryService();
+        }
     }
 }

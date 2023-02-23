@@ -17,13 +17,15 @@ public class Provider_Cart {
     
     public Provider_Cart(){
         if(Provider_Member.member_service.getMembers().isEmpty()){
-            new Provider_Member();
+            Provider_Member provider_Member = new Provider_Member();
         }
         cart_service = new CartService();
         
         if(Provider_Product_Category.product_service.getProducts().isEmpty()){
-            new Provider_Product_Category();
+            Provider_Product_Category provider_Product_Category = new Provider_Product_Category();
         }
-        cart_item_service = new CartItemService();
+        if(Provider_Cart.cart_service.getCarts().isEmpty()) {
+            cart_item_service = new CartItemService();
+        }
     }
 }

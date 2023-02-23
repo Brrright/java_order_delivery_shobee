@@ -46,10 +46,14 @@ public class UI_AllProducts extends JPanel {
     JPanel searchNproduct_Panel;
     
     
-    public UI_AllProducts() {
+    ArrayList<Product> initialize_data(){
         // setting up the data
-//        Provider_Product_Category provider_product  = new Provider_Product_Category();
         ArrayList<Product> all_products = Provider_Product_Category.product_service.getProducts();
+        return all_products;
+    }
+    
+    public UI_AllProducts() {
+        ArrayList<Product> all_products = initialize_data();
         
         // Title
         title = new JLabel("Products");

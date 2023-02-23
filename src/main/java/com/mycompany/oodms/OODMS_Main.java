@@ -9,6 +9,7 @@ import com.mycompany.oodms.ui.*;
 import com.mycompany.oodms.ui.UI_Admin.UI_AdminMain;
 import com.mycompany.oodms.ui.UI_Admin.UI_ReportPayment;
 import com.mycompany.oodms.ui.UI_Admin.UI_ReportPayments;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,7 +22,9 @@ public class OODMS_Main {
      public void initialize(){
         // setup Records (necessary record ) NOT USER RELATED DATA
         Provider_Product_Category provider_product  = new Provider_Product_Category();
-        Provider_Product_Category.product_service.getProducts();
+         ArrayList<Product> all_products = Provider_Product_Category.product_service.getProducts();
+         
+         
         // setup UI screen
         // Customer interface
         // unregistered

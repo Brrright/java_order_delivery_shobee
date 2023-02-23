@@ -16,15 +16,16 @@ public class Provider_Address {
     public Provider_Address()
     {
         if(Provider_Member.member_service.getMembers().isEmpty()){
-            new Provider_Member();
+            Provider_Member provider_Member = new Provider_Member();
         }
         if(Provider_Address.address_service.getAddresses().isEmpty()){
-            new Provider_Address();
+            Provider_Address provider_Address = new Provider_Address();
         }
         if(Provider_DeliveryStaff.staff_service.getStaffs().isEmpty()){
-            new Provider_DeliveryStaff();
+            Provider_DeliveryStaff provider_DeliveryStaff = new Provider_DeliveryStaff();
         }
-        
-        Provider_Address.address_service = new AddressService();
+        if(Provider_Address.address_service.getAddresses().isEmpty()){
+            Provider_Address.address_service = new AddressService();        
+        }
     }
 }

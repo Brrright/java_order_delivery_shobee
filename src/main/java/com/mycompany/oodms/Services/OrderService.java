@@ -4,7 +4,6 @@
  */
 package com.mycompany.oodms.Services;
 
-import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.Address;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;

@@ -50,6 +50,10 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
          String cart_record_string = cart.getCartID() + ";" + cart.getMember().getID();
          return new FileRecord(cart.getCartID(), cart_record_string);
     }
+      
+      public ArrayList<Cart> getCarts(){
+          return this.carts;
+      }
      
       public ArrayList<CartItem> getCartItems(Cart cart){
           CartItemService cart_item_service = new CartItemService();
