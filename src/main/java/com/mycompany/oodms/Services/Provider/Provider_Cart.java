@@ -19,12 +19,14 @@ public class Provider_Cart {
         if(Provider_Member.member_service == null){
             Provider_Member provider_Member = new Provider_Member();
         }
-        cart_service = new CartService();
-        
+        if(Provider_Cart.cart_service == null){
+            cart_service = new CartService();
+        }
         if(Provider_Product_Category.product_service == null){
             Provider_Product_Category provider_Product_Category = new Provider_Product_Category();
         }
-        if(Provider_Cart.cart_service.getCarts() == null) {
+        if(Provider_Cart.cart_item_service == null) {
+            System.out.println("no cart for now, creating...");
             cart_item_service = new CartItemService();
         }
     }
