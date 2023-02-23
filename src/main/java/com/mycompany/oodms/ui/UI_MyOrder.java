@@ -4,6 +4,8 @@
  */
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Services.Provider.Provider_Order_OrderItem;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -35,13 +37,18 @@ public class UI_MyOrder extends JPanel{
   JButton delivered;
   
   // orders
-  ArrayList<ArrayList<String>> tempOrder = new ArrayList<>();
-  ArrayList<String> tempContainer = new ArrayList<>();
+//  ArrayList<ArrayList<String>> tempOrder = new ArrayList<>();
+//  ArrayList<String> tempContainer = new ArrayList<>();
   JPanel orders_panel;
   JButton[] orders; // with product image, name and purchased quantity
   
+  public ArrayList<OrderItem> initialize_data(){
+      Provider_Order_OrderItem provider_order_item = new Provider_Order_OrderItem();
+      return Provider_Order_OrderItem.order_item_service.getOrderItems();
+  }
+  
   public UI_MyOrder() {
-    
+      ArrayList<OrderItem> order_items = initialize_data();
       // JLabel - title
       title = new JLabel("My order");
       title.setFont(new Font("MV Boli",Font.BOLD,30));
@@ -114,30 +121,21 @@ public class UI_MyOrder extends JPanel{
       orderStatus_btns.add(delivered);
       
       
-      // order generator
-      int orderAmt = 5;
-      for (int i = 0; i < orderAmt; i++) {
-          tempContainer.add("Product Name");
-          tempContainer.add("1/1/2023");
-          tempContainer.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-          tempOrder.add(tempContainer);
-      }
-      
       
       // orders
-      orders = new JButton[tempOrder.size()];
-      for (int i = 0; i < tempOrder.size(); i++) {
+      orders = new JButton[order_items.size()];
+      for (int i = 0; i < order_items.size(); i++) {
           
           orders[i] = new JButton();
           
-          ImageIcon productImg = new ImageIcon(tempOrder.get(i).get(2));
+          ImageIcon productImg = new ImageIcon(order_items.get(i).getProduct().getProcuctPicture());
 
           Image image = productImg.getImage();
           Image scaleImage = image.getScaledInstance(154, 174, Image.SCALE_SMOOTH);
           ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
           
           orders[i].setIcon(scaleImageIcon);
-          orders[i].setText("<html>"+ tempOrder.get(i).get(0) + "<br><br>Purchased on: " + tempOrder.get(i).get(1) + "</html>");
+          orders[i].setText("<html>"+ order_items.get(i).getProduct().getProductName() + "<br><br>Purchased on: " + order_items.get(i).getOrder().getOrderDateTime() + "</html>");
           orders[i].setPreferredSize(new Dimension(737,202));
           orders[i].setFocusPainted(false);
           orders[i].setHorizontalAlignment(JLabel.LEFT);
@@ -153,7 +151,7 @@ public class UI_MyOrder extends JPanel{
         
         orders_panel = new JPanel();
         orders_panel.setLayout(new FlowLayout(FlowLayout.CENTER,0,20));
-        orders_panel.setPreferredSize(new Dimension(780, tempOrder.size() * (210 + 20) + 30)); // 210 = order height, 20 = gap height
+        orders_panel.setPreferredSize(new Dimension(780, order_items.size() * (210 + 20) + 30)); // 210 = order height, 20 = gap height
         orders_panel.setBackground(Color.WHITE);
         
         for (JButton order : orders){

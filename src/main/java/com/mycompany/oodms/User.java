@@ -13,6 +13,7 @@ import com.mycompany.oodms.ui.UI_AllProducts;
 import com.mycompany.oodms.ui.UI_Cart;
 import com.mycompany.oodms.ui.UI_Delivery.UI_UpComing;
 import com.mycompany.oodms.ui.UI_Login;
+import com.mycompany.oodms.ui.UI_MyOrder;
 import javax.swing.JOptionPane;
 
 /**
@@ -125,8 +126,9 @@ abstract class User {
             }
             case FileName.MEMBER -> {
 //                frame.replacePanel(new UI_AllProducts());
-//                 temporary testing for cart
+//                 temporary testing for user related ui (after login)
                     frame.replacePanel(new UI_Cart());
+//                    frame.replacePanel(new UI_MyOrder());
             }
             case FileName.DELIVERY_STAFF -> {                
                 frame.replacePanel(new UI_UpComing());
