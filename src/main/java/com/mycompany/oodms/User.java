@@ -10,6 +10,7 @@ import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.ui.UI_Admin.UI_AdminMain;
 import com.mycompany.oodms.ui.UI_AllProducts;
+import com.mycompany.oodms.ui.UI_Cart;
 import com.mycompany.oodms.ui.UI_Delivery.UI_UpComing;
 import com.mycompany.oodms.ui.UI_Login;
 import javax.swing.JOptionPane;
@@ -123,7 +124,9 @@ abstract class User {
                 frame.replacePanel(new UI_AdminMain());
             }
             case FileName.MEMBER -> {
-                frame.replacePanel(new UI_AllProducts());
+//                frame.replacePanel(new UI_AllProducts());
+//                 temporary testing for cart
+                    frame.replacePanel(new UI_Cart());
             }
             case FileName.DELIVERY_STAFF -> {                
                 frame.replacePanel(new UI_UpComing());

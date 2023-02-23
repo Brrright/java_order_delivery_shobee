@@ -4,6 +4,10 @@
  */
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.CartItem;
+import com.mycompany.oodms.Member;
+import com.mycompany.oodms.OODMS_Main;
+import com.mycompany.oodms.Services.Provider.Provider_Cart;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -21,22 +25,15 @@ public class UI_Cart extends JPanel{
     JLabel title;
     JButton delete;
     JButton checkout;
+    Member member = (Member) OODMS_Main.current_user;
+    
+    public ArrayList<CartItem> initiatize_data(){
+        Provider_Cart provider_cart = new Provider_Cart();
+        return Provider_Cart.cart_item_service.getCartItems(member.getID());
+    }
     
     public UI_Cart() {
-        
-        // required date 
-        // 1. Cart object list of specific user
-        ArrayList<ArrayList<String>> inCart = new ArrayList<>();
-        ArrayList<String> inCartSingleProduct = new ArrayList<>();
-        
-        // create temp data
-        for (int i = 0; i < 10; i++) {
-            inCartSingleProduct.add("product name"); // product name
-            inCartSingleProduct.add("3"); // quantity
-            inCartSingleProduct.add("RM 3.50"); // price
-            inCart.add(inCartSingleProduct);
-        }
-        
+        ArrayList<CartItem> cart_items = initiatize_data();
         
          header = new UI_Header();
          header.setBounds(0,0,1080,50);
@@ -84,13 +81,13 @@ public class UI_Cart extends JPanel{
 
         // set cart table row
         
-        for (int i = 0; i < inCart.size(); i++) {
+        for (int i = 0; i < cart_items.size(); i++) {
             model.addRow(new Object[0]);
             model.setValueAt(false,i,0);
             model.setValueAt(i+1, i, 1);
-            model.setValueAt(inCart.get(i).get(0), i, 2);
-            model.setValueAt(inCart.get(i).get(1), i, 3);
-            model.setValueAt(inCart.get(i).get(2), i, 4);
+            model.setValueAt(cart_items.get(i).getProduct().getProductName(), i, 2);
+            model.setValueAt(cart_items.get(i).getProduct().getStockQty(), i, 3);
+            model.setValueAt(cart_items.get(i).getProduct().getProductPrice(), i, 4);
         }
         
         
