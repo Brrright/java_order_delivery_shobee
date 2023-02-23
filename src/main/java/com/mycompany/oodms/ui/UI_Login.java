@@ -8,6 +8,8 @@ import com.mycompany.oodms.Member;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import javax.swing.*;
 import java.awt.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UI_Login extends JPanel {
 
@@ -21,8 +23,10 @@ public class UI_Login extends JPanel {
     JLabel heading;
     JLabel emailLabel;
     JLabel passwordLabel;
+    JLabel validateLabel;
+    JLabel validatePwLabel;
     JTextField emailTF;
-    JTextField passwordTF;
+    JPasswordField passwordTF;
     JButton signup;
     JButton login;
     JPanel rightContainer = new JPanel();
@@ -76,18 +80,28 @@ public class UI_Login extends JPanel {
         emailLabel = new JLabel("Email :");
         emailLabel.setFont(new Font("MV Boli",Font.PLAIN,17));
         emailLabel.setBounds(478, 287, 56, 22);
+        
+        validateLabel = new JLabel("");
+        validateLabel.setFont(new Font("MV Boli",Font.PLAIN,17));
+        validateLabel.setForeground(Color.red);
+        validateLabel.setBounds(540, 287, 56, 22);
 
         // JLabel - password
         passwordLabel = new JLabel("Password :");
         passwordLabel.setFont(new Font("MV Boli",Font.PLAIN,17));
         passwordLabel.setBounds(478, 404, 94, 22);
+        
+        validatePwLabel = new JLabel("");
+        validatePwLabel.setFont(new Font("MV Boli",Font.PLAIN,17));
+        validatePwLabel.setForeground(Color.red);
+        validatePwLabel.setBounds(570, 404, 56, 22);
 
         // JTextField - email
         emailTF = new JTextField();
         emailTF.setBounds(478, 318, 488, 60);
 
         // JTextField - password
-        passwordTF = new JTextField();
+        passwordTF = new JPasswordField();
         passwordTF.setBounds(478, 435, 488, 60);
 
         // JButton - sign up
@@ -105,12 +119,16 @@ public class UI_Login extends JPanel {
         login.setFocusable(false);
         
         login.addActionListener(e -> {
+             if(!"".equals(validateLabel.getText()) && !"".equals(validatePwLabel.getText())){
+                JOptionPane.showMessageDialog(frame,"Invalid input.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             // validation needed.
             // is email or null
             
             Object user_role = userRoleComboBox.getSelectedItem();
             String user_email = emailTF.getText();
-            String user_password = passwordTF.getText();
+            String user_password = String.valueOf(passwordTF.getPassword());
             
             if(user_role == UserRole.ADMIN){
                 fileName = FileName.ADMIN;
@@ -126,9 +144,22 @@ public class UI_Login extends JPanel {
             } else{
                 JOptionPane.showMessageDialog(frame,"No user role selected.","Alert",JOptionPane.INFORMATION_MESSAGE);
             }
-            
         });
         
+        // login vlidation
+        emailTF.addKeyListener(new java.awt.event.KeyAdapter(){
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailTFKeyReleased(evt);
+            }
+         });
+        
+        
+        passwordTF.addKeyListener(new java.awt.event.KeyAdapter(){
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordTFKeyReleased(evt);
+            }
+         });
+
         // JPanel - right component
         rightContainer = new JPanel();
         rightContainer.setBounds(863, 0, 711, 766);
@@ -152,5 +183,28 @@ public class UI_Login extends JPanel {
         this.add(passwordTF);
         this.add(signup);
         this.add(login);
+        this.add(validateLabel);
+        this.add(validatePwLabel);
     }
+    
+      private void emailTFKeyReleased(java.awt.event.KeyEvent evt) {
+            String pattern = "^(.+)@(.+)$";
+            Pattern p = Pattern.compile(pattern);
+            Matcher match = p.matcher(emailTF.getText());
+            if (!match.matches()) {
+                validateLabel.setText("Invalid");
+            }
+            else {
+                validateLabel.setText("");
+            }
+        }
+      
+        private void passwordTFKeyReleased(java.awt.event.KeyEvent evt) {
+            if (passwordTF.getText().length() < 8) {
+                validatePwLabel.setText("Invalid");
+            }
+            else {
+                validatePwLabel.setText("");
+            }
+        }
 }
