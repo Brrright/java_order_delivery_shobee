@@ -2,6 +2,7 @@ package com.mycompany.oodms.ui;
 
 import com.mycompany.oodms.Product;
 import com.mycompany.oodms.Services.ProductService;
+import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,20 +23,18 @@ public class UI_AllProducts extends JPanel {
     ProductService product_service = new ProductService();
     ArrayList<Product> product_list = product_service.getProducts();
     
-    ArrayList<ArrayList<String>> tempProduct = new ArrayList<>(); // should store object instead 
-    ArrayList<String> tempProductContainer = new ArrayList<>();
     JButton[] products;
     
-    // TEMP : add temp product into temp arraylist
-    int loopCount;
-    private void tempProductGenerator(int productAmt) {
-        for (int i = 0; i < productAmt; i++) {
-            tempProductContainer.add("Product Name");
-            tempProductContainer.add("RM 10.00");
-            tempProductContainer.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-            tempProduct.add(tempProductContainer);
-        }   
-    }
+//    // TEMP : add temp product into temp arraylist
+//    int loopCount;
+//    private void tempProductGenerator(int productAmt) {
+//        for (int i = 0; i < productAmt; i++) {
+//            tempProductContainer.add("Product Name");
+//            tempProductContainer.add("RM 10.00");
+//            tempProductContainer.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
+//            tempProduct.add(tempProductContainer);
+//        }   
+//    }
     
      
     // ALL REQUIRED PANELS
@@ -48,6 +47,9 @@ public class UI_AllProducts extends JPanel {
     
     
     public UI_AllProducts() {
+        // setting up the data
+//        Provider_Product_Category provider_product  = new Provider_Product_Category();
+        ArrayList<Product> all_products = Provider_Product_Category.product_service.getProducts();
         
         // Title
         title = new JLabel("Products");
@@ -97,20 +99,20 @@ public class UI_AllProducts extends JPanel {
         
         
         // Products
-        loopCount = 2;
-        tempProductGenerator(loopCount); // temp product generator
+//        loopCount = 2;
+//        tempProductGenerator(loopCount); // temp product generator
         
-        products = new JButton[tempProduct.size()];
-        for (int i = 0; i < tempProduct.size(); i++) {
+        products = new JButton[all_products.size()];
+        for (int i = 0; i < all_products.size(); i++) {
            
             products[i] = new JButton();
             
             // add product name, price
-            products[i].setText(tempProduct.get(i).get(0) + " " + tempProduct.get(i).get(1));
+            products[i].setText(all_products.get(i).getProductName()+ " " + all_products.get(i).getProductPrice());
             
             
             // add image
-            ImageIcon productImg = new ImageIcon(tempProduct.get(i).get(2));
+            ImageIcon productImg = new ImageIcon(all_products.get(i).getProcuctPicture());
             Image image = productImg.getImage();
             Image scaleImage = image.getScaledInstance(331, 365, Image.SCALE_SMOOTH);
             ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
@@ -129,7 +131,7 @@ public class UI_AllProducts extends JPanel {
         
         
         // Panel for products
-        float rowCount = (float)tempProduct.size()/2;
+        float rowCount = (float)all_products.size()/2;
         int products_panel_height = 490 * (int)Math.ceil(rowCount);
         
         products_panel = new JPanel();

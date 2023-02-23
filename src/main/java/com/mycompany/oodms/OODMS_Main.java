@@ -21,7 +21,7 @@ public class OODMS_Main {
      public void initialize(){
         // setup Records (necessary record ) NOT USER RELATED DATA
         Provider_Product_Category provider_product  = new Provider_Product_Category();
-        
+        Provider_Product_Category.product_service.getProducts();
         // setup UI screen
         // Customer interface
         // unregistered
