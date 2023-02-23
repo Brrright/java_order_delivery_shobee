@@ -4,7 +4,6 @@
  */
 package com.mycompany.oodms.Services.Provider;
 
-import com.mycompany.oodms.Services.AddressService;
 import com.mycompany.oodms.Services.OrderItemService;
 import com.mycompany.oodms.Services.OrderService;
 //import static com.mycompany.oodms.Services.Provider.Provider_Member.order_item_service;
@@ -20,16 +19,18 @@ public class Provider_Order_OrderItem {
     
     public Provider_Order_OrderItem(){
         if(Provider_Address.address_service == null){
-            new Provider_Address();
+            Provider_Address provider_Address = new Provider_Address();
         }
         if(Provider_Member.member_service == null) {
-            new Provider_Member();
-        }
-        Provider_Order_OrderItem.order_service = new OrderService();
-        if(Provider_Product_Category.product_service == null){
-            new Provider_Product_Category();
+            Provider_Member provider_Member = new Provider_Member();
         }
         if(Provider_Order_OrderItem.order_service == null) {
+            Provider_Order_OrderItem.order_service = new OrderService();
+        }
+        if(Provider_Product_Category.product_service == null){
+            Provider_Product_Category provider_Product_Category = new Provider_Product_Category();
+        }
+        if(Provider_Order_OrderItem.order_item_service == null) {
             Provider_Order_OrderItem.order_item_service = new OrderItemService();
         }
     }

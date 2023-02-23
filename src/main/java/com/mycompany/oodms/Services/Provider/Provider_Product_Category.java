@@ -16,7 +16,7 @@ public class Provider_Product_Category {
     public static ProductService product_service;
     
     public Provider_Product_Category(){
-        if(Provider_Product_Category.product_service == null){
+        if(Provider_Product_Category.product_service == null ||Provider_Product_Category.category_service == null ){
             Provider_Product_Category.category_service  = new CategoryService();
             Provider_Product_Category.product_service  = new ProductService();
         }
