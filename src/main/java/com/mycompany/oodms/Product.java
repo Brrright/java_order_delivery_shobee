@@ -15,14 +15,16 @@ public class Product {
     private int stock_qty;
     private String product_pic;
     private Category category;
+    private String productDescription;
     
-    public Product(int id, String pro_name, double price, int stock_qty, String pro_pic, Category category) {
+    public Product(int id, String pro_name, double price, int stock_qty, String pro_pic, Category category, String productDescription) {
         this.productID = id;
         this.productName = pro_name;
         this.price = price;
         this.stock_qty = stock_qty;
         this.product_pic = pro_pic;
         this.category = category;
+        this.productDescription = productDescription;
     }
     
     public int getProductID(){
@@ -31,6 +33,10 @@ public class Product {
     
     public String getProductName(){
         return this.productName;
+    }
+    
+    public String getProductDescription(){
+        return this.productDescription;
     }
     
     public double getProductPrice(){
@@ -54,6 +60,10 @@ public class Product {
     
     public void setProductName(String pro_name) {
         this.productName = pro_name;
+    }
+    
+    public void setProductDescription(String productDescription){
+        this.productDescription = productDescription;
     }
     
     public void setProductPrice(double price) {

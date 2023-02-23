@@ -125,13 +125,16 @@ abstract class User {
                 frame.replacePanel(new UI_AdminMain());
             }
             case FileName.MEMBER -> {
-//                frame.replacePanel(new UI_AllProducts());
+                frame.replacePanel(new UI_AllProducts());
 //                 temporary testing for user related ui (after login)
 //                    frame.replacePanel(new UI_Cart());
-                    frame.replacePanel(new UI_MyOrder());
+//                    frame.replacePanel(new UI_MyOrder());
             }
             case FileName.DELIVERY_STAFF -> {                
                 frame.replacePanel(new UI_UpComing());
+            }
+            default -> {
+                System.out.println("no file name specified.");
             }
         }
         

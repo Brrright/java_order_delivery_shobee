@@ -20,7 +20,7 @@ public class FileHeader {
     final static String ORDER_HEADER = "OrderID;DateTime;TotalPrice;Paid;Change;MemberID;AddressID";
     final static String ORDER_ITEM_HEADER = "ProductID;Quantity;OrderID;MemberID";
 
-    final static String PRODUCT_HEADER = "ProductID;Product Name;Price;Stock Quantity;Picture;CategoryID";
+    final static String PRODUCT_HEADER = "ProductID;Product Name;Price;Stock Quantity;Picture;CategoryID;ProductDescription";
     final static String CATEGORY_HEADER = "CategoryID;CategoryName";
     
     // extra feature: warehouse

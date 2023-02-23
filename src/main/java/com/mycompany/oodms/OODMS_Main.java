@@ -28,10 +28,10 @@ public class OODMS_Main {
         // setup UI screen
         // Customer interface
         // unregistered
-        frame = new Main_Frame(new UI_Login());
+//        frame = new Main_Frame(new UI_Login());
 //        frame = new Main_Frame(new UI_Signup());
 //        frame = new Main_Frame(new UI_AllProducts());
-//        frame = new Main_Frame(new UI_Product());
+        frame = new Main_Frame(new UI_Product(1));
 
         // registered
 //        frame = new Main_Frame(new UI_Profile());

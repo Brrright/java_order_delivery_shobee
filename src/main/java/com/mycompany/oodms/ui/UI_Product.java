@@ -2,6 +2,7 @@ package com.mycompany.oodms.ui;
 
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
@@ -13,25 +14,29 @@ public class UI_Product extends JPanel {
     JButton backBtn;
     JLabel productImg;
     JLabel name;
-    JLabel sold;
+    JLabel category;
     JLabel description;
     JLabel stocks;
     JLabel price;
     JButton addToCartBtn;
+    
+    public Product initialize_data(int id){
+        Product product = Provider_Product_Category.product_service.getProduct(1);
+        return product;
+    }
 
-    public UI_Product(){
-        // REQUIRED DATA
-        // ID, PICTURE, NAME, DESCRIPTION, STOCK, PRICE, SOLD
+    public UI_Product(int product_id){
+        Product product = initialize_data(product_id);
         
         
-        ArrayList<String> productDetails = new ArrayList<>(); 
-        productDetails.add("ITEM1");
-        productDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-        productDetails.add("Nameg");
-        productDetails.add("Lorem ipsum dolor sit amet consectetur. Non habitant volutpat fames vel amet mollis. Massa sed sem diam tortor praesento");
-        productDetails.add("22"); // stock
-        productDetails.add("45.50");
-        productDetails.add("10"); //sold
+//        ArrayList<String> product = new ArrayList<>(); 
+//        product.add("ITEM1");
+//        product.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
+//        product.add("Nameg");
+//        product.add("Lorem ipsum dolor sit amet consectetur. Non habitant volutpat fames vel amet mollis. Massa sed sem diam tortor praesento");
+//        product.add("22"); // stock
+//        product.add("45.50");
+//        product.add("10"); //sold
 
         // JLabel - back
         backBtn = new JButton("< back");
@@ -43,7 +48,7 @@ public class UI_Product extends JPanel {
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         //image (edited scale)
-        ImageIcon itemPic = new ImageIcon(productDetails.get(1));
+        ImageIcon itemPic = new ImageIcon(product.getProcuctPicture());
         Image image = itemPic.getImage();
         Image newImage = image.getScaledInstance(370, 426, Image.SCALE_SMOOTH);
         ImageIcon newIcon = new ImageIcon(newImage);
@@ -53,32 +58,32 @@ public class UI_Product extends JPanel {
         productImg.setBounds(145,182,370,426);
 
         // JLabel - name
-        name = new JLabel(productDetails.get(2));
+        name = new JLabel(product.getProductName());
         name.setFont(new Font("MV Boli",Font.BOLD,30));
         name.setBounds(576,182,342,35);
 
-        // Jlabel - sold
-        sold = new JLabel(productDetails.get(6)+ " " + "sold");
-        sold.setFont(new Font("MV Boli",Font.PLAIN,12));
-        sold.setForeground(new Color(255, 151, 98, 124));
-        sold.setBounds(577,230,80,11);
+        // Jlabel - category
+        category = new JLabel( "Category: " + product.getCategory().getCategoryName() );
+        category.setFont(new Font("MV Boli",Font.PLAIN,12));
+        category.setForeground(new Color(255, 151, 98, 124));
+        category.setBounds(577,230,200,11);
 
         // Jlabel - description
-        description = new JLabel("<html>Shobee is a trusted online store that provides quality assurance to its customers. They sell only high-quality products and work with reputable suppliers and manufacturers.</html>");
+        description = new JLabel("<html>"+ product.getProductDescription() + "</html>");
         description.setFont(new Font("MV Boli",Font.PLAIN,15));
         description.setForeground(Color.LIGHT_GRAY);
         description.setBounds(576,290,360,320);
         description.setVerticalAlignment(JLabel.TOP);
 
         // JLabel - stocks
-        String stockStatus = (Integer.parseInt(productDetails.get(4)) > 0) ? productDetails.get(4) + " available" : "out of stock";
+        String stockStatus = (product.getStockQty() > 0) ? product.getStockQty() + " available" : "out of stock";
         stocks = new JLabel(stockStatus);
         stocks.setFont(new Font("MV Boli",Font.PLAIN,10));
         stocks.setForeground(new Color(121, 121, 121));
         stocks.setBounds(577,550,80,9);
 
         // JLabel - price
-        price = new JLabel("RM " + productDetails.get(5));
+        price = new JLabel("RM " + product.getProductPrice());
         price.setFont(new Font("MV Boli",Font.PLAIN,26));
         price.setForeground(new Color(0, 0, 0));
         price.setBounds(576,575,200,25);
@@ -107,7 +112,7 @@ public class UI_Product extends JPanel {
         this.add(backBtn);
         this.add(productImg);
         this.add(name);
-        this.add(sold);
+        this.add(category);
         this.add(description);
         this.add(stocks);
         this.add(price);

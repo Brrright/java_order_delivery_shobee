@@ -43,11 +43,12 @@ public class ProductService {
             int product_stock = Integer.parseInt(product_data[3]);
             String product_picture = product_data[4];
             int product_cate_id = Integer.parseInt(product_data[5]);
+            String product_description = product_data[6];
           
         // Category object
             Category category = Provider_Product_Category.category_service.getCategory(product_cate_id);
             
-            return new Product(product_id, product_name, product_price, product_stock, product_picture, category);
+            return new Product(product_id, product_name, product_price, product_stock, product_picture, category, product_description);
     }
     
     private FileRecord convertToFileRecord(Product product){
