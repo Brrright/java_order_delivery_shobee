@@ -48,6 +48,7 @@ public class UI_AllProducts extends JPanel {
     
     ArrayList<Product> initialize_data(){
         // setting up the data
+        Provider_Product_Category provider_product  = new Provider_Product_Category();
         ArrayList<Product> all_products = Provider_Product_Category.product_service.getProducts();
         return all_products;
     }

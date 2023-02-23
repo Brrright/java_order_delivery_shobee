@@ -19,17 +19,17 @@ public class Provider_Order_OrderItem {
     public static OrderItemService order_item_service;
     
     public Provider_Order_OrderItem(){
-        if(Provider_Address.address_service.getAddresses().isEmpty()){
+        if(Provider_Address.address_service == null){
             new Provider_Address();
         }
-        if(Provider_Member.member_service.getMembers().isEmpty()) {
+        if(Provider_Member.member_service == null) {
             new Provider_Member();
         }
         Provider_Order_OrderItem.order_service = new OrderService();
-        if(Provider_Product_Category.product_service.getProducts().isEmpty()){
+        if(Provider_Product_Category.product_service == null){
             new Provider_Product_Category();
         }
-        if(Provider_Order_OrderItem.order_service.getOrders().isEmpty()) {
+        if(Provider_Order_OrderItem.order_service == null) {
             Provider_Order_OrderItem.order_item_service = new OrderItemService();
         }
     }

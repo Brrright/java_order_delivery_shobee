@@ -17,18 +17,18 @@ public class Provider_Delivery {
     public static DeliveryService delivery_service;
     
     public Provider_Delivery(){
-        if(Provider_Member.member_service.getMembers().isEmpty()) {
+        if(Provider_Member.member_service == null) {
             new Provider_Member();
         }
         
-        if(Provider_Address.address_service.getAddresses().isEmpty()) {
+        if(Provider_Address.address_service == null) {
             new Provider_Address();
         }
         
-        if(Provider_DeliveryStaff.staff_service.getStaffs().isEmpty()) {
+        if(Provider_DeliveryStaff.staff_service == null) {
             new Provider_DeliveryStaff();
         }
-        if(Provider_Delivery.delivery_service.getDeliveries().isEmpty()) {
+        if(Provider_Delivery.delivery_service == null) {
             Provider_Delivery.delivery_service = new DeliveryService();
         }
     }
