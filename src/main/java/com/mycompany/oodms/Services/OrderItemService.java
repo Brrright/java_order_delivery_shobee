@@ -7,11 +7,9 @@ package com.mycompany.oodms.Services;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
-import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Order;
 import com.mycompany.oodms.OrderItem;
 import com.mycompany.oodms.Product;
-import com.mycompany.oodms.Services.Provider.Provider_Member;
 import com.mycompany.oodms.Services.Provider.Provider_Order_OrderItem;
 import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import java.util.ArrayList;
@@ -38,7 +36,7 @@ public class OrderItemService {
         String[] order_item_data = r.getRecordList();
         if(order_item_data.length == 0){
             return null;
-    }
+        }
 //        Order Item Data
         int product_id = Integer.parseInt(order_item_data[0]);
         int quantity = Integer.parseInt(order_item_data[1]);
@@ -48,7 +46,8 @@ public class OrderItemService {
         Order order = Provider_Order_OrderItem.order_service.getOrder(order_id);
         Product product = Provider_Product_Category.product_service.getProduct(product_id);
 //        Member member = Provider_Member.member_service.getMember(member_id);
-        
+        System.out.println(quantity);
+        System.out.println(product.getProductPrice());
         return new OrderItem(quantity, product.getProductPrice(), product, order);
     }
     
@@ -57,9 +56,8 @@ public class OrderItemService {
         int qty = order_item.getQuantity();
         int order_id = order_item.getOrder().getOrderID();
         int member_id = order_item.getOrder().getCustomer().getID();
-        
-                
-        return new FileRecord(product_id, product_id + ";" + qty + ";" + order_id + ';' + member_id);
+        String member_record = product_id + ";" + qty + ";" + order_id + ';' + member_id;
+        return new FileRecord(product_id, member_record);
     }
     
      public ArrayList<OrderItem> getOrderItems() {

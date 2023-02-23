@@ -127,8 +127,8 @@ abstract class User {
             case FileName.MEMBER -> {
 //                frame.replacePanel(new UI_AllProducts());
 //                 temporary testing for user related ui (after login)
-                    frame.replacePanel(new UI_Cart());
-//                    frame.replacePanel(new UI_MyOrder());
+//                    frame.replacePanel(new UI_Cart());
+                    frame.replacePanel(new UI_MyOrder());
             }
             case FileName.DELIVERY_STAFF -> {                
                 frame.replacePanel(new UI_UpComing());
