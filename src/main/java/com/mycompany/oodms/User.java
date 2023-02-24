@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  * @author mingl
  */
 
-abstract class User {
+public abstract class User {
     protected int userId;
     protected String userName;
     protected String userEmail;
@@ -122,18 +122,18 @@ abstract class User {
         switch(fileName) {
             case FileName.ADMIN -> {
                 frame.replacePanel(new UI_AdminMain());
-                OODMS_Main.current_user_role = UserRole.ADMIN;
+                OODMS_Main.current_user.setRole(UserRole.ADMIN);
             }
             case FileName.MEMBER -> {
                 frame.replacePanel(new UI_AllProducts());
-                OODMS_Main.current_user_role = UserRole.MEMBER;
+                OODMS_Main.current_user.setRole(UserRole.MEMBER);
 //                 temporary testing for user related ui (after login)
 //                    frame.replacePanel(new UI_Cart());
 //                    frame.replacePanel(new UI_MyOrder());
             }
             case FileName.DELIVERY_STAFF -> {                
                 frame.replacePanel(new UI_UpComing());                
-                OODMS_Main.current_user_role = UserRole.DELIVERY_STAFF;
+                OODMS_Main.current_user.setRole(UserRole.DELIVERY_STAFF);
             }
             default -> {
                 System.out.println("no file name specified.");

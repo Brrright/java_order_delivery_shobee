@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class OODMS_Main {
     public static Main_Frame frame;
     public static User current_user; // make user detail globally accessible
-    public static UserRole current_user_role;
     
      public void initialize(){
         // setup Records (necessary record ) NOT USER RELATED DATA
