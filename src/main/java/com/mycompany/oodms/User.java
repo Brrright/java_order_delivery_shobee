@@ -14,6 +14,8 @@ import com.mycompany.oodms.ui.UI_Cart;
 import com.mycompany.oodms.ui.UI_Delivery.UI_UpComing;
 import com.mycompany.oodms.ui.UI_Login;
 import com.mycompany.oodms.ui.UI_MyOrder;
+import com.mycompany.oodms.ui.UI_OrderDetails;
+import com.mycompany.oodms.ui.UI_Payment;
 import com.mycompany.oodms.ui.UI_Profile;
 import javax.swing.JOptionPane;
 
@@ -169,7 +171,9 @@ public abstract class User {
 //                 temporary testing for user related ui (after login)
 //                    frame.replacePanel(new UI_Cart());
 //                    frame.replacePanel(new UI_MyOrder());
-                    frame.replacePanel(new UI_Profile());
+//                    frame.replacePanel(new UI_Profile());
+//                    frame.replacePanel(new UI_OrderDetails());
+                    frame.replacePanel(new UI_Payment());
 
             }
             case FileName.DELIVERY_STAFF -> {                
