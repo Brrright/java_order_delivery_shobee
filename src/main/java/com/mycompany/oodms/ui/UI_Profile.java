@@ -3,6 +3,7 @@ package com.mycompany.oodms.ui;
 
 import com.mycompany.oodms.Admin;
 import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Services.Provider.Provider_Admin;
@@ -37,25 +38,24 @@ public class UI_Profile extends JPanel {
     ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
 
     public UI_Profile(){
-        // REQUIRED DATA
-        // ID, PICTURE, NAME, GENDER, DOB, EMAIL, PHONE NO
         User user = OODMS_Main.current_user;
         
-        switch(user){
+        
+        switch(user.getRole()){
             case ADMIN -> {
                 Admin admin = (Admin) OODMS_Main.current_user;
                 Provider_Admin provider_admin = new Provider_Admin();
-                Admin user  = Provider_Admin.admin_service.getAdmin(admin.getID());
+                user  = Provider_Admin.admin_service.getAdmin(admin.getID());
             }
             case MEMBER -> {
                 Member member = (Member) OODMS_Main.current_user;
                 Provider_Member provider_admin = new Provider_Member();
-                Member user =Provider_Member.member_service.getMember(member.getID()); 
+                user =Provider_Member.member_service.getMember(member.getID()); 
             }
             case DELIVERY_STAFF -> {
                 DeliveryStaff staff = (DeliveryStaff) OODMS_Main.current_user;
                 Provider_DeliveryStaff provider_staff = new Provider_DeliveryStaff();
-                DeliveryStaff user = Provider_DeliveryStaff.staff_service.getStaff(staff.getID());
+                user = Provider_DeliveryStaff.staff_service.getStaff(staff.getID());
             }
             default -> {
                 System.out.println("no user role selected");
@@ -82,7 +82,7 @@ public class UI_Profile extends JPanel {
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         //image
-        ImageIcon itemPic = new ImageIcon(profileDetails.get(1));
+        ImageIcon itemPic = new ImageIcon(user.getPicturePath());
         Image image = itemPic.getImage();
         Image newImage = image.getScaledInstance(370, 426, Image.SCALE_SMOOTH);
         ImageIcon newIcon = new ImageIcon(newImage);
@@ -92,7 +92,7 @@ public class UI_Profile extends JPanel {
         profilePic.setBounds(145,182,370,426);
 
         // JLabel - name
-        name = new JLabel(profileDetails.get(2));
+        name = new JLabel(user.getName());
         name.setFont(new Font("MV Boli",Font.BOLD,30));
         name.setBounds(577,189,342,35);
 
@@ -103,7 +103,7 @@ public class UI_Profile extends JPanel {
         idHeader.setBounds(577,239,49,26);
 
         // JLabel - ID
-        id = new JLabel(profileDetails.get(0));
+        id = new JLabel(Integer.toString(user.getID()));
         id.setFont(new Font("MV Boli",Font.PLAIN,16));
         id.setForeground(new Color(0, 0, 0, 255));
         id.setBounds(577,265,90,31);
@@ -115,7 +115,7 @@ public class UI_Profile extends JPanel {
         genderHeader.setBounds(708,239,70,26);
 
         // Jlabel - gender
-        gender = new JLabel(profileDetails.get(3));
+        gender = new JLabel(String.valueOf(user.getGender()));
         gender.setFont(new Font("MV Boli",Font.PLAIN,16));
         gender.setForeground(new Color(0, 0, 0, 255));
         gender.setBounds(708,265,90,31);
@@ -123,13 +123,13 @@ public class UI_Profile extends JPanel {
         /////////
         
         // JLabel - dob header
-        dobHeader = new JLabel("Date of Birth :");
+        dobHeader = new JLabel("Age :");
         dobHeader.setFont(new Font("MV Boli",Font.PLAIN,12));
         dobHeader.setForeground(new Color(152, 152, 152, 255));
         dobHeader.setBounds(577,312,90,26);
 
         // Jlabel - dob
-        dob = new JLabel(profileDetails.get(4));
+        dob = new JLabel(Integer.toString(user.getAge()));
         dob.setFont(new Font("MV Boli",Font.PLAIN,16));
         dob.setForeground(new Color(0, 0, 0, 255));
         dob.setBounds(577,338,180,31);
@@ -141,7 +141,7 @@ public class UI_Profile extends JPanel {
         emailHeader.setBounds(577,385,50,26);
 
         // JLabel - email
-        email = new JLabel(profileDetails.get(5));
+        email = new JLabel(user.getEmail());
         email.setFont(new Font("MV Boli",Font.PLAIN,16));
         email.setForeground(new Color(0, 0, 0));
         email.setBounds(577,411,340,31);
@@ -153,7 +153,7 @@ public class UI_Profile extends JPanel {
         phoneNoHeader.setBounds(577,458,200,26);
 
         // JLabel - phoneNo
-        phoneNo = new JLabel(profileDetails.get(6));
+        phoneNo = new JLabel(user.getPhoneNum());
         phoneNo.setFont(new Font("MV Boli",Font.PLAIN,16));
         phoneNo.setForeground(new Color(0, 0, 0));
         phoneNo.setBounds(577,484,200,31);

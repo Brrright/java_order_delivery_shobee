@@ -14,6 +14,7 @@ import com.mycompany.oodms.ui.UI_Cart;
 import com.mycompany.oodms.ui.UI_Delivery.UI_UpComing;
 import com.mycompany.oodms.ui.UI_Login;
 import com.mycompany.oodms.ui.UI_MyOrder;
+import com.mycompany.oodms.ui.UI_Profile;
 import javax.swing.JOptionPane;
 
 /**
@@ -48,41 +49,79 @@ public abstract class User {
         this.userId = userId;
     }
     
-    abstract void setID(int id);
+    public void setID(int id){
+        this.userId = id;
+    }
     
-    abstract void setEmail(String email);
+    public void setEmail(String email){
+        this.userEmail = email;
+    }
     
-    abstract void setName(String name);
+    public void setName(String name){
+        this.userName = name;
+    }
     
-    abstract void setPassword(String password);
+    public void setPassword(String password){
+        this.password = password;
+    }
     
-    abstract void setAge(int age);
+    public void setAge(int age) {
+        this.age = age;
+    }
     
-    abstract void setGender(Gender gender);
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
     
-    abstract void setPhoneNum(String phononeNum);
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
     
-    abstract void setPicturePath(String picturecturePath);
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
     
-    abstract void setRole(UserRole role);
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
     
-    abstract int getID();
+    public int getID(){
+        return this.userId;
+    }
     
-    abstract String getName();
+    public String getName(){
+        return this.userName;
+    }
     
-    abstract String getEmail();
+    public String getEmail()
+    {
+        return this.userEmail;
+    }
     
-    abstract String getPassword();
+    public String getPassword()
+    {
+        return this.password;
+    }
     
-    abstract int getAge();
+    public int getAge(){
+        return this.age;
+    }
     
-    abstract Gender getGender();
+    public Gender getGender(){
+        return this.gender;
+    }
     
-    abstract String getPhoneNum();
+    public String getPhoneNum(){
+        return this.password;
+    }
     
-    abstract String getPicturePath();
+    public String getPicturePath(){
+        return this.picturePath;
+    }
     
-    abstract UserRole getRole();
+    public UserRole getRole(){
+        return this.role;
+    }
         
     public static void login(String email, String password, String fileName){
         FileHandler fHandler = new FileHandler(fileName);
@@ -130,6 +169,8 @@ public abstract class User {
 //                 temporary testing for user related ui (after login)
 //                    frame.replacePanel(new UI_Cart());
 //                    frame.replacePanel(new UI_MyOrder());
+                    frame.replacePanel(new UI_Profile());
+
             }
             case FileName.DELIVERY_STAFF -> {                
                 frame.replacePanel(new UI_UpComing());                
