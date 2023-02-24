@@ -1,6 +1,15 @@
 package com.mycompany.oodms.ui;
 
 
+import com.mycompany.oodms.Admin;
+import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.Member;
+import com.mycompany.oodms.OODMS_Main;
+import com.mycompany.oodms.Services.Provider.Provider_Admin;
+import com.mycompany.oodms.Services.Provider.Provider_DeliveryStaff;
+import com.mycompany.oodms.Services.Provider.Provider_Member;
+import com.mycompany.oodms.User;
+import com.mycompany.oodms.UserRole;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,21 +32,43 @@ public class UI_Profile extends JPanel {
     JButton myOrder;
     JButton editProfile;
     JButton changePwd;
-
+    
     ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
 
     public UI_Profile(){
         // REQUIRED DATA
         // ID, PICTURE, NAME, GENDER, DOB, EMAIL, PHONE NO
+        
+        switch(OODMS_Main.current_user_role){
+            case ADMIN -> {
+                Admin admin = (Admin) OODMS_Main.current_user;
+                Provider_Admin provider_admin = new Provider_Admin();
+                Admin user  = Provider_Admin.admin_service.getAdmin(admin.getID());
+            }
+            case MEMBER -> {
+                Member member = (Member) OODMS_Main.current_user;
+                Provider_Member provider_admin = new Provider_Member();
+                Member user =Provider_Member.member_service.getMember(member.getID()); 
+            }
+            case DELIVERY_STAFF -> {
+                DeliveryStaff staff = (DeliveryStaff) OODMS_Main.current_user;
+                Provider_DeliveryStaff provider_staff = new Provider_DeliveryStaff();
+                DeliveryStaff user = Provider_DeliveryStaff.staff_service.getStaff(staff.getID());
+            }
+            default -> {
+                System.out.println("no user role selected");
+                return;
+            }
+        }
 
-        ArrayList<String> profileDetails = new ArrayList<>();
-        profileDetails.add("PROFILE1");
-        profileDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-        profileDetails.add("Hong Wei");
-        profileDetails.add("Male");
-        profileDetails.add("2/2/2002"); // stock
-        profileDetails.add("hw@gmail.com");
-        profileDetails.add("0192583948"); //sold
+//        ArrayList<String> profileDetails = new ArrayList<>();
+//        profileDetails.add("PROFILE1");
+//        profileDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
+//        profileDetails.add("Hong Wei");
+//        profileDetails.add("Male");
+//        profileDetails.add("2/2/2002"); // stock
+//        profileDetails.add("hw@gmail.com");
+//        profileDetails.add("0192583948"); //sold
 
         // JLabel - back
         backBtn = new JButton("< back");

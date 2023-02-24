@@ -119,19 +119,21 @@ abstract class User {
         OODMS_Main.current_user.setPhoneNum(splitted_user_record[6]);
         OODMS_Main.current_user.setPicturePath(splitted_user_record[7]);
         
-        
         switch(fileName) {
             case FileName.ADMIN -> {
                 frame.replacePanel(new UI_AdminMain());
+                OODMS_Main.current_user_role = UserRole.ADMIN;
             }
             case FileName.MEMBER -> {
                 frame.replacePanel(new UI_AllProducts());
+                OODMS_Main.current_user_role = UserRole.MEMBER;
 //                 temporary testing for user related ui (after login)
 //                    frame.replacePanel(new UI_Cart());
 //                    frame.replacePanel(new UI_MyOrder());
             }
             case FileName.DELIVERY_STAFF -> {                
-                frame.replacePanel(new UI_UpComing());
+                frame.replacePanel(new UI_UpComing());                
+                OODMS_Main.current_user_role = UserRole.DELIVERY_STAFF;
             }
             default -> {
                 System.out.println("no file name specified.");
