@@ -26,7 +26,7 @@ public class Provider_Cart {
             Provider_Product_Category provider_Product_Category = new Provider_Product_Category();
         }
         if(Provider_Cart.cart_item_service == null) {
-            System.out.println("no cart for now, creating...");
+//            System.out.println("no cart for now, creating...");
             cart_item_service = new CartItemService();
         }
     }

@@ -18,11 +18,17 @@ import java.util.List;
  * @author mingl
  */
 public class MemberService {
+    
+    public static MemberService member_service;
+
     private ArrayList<Member> members;
     FileHandler member_file = new FileHandler(FileName.MEMBER);
     
     public MemberService(){
         this.members = new ArrayList<Member>();
+         if(member_service == null) {
+            member_service = new MemberService();
+         }
         List<FileRecord> member_records = member_file.FetchRecord();
         member_records.forEach((record) -> {
             Member member_object = convertToObject(record);

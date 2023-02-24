@@ -24,6 +24,7 @@ public class AddressService {
     public AddressService(){
         this.addresses = new ArrayList<Address>();
         List<FileRecord> address_record = address_file.FetchRecord();
+//        address_record.size() == 0
         address_record.forEach((record) -> {
             Address order_object = convertToObject(record);
             this.addresses.add(order_object);
@@ -35,6 +36,7 @@ public class AddressService {
         if (address_data.length == 0){
             return null;
         }
+        
         Member member = Provider_Member.member_service.getMember(Integer.parseInt(address_data[5]));
         return new Address(r.getID(), address_data[1], address_data[2], address_data[3], address_data[4], member);
     }
@@ -48,10 +50,27 @@ public class AddressService {
         return this.addresses;
     }
     
-    public Address getAddress(int id) {
+    public Address getAddress(int address_id) {
         Address response = null;
         for(int i = 0; i < addresses.size(); i ++) {
-            if(addresses.get(i).getAddressID() == id){
+            if(addresses.get(i).getAddressID() == address_id){
+                response = addresses.get(i);
+                break;
+            }
+        }
+         if(response == null){
+            System.out.println("not such record in this \"addresses\".  FIND A WAY TO HANDLE**");
+        }
+        return response;
+    }
+    
+    public Address getAddressByMemberId(int member_id) {
+        Address response = null;
+        for(int i = 0; i < addresses.size(); i ++) {
+            System.out.println(addresses.get(i).getMember().getID());
+            
+            if(addresses.get(i).getMember().getID()== member_id){
+                System.out.println("member id match, fetching address...");
                 response = addresses.get(i);
                 break;
             }

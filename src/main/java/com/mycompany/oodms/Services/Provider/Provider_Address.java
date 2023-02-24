@@ -13,16 +13,17 @@ import com.mycompany.oodms.Services.AddressService;
 public class Provider_Address {
     public static AddressService address_service;
     
-    public Provider_Address()
+    public static boolean StartProvider()
     {
         if(Provider_Member.member_service == null){
-            Provider_Member provider_Member = new Provider_Member();
-    }
-//        if(Provider_DeliveryStaff.staff_service == null){
-//            Provider_DeliveryStaff provider_DeliveryStaff = new Provider_DeliveryStaff();
-//        }
+            Provider_Member.StartProvider();
+        }  
         if(Provider_Address.address_service == null){
-            Provider_Address.address_service = new AddressService();        
+            Provider_Address.address_service = new AddressService();    
+             if (address_service.getAddresses().size() == 0){
+                 return false;
+             }
         }
+        return true;
     }
 }
