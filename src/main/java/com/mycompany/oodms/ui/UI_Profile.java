@@ -33,13 +33,15 @@ public class UI_Profile extends JPanel {
     JButton editProfile;
     JButton changePwd;
     
+    
     ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
 
     public UI_Profile(){
         // REQUIRED DATA
         // ID, PICTURE, NAME, GENDER, DOB, EMAIL, PHONE NO
+        User user = OODMS_Main.current_user;
         
-        switch(OODMS_Main.current_user_role){
+        switch(user){
             case ADMIN -> {
                 Admin admin = (Admin) OODMS_Main.current_user;
                 Provider_Admin provider_admin = new Provider_Admin();

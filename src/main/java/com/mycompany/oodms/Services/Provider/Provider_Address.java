@@ -17,7 +17,7 @@ public class Provider_Address {
     {
         if(Provider_Member.member_service == null){
             Provider_Member provider_Member = new Provider_Member();
-        }
+    }
 //        if(Provider_DeliveryStaff.staff_service == null){
 //            Provider_DeliveryStaff provider_DeliveryStaff = new Provider_DeliveryStaff();
 //        }
