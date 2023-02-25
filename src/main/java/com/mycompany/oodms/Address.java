@@ -77,4 +77,9 @@ public class Address {
     public void setMember(Member member) {
         this.member = member;
     }
+    
+    @Override
+    public String toString() {
+        return this.streetName + " " + this.postcode + " " + this.city + " "+ this.state;
+    }
 }
