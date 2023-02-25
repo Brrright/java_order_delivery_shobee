@@ -1,8 +1,12 @@
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.Cart;
+import com.mycompany.oodms.CartItem;
+import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.CartService;
 import com.mycompany.oodms.Services.ProductService;
 import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 
@@ -90,6 +94,7 @@ public class UI_Product extends JPanel {
         price.setFont(new Font("MV Boli",Font.PLAIN,26));
         price.setForeground(new Color(0, 0, 0));
         price.setBounds(576,575,200,25);
+        
 
         // JButton - addToCartBtn
         addToCartBtn = new JButton("Add to Cart");
@@ -102,7 +107,14 @@ public class UI_Product extends JPanel {
         addToCartBtn.setFocusable(false);
         addToCartBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         addToCartBtn.addActionListener(e -> {
-            frame.replacePanel(new UI_Profile());
+            if(OODMS_Main.current_user == null){
+                JOptionPane.showMessageDialog(frame,"Please login or register an member account to enable this feature <3.","Hello user",JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            Cart cart = CartService.getCartService().getCartByMemberID(OODMS_Main.current_user.getID());
+            CartItem newCartItem = new CartItem(cart, (Member) OODMS_Main.current_user, product, 1);
+            frame.replacePanel(new UI_Cart(newCartItem));
         });
 
 
