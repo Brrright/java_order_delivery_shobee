@@ -2,12 +2,11 @@ package com.mycompany.oodms.ui;
 
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.ProductService;
 import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
-import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class UI_Product extends JPanel {
 
@@ -21,7 +20,7 @@ public class UI_Product extends JPanel {
     JButton addToCartBtn;
     
     public Product initialize_data(int id){
-        Product product = Provider_Product_Category.product_service.getProduct(1);
+        Product product = ProductService.getProductService().getProduct(id);
         return product;
     }
 

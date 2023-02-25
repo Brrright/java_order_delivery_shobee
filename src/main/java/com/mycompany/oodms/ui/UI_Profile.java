@@ -9,6 +9,9 @@ import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Services.Provider.Provider_Admin;
 import com.mycompany.oodms.Services.Provider.Provider_DeliveryStaff;
 import com.mycompany.oodms.Services.Provider.Provider_Member;
+import com.mycompany.oodms.Services.User.AdminService;
+import com.mycompany.oodms.Services.User.DeliveryStaffService;
+import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.User;
 import com.mycompany.oodms.UserRole;
 import javax.swing.*;
@@ -38,24 +41,22 @@ public class UI_Profile extends JPanel {
     ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
 
     public UI_Profile(){
-        User user = OODMS_Main.current_user;
-        
-        
+         User user = OODMS_Main.current_user;
         switch(user.getRole()){
             case ADMIN -> {
                 Admin admin = (Admin) OODMS_Main.current_user;
                 Provider_Admin provider_admin = new Provider_Admin();
-                user  = Provider_Admin.admin_service.getAdmin(admin.getID());
+                user  = AdminService.getAdminService().getAdmin(admin.getID());
             }
             case MEMBER -> {
                 Member member = (Member) OODMS_Main.current_user;
                 Provider_Member provider_admin = new Provider_Member();
-                user =Provider_Member.member_service.getMember(member.getID()); 
+                user = MemberService.getMemberService().getMember(member.getID()); 
             }
             case DELIVERY_STAFF -> {
                 DeliveryStaff staff = (DeliveryStaff) OODMS_Main.current_user;
                 Provider_DeliveryStaff provider_staff = new Provider_DeliveryStaff();
-                user = Provider_DeliveryStaff.staff_service.getStaff(staff.getID());
+                user = DeliveryStaffService.getDeliveryStaffService().getStaff(staff.getID());
             }
             default -> {
                 System.out.println("no user role selected");

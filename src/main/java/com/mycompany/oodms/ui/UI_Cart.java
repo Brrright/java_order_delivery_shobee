@@ -7,6 +7,8 @@ package com.mycompany.oodms.ui;
 import com.mycompany.oodms.CartItem;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
+import com.mycompany.oodms.Services.CartItemService;
+import com.mycompany.oodms.Services.CartService;
 import com.mycompany.oodms.Services.Provider.Provider_Cart;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -28,8 +30,7 @@ public class UI_Cart extends JPanel{
     Member member = (Member) OODMS_Main.current_user;
     
     public ArrayList<CartItem> initiatize_data(){
-        Provider_Cart provider_cart = new Provider_Cart();
-        return Provider_Cart.cart_item_service.getCartItems(member.getID());
+        return CartItemService.getCartItemService().getCartItems(member.getID());
     }
     
     public UI_Cart() {
