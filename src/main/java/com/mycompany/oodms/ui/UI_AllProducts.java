@@ -20,18 +20,6 @@ public class UI_AllProducts extends JPanel {
     JButton searchBtn;
     
     JButton[] products;
-    
-//    // TEMP : add temp product into temp arraylist
-//    int loopCount;
-//    private void tempProductGenerator(int productAmt) {
-//        for (int i = 0; i < productAmt; i++) {
-//            tempProductContainer.add("Product Name");
-//            tempProductContainer.add("RM 10.00");
-//            tempProductContainer.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-//            tempProduct.add(tempProductContainer);
-//        }   
-//    }
-    
      
     // ALL REQUIRED PANELS
     JScrollPane scrollPane;
@@ -40,7 +28,6 @@ public class UI_AllProducts extends JPanel {
     JPanel searchFilter_panel;
     JPanel products_panel;
     JPanel searchNproduct_Panel;
-    
     
     ArrayList<Product> initialize_data(){
         // setting up the data
@@ -98,13 +85,9 @@ public class UI_AllProducts extends JPanel {
         searchFilter_panel.add(categories);
         searchFilter_panel.add(searchBtn);
         
-        
-        // Products
-//        loopCount = 2;
-//        tempProductGenerator(loopCount); // temp product generator
-        
         products = new JButton[all_products.size()];
         for (int i = 0; i < all_products.size(); i++) {
+            Product product = all_products.get(i);
            
             products[i] = new JButton();
             
@@ -127,9 +110,11 @@ public class UI_AllProducts extends JPanel {
             products[i].setVerticalTextPosition(JLabel.BOTTOM);
             products[i].setBorder(BorderFactory.createEmptyBorder());
             products[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            
+            products[i].addActionListener(e -> {
+                OODMS_Main.previous_panel = Main_Frame.currentPanel;
+                OODMS_Main.frame.replacePanel(new UI_Product(product.getProductID()));
+            });
         }
-        
         
         // Panel for products
         float rowCount = (float)all_products.size()/2;
@@ -143,7 +128,6 @@ public class UI_AllProducts extends JPanel {
         for (JButton product : products){
             products_panel.add(product);
         }
-        
         
         // Panel for search bar and products
         searchNproduct_Panel = new JPanel();
