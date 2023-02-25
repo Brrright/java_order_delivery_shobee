@@ -12,9 +12,6 @@ import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Product;
-import com.mycompany.oodms.Services.Provider.Provider_Cart;
-import com.mycompany.oodms.Services.Provider.Provider_Member;
-import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import com.mycompany.oodms.Services.User.MemberService;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +23,13 @@ import java.util.List;
 public class CartItemService {
     private static CartItemService cart_item_service;
     
-     public static CartItemService getCartItemServive()
+     public static CartItemService getCartItemService()
     {
         //Not instantiated yet
         if (cart_item_service == null)
         {
             cart_item_service = new CartItemService();
         }
-        
         return cart_item_service;
     }
     

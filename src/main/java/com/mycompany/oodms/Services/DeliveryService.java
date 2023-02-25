@@ -13,10 +13,6 @@ import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Order;
-import com.mycompany.oodms.Services.Provider.Provider_Address;
-import com.mycompany.oodms.Services.Provider.Provider_DeliveryStaff;
-import com.mycompany.oodms.Services.Provider.Provider_Member;
-import com.mycompany.oodms.Services.Provider.Provider_Order_OrderItem;
 import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.Services.User.MemberService;
 import java.time.LocalDateTime;
@@ -69,7 +65,7 @@ public class DeliveryService {
         int member_id = Integer.parseInt(delivery_data[6]);
         int order_id = Integer.parseInt(delivery_data[7]);
         
-        Order order = Provider_Order_OrderItem.order_service.getOrder(order_id);
+        Order order = OrderService.getOrderService().getOrder(order_id);
             
         Member member_object = MemberService.getMemberService().getMember(member_id);
         Address address_object = AddressService.getAddressService().getAddress(address_id);
@@ -83,7 +79,7 @@ public class DeliveryService {
         return new FileRecord(delivery.getDeliveryID(), delivery_record_string);
     }
     
-    public List<Delivery>getDeliveries(){
+    public ArrayList<Delivery> getDeliveries(){
         return this.deliveries;
     }
     

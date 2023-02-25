@@ -10,8 +10,6 @@ import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Order;
-import com.mycompany.oodms.Services.Provider.Provider_Address;
-import com.mycompany.oodms.Services.Provider.Provider_Member;
 import com.mycompany.oodms.Services.User.MemberService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -49,9 +49,6 @@ public class AddressService {
         if (address_data.length == 0){
             return null;
         }
-        if(Provider_Member.member_service == null){
-            Provider_Member.StartProvider();
-        }  
         
 //        Member member = Provider_Member.member_service.getMember(Integer.parseInt(address_data[5]));
         Member member = MemberService.getMemberService().getMember(Integer.parseInt(address_data[5]));;
@@ -85,7 +82,7 @@ public class AddressService {
     public Address getAddressByMemberId(int member_id) {
         Address response = null;
         for(int i = 0; i < addresses.size(); i ++) {
-            System.out.println(addresses.get(i).getMember().getID());
+            System.out.println("address id = " +addresses.get(i).getMember().getID());
             
             if(addresses.get(i).getMember().getID()== member_id){
                 System.out.println("member id match, fetching address...");

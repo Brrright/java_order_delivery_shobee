@@ -10,8 +10,6 @@ import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Order;
 import com.mycompany.oodms.OrderItem;
 import com.mycompany.oodms.Product;
-import com.mycompany.oodms.Services.Provider.Provider_Order_OrderItem;
-import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,7 @@ public class OrderItemService {
     {
         if(OrderItemService.order_item_service == null)
         {
+            System.out.println("turning on order item service");
             OrderItemService.order_item_service = new OrderItemService();
         }
         
@@ -40,6 +39,7 @@ public class OrderItemService {
         this.order_items = new ArrayList<OrderItem>();
         List<FileRecord> order_item_records = order_item_file.FetchRecord();
         order_item_records.forEach((record) -> {
+            System.out.println("orderitem details: " + record.getRecord());
             OrderItem order_item_object = convertToObject(record);
             this.order_items.add(order_item_object);
         });
@@ -59,8 +59,8 @@ public class OrderItemService {
         Order order = OrderService.getOrderService().getOrder(order_id);
         Product product = ProductService.getProductService().getProduct(product_id);
 //        Member member = Provider_Member.member_service.getMember(member_id);
-        System.out.println(quantity);
-        System.out.println(product.getProductPrice());
+        System.out.println("p_qty" + quantity);
+        System.out.println("p_price" + product.getProductPrice());
         return new OrderItem(quantity, product.getProductPrice(), product, order);
     }
     
@@ -77,9 +77,11 @@ public class OrderItemService {
         return order_items;
     }
     
-    public OrderItem getOrderItem(int orderId, int productId) {
+    public OrderItem getOrderItem(int orderId) {
+//        System.out.println("in getOrderItem, received orderid : "  + orderId);
         for (OrderItem item : order_items) {
-            if (item.getProduct().getProductID() == productId && item.getOrder().getOrderID() == orderId) {
+//            System.out.println("found available order id in here: " + item.getOrder().getOrderID());
+            if (item.getOrder().getOrderID() == orderId) {
                 return item;
             }
         }

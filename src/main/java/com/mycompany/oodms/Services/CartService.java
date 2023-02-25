@@ -10,7 +10,6 @@ import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
-import com.mycompany.oodms.Services.Provider.Provider_Member;
 import com.mycompany.oodms.Services.User.MemberService;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +115,4 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
             }
         }
     }
-
-   
 }
