@@ -8,8 +8,6 @@ import com.mycompany.oodms.CartItem;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Services.CartItemService;
-import com.mycompany.oodms.Services.CartService;
-import com.mycompany.oodms.Services.Provider.Provider_Cart;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -33,10 +31,32 @@ public class UI_Cart extends JPanel{
         return CartItemService.getCartItemService().getCartItems(member.getID());
     }
     
+    
+    public UI_Cart(CartItem cartItem){
+        // add item to cart
+        CartItemService.getCartItemService().addCartItem(cartItem);
+        buildUI();
+    }
+    
     public UI_Cart() {
+        // view cart and do edit saje
+        buildUI();
+    }
+    
+    public boolean isSelected(JTable cart){
+        for (int i = 0; i < cart.getRowCount(); i++)
+        {
+            if ((boolean)cart.getValueAt(i, 0) == true)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void buildUI(){
         ArrayList<CartItem> cart_items = initiatize_data();
-        
-         header = new UI_Header();
+        header = new UI_Header();
          header.setBounds(0,0,1080,50);
         
         // JLabel - title
@@ -91,13 +111,10 @@ public class UI_Cart extends JPanel{
             model.setValueAt(cart_items.get(i).getProduct().getProductPrice(), i, 4);
         }
         
-        
         // scrollpane for JTable
         JScrollPane scrollPane = new JScrollPane(cart);
         scrollPane.setBounds(193,220,700,290);
         
-        
-                
         // JButton - delete
         delete = new JButton("Remove");
         delete.setBorder(BorderFactory.createEmptyBorder());
@@ -110,27 +127,31 @@ public class UI_Cart extends JPanel{
         delete.setFont(new Font("MV Boli",Font.PLAIN,12));
         delete.setForeground(Color.WHITE);
         delete.addActionListener(e -> {
-            int removeConfirmation = JOptionPane.showOptionDialog(null, "Confirm to remove selected product?", "Confirmation",
+            if(isSelected(cart)){
+                int removeConfirmation = JOptionPane.showOptionDialog(null, "Confirm to remove selected product?", "Confirmation",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            
+                if (removeConfirmation == JOptionPane.OK_OPTION) {
+                    // User clicked the "OK" button
+                    // get the selected product
 
-            if (removeConfirmation == JOptionPane.OK_OPTION) {
-                // User clicked the "OK" button
-                // get the selected product
-                
-                for (int i = 0; i < cart.getRowCount(); i++)
-                {
-                    if ((boolean)cart.getValueAt(i, 0) == true)
+                    for (int i = 0; i < cart.getRowCount(); i++)
                     {
-                        System.out.print(cart.getValueAt(i, 1) + " is ture");
+                        if ((boolean)cart.getValueAt(i, 0) == true)
+                        {
+                            System.out.print(cart.getValueAt(i, 1) + " is ture");
+                        }
                     }
-                }
-                
-                // remove selected product and update to the txt file
-                // remove cart panel and redirect to the same panel with updated cart
-                
-                System.out.println("item removed");
-            }
+                    // remove selected product and update to the txt file
+                    // remove cart panel and redirect to the same panel with updated cart
 
+                    System.out.println("item removed");
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Please select a product.", "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
         
         
@@ -147,24 +168,28 @@ public class UI_Cart extends JPanel{
         checkout.setForeground(Color.WHITE);
         checkout.addActionListener(e -> {
             
-            // checkout confirmation
-            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to checkout?", "Confirmation",
+            if(isSelected(cart)){
+                // checkout confirmation
+                int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to checkout?", "Confirmation",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-
-            if (checkoutConfirmation == JOptionPane.OK_OPTION) {
-                // User clicked the "OK" button
-                for (int i = 0; i < cart.getRowCount(); i++)
-                {
-                    if ((boolean)cart.getValueAt(i, 0) == true)
+                if (checkoutConfirmation == JOptionPane.OK_OPTION) {
+                    // User clicked the "OK" button
+                    for (int i = 0; i < cart.getRowCount(); i++)
                     {
-                        System.out.print(cart.getValueAt(i, 1) + " is ture");
+                        if ((boolean)cart.getValueAt(i, 0) == true)
+                        {
+                            System.out.print(cart.getValueAt(i, 1) + " is ture");
+                        }
                     }
+                    // get the selected product
+                    //direct to checkout page
+                    System.out.println("go to checkout page");
                 }
-                // get the selected product
-                //direct to checkout page
-                System.out.println("go to checkout page");
             }
-
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Please select a product.", "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
         
        
@@ -179,9 +204,5 @@ public class UI_Cart extends JPanel{
         this.add(scrollPane);
         this.add(delete);
         this.add(checkout);
-        
-        
     }
-    
-    
 }
