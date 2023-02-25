@@ -20,11 +20,6 @@ public class OODMS_Main {
     public static User current_user; // make user detail globally accessible
     
      public void initialize(){
-        // setup Records (necessary record ) NOT USER RELATED DATA
-        Provider_Product_Category provider_product  = new Provider_Product_Category();
-         ArrayList<Product> all_products = Provider_Product_Category.product_service.getProducts();
-         
-         
         // setup UI screen
         // Customer interface
         // unregistered
@@ -32,7 +27,7 @@ public class OODMS_Main {
 //        frame = new Main_Frame(new UI_Signup());
 //        frame = new Main_Frame(new UI_AllProducts());
 //        frame = new Main_Frame(new UI_Product(1));
-
+ 
         // registered
 //        frame = new Main_Frame(new UI_Profile());
 //        frame = new Main_Frame(new UI_MyOrder());

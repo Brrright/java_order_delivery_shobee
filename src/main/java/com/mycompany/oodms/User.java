@@ -172,8 +172,8 @@ public abstract class User {
 //                    frame.replacePanel(new UI_Cart());
 //                    frame.replacePanel(new UI_MyOrder());
 //                    frame.replacePanel(new UI_Profile());
-//                    frame.replacePanel(new UI_OrderDetails());
-                    frame.replacePanel(new UI_Payment());
+                    frame.replacePanel(new UI_OrderDetails());
+//                    frame.replacePanel(new UI_Payment());
 
             }
             case FileName.DELIVERY_STAFF -> {                
