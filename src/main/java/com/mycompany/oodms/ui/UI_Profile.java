@@ -64,15 +64,6 @@ public class UI_Profile extends JPanel {
             }
         }
 
-//        ArrayList<String> profileDetails = new ArrayList<>();
-//        profileDetails.add("PROFILE1");
-//        profileDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-//        profileDetails.add("Hong Wei");
-//        profileDetails.add("Male");
-//        profileDetails.add("2/2/2002"); // stock
-//        profileDetails.add("hw@gmail.com");
-//        profileDetails.add("0192583948"); //sold
-
         // JLabel - back
         backBtn = new JButton("< back");
         backBtn.setFont(new Font("MV Boli",Font.PLAIN,12));
@@ -81,6 +72,9 @@ public class UI_Profile extends JPanel {
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backBtn.addActionListener(e -> {
+            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
+        });
 
         //image
         ImageIcon itemPic = new ImageIcon(user.getPicturePath());
@@ -176,6 +170,9 @@ public class UI_Profile extends JPanel {
         myOrder.setBorder(BorderFactory.createEmptyBorder());
         myOrder.setFocusable(false);
         myOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        myOrder.addActionListener(e -> {
+            OODMS_Main.frame.replacePanel(new UI_MyOrder());
+        });
         
         // JButton - editProfile
         editProfile = new JButton("<html><body>Edit<br>profile</html>");
@@ -189,6 +186,9 @@ public class UI_Profile extends JPanel {
         editProfile.setBorder(BorderFactory.createEmptyBorder());
         editProfile.setFocusable(false);
         editProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        editProfile.addActionListener(e -> {
+//            OODMS_Main.frame.replacePanel(new UI_Profile());
+        });
 
         // JButton - changePwd
         changePwd = new JButton("<html><body>Change<br>password</html>");
@@ -202,6 +202,10 @@ public class UI_Profile extends JPanel {
         changePwd.setBorder(BorderFactory.createEmptyBorder());
         changePwd.setFocusable(false);
         changePwd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        changePwd.addActionListener(e -> {
+//            OODMS_Main.frame.replacePanel(new );
+
+        });
 
 
         // ------------------------------ this JFrame ------------------------------ //
