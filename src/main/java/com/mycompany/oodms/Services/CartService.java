@@ -10,6 +10,7 @@ import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
+import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Services.User.MemberService;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,23 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
          }
          if(response == null){
             System.out.println("not such record in this \"carts\".  FIND A WAY TO HANDLE**");
+        }
+        return response;
+     }
+     
+     public Cart getCartByMemberID(int memberID){
+         Cart response = null;
+         for (int i = 0; i < carts.size(); i++) {
+             if(carts.get(i).getMember().getID() == memberID){
+                 response = carts.get(i);
+                 break;
+             }
+         }
+         if(response == null){
+             Cart newCart = new Cart(cart_file.GenerateID(), (Member) OODMS_Main.current_user);
+             addCartRecord(newCart);
+             response = newCart;
+            System.out.println("no cart found for this user, creating new cart for the user... **");
         }
         return response;
      }

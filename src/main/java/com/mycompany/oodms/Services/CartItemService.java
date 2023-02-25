@@ -68,8 +68,18 @@ public class CartItemService {
         return new FileRecord(item.getCart().getCartID(), cart_item_record_string);
     }
     
-    public ArrayList<CartItem> getCartItems(int member_id){
+    public ArrayList<CartItem> getCartItems(){
         return this.cart_items;
+    }
+    
+    public ArrayList<CartItem> getCartItems(int member_id){
+        ArrayList<CartItem> cartItems = new ArrayList<CartItem>();
+        cart_items.forEach((x) -> {
+            if(x.getMember().getID() == member_id){
+                cartItems.add(x);
+            }
+        });
+        return cartItems;
     }
     
     public CartItem getCartItem(int member_id, int product_id){
