@@ -1,5 +1,6 @@
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Product;
 import com.mycompany.oodms.Services.ProductService;
@@ -45,6 +46,9 @@ public class UI_Product extends JPanel {
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backBtn.addActionListener(e -> {
+            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
+        });
 
         //image (edited scale)
         ImageIcon itemPic = new ImageIcon(product.getProcuctPicture());

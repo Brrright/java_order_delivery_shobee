@@ -10,6 +10,7 @@ import com.mycompany.oodms.ui.UI_Admin.UI_AdminMain;
 import com.mycompany.oodms.ui.UI_Admin.UI_ReportPayment;
 import com.mycompany.oodms.ui.UI_Admin.UI_ReportPayments;
 import java.util.ArrayList;
+import javax.swing.JPanel;
 
 /**
  *
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class OODMS_Main {
     public static Main_Frame frame;
     public static User current_user; // make user detail globally accessible
+    public static JPanel previous_panel;
     
      public void initialize(){
         // setup UI screen

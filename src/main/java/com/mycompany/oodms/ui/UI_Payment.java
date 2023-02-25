@@ -78,6 +78,9 @@ public class UI_Payment extends JPanel {
        back.setBorder(BorderFactory.createEmptyBorder());
        back.setFocusable(false);
        back.setCursor(new Cursor(Cursor.HAND_CURSOR));
+       back.addActionListener(e -> {
+            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
+        });
        
        // JLabel - price header
        price_header = new JLabel("Price");

@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;
 
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -38,7 +39,7 @@ public class UI_CategoryManagementCategory extends JPanel {
         back.setFocusable(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
         back.addActionListener(e -> {
-            frame.replacePanel(new UI_CategoryManagement());
+            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
         
         

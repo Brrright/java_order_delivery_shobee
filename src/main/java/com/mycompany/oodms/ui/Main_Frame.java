@@ -13,10 +13,10 @@ import javax.swing.JPanel;
  * @author mingl
  */
 public class Main_Frame extends JFrame{
-     public JPanel currentPanel;
+     public static JPanel currentPanel;
     
     public Main_Frame(JPanel panel) {
-        this.currentPanel = panel;
+        Main_Frame.currentPanel = panel;
         // set layout, and add it to this class, default operation, pack, set visible, location        
         this.setSize(1080,768);
         this.setTitle("Shobee");
@@ -36,6 +36,7 @@ public class Main_Frame extends JFrame{
     }
     
     public void replacePanel(JPanel new_panel){
+        Main_Frame.currentPanel = new_panel;
         // get the content pane of JFrame
         Container contentPane = this.getContentPane();
         contentPane.removeAll();

@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;
 
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.Color;
@@ -54,7 +55,7 @@ public class UI_UserManagementProfileDeliveryList extends JPanel{
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backBtn.addActionListener(e -> {
-            frame.replacePanel(new UI_UserManagementProfile());
+            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
         
         

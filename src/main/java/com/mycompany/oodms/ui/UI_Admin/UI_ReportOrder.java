@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;
 
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.ui.Main_Frame;
 import java.awt.Color;
@@ -71,7 +72,7 @@ public class UI_ReportOrder extends JPanel{
         back.setFocusable(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
         back.addActionListener(e -> {
-            frame = new Main_Frame(new UI_ReportOrders());
+            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
         
         

@@ -1,6 +1,7 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.ui.UI_Delivery.UI_Completed;
 import javax.swing.*;
@@ -50,7 +51,7 @@ public class UI_UserManagementProfile extends JPanel {
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backBtn.addActionListener(e -> {
-            frame.replacePanel(new UI_UserManagement());
+            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
                         
 

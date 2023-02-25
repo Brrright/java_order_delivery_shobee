@@ -8,6 +8,7 @@ import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.ui.Main_Frame;
 import com.mycompany.oodms.ui.UI_Admin.UI_AdminMain;
 import com.mycompany.oodms.ui.UI_AllProducts;
 import com.mycompany.oodms.ui.UI_Cart;
@@ -168,12 +169,13 @@ public abstract class User {
             case FileName.MEMBER -> {
                 frame.replacePanel(new UI_AllProducts());
                 OODMS_Main.current_user.setRole(UserRole.MEMBER);
+                OODMS_Main.previous_panel = Main_Frame.currentPanel;
 //                 temporary testing for user related ui (after login)
 //                    frame.replacePanel(new UI_Cart());
-//                    frame.replacePanel(new UI_MyOrder());
+                    frame.replacePanel(new UI_MyOrder());
 //                    frame.replacePanel(new UI_Profile());
 //                    frame.replacePanel(new UI_OrderDetails());
-                    frame.replacePanel(new UI_Payment());
+//                    frame.replacePanel(new UI_Payment());
 
             }
             case FileName.DELIVERY_STAFF -> {                

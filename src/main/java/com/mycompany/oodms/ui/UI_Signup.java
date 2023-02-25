@@ -4,6 +4,7 @@ import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Gender;
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Services.Provider.Provider_Member;
 import javax.swing.*;
@@ -46,7 +47,7 @@ public class UI_Signup extends JPanel{
         back.setFocusable(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
         back.addActionListener(e -> {
-            frame.replacePanel(new UI_Login());
+            frame.replacePanel(OODMS_Main.previous_panel);
         });
         
         // JLabel - title
