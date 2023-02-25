@@ -56,14 +56,10 @@ public class UI_OrderDetails extends JPanel{
     JLabel paymentMethod;
     JLabel billingAddress;
     
-    ArrayList<String> orderDetails = new ArrayList<>();
-    
-    public Order initialize_order_data() 
+    public Order initialize_order_data(Order order) 
     {
         //            System.out.println("fetching order");
-
-        Member member = MemberService.getMemberService().getMember(OODMS_Main.current_user.getID());
-        return OrderService.getOrderService().getOrder(member.getID());
+            return OrderService.getOrderService().getOrder(order.getOrderID());
     }
     
     public OrderItem initialize_order_item_data(Order order){
@@ -86,9 +82,9 @@ public class UI_OrderDetails extends JPanel{
         return response;
     }
     
-    public UI_OrderDetails() { 
+    public UI_OrderDetails(Order receivedOrder) { 
 //        System.out.println("UI_OrderDetails, HI");
-        Order order = initialize_order_data();
+        Order order = initialize_order_data(receivedOrder);
 
         if(order == null) {
             OODMS_Main.frame.replacePanel(new UI_AllProducts());
@@ -124,6 +120,9 @@ public class UI_OrderDetails extends JPanel{
         back.setBorder(BorderFactory.createEmptyBorder());
         back.setFocusable(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        back.addActionListener(e -> {
+            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
+        });
         
         
         // JLabel - title (order status)

@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.OrderItem;
 import com.mycompany.oodms.Services.Provider.Provider_Order_OrderItem;
 import java.awt.BorderLayout;
@@ -125,17 +126,17 @@ public class UI_MyOrder extends JPanel{
       // orders
       orders = new JButton[order_items.size()];
       for (int i = 0; i < order_items.size(); i++) {
-          
+          OrderItem order_item = order_items.get(i);
           orders[i] = new JButton();
           
-          ImageIcon productImg = new ImageIcon(order_items.get(i).getProduct().getProcuctPicture());
+          ImageIcon productImg = new ImageIcon(order_item.getProduct().getProcuctPicture());
 
           Image image = productImg.getImage();
           Image scaleImage = image.getScaledInstance(154, 174, Image.SCALE_SMOOTH);
           ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
           
           orders[i].setIcon(scaleImageIcon);
-          orders[i].setText("<html>"+ order_items.get(i).getProduct().getProductName() + "<br><br>Purchased on: " + order_items.get(i).getOrder().getOrderDateTime() + "</html>");
+          orders[i].setText("<html>"+ order_item.getProduct().getProductName() + "<br><br>Purchased on: " + order_item.getOrder().getOrderDateTime() + "</html>");
           orders[i].setPreferredSize(new Dimension(737,202));
           orders[i].setFocusPainted(false);
           orders[i].setHorizontalAlignment(JLabel.LEFT);
@@ -146,6 +147,10 @@ public class UI_MyOrder extends JPanel{
           orders[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
           orders[i].setIconTextGap(30);
           orders[i].setFont(new Font("MV Boli",Font.PLAIN,15));
+          orders[i].addActionListener(e -> {
+              OODMS_Main.previous_panel = Main_Frame.currentPanel;
+              OODMS_Main.frame.replacePanel(new UI_OrderDetails(order_item.getOrder()));
+          });
       }
       
         
