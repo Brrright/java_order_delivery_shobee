@@ -5,6 +5,8 @@ import com.mycompany.oodms.DeliveryStaff;
 import com.mycompany.oodms.UserRole;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.Member;
+// DO NOT REMOVE!!!! THIS IMPORT IS NECCESSARY
+import com.mycompany.oodms.User;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import javax.swing.*;
 import java.awt.*;
