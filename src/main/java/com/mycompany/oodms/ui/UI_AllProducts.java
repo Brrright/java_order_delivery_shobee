@@ -46,8 +46,6 @@ public class UI_AllProducts extends JPanel {
     }
     
     public UI_AllProducts() {
-        //check if user login or not.
-
         categories_name.add("ALL");
         for(int y = 0; y < all_categories.size(); y++){
             categories_name.add(all_categories.get(y).getCategoryName());
@@ -60,7 +58,6 @@ public class UI_AllProducts extends JPanel {
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalAlignment(JLabel.BOTTOM);
         
-        
         // subtitle
         subTitle = new JLabel("We only sell best product");
         subTitle.setFont(new Font("MV Boli",Font.PLAIN,10));
@@ -69,13 +66,11 @@ public class UI_AllProducts extends JPanel {
         subTitle.setHorizontalAlignment(JLabel.CENTER);
         subTitle.setVerticalAlignment(JLabel.TOP);
         
-        
         // Search bar 
         // searchBar.getText()
         searchBar = new JTextField();
         searchBar.setPreferredSize(new Dimension(382,45));
         searchBar.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-        
         
         // filter 
         categories = new JComboBox<>(categories_name.toArray(new String[categories_name.size()]));
@@ -93,7 +88,6 @@ public class UI_AllProducts extends JPanel {
             this.repaint();
             this.revalidate();
         });
-        
         
         // search button
         ImageIcon searchIcon = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/searchIcon.png");
@@ -164,7 +158,6 @@ public class UI_AllProducts extends JPanel {
          products = new JButton[all_products.size()];
            for (int i = 0; i < all_products.size(); i++) {
                 Product product = all_products.get(i);
-
                 products[i] = new JButton();
 
                 // add product name, price
@@ -176,7 +169,6 @@ public class UI_AllProducts extends JPanel {
                 Image scaleImage = image.getScaledInstance(331, 365, Image.SCALE_SMOOTH);
                 ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
                 products[i].setIcon(scaleImageIcon);
-
 
                 // Button looking configuration
                 products[i].setIconTextGap(20);
