@@ -54,7 +54,7 @@ public class CategoryService {
          return new FileRecord(cate.getCategoryID(), category_record_string);
     }
     
-    public List<Category> getCategories(){
+    public ArrayList<Category> getCategories(){
         return this.categories;
     }
     

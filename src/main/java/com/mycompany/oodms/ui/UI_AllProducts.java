@@ -1,9 +1,10 @@
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.Category;
 import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.CategoryService;
 import com.mycompany.oodms.Services.ProductService;
-import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ public class UI_AllProducts extends JPanel {
     UI_Header heading = new UI_Header();
     JLabel title;
     JLabel subTitle;
+    ArrayList<String>categories_name = new ArrayList<String>();
+    ArrayList<Product> all_products = initialize_product_data();
+    ArrayList<Category> all_categories = initialize_category_data();
     
     // SEARCH AND FILTER OBJECTS
     JTextField searchBar;
@@ -26,18 +30,28 @@ public class UI_AllProducts extends JPanel {
     JPanel title_panel;
     JPanel subTitle_panel;
     JPanel searchFilter_panel;
-    JPanel products_panel;
+    JPanel products_panel = new JPanel();
     JPanel searchNproduct_Panel;
     
-    ArrayList<Product> initialize_data(){
+    ArrayList<Product> initialize_product_data(){
         // setting up the data
         ArrayList<Product> all_products = ProductService.getProductService().getProducts();
         return all_products;
     }
     
+    ArrayList<Category> initialize_category_data()
+    {
+        ArrayList<Category> all_categories = CategoryService.getCategoryService().getCategories();
+        return all_categories;
+    }
+    
     public UI_AllProducts() {
         //check if user login or not.
-        ArrayList<Product> all_products = initialize_data();
+
+        categories_name.add("ALL");
+        for(int y = 0; y < all_categories.size(); y++){
+            categories_name.add(all_categories.get(y).getCategoryName());
+        }
         
         // Title
         title = new JLabel("Products");
@@ -64,8 +78,21 @@ public class UI_AllProducts extends JPanel {
         
         
         // filter 
-        categories = new JComboBox<>(new String[] {"Food and beverage", "Electronics", "Furnitures"});
+        categories = new JComboBox<>(categories_name.toArray(new String[categories_name.size()]));
         categories.setPreferredSize(new Dimension(150,45));
+        categories.addActionListener(e -> {
+//            System.out.println(categories.getSelectedIndex());
+            if(categories.getSelectedIndex() == 0){
+                this.all_products = this.initialize_product_data();
+            }else{
+                Category cate = CategoryService.getCategoryService().getCategory(categories.getSelectedIndex());
+                this.all_products = ProductService.getProductService().getProducts(cate);
+            }
+            this.products_panel.removeAll();
+            productCard(this.all_products);
+            this.repaint();
+            this.revalidate();
+        });
         
         
         // search button
@@ -85,49 +112,17 @@ public class UI_AllProducts extends JPanel {
         searchFilter_panel.add(categories);
         searchFilter_panel.add(searchBtn);
         
-        products = new JButton[all_products.size()];
-        for (int i = 0; i < all_products.size(); i++) {
-            Product product = all_products.get(i);
-           
-            products[i] = new JButton();
-            
-            // add product name, price
-            products[i].setText(all_products.get(i).getProductName()+ " " + all_products.get(i).getProductPrice());
-            
-            
-            // add image
-            ImageIcon productImg = new ImageIcon(all_products.get(i).getProcuctPicture());
-            Image image = productImg.getImage();
-            Image scaleImage = image.getScaledInstance(331, 365, Image.SCALE_SMOOTH);
-            ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
-            products[i].setIcon(scaleImageIcon);
-            
-            
-            // Button looking configuration
-            products[i].setIconTextGap(20);
-            products[i].setPreferredSize(new Dimension(332, 470));
-            products[i].setHorizontalTextPosition(JLabel.CENTER);
-            products[i].setVerticalTextPosition(JLabel.BOTTOM);
-            products[i].setBorder(BorderFactory.createEmptyBorder());
-            products[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            products[i].addActionListener(e -> {
-                OODMS_Main.previous_panel = Main_Frame.currentPanel;
-                OODMS_Main.frame.replacePanel(new UI_Product(product.getProductID()));
-            });
-        }
+        JButton[] products = productCard(this.all_products);
         
         // Panel for products
         float rowCount = (float)all_products.size()/2;
         int products_panel_height = 490 * (int)Math.ceil(rowCount);
         
-        products_panel = new JPanel();
         products_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 1));
         products_panel.setPreferredSize(new Dimension(780, products_panel_height));
         products_panel.setBackground(Color.WHITE);
         
-        for (JButton product : products){
-            products_panel.add(product);
-        }
+        
         
         // Panel for search bar and products
         searchNproduct_Panel = new JPanel();
@@ -163,5 +158,48 @@ public class UI_AllProducts extends JPanel {
         this.add(heading, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
         this.setBackground(Color.WHITE);
+    }
+    
+    public JButton[] productCard(ArrayList<Product> all_products){
+         products = new JButton[all_products.size()];
+           for (int i = 0; i < all_products.size(); i++) {
+                Product product = all_products.get(i);
+
+                products[i] = new JButton();
+
+                // add product name, price
+                products[i].setText(all_products.get(i).getProductName()+ " " + all_products.get(i).getProductPrice());
+
+                // add image
+                ImageIcon productImg = new ImageIcon(all_products.get(i).getProcuctPicture());
+                Image image = productImg.getImage();
+                Image scaleImage = image.getScaledInstance(331, 365, Image.SCALE_SMOOTH);
+                ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
+                products[i].setIcon(scaleImageIcon);
+
+
+                // Button looking configuration
+                products[i].setIconTextGap(20);
+                products[i].setPreferredSize(new Dimension(332, 470));
+                products[i].setHorizontalTextPosition(JLabel.CENTER);
+                products[i].setVerticalTextPosition(JLabel.BOTTOM);
+                products[i].setBorder(BorderFactory.createEmptyBorder());
+                products[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                products[i].addActionListener(e -> {
+                    OODMS_Main.previous_panel = Main_Frame.currentPanel;
+                    OODMS_Main.frame.replacePanel(new UI_Product(product.getProductID()));
+                });
+            }
+           for (JButton product : products){
+            products_panel.add(product);
+            }
+           // Panel for products
+        float rowCount = (float)all_products.size()/2;
+        int products_panel_height = 490 * (int)Math.ceil(rowCount);
+        
+        products_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 1));
+        products_panel.setPreferredSize(new Dimension(780, products_panel_height));
+        products_panel.setBackground(Color.WHITE);
+        return products;
     }
 }

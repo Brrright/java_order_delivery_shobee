@@ -4,7 +4,6 @@
  */
 package com.mycompany.oodms.Services;
 
-import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 import com.mycompany.oodms.Category;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
@@ -70,6 +69,19 @@ public class ProductService {
     
     public ArrayList<Product> getProducts(){
         return this.products;
+    }
+    
+    
+    public ArrayList<Product> getProducts(Category category){
+         ArrayList<Product> response = new ArrayList<Product>();
+
+        for(int i = 0; i < products.size(); i ++) {
+            if(products.get(i).getCategory() == category){
+                response.add(products.get(i));
+                break;
+            }
+        }
+        return response;
     }
     
     public Product getProduct(int id) {
