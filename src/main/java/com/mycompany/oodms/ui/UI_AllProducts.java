@@ -19,10 +19,6 @@ public class UI_AllProducts extends JPanel {
     JComboBox<String> categories;
     JButton searchBtn;
     
-    // ITEM OBJECT
-    ProductService product_service = new ProductService();
-    ArrayList<Product> product_list = product_service.getProducts();
-    
     JButton[] products;
     
 //    // TEMP : add temp product into temp arraylist
@@ -48,8 +44,7 @@ public class UI_AllProducts extends JPanel {
     
     ArrayList<Product> initialize_data(){
         // setting up the data
-        Provider_Product_Category provider_product  = new Provider_Product_Category();
-        ArrayList<Product> all_products = Provider_Product_Category.product_service.getProducts();
+        ArrayList<Product> all_products = ProductService.getProductService().getProducts();
         return all_products;
     }
     
