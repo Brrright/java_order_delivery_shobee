@@ -193,8 +193,6 @@ public class UI_Signup extends JPanel{
             return;
         }
         if(input_pw == null ? input_confirm_pw == null : !input_pw.equals(input_confirm_pw)){
-            System.out.println(input_pw);
-            System.out.println(input_confirm_pw);
             JOptionPane.showMessageDialog(frame,"Password entered not matched.","Oops",JOptionPane.WARNING_MESSAGE);
             return;
         }
