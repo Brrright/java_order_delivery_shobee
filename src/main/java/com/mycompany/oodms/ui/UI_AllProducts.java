@@ -1,5 +1,6 @@
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Product;
 import com.mycompany.oodms.Services.ProductService;
 import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
@@ -8,7 +9,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class UI_AllProducts extends JPanel {
-    
     // HEADING AND TITLE OBJECTS
     UI_Header heading = new UI_Header();
     JLabel title;
@@ -49,6 +49,7 @@ public class UI_AllProducts extends JPanel {
     }
     
     public UI_AllProducts() {
+        //check if user login or not.
         ArrayList<Product> all_products = initialize_data();
         
         // Title

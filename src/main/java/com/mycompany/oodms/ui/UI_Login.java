@@ -5,6 +5,7 @@ import com.mycompany.oodms.DeliveryStaff;
 import com.mycompany.oodms.UserRole;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.Member;
+import com.mycompany.oodms.OODMS_Main;
 // DO NOT REMOVE!!!! THIS IMPORT IS NECCESSARY
 import com.mycompany.oodms.User;
 import static com.mycompany.oodms.OODMS_Main.frame;
@@ -111,6 +112,7 @@ public class UI_Login extends JPanel {
         signup.setBounds(722,550,112,49);
         signup.setFocusable(false);
         signup.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
             frame.replacePanel(new UI_Signup());
         });
 

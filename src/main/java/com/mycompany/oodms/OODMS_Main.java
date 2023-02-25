@@ -20,6 +20,7 @@ public class OODMS_Main {
     public static Main_Frame frame;
     public static User current_user; // make user detail globally accessible
     public static JPanel previous_panel;
+    public static boolean isLogIn;
     
      public void initialize(){
         // setup UI screen
