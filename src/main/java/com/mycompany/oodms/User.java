@@ -171,9 +171,9 @@ public abstract class User {
                 OODMS_Main.current_user.setRole(UserRole.MEMBER);
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
 //                 temporary testing for user related ui (after login)
-//                    frame.replacePanel(new UI_AllProducts());
+                    frame.replacePanel(new UI_AllProducts());
 //                    frame.replacePanel(new UI_Cart());
-                    frame.replacePanel(new UI_MyOrder());
+//                    frame.replacePanel(new UI_MyOrder());
 //                    frame.replacePanel(new UI_Profile());
 //                    frame.replacePanel(new UI_OrderDetails());
 //                    frame.replacePanel(new UI_Payment());
