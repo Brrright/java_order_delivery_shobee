@@ -71,22 +71,23 @@ public class UI_AllProducts extends JPanel {
         searchBar = new JTextField();
         searchBar.setPreferredSize(new Dimension(382,45));
         searchBar.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        searchBar.addKeyListener(new java.awt.event.KeyAdapter()  {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                System.out.println("triggered...");
+                all_products = initialize_product_data();
+                products_panel.removeAll();
+                searchProduct(evt);
+                products_panel.repaint();
+                products_panel.revalidate();
+            }
+        });
         
         // filter 
         categories = new JComboBox<>(categories_name.toArray(new String[categories_name.size()]));
         categories.setPreferredSize(new Dimension(150,45));
         categories.addActionListener(e -> {
 //            System.out.println(categories.getSelectedIndex());
-            if(categories.getSelectedIndex() == 0){
-                this.all_products = this.initialize_product_data();
-            }else{
-                Category cate = CategoryService.getCategoryService().getCategory(categories.getSelectedIndex());
-                this.all_products = ProductService.getProductService().getProducts(cate);
-            }
-            this.products_panel.removeAll();
-            productCard(this.all_products);
-            this.repaint();
-            this.revalidate();
+            filterByCategory();
         });
         
         // search button
@@ -95,6 +96,9 @@ public class UI_AllProducts extends JPanel {
         searchBtn.setPreferredSize(new Dimension(45,45));
         searchBtn.setFocusPainted(false);
         searchBtn.setBorderPainted(false);
+        searchBtn.addActionListener(e -> {
+            // no need handle
+        });
         
         
         // Panel for search n filter section
@@ -116,15 +120,12 @@ public class UI_AllProducts extends JPanel {
         products_panel.setPreferredSize(new Dimension(780, products_panel_height));
         products_panel.setBackground(Color.WHITE);
         
-        
-        
         // Panel for search bar and products
         searchNproduct_Panel = new JPanel();
         searchNproduct_Panel.setLayout(new BorderLayout());
         searchNproduct_Panel.setBackground(Color.WHITE); 
         searchNproduct_Panel.add(searchFilter_panel, BorderLayout.NORTH);
         searchNproduct_Panel.add(products_panel, BorderLayout.CENTER); 
-        
         
         // Panel for subtitle
         subTitle_panel = new JPanel();
@@ -154,7 +155,7 @@ public class UI_AllProducts extends JPanel {
         this.setBackground(Color.WHITE);
     }
     
-    public JButton[] productCard(ArrayList<Product> all_products){
+    private JButton[] productCard(ArrayList<Product> all_products){
          products = new JButton[all_products.size()];
            for (int i = 0; i < all_products.size(); i++) {
                 Product product = all_products.get(i);
@@ -193,5 +194,35 @@ public class UI_AllProducts extends JPanel {
         products_panel.setPreferredSize(new Dimension(780, products_panel_height));
         products_panel.setBackground(Color.WHITE);
         return products;
+    }
+    
+    private void filterByCategory() {
+        if(categories.getSelectedIndex() == 0){
+            this.all_products = this.initialize_product_data();
+        }else{
+            Category cate = CategoryService.getCategoryService().getCategory(categories.getSelectedIndex());
+            this.all_products = ProductService.getProductService().getProducts(cate);
+        }
+        this.products_panel.removeAll();
+        productCard(this.all_products);
+        this.repaint();
+        this.revalidate();
+    }
+    
+    private ArrayList<Product> searchProduct(java.awt.event.KeyEvent evt){
+        ArrayList<Product> matchedProducts = new ArrayList<Product>();
+        String input =  searchBar.getText();
+        for(int x = 0; x < this.all_products.size(); x ++){
+            System.out.println("from file : " + this.all_products.get(x).getProductName());
+            System.out.println("input : " +input);
+            String product_name = this.all_products.get(x).getProductName();
+            System.out.println("contain? : " +product_name.contains(input) );
+            if(product_name.toLowerCase().contains(input.toLowerCase())){
+                matchedProducts.add(this.all_products.get(x));
+            }
+        }
+        this.all_products = matchedProducts;
+        productCard(this.all_products);
+        return matchedProducts;
     }
 }
