@@ -15,6 +15,7 @@ import com.mycompany.oodms.Product;
 import com.mycompany.oodms.Services.Provider.Provider_Cart;
 import com.mycompany.oodms.Services.Provider.Provider_Member;
 import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
+import com.mycompany.oodms.Services.User.MemberService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,19 @@ import java.util.List;
  * @author User
  */
 public class CartItemService {
+    private static CartItemService cart_item_service;
+    
+     public static CartItemService getCartItemServive()
+    {
+        //Not instantiated yet
+        if (cart_item_service == null)
+        {
+            cart_item_service = new CartItemService();
+        }
+        
+        return cart_item_service;
+    }
+    
     private ArrayList<CartItem> cart_items;
     FileHandler cart_item_file = new FileHandler(FileName.CART_ITEM);
     
@@ -46,9 +60,9 @@ public class CartItemService {
         int member_id = Integer.parseInt(cart_item_data[3]);
         int cart_id = Integer.parseInt(cart_item_data[0]);
         
-        Member member = Provider_Member.member_service.getMember(member_id);
-        Product product = Provider_Product_Category.product_service.getProduct(product_id);
-        Cart cart = Provider_Cart.cart_service.getCart(cart_id);
+        Member member = MemberService.getMemberService().getMember(member_id);
+        Product product = ProductService.getProductService().getProduct(product_id);
+        Cart cart = CartService.getCartService().getCart(cart_id);
         
         return new CartItem(cart, member, product, qty);
     }

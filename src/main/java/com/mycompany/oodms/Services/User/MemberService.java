@@ -18,22 +18,29 @@ import java.util.List;
  * @author mingl
  */
 public class MemberService {
+    private static MemberService member_service;
     
-    public static MemberService member_service;
-
+     public static MemberService getMemberService()
+    {
+        //Not instantiated yet
+        if (member_service == null)
+        {
+            member_service = new MemberService();
+        }
+        return member_service;
+    }
+     
     private ArrayList<Member> members;
     FileHandler member_file = new FileHandler(FileName.MEMBER);
     
     public MemberService(){
-        this.members = new ArrayList<Member>();
-         if(member_service == null) {
-            member_service = new MemberService();
-         }
-        List<FileRecord> member_records = member_file.FetchRecord();
-        member_records.forEach((record) -> {
-            Member member_object = convertToObject(record);
-            this.members.add(member_object);
-        });
+         this.members = new ArrayList<Member>();
+
+           List<FileRecord> member_records = member_file.FetchRecord();
+           member_records.forEach((record) -> {
+               Member member_object = convertToObject(record);
+               this.members.add(member_object);
+           });
     }
     
     private Member convertToObject(FileRecord r){

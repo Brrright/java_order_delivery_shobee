@@ -18,6 +18,18 @@ import java.util.List;
  * @author User
  */
 public class ProductService {
+    private static ProductService product_service;
+    
+    public static ProductService getProductService()
+    {
+        if(ProductService.product_service == null)
+        {
+            ProductService.product_service = new ProductService();
+        }
+        
+        return ProductService.product_service;
+    }
+    
     private ArrayList<Product> products;
     FileHandler product_file = new FileHandler(FileName.PRODUCT);
 
@@ -46,7 +58,7 @@ public class ProductService {
             String product_description = product_data[6];
           
         // Category object
-            Category category = Provider_Product_Category.category_service.getCategory(product_cate_id);
+            Category category = CategoryService.getCategoryService().getCategory(product_cate_id);
             
             return new Product(product_id, product_name, product_price, product_stock, product_picture, category, product_description);
     }

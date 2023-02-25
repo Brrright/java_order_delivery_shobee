@@ -17,6 +17,8 @@ import com.mycompany.oodms.Services.Provider.Provider_Address;
 import com.mycompany.oodms.Services.Provider.Provider_DeliveryStaff;
 import com.mycompany.oodms.Services.Provider.Provider_Member;
 import com.mycompany.oodms.Services.Provider.Provider_Order_OrderItem;
+import com.mycompany.oodms.Services.User.DeliveryStaffService;
+import com.mycompany.oodms.Services.User.MemberService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,17 @@ import java.util.List;
  * @author mingl
  */
 public class DeliveryService {
+    private static DeliveryService delivery_service;
+    
+    public static DeliveryService getDeliveryService()
+    {
+        if(DeliveryService.delivery_service == null)
+        {
+            DeliveryService.delivery_service = new DeliveryService();
+        }
+        return DeliveryService.delivery_service;
+    }
+    
 //    public static boolean isCreated = false;
     private ArrayList<Delivery> deliveries;
     FileHandler delivery_file = new FileHandler(FileName.DELIVERY);
@@ -58,9 +71,9 @@ public class DeliveryService {
         
         Order order = Provider_Order_OrderItem.order_service.getOrder(order_id);
             
-        Member member_object = Provider_Member.member_service.getMember(member_id);
-        Address address_object = Provider_Address.address_service.getAddress(address_id);
-        DeliveryStaff staff =Provider_DeliveryStaff. staff_service.getStaff(staff_id);
+        Member member_object = MemberService.getMemberService().getMember(member_id);
+        Address address_object = AddressService.getAddressService().getAddress(address_id);
+        DeliveryStaff staff = DeliveryStaffService.getDeliveryStaffService().getStaff(staff_id);
             
         return new Delivery(delivery_id, order, delivery_date_time,staff, status, rating, address_object, member_object);
     }

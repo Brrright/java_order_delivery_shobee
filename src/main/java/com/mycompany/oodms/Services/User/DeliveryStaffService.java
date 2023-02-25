@@ -18,6 +18,18 @@ import java.util.List;
  * @author User
  */
 public class DeliveryStaffService {
+    private static DeliveryStaffService delivery_staff_service;
+    
+     public static DeliveryStaffService getDeliveryStaffService()
+    {
+        //Not instantiated yet
+        if (delivery_staff_service == null)
+        {
+            delivery_staff_service = new DeliveryStaffService();
+        }
+        return delivery_staff_service;
+    }
+    
     private ArrayList<DeliveryStaff> delivery_staffs;
     FileHandler staff_file = new FileHandler(FileName.DELIVERY_STAFF);
     

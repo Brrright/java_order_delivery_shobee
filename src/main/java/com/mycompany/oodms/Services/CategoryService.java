@@ -16,6 +16,19 @@ import java.util.List;
  * @author mingl
  */
 public class CategoryService {
+    private static CategoryService category_service;
+    
+     public static CategoryService getCategoryService()
+    {
+        //Not instantiated yet
+        if (category_service == null)
+        {
+            category_service = new CategoryService();
+        }
+        
+        return category_service;
+    }
+    
     private ArrayList<Category> categories;
     FileHandler category_file = new FileHandler(FileName.CATEGORY);
     

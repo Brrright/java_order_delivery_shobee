@@ -11,6 +11,7 @@ import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Services.Provider.Provider_Member;
+import com.mycompany.oodms.Services.User.MemberService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,20 @@ import java.util.List;
  * @author mingl
  */
 public class CartService { //might no use le, since 1 person 1 cart, no place for us to show all cart oso, but CART ITEM SERVICE IS NEEDED
+    
+    private static CartService cart_service;
+    
+     public static CartService getCartService()
+    {
+        //Not instantiated yet
+        if (cart_service == null)
+        {
+            cart_service = new CartService();
+        }
+        
+        return cart_service;
+    }
+    
     private ArrayList<Cart> carts;
     FileHandler cart_file = new FileHandler(FileName.CART);
     
@@ -41,7 +56,7 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
         int cart_id = r.getID();
         int member_id= Integer.parseInt(cart_data[1]);
         
-        Member member_object = Provider_Member.member_service.getMember(member_id);
+        Member member_object = MemberService.getMemberService().getMember(member_id);
         
         return new Cart(cart_id, member_object);
     }

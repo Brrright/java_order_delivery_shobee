@@ -18,6 +18,18 @@ import java.util.List;
  * @author User
  */
 public class AdminService {
+    private static AdminService admin_service;
+    
+     public static AdminService getAdminService()
+    {
+        //Not instantiated yet
+        if (admin_service == null)
+        {
+            admin_service = new AdminService();
+        }
+        return admin_service;
+    }
+    
     private ArrayList<Admin> admins;
     FileHandler admin_file = new FileHandler(FileName.ADMIN);
     

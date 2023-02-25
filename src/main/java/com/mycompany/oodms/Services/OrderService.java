@@ -12,6 +12,7 @@ import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Order;
 import com.mycompany.oodms.Services.Provider.Provider_Address;
 import com.mycompany.oodms.Services.Provider.Provider_Member;
+import com.mycompany.oodms.Services.User.MemberService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,6 +23,19 @@ import java.util.List;
  * @author mingl
  */
 public class OrderService {
+    
+    private static OrderService order_service;
+    
+    public static OrderService getOrderService()
+    {
+        if(OrderService.order_service == null)
+        {
+            OrderService.order_service = new OrderService();
+        }
+        
+        return OrderService.order_service;
+    }
+    
      private ArrayList<Order> orders;
     FileHandler order_file = new FileHandler(FileName.ORDER);
 
@@ -49,8 +63,8 @@ public class OrderService {
             int order_member_id = Integer.parseInt(order_data[5]);
             int order_address_id = Integer.parseInt(order_data[6]);
             
-            Address address_object = Provider_Address.address_service.getAddress(order_address_id);
-            Member member_object = Provider_Member.member_service.getMember(order_member_id);
+            Address address_object = AddressService.getAddressService().getAddress(order_address_id);
+            Member member_object = MemberService.getMemberService().getMember(order_member_id);
             
             return new Order(order_id, order_date_time, order_total_price, order_paid, order_change,member_object, address_object);
     }

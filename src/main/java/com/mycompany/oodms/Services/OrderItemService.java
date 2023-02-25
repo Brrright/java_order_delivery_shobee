@@ -20,6 +20,19 @@ import java.util.List;
  * @author User
  */
 public class OrderItemService {
+    
+    private static OrderItemService order_item_service;
+    
+    public static OrderItemService getOrderItemService()
+    {
+        if(OrderItemService.order_item_service == null)
+        {
+            OrderItemService.order_item_service = new OrderItemService();
+        }
+        
+        return OrderItemService.order_item_service;
+    }
+    
     private ArrayList<OrderItem> order_items;
     FileHandler order_item_file = new FileHandler(FileName.ORDER_ITEM);
     
@@ -43,8 +56,8 @@ public class OrderItemService {
         int order_id  = Integer.parseInt(order_item_data[2]);
 //        int member_id  = Integer.parseInt(order_item_data[3]);
 
-        Order order = Provider_Order_OrderItem.order_service.getOrder(order_id);
-        Product product = Provider_Product_Category.product_service.getProduct(product_id);
+        Order order = OrderService.getOrderService().getOrder(order_id);
+        Product product = ProductService.getProductService().getProduct(product_id);
 //        Member member = Provider_Member.member_service.getMember(member_id);
         System.out.println(quantity);
         System.out.println(product.getProductPrice());

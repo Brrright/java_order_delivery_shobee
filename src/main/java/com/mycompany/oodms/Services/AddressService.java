@@ -10,6 +10,7 @@ import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.Services.Provider.Provider_Member;
+import com.mycompany.oodms.Services.User.MemberService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,18 @@ import java.util.List;
  * @author mingl
  */
 public class AddressService {
+    private static AddressService address_service;
+    
+    public static AddressService getAddressService()
+    {
+        if(AddressService.address_service == null)
+        {
+            AddressService.address_service = new AddressService();
+        }
+        
+        return AddressService.address_service;
+    }
+    
     private ArrayList<Address> addresses;
     FileHandler address_file = new FileHandler(FileName.MEMBER_ADDRESS);
     
@@ -36,8 +49,13 @@ public class AddressService {
         if (address_data.length == 0){
             return null;
         }
+        if(Provider_Member.member_service == null){
+            Provider_Member.StartProvider();
+        }  
         
-        Member member = Provider_Member.member_service.getMember(Integer.parseInt(address_data[5]));
+//        Member member = Provider_Member.member_service.getMember(Integer.parseInt(address_data[5]));
+        Member member = MemberService.getMemberService().getMember(Integer.parseInt(address_data[5]));;
+
         return new Address(r.getID(), address_data[1], address_data[2], address_data[3], address_data[4], member);
     }
     
