@@ -134,7 +134,7 @@ public class UI_OrderDetails extends JPanel{
         
         
 //         JLabel - current Location 
-        currentLocation = new JLabel("*Shobee order delivery status...*");
+        currentLocation = new JLabel("Shobee order delivery status");
         currentLocation.setFont(new Font("MV Boli",Font.BOLD,13));
         currentLocation.setForeground(new Color(255, 151, 98, 255));
         currentLocation.setBounds(158,154,500,15);

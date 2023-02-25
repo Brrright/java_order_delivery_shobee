@@ -7,6 +7,8 @@ package com.mycompany.oodms.ui;
 import com.mycompany.oodms.Address;
 import com.mycompany.oodms.CartItem;
 import com.mycompany.oodms.OODMS_Main;
+import com.mycompany.oodms.Services.AddressService;
+import com.mycompany.oodms.Services.CartItemService;
 import com.mycompany.oodms.Services.Provider.Provider_Address;
 import com.mycompany.oodms.Services.Provider.Provider_Cart;
 import java.awt.BorderLayout;
@@ -22,9 +24,8 @@ import javax.swing.*;
  */
 public class UI_Payment extends JPanel {
     JButton back;
-    
-    JLabel orderAmt_header;
-    JLabel cartItemLabel;
+//    JLabel orderAmt_header;
+//    JLabel cartItemLabel;
     JLabel price_header;
     JLabel price;
     JLabel shippingFee_header;
@@ -46,12 +47,12 @@ public class UI_Payment extends JPanel {
     
     public Address initialize_address(){
         Provider_Address provider_address = new Provider_Address();
-        return Provider_Address.address_service.getAddressByMemberId(member_id);
+        return AddressService.getAddressService().getAddressByMemberId(member_id);
     }
     
     public ArrayList<CartItem> initialize_cart_item(){
         Provider_Cart provider_cart = new Provider_Cart();
-        return Provider_Cart.cart_item_service.getCartItems(member_id);
+        return CartItemService.getCartItemService().getCartItems(member_id);
     }
     
     public double calculateTotal(ArrayList<CartItem> cart_items) {
@@ -110,7 +111,7 @@ public class UI_Payment extends JPanel {
        
        
         // JLabel - Total price
-       totalPrice = new JLabel("RM " + total_price + 5.0);
+       totalPrice = new JLabel("RM " + (total_price + 5.0));
        totalPrice.setForeground(Color.BLACK);
        totalPrice.setFont(new Font("Sarif",Font.BOLD,15));
        totalPrice.setBounds(480, 354, 430, 27);
@@ -148,25 +149,25 @@ public class UI_Payment extends JPanel {
        paymentBtn.setVerticalAlignment(JLabel.CENTER);
        paymentBtn.setHorizontalTextPosition(JLabel.CENTER);
        paymentBtn.setVerticalTextPosition(JLabel.CENTER);
-       paymentBtn.setBounds(805,700,125,58);
+       paymentBtn.setBounds(805,600,125,58);
        paymentBtn.setBorder(BorderFactory.createEmptyBorder());
        paymentBtn.setFocusable(false);
        paymentBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
        
        
-       for(int i = 0; i < cart_items.size(); i++) {
-        // JLabel - cart item header
-       orderAmt_header = new JLabel("Product");
-       orderAmt_header.setForeground(new Color(255,166,101));
-       orderAmt_header.setFont(new Font("Sarif",Font.PLAIN,15));
-       orderAmt_header.setBounds(206, 750, 161, 27);
-
-       // JLabel - cart item 
-       cartItemLabel = new JLabel(cart_items.get(i).getProduct().getProductName() + " x" + cart_items.get(i).getQuantity());
-       cartItemLabel.setForeground(Color.BLACK);
-       cartItemLabel.setFont(new Font("Sarif",Font.PLAIN,15));
-       cartItemLabel.setBounds(480, 750, 430, 27);
-       }
+//       for(int i = 0; i < cart_items.size(); i++) {
+//        // JLabel - cart item header
+//       orderAmt_header = new JLabel("Product");
+//       orderAmt_header.setForeground(new Color(255,166,101));
+//       orderAmt_header.setFont(new Font("Sarif",Font.PLAIN,15));
+//       orderAmt_header.setBounds(206, 750, 161, 27);
+//
+//       // JLabel - cart item 
+//       cartItemLabel = new JLabel(cart_items.get(i).getProduct().getProductName() + " x" + cart_items.get(i).getQuantity());
+//       cartItemLabel.setForeground(Color.BLACK);
+//       cartItemLabel.setFont(new Font("Sarif",Font.PLAIN,15));
+//       cartItemLabel.setBounds(480, 750, 430, 27);
+//       }
        
        // JPanel - container
        panel = new JPanel();
@@ -175,8 +176,8 @@ public class UI_Payment extends JPanel {
        panel.setBackground(Color.WHITE);
        
        panel.add(back);
-       panel.add(orderAmt_header);
-       panel.add(cartItemLabel);
+//       panel.add(orderAmt_header);
+//       panel.add(cartItemLabel);
        panel.add(price_header);
        panel.add(price);
        panel.add(shippingFee_header);

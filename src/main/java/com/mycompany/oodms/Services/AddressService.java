@@ -9,7 +9,6 @@ import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
-import com.mycompany.oodms.Services.Provider.Provider_Member;
 import com.mycompany.oodms.Services.User.MemberService;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,6 @@ public class AddressService {
         {
             AddressService.address_service = new AddressService();
         }
-        
         return AddressService.address_service;
     }
     
@@ -39,6 +37,7 @@ public class AddressService {
         List<FileRecord> address_record = address_file.FetchRecord();
 //        address_record.size() == 0
         address_record.forEach((record) -> {
+            System.out.println("testing printing record; " + record.getRecord());
             Address order_object = convertToObject(record);
             this.addresses.add(order_object);
         });
