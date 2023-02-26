@@ -20,6 +20,10 @@ public class UI_Signup extends JPanel{
     JLabel gender_header; 
     JLabel age_header;
     JLabel phoneNo_header;
+    JLabel street_header;
+    JLabel city_header;
+    JLabel state_header;
+    JLabel postcode_header;
     JLabel email_header; 
     JLabel pwd_header;
     JLabel confirmPwd_header;
@@ -28,6 +32,10 @@ public class UI_Signup extends JPanel{
     JComboBox gender;
     JTextField age;
     JTextField phoneNo;
+    JTextField street;
+    JTextField city;
+    JTextField state;
+    JTextField postcode;
     JTextField email;
     JPasswordField pwd;
     JPasswordField confirmPwd;
@@ -45,6 +53,10 @@ public class UI_Signup extends JPanel{
         back.setBounds(68,70,45,11);
         back.setBorder(BorderFactory.createEmptyBorder());
         back.setFocusable(false);
+        back.setOpaque(false);
+        back.setFocusPainted(false);
+        back.setContentAreaFilled(false);
+        back.setOpaque(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
         back.addActionListener(e -> {
             frame.replacePanel(OODMS_Main.previous_panel);
@@ -68,63 +80,102 @@ public class UI_Signup extends JPanel{
         
         // JTextField - name
         name = new JTextField();
-        name.setBounds(140,233,587,48);
+        name.setBounds(140,233,380,48);
         
         // JLabel - gender header
         gender_header = new JLabel("Gender :");
         gender_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        gender_header.setBounds(763,213,100,20);
+        gender_header.setBounds(556,213,100,20);
         
         // JTextField - gender
         String[] genderList = {Gender.MALE.name(),Gender.FEMALE.name()};
         gender = new JComboBox(genderList);
-        gender.setBounds(759,233,174,48);
+        gender.setBounds(556,233,174,48);
         
         // JLabel - age header
         age_header = new JLabel("Age :");
         age_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        age_header.setBounds(144,307,50,20);
+        age_header.setBounds(766,213,50,20);
         
         // JTextField - age
         age = new JTextField();
-        age.setBounds(140,327,378,48);
+        age.setBounds(766,233,171,48);
+        
+        
+        // JLabel - street header
+        street_header = new JLabel("Street :");
+        street_header.setFont(new Font("MV Boli",Font.PLAIN,12));
+        street_header.setBounds(140,307,100,20);
+        
+        // JTextField - street
+        street = new JTextField();
+        street.setBounds(140,327,793,48);
+        
+        
+        // JLabel - city header
+        city_header = new JLabel("City :");
+        city_header.setFont(new Font("MV Boli",Font.PLAIN,12));
+        city_header.setBounds(140,406,240,20);
+        
+        // JTextField - City
+        city = new JTextField();
+        city.setBounds(140,426,240,48);
+        
+        // JLabel - state header
+        state_header = new JLabel("City :");
+        state_header.setFont(new Font("MV Boli",Font.PLAIN,12));
+        state_header.setBounds(416,406,240,20);
+        
+        // JTextField - state
+        state = new JTextField();
+        state.setBounds(416,426,240,48);
+        
+        // JLabel - postcode header
+        postcode_header = new JLabel("Postcode :");
+        postcode_header.setFont(new Font("MV Boli",Font.PLAIN,12));
+        postcode_header.setBounds(692,406,240,20);
+        
+        // JTextField - postcode
+        postcode = new JTextField();
+        postcode.setBounds(692,426,240,48);
+        
         
         // JLabel - phone number header
         phoneNo_header = new JLabel("Phone number :");
         phoneNo_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        phoneNo_header.setBounds(558,307,150,20);
+        phoneNo_header.setBounds(140,505,150,20);
         
         // JTextField - phone number
         phoneNo = new JTextField();
-        phoneNo.setBounds(554,327,379,48);
+        phoneNo.setBounds(140,525,238,48);
         
         // JLabel - Email header
         email_header = new JLabel("Email :");
         email_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        email_header.setBounds(144,406,100,20);
+        email_header.setBounds(414,505,100,20);
         
         // JTextField - Email
         email = new JTextField();
-        email.setBounds(140,426,793,48);
+        email.setBounds(414,525,519,48);
         
         // JLabel - Password header
         pwd_header = new JLabel("Password :");
         pwd_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        pwd_header.setBounds(144,505,100,20);
+        pwd_header.setBounds(144,590,100,20);
         
         // JPasswordField - Password
         pwd = new JPasswordField();
-        pwd.setBounds(140,525,378,48);
+        pwd.setBounds(140,610,378,48);
         // more than 7 words
         
         // JLabel - Confirm password header
         confirmPwd_header = new JLabel("Confirm Password :");
         confirmPwd_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        confirmPwd_header.setBounds(558,505,200,20);
+        confirmPwd_header.setBounds(558,590,200,20);
         
         // JPasswordField - Confirm password
         confirmPwd = new JPasswordField();
-        confirmPwd.setBounds(554,525,378,48);
+        confirmPwd.setBounds(554,610,378,48);
         
         
         // JButton - sign up button
@@ -146,7 +197,7 @@ public class UI_Signup extends JPanel{
              
             String input_name = name.getText();
             Gender input_gender = Gender.valueOf(String.valueOf(gender.getSelectedItem()));
-            int input_age = Integer.valueOf(age.getText());
+            int input_age = Integer.parseInt(age.getText());
             String input_phonenum = phoneNo.getText();
             String input_email = email.getText();
             String input_pw = String.valueOf(pwd.getPassword());
@@ -169,6 +220,10 @@ public class UI_Signup extends JPanel{
         this.add(name_header);
         this.add(gender_header);
         this.add(age_header);
+        this.add(street_header);
+        this.add(city_header);
+        this.add(state_header);
+        this.add(postcode_header);
         this.add(phoneNo_header);
         this.add(email_header);
         this.add(pwd_header);
@@ -177,13 +232,16 @@ public class UI_Signup extends JPanel{
         this.add(name);
         this.add(gender);
         this.add(age);
+        this.add(street);
+        this.add(city);
+        this.add(state);
+        this.add(postcode);
         this.add(phoneNo);
         this.add(email);
         this.add(pwd);
         this.add(confirmPwd);
         
         this.add(signup);
-        
     }
     
     public void signUp(String input_name, Gender input_gender, int input_age, String input_phonenum, String input_email, String input_pw, String input_confirm_pw){
