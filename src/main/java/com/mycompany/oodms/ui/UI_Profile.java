@@ -35,7 +35,6 @@ public class UI_Profile extends JPanel {
 
     JButton myOrder;
     JButton editProfile;
-    JButton changePwd;
     
     
     ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
@@ -182,7 +181,7 @@ public class UI_Profile extends JPanel {
         editProfile.setHorizontalTextPosition(JLabel.CENTER);
         editProfile.setVerticalAlignment(JLabel.CENTER);
         editProfile.setHorizontalAlignment(JLabel.CENTER);
-        editProfile.setBounds(692,555,112,53);
+        editProfile.setBounds(770,555,112,53);
         editProfile.setBorder(BorderFactory.createEmptyBorder());
         editProfile.setFocusable(false);
         editProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -190,22 +189,7 @@ public class UI_Profile extends JPanel {
 //            OODMS_Main.frame.replacePanel(new UI_Profile());
         });
 
-        // JButton - changePwd
-        changePwd = new JButton("<html><body>Change<br>password</html>");
-        changePwd.setFont(new Font("MV Boli",Font.PLAIN,12));
-        changePwd.setForeground(new Color(255, 255, 255));
-        changePwd.setIcon(orangeRect);
-        changePwd.setHorizontalTextPosition(JLabel.CENTER);
-        changePwd.setVerticalAlignment(JLabel.CENTER);
-        changePwd.setHorizontalAlignment(JLabel.CENTER);
-        changePwd.setBounds(807,555,112,53);
-        changePwd.setBorder(BorderFactory.createEmptyBorder());
-        changePwd.setFocusable(false);
-        changePwd.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        changePwd.addActionListener(e -> {
-//            OODMS_Main.frame.replacePanel(new );
 
-        });
 
 
         // ------------------------------ this JFrame ------------------------------ //
@@ -229,7 +213,6 @@ public class UI_Profile extends JPanel {
 
         this.add(myOrder);
         this.add(editProfile);
-        this.add(changePwd);
 
     }
 }
