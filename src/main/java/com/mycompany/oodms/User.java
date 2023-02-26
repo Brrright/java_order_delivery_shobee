@@ -115,7 +115,7 @@ public abstract class User {
     }
     
     public String getPhoneNum(){
-        return this.password;
+        return this.phoneNum;
     }
     
     public String getPicturePath(){
