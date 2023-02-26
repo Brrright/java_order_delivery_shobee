@@ -8,6 +8,8 @@ package com.mycompany.oodms.ui.UI_Admin;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.ProductService;
+import com.mycompany.oodms.ui.Main_Frame;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
@@ -19,28 +21,24 @@ public class UI_ProductManagementProduct extends JPanel {
     JButton backBtn;
     JLabel productImg;
     JLabel name;
-    JLabel sold;
+    JLabel category;
     JLabel description;
     JLabel stocks;
     JLabel price;
     
+    
     JButton edit;
     JButton remove;
+    
+    public Product initialize_data(int id){
+        Product product = ProductService.getProductService().getProduct(id);
+        return product;
+    }
 
-    public UI_ProductManagementProduct(){
-        // REQUIRED DATA
-        // ID, PICTURE, NAME, DESCRIPTION, STOCK, PRICE, SOLD
+    public UI_ProductManagementProduct(int product_id){
         
-        
-        ArrayList<String> productDetails = new ArrayList<>(); 
-        productDetails.add("ITEM1");
-        productDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-        productDetails.add("Nameg");
-        productDetails.add("Lorem ipsum dolor sit amet consectetur. Non habitant volutpat fames vel amet mollis. Massa sed sem diam tortor praesento");
-        productDetails.add("22"); // stock
-        productDetails.add("45.50");
-        productDetails.add("Electronics"); //sold
-
+         Product product = initialize_data(product_id);
+         
         // JLabel - back
         backBtn = new JButton("< back");
         backBtn.setFont(new Font("MV Boli",Font.PLAIN,12));
@@ -48,14 +46,18 @@ public class UI_ProductManagementProduct extends JPanel {
         backBtn.setBounds(73,77,45,11);
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setFocusable(false);
+        backBtn.setBackground(new Color(0,0,0,0));
+        backBtn.setOpaque(false);
+        backBtn.setFocusPainted(false);
+        backBtn.setContentAreaFilled(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backBtn.addActionListener(e -> {
             OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
         
 
-        //image (edited scale)
-        ImageIcon itemPic = new ImageIcon(productDetails.get(1));
+        // image (edited scale)
+        ImageIcon itemPic = new ImageIcon(product.getProcuctPicture());
         Image image = itemPic.getImage();
         Image newImage = image.getScaledInstance(370, 426, Image.SCALE_SMOOTH);
         ImageIcon newIcon = new ImageIcon(newImage);
@@ -63,34 +65,34 @@ public class UI_ProductManagementProduct extends JPanel {
         // JLabel - picture
         productImg = new JLabel(newIcon);
         productImg.setBounds(145,182,370,426);
-
-        // JLabel - name
-        name = new JLabel(productDetails.get(2));
+        
+         // JLabel - name
+        name = new JLabel(product.getProductName());
         name.setFont(new Font("MV Boli",Font.BOLD,30));
         name.setBounds(576,182,342,35);
 
-        // Jlabel - sold
-        sold = new JLabel(productDetails.get(6));
-        sold.setFont(new Font("MV Boli",Font.PLAIN,12));
-        sold.setForeground(new Color(255, 151, 98, 124));
-        sold.setBounds(577,230,80,11);
+        // JLabel - category
+        category = new JLabel("Category: " + product.getCategory().getCategoryName());
+        category.setFont(new Font("MV Boli",Font.PLAIN,12));
+        category.setForeground(new Color(255, 151, 98, 124));
+        category.setBounds(577,230,200,11);
 
-        // Jlabel - description
-        description = new JLabel("<html>Shobee is a trusted online store that provides quality assurance to its customers. They sell only high-quality products and work with reputable suppliers and manufacturers.</html>");
+        // JLabel - description
+        description = new JLabel("<html>"+ product.getProductDescription() + "</html>");
         description.setFont(new Font("MV Boli",Font.PLAIN,15));
         description.setForeground(Color.LIGHT_GRAY);
         description.setBounds(576,290,360,320);
         description.setVerticalAlignment(JLabel.TOP);
 
         // JLabel - stocks
-        String stockStatus = (Integer.parseInt(productDetails.get(4)) > 0) ? productDetails.get(4) + " available" : "out of stock";
+        String stockStatus = (product.getStockQty()> 0) ? product.getStockQty()  + " available" : "out of stock";
         stocks = new JLabel(stockStatus);
         stocks.setFont(new Font("MV Boli",Font.PLAIN,10));
         stocks.setForeground(new Color(121, 121, 121));
         stocks.setBounds(577,550,80,9);
 
         // JLabel - price
-        price = new JLabel("RM " + productDetails.get(5));
+        price = new JLabel("RM " + product.getProductPrice());
         price.setFont(new Font("MV Boli",Font.PLAIN,26));
         price.setForeground(new Color(0, 0, 0));
         price.setBounds(576,575,200,25);
@@ -106,7 +108,9 @@ public class UI_ProductManagementProduct extends JPanel {
         edit.setFocusable(false);
         edit.setCursor(new Cursor(Cursor.HAND_CURSOR));
         edit.addActionListener(e -> {
-            frame.replacePanel(new UI_ProductManagementProductEdit());
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+             OODMS_Main.frame.replacePanel(new UI_ProductManagementProductEdit(product.getProductID()));
+
         });
         
         // JButton - remove
@@ -139,7 +143,7 @@ public class UI_ProductManagementProduct extends JPanel {
         this.add(backBtn);
         this.add(productImg);
         this.add(name);
-        this.add(sold);
+        this.add(category);
         this.add(description);
         this.add(stocks);
         this.add(price);

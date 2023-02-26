@@ -90,14 +90,13 @@ public class UI_ProductManagement extends JPanel{
         ArrayList<Category> all_categories = CategoryService.getCategoryService().getCategories();
         return all_categories;
     }
-     
     
     public UI_ProductManagement() {
         // add category
         categories_name.add("ALL");
         for(int y = 0; y < all_categories.size(); y++){
             categories_name.add(all_categories.get(y).getCategoryName());
-        }
+    }
 
         // heading
         heading = new UI_Header();
@@ -116,6 +115,12 @@ public class UI_ProductManagement extends JPanel{
         userManagementBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         userManagementBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         userManagementBtn.setForeground(Color.GRAY);
+        userManagementBtn.setBackground(new Color(0,0,0,0));
+        userManagementBtn.setOpaque(false);
+        userManagementBtn.setBorderPainted(false);
+        userManagementBtn.setFocusPainted(false);
+        userManagementBtn.setForeground(Color.GRAY);
+        userManagementBtn.setForeground(Color.GRAY);
         userManagementBtn.addActionListener(e -> {
             frame.replacePanel(new UI_UserManagement());
         });
@@ -129,6 +134,10 @@ public class UI_ProductManagement extends JPanel{
         productManagementBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         productManagementBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         productManagementBtn.setForeground(Color.WHITE);
+        productManagementBtn.setBackground(new Color(0,0,0,0));
+        productManagementBtn.setOpaque(false);
+        productManagementBtn.setBorderPainted(false);
+        productManagementBtn.setFocusPainted(false);
         
         
         // JButton - Category management button
@@ -140,6 +149,10 @@ public class UI_ProductManagement extends JPanel{
         categoryManagementBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         categoryManagementBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         categoryManagementBtn.setForeground(Color.GRAY);
+        categoryManagementBtn.setBackground(new Color(0,0,0,0));
+        categoryManagementBtn.setOpaque(false);
+        categoryManagementBtn.setBorderPainted(false);
+        categoryManagementBtn.setFocusPainted(false);
         categoryManagementBtn.addActionListener(e -> {
             frame.replacePanel(new UI_CategoryManagement());
         });
@@ -163,6 +176,10 @@ public class UI_ProductManagement extends JPanel{
         addProduct.setHorizontalAlignment(JLabel.CENTER);
         addProduct.setVerticalAlignment(JLabel.CENTER);
         addProduct.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        addProduct.setBackground(new Color(0,0,0,0));
+        addProduct.setOpaque(false);
+        addProduct.setBorderPainted(false);
+        addProduct.setFocusPainted(false);
         addProduct.addActionListener(e -> {
             frame.replacePanel(new UI_ProductManagementAdd());
         });
@@ -198,6 +215,10 @@ public class UI_ProductManagement extends JPanel{
         productType = new JComboBox(categories_name.toArray(new String[categories_name.size()]));
         productType.setFont(new Font("MV Boli",Font.PLAIN,13));
         productType.setPreferredSize(new Dimension(153,48));
+        productType.addActionListener(e -> {
+//            System.out.println(categories.getSelectedIndex());
+            filterByCategory();
+        });
         
         // JPanel - search panel (add, search, filter)
         search_panel = new JPanel();
@@ -272,9 +293,13 @@ public class UI_ProductManagement extends JPanel{
                 products[i].setVerticalTextPosition(JLabel.BOTTOM);
                 products[i].setBorder(BorderFactory.createEmptyBorder());
                 products[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                products[i].setBackground(new Color(0,0,0,0));
+                products[i].setOpaque(false);
+                products[i].setBorderPainted(false);
+                products[i].setFocusPainted(false);
                 products[i].addActionListener(e -> {
                     OODMS_Main.previous_panel = Main_Frame.currentPanel;
-                    OODMS_Main.frame.replacePanel(new UI_Product(product.getProductID()));
+                    OODMS_Main.frame.replacePanel(new UI_ProductManagementProduct(product.getProductID()));
                 });
             }
            for (JButton product : products){
