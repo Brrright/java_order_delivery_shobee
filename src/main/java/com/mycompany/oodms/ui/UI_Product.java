@@ -51,6 +51,10 @@ public class UI_Product extends JPanel {
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backBtn.setBackground(new Color(0,0,0,0));
+        backBtn.setOpaque(false);
+        backBtn.setFocusPainted(false);
+        backBtn.setContentAreaFilled(false);
         backBtn.addActionListener(e -> {
             OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
