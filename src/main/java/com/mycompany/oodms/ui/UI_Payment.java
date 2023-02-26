@@ -24,8 +24,6 @@ import javax.swing.*;
  */
 public class UI_Payment extends JPanel {
     JButton back;
-//    JLabel orderAmt_header;
-//    JLabel cartItemLabel;
     JLabel price_header;
     JLabel price;
     JLabel shippingFee_header;
@@ -40,19 +38,12 @@ public class UI_Payment extends JPanel {
     JButton paymentBtn;
     ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
 
-
     JPanel panel;
     int member_id = OODMS_Main.current_user.getID();
-
     
     public Address initialize_address(){
         return AddressService.getAddressService().getAddressByMemberId(member_id);
     }
-    
-//    public ArrayList<CartItem> initialize_cart_item(){
-//        Provider_Cart provider_cart = new Provider_Cart();
-//        return CartItemService.getCartItemService().getCartItems(member_id);
-//    }
     
     public double calculateTotal(ArrayList<CartItem> cart_items) {
         double total = 0;
@@ -62,7 +53,6 @@ public class UI_Payment extends JPanel {
         return total;
     }
 
-   
    public UI_Payment(ArrayList<CartItem> cart_items){
         Address address = initialize_address();
 //        ArrayList<CartItem> cart_items = initialize_cart_item();
@@ -144,7 +134,7 @@ public class UI_Payment extends JPanel {
        
        // JButton - Payment button
        paymentBtn = new JButton(orangeRect);
-       paymentBtn.setText("<html>continue<br>checkout</html>");
+       paymentBtn.setText("<html>Make<br>payment</html>");
        paymentBtn.setFont(new Font("Sarif",Font.PLAIN,12));
        paymentBtn.setForeground(Color.WHITE);
        paymentBtn.setHorizontalAlignment(JLabel.CENTER);
@@ -155,21 +145,10 @@ public class UI_Payment extends JPanel {
        paymentBtn.setBorder(BorderFactory.createEmptyBorder());
        paymentBtn.setFocusable(false);
        paymentBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-       
-       
-//       for(int i = 0; i < cart_items.size(); i++) {
-//        // JLabel - cart item header
-//       orderAmt_header = new JLabel("Product");
-//       orderAmt_header.setForeground(new Color(255,166,101));
-//       orderAmt_header.setFont(new Font("Sarif",Font.PLAIN,15));
-//       orderAmt_header.setBounds(206, 750, 161, 27);
-//
-//       // JLabel - cart item 
-//       cartItemLabel = new JLabel(cart_items.get(i).getProduct().getProductName() + " x" + cart_items.get(i).getQuantity());
-//       cartItemLabel.setForeground(Color.BLACK);
-//       cartItemLabel.setFont(new Font("Sarif",Font.PLAIN,15));
-//       cartItemLabel.setBounds(480, 750, 430, 27);
-//       }
+       paymentBtn.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_Payment_Form(total_price, address));
+       });
        
        // JPanel - container
        panel = new JPanel();
@@ -192,13 +171,10 @@ public class UI_Payment extends JPanel {
        panel.add(billingAddress);
        panel.add(paymentBtn);
        
-       
        // JPanel - this
        this.setSize(1080,768);
        this.setBackground(Color.white);
        this.setLayout(new BorderLayout());
        this.add(panel, BorderLayout.CENTER);
-       
    }
-    
 }
