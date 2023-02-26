@@ -97,6 +97,16 @@ public class CartItemService {
     }
     
     public void addCartItem(CartItem item){
+        for(CartItem x : cart_items){
+            int product_ID = x.getProduct().getProductID();
+            if(product_ID == item.getProduct().getProductID() && x.getCart().getCartID() == item.getCart().getCartID()){
+                System.out.println("same product, adding quantity");
+                int newQty = item.getQuantity() + 1;
+                item.setQuantity(newQty);
+                updateCartItem(item);
+                return;
+            }
+        }
         this.cart_items.add(item);
         FileRecord cart_item_record=  convertToFileRecord(item);
         cart_item_file.InsertRecord(cart_item_record);
