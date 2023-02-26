@@ -134,6 +134,33 @@ public class FileHandler {
         }
         SaveRecord();
     }
+    
+//    "CartID;ProductID;Quantity;MemberID";
+    public void UpdateRecordForCartItem(FileRecord record){
+        for(int i = 0; i < records.size(); i++){
+            String[] cart_item_record = records.get(i).getRecordList();
+            int cart_id = Integer.parseInt(cart_item_record[0]);
+            int product_id = Integer.parseInt(cart_item_record[1]);
+//            int qty = Integer.parseInt(cart_item_record[2]);
+//            int member_id = Integer.parseInt(cart_item_record[3]);
+            
+            String[] received_item_record = record.getRecordList();
+            int cid = Integer.parseInt(received_item_record[0]);
+            int pid = Integer.parseInt(received_item_record[1]);
+//            int o_qty = Integer.parseInt(received_item_record[2]);
+//            int mid = Integer.parseInt(received_item_record[3]);
+            
+            if(cart_id == cid && product_id == pid){
+                records.set(i, record);
+                break;
+            }
+        }
+        SaveRecord();
+    }
+    
+    public void UpdateRecordForOrderItem(FileRecord record){
+        //
+    }
 
     public void InsertRecord(FileRecord record) {
         records.add(record);
@@ -147,6 +174,32 @@ public class FileHandler {
             }
         }
         SaveRecord();
+    }
+    
+    public void DeleteRecordForCartItem(FileRecord record) {
+        for(int i = 0; i < records.size(); i++){
+            String[] cart_item_record = records.get(i).getRecordList();
+            int cart_id = Integer.parseInt(cart_item_record[0]);
+            int product_id = Integer.parseInt(cart_item_record[1]);
+//            int qty = Integer.parseInt(cart_item_record[2]);
+//            int member_id = Integer.parseInt(cart_item_record[3]);
+            
+            String[] received_item_record = record.getRecordList();
+            int cid = Integer.parseInt(received_item_record[0]);
+            int pid = Integer.parseInt(received_item_record[1]);
+//            int o_qty = Integer.parseInt(received_item_record[2]);
+//            int mid = Integer.parseInt(received_item_record[3]);
+            
+            if(cart_id == cid && product_id == pid){
+                records.remove(i);
+                break;
+            }
+        }
+        SaveRecord();
+    }
+    
+    public void DeleteRecordForOrderItem(FileRecord record){
+        //
     }
 
     private void LoadRecords() {
