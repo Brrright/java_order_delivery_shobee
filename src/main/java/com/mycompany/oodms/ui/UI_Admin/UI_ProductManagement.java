@@ -54,19 +54,18 @@ public class UI_ProductManagement extends JPanel{
 
     JComboBox productType;
     
-    
     // 3rd section (users)
     final int imageWidth = 203;
     final int imageHeight = 203;
     
     
-    ArrayList<String>categories_name = new ArrayList<String>();
+    ArrayList<String>categories_name = new ArrayList<>();
     ArrayList<Product> all_products = initialize_product_data();
     ArrayList<Category> all_categories = initialize_category_data();
     
     
     // panels
-     JPanel product_panel;
+     JPanel product_panel = new JPanel();
      JPanel search_panel;
      JPanel managementSelection_panel;
      
@@ -100,7 +99,6 @@ public class UI_ProductManagement extends JPanel{
             categories_name.add(all_categories.get(y).getCategoryName());
         }
 
-        
         // heading
         heading = new UI_Header();
         
@@ -173,6 +171,7 @@ public class UI_ProductManagement extends JPanel{
         search_textfield = new JTextField();
         search_textfield.setPreferredSize(new Dimension(432,48));
         search_textfield.addKeyListener(new java.awt.event.KeyAdapter()  {
+            @Override
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 System.out.println("triggered...");
                 all_products = initialize_product_data();
@@ -182,8 +181,6 @@ public class UI_ProductManagement extends JPanel{
                 product_panel.revalidate();
             }
         });
-        
-        
         
         // JButton - search button
         search_btn = new JButton(searchBtn);
@@ -212,7 +209,9 @@ public class UI_ProductManagement extends JPanel{
         search_panel.add(search_btn);
         search_panel.add(productType);
         
-        
+        // JButtons - products
+        products = productCard(this.all_products);
+
         // third container (search container)
         search_container = new JPanel();
         search_container.setLayout(new BorderLayout());

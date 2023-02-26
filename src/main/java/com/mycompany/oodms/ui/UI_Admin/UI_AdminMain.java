@@ -62,7 +62,7 @@ public class UI_AdminMain extends JPanel{
         generalManagementBtn.setOpaque(false);
         generalManagementBtn.setBorder(BorderFactory.createEmptyBorder()); 
         generalManagementBtn.addActionListener(e -> {
-            frame.replacePanel(new UI_UserManagement());
+            frame.replacePanel(new UI_ProductManagement());
         });
         
         
