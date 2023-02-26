@@ -163,13 +163,13 @@ public abstract class User {
         
         switch(fileName) {
             case FileName.ADMIN -> {
-                frame.replacePanel(new UI_AdminMain());
                 OODMS_Main.current_user.setRole(UserRole.ADMIN);
+                frame.replacePanel(new UI_AdminMain());
             }
             case FileName.MEMBER -> {
                 frame.replacePanel(new UI_AllProducts());
-                OODMS_Main.current_user.setRole(UserRole.MEMBER);
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
+                OODMS_Main.current_user.setRole(UserRole.MEMBER);
 //                 temporary testing for user related ui (after login)
 //                    frame.replacePanel(new UI_AllProducts());
 //                    frame.replacePanel(new UI_Cart());
@@ -180,8 +180,8 @@ public abstract class User {
 
             }
             case FileName.DELIVERY_STAFF -> {                
-                frame.replacePanel(new UI_UpComing());                
                 OODMS_Main.current_user.setRole(UserRole.DELIVERY_STAFF);
+                frame.replacePanel(new UI_UpComing());                
             }
             default -> {
                 System.out.println("no file name specified.");
