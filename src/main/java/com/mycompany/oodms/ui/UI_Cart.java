@@ -31,13 +31,6 @@ public class UI_Cart extends JPanel{
         return CartItemService.getCartItemService().getCartItems(member.getID());
     }
     
-    
-//    public UI_Cart(CartItem cartItem){
-//        // add item to cart
-//        CartItemService.getCartItemService().addCartItem(cartItem);
-//        buildUI();
-//    }
-    
     public UI_Cart() {
         // view cart and do edit saje
         buildUI();
@@ -87,28 +80,32 @@ public class UI_Cart extends JPanel{
                         return String.class;
                 }
             }
+            
+            // set column other than 0  (select) uneditable
+            public boolean isCellEditable(int row, int column) {
+                return column == 0;
+            }
         };
-        
         
         // JTable - cart
         JTable cart = new JTable();
         cart.setModel(model);
+        cart.getTableHeader().setReorderingAllowed(false);
         
         model.addColumn("Select");
         model.addColumn("No");
         model.addColumn("Product");
-        model.addColumn("Qty");
         model.addColumn("Price");
+        model.addColumn("Qty");
 
         // set cart table row
-        
         for (int i = 0; i < cart_items.size(); i++) {
             model.addRow(new Object[0]);
             model.setValueAt(false,i,0);
             model.setValueAt(i+1, i, 1);
             model.setValueAt(cart_items.get(i).getProduct().getProductName(), i, 2);
-            model.setValueAt(cart_items.get(i).getQuantity(), i, 3);
-            model.setValueAt(cart_items.get(i).getProduct().getProductPrice(), i, 4);
+            model.setValueAt(cart_items.get(i).getProduct().getProductPrice(), i, 3);
+            model.setValueAt(cart_items.get(i).getQuantity(), i, 4);
         }
         
         // scrollpane for JTable
