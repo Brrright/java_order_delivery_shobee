@@ -36,6 +36,7 @@ public class OODMS_Main {
 //        frame = new Main_Frame(new UI_OrderDetails());
 //        frame = new Main_Frame(new UI_Cart());
 //        frame = new Main_Frame(new UI_Payment());
+//        frame = new Main_Frame(new UI_Payment_Form());
 
 
         // Delivery interface

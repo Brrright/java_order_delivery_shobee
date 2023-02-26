@@ -97,6 +97,9 @@ public class OrderItemService {
             }
             int orderID = item.getOrder().getOrderID();
             Delivery delivery = DeliveryService.getDeliveryService().getDelivery(orderID);
+            if(delivery == null){
+                return retrievedItems;
+            }
             if(delivery.getMember().getEmail().equals(OODMS_Main.current_user.getEmail())) {
                 retrievedItems.add(item);
             }
