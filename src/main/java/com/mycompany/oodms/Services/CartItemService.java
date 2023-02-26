@@ -141,7 +141,8 @@ public class CartItemService {
     public void deleteCartItem(CartItem item){
         for(int i=0; i < cart_items.size(); i++){
             if(cart_items.get(i).getCart().getCartID() == item.getCart().getCartID() && cart_items.get(i).getProduct().getProductID() == item.getProduct().getProductID()){
-                cart_items.set(i, item);
+                cart_items.remove(i);
+                System.out.println("item removed");
                 FileRecord cart_item_record = convertToFileRecord(item);
                 cart_item_file.DeleteRecord(cart_item_record);
                 break;

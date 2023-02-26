@@ -213,11 +213,7 @@ public class UI_Header extends JPanel{
         
         // profile, logout (in registered user section)
         
-        
-        
-        
         ////////////////////////////////////////////////////////////////////////
-        
         // JPanel - this
         this.setLayout(new FlowLayout(FlowLayout.LEADING,50,20));
         this.setBackground(Color.WHITE);

@@ -177,7 +177,6 @@ public abstract class User {
 //                    frame.replacePanel(new UI_Profile());
 //                    frame.replacePanel(new UI_OrderDetails());
 //                    frame.replacePanel(new UI_Payment());
-
             }
             case FileName.DELIVERY_STAFF -> {              
                 OODMS_Main.current_user.setRole(UserRole.DELIVERY_STAFF);
@@ -187,12 +186,9 @@ public abstract class User {
                 System.out.println("no file name specified.");
             }
         }
-        
         System.out.println("User login successfully");
-
         JOptionPane.showMessageDialog(frame,"Welcome to Shobee!","Successfully Login",JOptionPane.INFORMATION_MESSAGE);
         // need to setup user related data
-
     }
     
     public static void logout(){

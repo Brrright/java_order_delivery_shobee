@@ -88,12 +88,12 @@ public class UI_Cart extends JPanel{
         };
         
         // JTable - cart
-        JTable cart = new JTable();
-        cart.setModel(model);
-        cart.getTableHeader().setReorderingAllowed(false);
+        JTable cartTable = new JTable();
+        cartTable.setModel(model);
+        cartTable.getTableHeader().setReorderingAllowed(false);
         
         model.addColumn("Select");
-        model.addColumn("No");
+        model.addColumn("Product ID");
         model.addColumn("Product");
         model.addColumn("Price");
         model.addColumn("Qty");
@@ -102,14 +102,14 @@ public class UI_Cart extends JPanel{
         for (int i = 0; i < cart_items.size(); i++) {
             model.addRow(new Object[0]);
             model.setValueAt(false,i,0);
-            model.setValueAt(i+1, i, 1);
+            model.setValueAt(cart_items.get(i).getProduct().getProductID(), i, 1);
             model.setValueAt(cart_items.get(i).getProduct().getProductName(), i, 2);
             model.setValueAt(cart_items.get(i).getProduct().getProductPrice(), i, 3);
             model.setValueAt(cart_items.get(i).getQuantity(), i, 4);
         }
         
         // scrollpane for JTable
-        JScrollPane scrollPane = new JScrollPane(cart);
+        JScrollPane scrollPane = new JScrollPane(cartTable);
         scrollPane.setBounds(193,220,700,290);
         
         // JButton - delete
@@ -124,7 +124,7 @@ public class UI_Cart extends JPanel{
         delete.setFont(new Font("MV Boli",Font.PLAIN,12));
         delete.setForeground(Color.WHITE);
         delete.addActionListener(e -> {
-            if(isSelected(cart)){
+            if(isSelected(cartTable)){
                 int removeConfirmation = JOptionPane.showOptionDialog(null, "Confirm to remove selected product?", "Confirmation",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
             
@@ -132,17 +132,17 @@ public class UI_Cart extends JPanel{
                     // User clicked the "OK" button
                     // get the selected product
 
-                    for (int i = 0; i < cart.getRowCount(); i++)
+                    for (int i = 0; i < cartTable.getRowCount(); i++)
                     {
-                        if ((boolean)cart.getValueAt(i, 0) == true)
+                        if ((boolean)cartTable.getValueAt(i, 0) == true)
                         {
-                            System.out.print(cart.getValueAt(i, 1) + " is ture");
+                            int p_id = (int) cartTable.getValueAt(i, 1);
+                            CartItem cart_item = CartItemService.getCartItemService().getCartItem(OODMS_Main.current_user.getID(), p_id);
+                            CartItemService.getCartItemService().deleteCartItem(cart_item);
+                            cartTable.removeAll();
+                            OODMS_Main.frame.replacePanel(new UI_Cart());
                         }
                     }
-                    // remove selected product and update to the txt file
-                    // remove cart panel and redirect to the same panel with updated cart
-
-                    System.out.println("item removed");
                 }
             }
             else
@@ -165,17 +165,17 @@ public class UI_Cart extends JPanel{
         checkout.setForeground(Color.WHITE);
         checkout.addActionListener(e -> {
             
-            if(isSelected(cart)){
+            if(isSelected(cartTable)){
                 // checkout confirmation
                 int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to checkout?", "Confirmation",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (checkoutConfirmation == JOptionPane.OK_OPTION) {
                     // User clicked the "OK" button
-                    for (int i = 0; i < cart.getRowCount(); i++)
+                    for (int i = 0; i < cartTable.getRowCount(); i++)
                     {
-                        if ((boolean)cart.getValueAt(i, 0) == true)
+                        if ((boolean)cartTable.getValueAt(i, 0) == true)
                         {
-                            System.out.print(cart.getValueAt(i, 1) + " is ture");
+                            System.out.print(cartTable.getValueAt(i, 1) + " is ture");
                         }
                     }
                     // get the selected product
