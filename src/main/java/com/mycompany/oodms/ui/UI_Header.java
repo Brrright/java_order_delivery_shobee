@@ -102,7 +102,7 @@ public class UI_Header extends JPanel{
         profile.setCursor(new Cursor(Cursor.HAND_CURSOR));
         profile.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
-//            OODMS_Main.frame.replacePanel(new UI_Profile());
+            OODMS_Main.frame.replacePanel(new UI_Profile());
         });
         
         // cart button
@@ -115,7 +115,7 @@ public class UI_Header extends JPanel{
         cart.setCursor(new Cursor(Cursor.HAND_CURSOR));
         cart.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
-//            OODMS_Main.frame.replacePanel(new UI_Cart());
+            OODMS_Main.frame.replacePanel(new UI_Cart());
         });
         
         // logout button
@@ -127,8 +127,10 @@ public class UI_Header extends JPanel{
         logout.setFont(new Font("Sarif",Font.BOLD,15));
         logout.setCursor(new Cursor(Cursor.HAND_CURSOR));
         logout.addActionListener(e -> {
-            OODMS_Main.previous_panel = Main_Frame.currentPanel;
-//            OODMS_Main.frame.replacePanel(new UI_Signup());
+            OODMS_Main.previous_panel = null;
+            OODMS_Main.current_user = null;
+            OODMS_Main.isLogIn = false;
+            OODMS_Main.frame.replacePanel(new UI_Login());
         });
                 
         
