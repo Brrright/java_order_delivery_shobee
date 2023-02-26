@@ -52,6 +52,8 @@ public class UI_Login extends JPanel {
         left.setVerticalTextPosition(JLabel.BOTTOM);
         left.setBackground(new Color(255, 151, 98, 0));
         left.setBorder(BorderFactory.createEmptyBorder());
+        left.setFocusPainted(false);
+        left.setOpaque(false);
         left.setCursor(new Cursor(Cursor.HAND_CURSOR));
         left.setBounds(74,230,221,270);
         left.setIconTextGap(17);

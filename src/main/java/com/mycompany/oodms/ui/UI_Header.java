@@ -53,6 +53,9 @@ public class UI_Header extends JPanel{
         allProduct.setForeground(new Color(0, 0, 0));
         allProduct.setFont(new Font("Sarif",Font.BOLD,15));
         allProduct.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        allProduct.setOpaque(false);
+        allProduct.setFocusPainted(false);
+        allProduct.setContentAreaFilled(false);
         allProduct.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_AllProducts());
@@ -67,6 +70,9 @@ public class UI_Header extends JPanel{
         login.setForeground(new Color(0, 0, 0));
         login.setFont(new Font("Sarif",Font.BOLD,15));
         login.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        login.setOpaque(false);
+        login.setFocusPainted(false);
+        login.setContentAreaFilled(false);
         login.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_Login());
@@ -81,6 +87,9 @@ public class UI_Header extends JPanel{
         signup.setForeground(new Color(0, 0, 0));
         signup.setFont(new Font("Sarif",Font.BOLD,15));
         signup.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        signup.setOpaque(false);
+        signup.setFocusPainted(false);
+        signup.setContentAreaFilled(false);
         signup.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_Signup());
@@ -100,6 +109,9 @@ public class UI_Header extends JPanel{
         profile.setForeground(new Color(0, 0, 0));
         profile.setFont(new Font("Sarif",Font.BOLD,15));
         profile.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        profile.setOpaque(false);
+        profile.setFocusPainted(false);
+        profile.setContentAreaFilled(false);
         profile.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_Profile());
@@ -113,6 +125,9 @@ public class UI_Header extends JPanel{
         cart.setForeground(new Color(0, 0, 0));
         cart.setFont(new Font("Sarif",Font.BOLD,15));
         cart.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cart.setOpaque(false);
+        cart.setFocusPainted(false);
+        cart.setContentAreaFilled(false);
         cart.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_Cart());
@@ -126,6 +141,9 @@ public class UI_Header extends JPanel{
         logout.setForeground(new Color(0, 0, 0));
         logout.setFont(new Font("Sarif",Font.BOLD,15));
         logout.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        logout.setOpaque(false);
+        logout.setFocusPainted(false);
+        logout.setContentAreaFilled(false);
         logout.addActionListener(e -> {
             OODMS_Main.previous_panel = null;
             OODMS_Main.current_user = null;
@@ -146,6 +164,9 @@ public class UI_Header extends JPanel{
         delivery.setForeground(new Color(0, 0, 0));
         delivery.setFont(new Font("Sarif",Font.BOLD,15));
         delivery.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        delivery.setOpaque(false);
+        delivery.setFocusPainted(false);
+        delivery.setContentAreaFilled(false);
         delivery.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_UpComing());
@@ -166,6 +187,9 @@ public class UI_Header extends JPanel{
         adminManagement.setForeground(new Color(0, 0, 0));
         adminManagement.setFont(new Font("Sarif",Font.BOLD,15));
         adminManagement.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        adminManagement.setOpaque(false);
+        adminManagement.setFocusPainted(false);
+        adminManagement.setContentAreaFilled(false);
         adminManagement.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_UserManagement());
@@ -179,6 +203,9 @@ public class UI_Header extends JPanel{
         adminDelivery.setForeground(new Color(0, 0, 0));
         adminDelivery.setFont(new Font("Sarif",Font.BOLD,15));
         adminDelivery.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        adminDelivery.setOpaque(false);
+        adminDelivery.setFocusPainted(false);
+        adminDelivery.setContentAreaFilled(false);
         adminDelivery.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_AdminDelivery());
