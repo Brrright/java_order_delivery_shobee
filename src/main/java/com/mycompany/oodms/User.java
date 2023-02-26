@@ -167,9 +167,9 @@ public abstract class User {
                 frame.replacePanel(new UI_AdminMain());
             }
             case FileName.MEMBER -> {
+                OODMS_Main.current_user.setRole(UserRole.MEMBER);
                 frame.replacePanel(new UI_AllProducts());
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
-                OODMS_Main.current_user.setRole(UserRole.MEMBER);
 //                 temporary testing for user related ui (after login)
 //                    frame.replacePanel(new UI_AllProducts());
 //                    frame.replacePanel(new UI_Cart());

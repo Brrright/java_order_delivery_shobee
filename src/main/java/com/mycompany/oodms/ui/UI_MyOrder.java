@@ -146,10 +146,15 @@ public class UI_MyOrder extends JPanel{
       
       // JScrollPane - main pane
       scrollPane = new JScrollPane(tittle_panel);
+//        scrollPane.setSize(780, products_panel_height);
       scrollPane.setBorder(BorderFactory.createEmptyBorder());
       scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
       
-      
+      // Panel - scrollPane
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(5);
+        scrollPane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
       // JPanel - this
       this.setBackground(Color.WHITE);
       this.setLayout(new BorderLayout());
