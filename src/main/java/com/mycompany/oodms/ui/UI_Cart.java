@@ -171,13 +171,18 @@ public class UI_Cart extends JPanel{
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (checkoutConfirmation == JOptionPane.OK_OPTION) {
                     // User clicked the "OK" button
+                    ArrayList<CartItem> selected_cart_items = new ArrayList<CartItem>();
                     for (int i = 0; i < cartTable.getRowCount(); i++)
                     {
                         if ((boolean)cartTable.getValueAt(i, 0) == true)
                         {
-                            System.out.print(cartTable.getValueAt(i, 1) + " is ture");
+                            int p_id = (int) cartTable.getValueAt(i, 1);
+                            CartItem cart_item = CartItemService.getCartItemService().getCartItem(OODMS_Main.current_user.getID(), p_id);
+                            selected_cart_items.add(cart_item);
                         }
                     }
+                    OODMS_Main.previous_panel = Main_Frame.currentPanel;
+                    OODMS_Main.frame.replacePanel(new UI_Payment(selected_cart_items));
                     // get the selected product
                     //direct to checkout page
                     System.out.println("go to checkout page");

@@ -46,14 +46,13 @@ public class UI_Payment extends JPanel {
 
     
     public Address initialize_address(){
-        Provider_Address provider_address = new Provider_Address();
         return AddressService.getAddressService().getAddressByMemberId(member_id);
     }
     
-    public ArrayList<CartItem> initialize_cart_item(){
-        Provider_Cart provider_cart = new Provider_Cart();
-        return CartItemService.getCartItemService().getCartItems(member_id);
-    }
+//    public ArrayList<CartItem> initialize_cart_item(){
+//        Provider_Cart provider_cart = new Provider_Cart();
+//        return CartItemService.getCartItemService().getCartItems(member_id);
+//    }
     
     public double calculateTotal(ArrayList<CartItem> cart_items) {
         double total = 0;
@@ -64,9 +63,9 @@ public class UI_Payment extends JPanel {
     }
 
    
-   public UI_Payment(){
+   public UI_Payment(ArrayList<CartItem> cart_items){
         Address address = initialize_address();
-        ArrayList<CartItem> cart_items = initialize_cart_item();
+//        ArrayList<CartItem> cart_items = initialize_cart_item();
         double total_price = calculateTotal(cart_items);
        
        // JButton - back
