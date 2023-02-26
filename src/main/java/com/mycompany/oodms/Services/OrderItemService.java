@@ -92,15 +92,11 @@ public class OrderItemService {
     public ArrayList<OrderItem> getOrderItemsOfCurrentMember(){
         ArrayList<OrderItem> retrievedItems = new ArrayList<OrderItem>();
         for(OrderItem item : order_items){
-            System.out.println(item.getProduct().getProductName());
-
             if(item.getOrder() == null ){
                 return retrievedItems;
             }
             int orderID = item.getOrder().getOrderID();
             Delivery delivery = DeliveryService.getDeliveryService().getDelivery(orderID);
-            System.out.println(delivery.getMember().getEmail());
-            System.out.println(OODMS_Main.current_user.getEmail());
             if(delivery.getMember().getEmail().equals(OODMS_Main.current_user.getEmail())) {
                 retrievedItems.add(item);
             }

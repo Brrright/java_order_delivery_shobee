@@ -107,7 +107,7 @@ public class UI_Cart extends JPanel{
             model.setValueAt(false,i,0);
             model.setValueAt(i+1, i, 1);
             model.setValueAt(cart_items.get(i).getProduct().getProductName(), i, 2);
-            model.setValueAt(cart_items.get(i).getProduct().getStockQty(), i, 3);
+            model.setValueAt(cart_items.get(i).getQuantity(), i, 3);
             model.setValueAt(cart_items.get(i).getProduct().getProductPrice(), i, 4);
         }
         
