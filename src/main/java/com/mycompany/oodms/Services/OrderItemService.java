@@ -9,6 +9,7 @@ import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
+import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Order;
 import com.mycompany.oodms.OrderItem;
 import com.mycompany.oodms.Product;
@@ -41,7 +42,6 @@ public class OrderItemService {
         this.order_items = new ArrayList<OrderItem>();
         List<FileRecord> order_item_records = order_item_file.FetchRecord();
         order_item_records.forEach((record) -> {
-            System.out.println("orderitem details: " + record.getRecord());
             OrderItem order_item_object = convertToObject(record);
             this.order_items.add(order_item_object);
         });
@@ -61,8 +61,6 @@ public class OrderItemService {
         Order order = OrderService.getOrderService().getOrder(order_id);
         Product product = ProductService.getProductService().getProduct(product_id);
 //        Member member = Provider_Member.member_service.getMember(member_id);
-        System.out.println("p_qty" + quantity);
-        System.out.println("p_price" + product.getProductPrice());
         return new OrderItem(quantity, product.getProductPrice(), product, order);
     }
     
@@ -91,12 +89,43 @@ public class OrderItemService {
         return null;
     }
     
+    public ArrayList<OrderItem> getOrderItemsOfCurrentMember(){
+        ArrayList<OrderItem> retrievedItems = new ArrayList<OrderItem>();
+        for(OrderItem item : order_items){
+            System.out.println(item.getProduct().getProductName());
+
+            if(item.getOrder() == null ){
+                return retrievedItems;
+            }
+            int orderID = item.getOrder().getOrderID();
+            Delivery delivery = DeliveryService.getDeliveryService().getDelivery(orderID);
+            System.out.println(delivery.getMember().getEmail());
+            System.out.println(OODMS_Main.current_user.getEmail());
+            if(delivery.getMember().getEmail().equals(OODMS_Main.current_user.getEmail())) {
+                retrievedItems.add(item);
+            }
+        }
+        return retrievedItems;
+    }
+    
     public ArrayList<OrderItem> getOrderItemByStatus(DeliveryStatus status){
         ArrayList<OrderItem> retrievedItems = new ArrayList<OrderItem>();
         for(OrderItem item : order_items){
             int orderID = item.getOrder().getOrderID();
             Delivery delivery = DeliveryService.getDeliveryService().getDelivery(orderID);
             if(delivery.getStatus() == status) {
+                retrievedItems.add(item);
+            }
+        }
+        return retrievedItems;
+    }
+    
+    public ArrayList<OrderItem> getOrderItemByStatusOfCurrentMember(DeliveryStatus status){
+        ArrayList<OrderItem> retrievedItems = new ArrayList<OrderItem>();
+        for(OrderItem item : order_items){
+            int orderID = item.getOrder().getOrderID();
+            Delivery delivery = DeliveryService.getDeliveryService().getDelivery(orderID);
+            if(delivery.getStatus() == status && delivery.getMember().getEmail().equals(OODMS_Main.current_user.getEmail())) {
                 retrievedItems.add(item);
             }
         }
