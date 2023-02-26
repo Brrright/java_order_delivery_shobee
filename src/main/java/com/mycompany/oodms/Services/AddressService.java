@@ -48,8 +48,7 @@ public class AddressService {
             return null;
         }
         
-//        Member member = Provider_Member.member_service.getMember(Integer.parseInt(address_data[5]));
-        Member member = MemberService.getMemberService().getMember(Integer.parseInt(address_data[5]));;
+        Member member = MemberService.getMemberService().getMember(Integer.parseInt(address_data[5]));
 
         return new Address(r.getID(), address_data[1], address_data[2], address_data[3], address_data[4], member);
     }
@@ -80,8 +79,6 @@ public class AddressService {
     public Address getAddressByMemberId(int member_id) {
         Address response = null;
         for(int i = 0; i < addresses.size(); i ++) {
-            System.out.println("address id = " +addresses.get(i).getMember().getID());
-            
             if(addresses.get(i).getMember().getID()== member_id){
                 System.out.println("member id match, fetching address...");
                 response = addresses.get(i);
