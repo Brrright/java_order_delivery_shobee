@@ -164,11 +164,11 @@ public abstract class User {
         switch(fileName) {
             case FileName.ADMIN -> {
                 OODMS_Main.current_user.setRole(UserRole.ADMIN);
+                OODMS_Main.previous_panel = Main_Frame.currentPanel;
                 frame.replacePanel(new UI_AdminMain());
             }
             case FileName.MEMBER -> {
                 OODMS_Main.current_user.setRole(UserRole.MEMBER);
-                frame.replacePanel(new UI_AllProducts());
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
 //                 temporary testing for user related ui (after login)
                     frame.replacePanel(new UI_AllProducts());
