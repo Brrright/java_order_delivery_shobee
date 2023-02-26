@@ -32,11 +32,11 @@ public class UI_Cart extends JPanel{
     }
     
     
-    public UI_Cart(CartItem cartItem){
-        // add item to cart
-        CartItemService.getCartItemService().addCartItem(cartItem);
-        buildUI();
-    }
+//    public UI_Cart(CartItem cartItem){
+//        // add item to cart
+//        CartItemService.getCartItemService().addCartItem(cartItem);
+//        buildUI();
+//    }
     
     public UI_Cart() {
         // view cart and do edit saje

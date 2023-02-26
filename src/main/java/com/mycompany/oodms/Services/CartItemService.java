@@ -97,19 +97,33 @@ public class CartItemService {
     }
     
     public void addCartItem(CartItem item){
+        System.out.println(item.getCart().getCartID());
+                    // if not exist in cart item
+        if(this.cart_items.size() == 0){
+            directAdd(item);
+        }
         for(CartItem x : cart_items){
-            int product_ID = x.getProduct().getProductID();
-            if(product_ID == item.getProduct().getProductID() && x.getCart().getCartID() == item.getCart().getCartID()){
-                System.out.println("same product, adding quantity");
-                int newQty = item.getQuantity() + 1;
-                item.setQuantity(newQty);
+            Product product = x.getProduct();
+            if(product.getProductID() == item.getProduct().getProductID() && x.getCart().getCartID() == item.getCart().getCartID()){
+                System.out.println( "pid:  " + product.getProductID() + "\ncid:  " + x.getCart().getCartID());
+//                System.out.println(item.getProduct().getProductName());
+//                System.out.println("same product, adding quantity");
+//                int newQty = x.getQuantity() + 1;
+//                System.out.println("newQty: "+newQty);
+//                item.setQuantity(newQty);
+//                System.out.println("qty: "+item.getQuantity());
                 updateCartItem(item);
                 return;
             }
         }
+        directAdd(item);
+    }
+    
+    public void directAdd(CartItem item)
+    {
         this.cart_items.add(item);
-        FileRecord cart_item_record=  convertToFileRecord(item);
-        cart_item_file.InsertRecord(cart_item_record);
+            FileRecord cart_item_record=  convertToFileRecord(item);
+            cart_item_file.InsertRecord(cart_item_record);
     }
     
     public void updateCartItem(CartItem item){
@@ -117,7 +131,8 @@ public class CartItemService {
             if(cart_items.get(i).getCart().getCartID() == item.getCart().getCartID() && cart_items.get(i).getProduct().getProductID() == item.getProduct().getProductID()){
                 cart_items.set(i, item);
                 FileRecord cart_item_record = convertToFileRecord(item);
-                cart_item_file.UpdateRecord(cart_item_record);
+                System.out.println(cart_item_record.getRecord());
+                cart_item_file.UpdateRecordForCartItem(cart_item_record);
                 break;
             }
         }

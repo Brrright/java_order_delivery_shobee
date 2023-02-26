@@ -6,6 +6,7 @@ import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.CartItemService;
 import com.mycompany.oodms.Services.CartService;
 import com.mycompany.oodms.Services.ProductService;
 import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
@@ -111,10 +112,19 @@ public class UI_Product extends JPanel {
                 JOptionPane.showMessageDialog(frame,"Please login or register an member account to enable this feature <3.","Hello user",JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            OODMS_Main.previous_panel = Main_Frame.currentPanel;
             Cart cart = CartService.getCartService().getCartByMemberID(OODMS_Main.current_user.getID());
-            CartItem newCartItem = new CartItem(cart, (Member) OODMS_Main.current_user, product, 1);
-            frame.replacePanel(new UI_Cart(newCartItem));
+            CartItem cartItem = CartItemService.getCartItemService().getCartItem(OODMS_Main.current_user.getID(), product_id);
+            int qty = 0;
+            if(cartItem == null){
+                qty = 1;
+            }
+            else{
+                qty = cartItem.getQuantity() + 1;
+            }
+            CartItem newCartItem = new CartItem(cart, (Member) OODMS_Main.current_user, product, qty);
+            CartItemService.getCartItemService().addCartItem(newCartItem);
+            String message = "1 " + product.getProductName() + " added to cart successfully";
+            JOptionPane.showMessageDialog(frame, message, "Success",JOptionPane.INFORMATION_MESSAGE);
         });
 
 
