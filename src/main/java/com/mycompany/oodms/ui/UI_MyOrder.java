@@ -4,8 +4,10 @@
  */
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Services.OrderItemService;
 import com.mycompany.oodms.Services.Provider.Provider_Order_OrderItem;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,26 +32,26 @@ public class UI_MyOrder extends JPanel{
   JLabel title;
   
   ImageIcon orangeCircle = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangecircle.png");
-  JPanel buttons_panel;
+  JPanel buttons_panel = new JPanel();
   JPanel orderStatus_btns;
   JButton packing;
   JButton packed;
   JButton delivering;
   JButton delivered;
+  ArrayList<OrderItem> order_items = initialize_data();
   
   // orders
 //  ArrayList<ArrayList<String>> tempOrder = new ArrayList<>();
 //  ArrayList<String> tempContainer = new ArrayList<>();
-  JPanel orders_panel;
+  JPanel orders_panel = new JPanel();
   JButton[] orders; // with product image, name and purchased quantity
   
   public ArrayList<OrderItem> initialize_data(){
-      Provider_Order_OrderItem provider_order_item = new Provider_Order_OrderItem();
-      return Provider_Order_OrderItem.order_item_service.getOrderItems();
+      return OrderItemService.getOrderItemService().getOrderItems();
   }
   
   public UI_MyOrder() {
-      ArrayList<OrderItem> order_items = initialize_data();
+      
       // JLabel - title
       title = new JLabel("My order");
       title.setFont(new Font("MV Boli",Font.BOLD,30));
@@ -69,6 +71,9 @@ public class UI_MyOrder extends JPanel{
       packing.setVerticalAlignment(JLabel.CENTER);
       packing.setHorizontalTextPosition(JLabel.CENTER);
       packing.setVerticalTextPosition(JLabel.CENTER);
+      packing.addActionListener(e -> {
+          filterByStatus(DeliveryStatus.PACKING);
+      });
       
       // JButton - packed
       packed = new JButton("Packed");
@@ -82,6 +87,9 @@ public class UI_MyOrder extends JPanel{
       packed.setVerticalAlignment(JLabel.CENTER);
       packed.setHorizontalTextPosition(JLabel.CENTER);
       packed.setVerticalTextPosition(JLabel.CENTER);
+      packed.addActionListener(e -> {
+          filterByStatus(DeliveryStatus.PACKED);
+      });
       
       // JButton - delivering
       delivering = new JButton("Delivering");
@@ -95,6 +103,9 @@ public class UI_MyOrder extends JPanel{
       delivering.setVerticalAlignment(JLabel.CENTER);
       delivering.setHorizontalTextPosition(JLabel.CENTER);
       delivering.setVerticalTextPosition(JLabel.CENTER);
+      delivering.addActionListener(e -> {
+          filterByStatus(DeliveryStatus.DELIVERING);
+      });
       
       // JButton - delivered
       delivered = new JButton("Delivered");
@@ -108,6 +119,9 @@ public class UI_MyOrder extends JPanel{
       delivered.setVerticalAlignment(JLabel.CENTER);
       delivered.setHorizontalTextPosition(JLabel.CENTER);
       delivered.setVerticalTextPosition(JLabel.CENTER);
+      delivered.addActionListener(e -> {
+          filterByStatus(DeliveryStatus.DELIVERED);
+      });
       
       
       // JPanel - orderStatus (flowlayout)
@@ -121,9 +135,30 @@ public class UI_MyOrder extends JPanel{
       orderStatus_btns.add(delivering);
       orderStatus_btns.add(delivered);
       
+      OrderCard(order_items);
+      
+      // JPanel - title panel
+      tittle_panel = new JPanel();
+      tittle_panel.setLayout(new BorderLayout());
+      tittle_panel.setBackground(Color.WHITE);
+      tittle_panel.add(title, BorderLayout.NORTH);
+      tittle_panel.add(buttons_panel, BorderLayout.CENTER);
+      
+      // JScrollPane - main pane
+      scrollPane = new JScrollPane(tittle_panel);
+      scrollPane.setBorder(BorderFactory.createEmptyBorder());
+      scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
       
       
-      // orders
+      // JPanel - this
+      this.setBackground(Color.WHITE);
+      this.setLayout(new BorderLayout());
+      this.add(heading, BorderLayout.NORTH);
+      this.add(scrollPane, BorderLayout.CENTER);
+ }
+  
+  private void OrderCard(ArrayList<OrderItem> order_items){
+        // orders
       orders = new JButton[order_items.size()];
       for (int i = 0; i < order_items.size(); i++) {
           OrderItem order_item = order_items.get(i);
@@ -154,7 +189,7 @@ public class UI_MyOrder extends JPanel{
       }
       
         
-        orders_panel = new JPanel();
+//        orders_panel = new JPanel();
         orders_panel.setLayout(new FlowLayout(FlowLayout.CENTER,0,20));
         orders_panel.setPreferredSize(new Dimension(780, order_items.size() * (210 + 20) + 30)); // 210 = order height, 20 = gap height
         orders_panel.setBackground(Color.WHITE);
@@ -165,32 +200,18 @@ public class UI_MyOrder extends JPanel{
       
       
       // JPanel - buttons_panel
-      buttons_panel = new JPanel();
       buttons_panel.setLayout(new BorderLayout());
       buttons_panel.setBackground(Color.WHITE);
       buttons_panel.add(orderStatus_btns, BorderLayout.NORTH);
       buttons_panel.add(orders_panel, BorderLayout.CENTER);
-      
-      
-      
-      // JPanel - title panel
-      tittle_panel = new JPanel();
-      tittle_panel.setLayout(new BorderLayout());
-      tittle_panel.setBackground(Color.WHITE);
-      tittle_panel.add(title, BorderLayout.NORTH);
-      tittle_panel.add(buttons_panel, BorderLayout.CENTER);
-      
-      // JScrollPane - main pane
-      scrollPane = new JScrollPane(tittle_panel);
-      scrollPane.setBorder(BorderFactory.createEmptyBorder());
-      scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-      
-      
-      // JPanel - this
-      this.setBackground(Color.WHITE);
-      this.setLayout(new BorderLayout());
-      this.add(heading, BorderLayout.NORTH);
-      this.add(scrollPane, BorderLayout.CENTER);
- }
+  }
+  
+  private void filterByStatus(DeliveryStatus status){
+      this.order_items = OrderItemService.getOrderItemService().getOrderItemByStatus(status);
+      this.buttons_panel.removeAll();
+      OrderCard(this.order_items);
+      this.repaint();
+      this.revalidate();
+  }
     
 }

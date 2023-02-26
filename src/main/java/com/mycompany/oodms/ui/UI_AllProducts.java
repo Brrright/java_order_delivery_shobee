@@ -146,7 +146,8 @@ public class UI_AllProducts extends JPanel {
         scrollPane.setSize(780, products_panel_height);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
+        scrollPane.getVerticalScrollBar().setUnitIncrement(5);
+        scrollPane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
         
         // Main Panel
         this.setLayout(new BorderLayout());

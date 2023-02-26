@@ -4,6 +4,8 @@
  */
 package com.mycompany.oodms.Services;
 
+import com.mycompany.oodms.Delivery;
+import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
@@ -87,6 +89,18 @@ public class OrderItemService {
         }
         System.out.println("No order found in order service");
         return null;
+    }
+    
+    public ArrayList<OrderItem> getOrderItemByStatus(DeliveryStatus status){
+        ArrayList<OrderItem> retrievedItems = new ArrayList<OrderItem>();
+        for(OrderItem item : order_items){
+            int orderID = item.getOrder().getOrderID();
+            Delivery delivery = DeliveryService.getDeliveryService().getDelivery(orderID);
+            if(delivery.getStatus() == status) {
+                retrievedItems.add(item);
+            }
+        }
+        return retrievedItems;
     }
     
     public void addOrderItem(OrderItem orderItem){
