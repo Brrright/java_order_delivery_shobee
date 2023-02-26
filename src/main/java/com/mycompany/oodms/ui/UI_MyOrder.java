@@ -47,7 +47,7 @@ public class UI_MyOrder extends JPanel{
   JButton[] orders; // with product image, name and purchased quantity
   
   public ArrayList<OrderItem> initialize_data(){
-      return OrderItemService.getOrderItemService().getOrderItems();
+      return OrderItemService.getOrderItemService().getOrderItemsOfCurrentMember();
   }
   
   public UI_MyOrder() {
@@ -146,7 +146,6 @@ public class UI_MyOrder extends JPanel{
       
       // JScrollPane - main pane
       scrollPane = new JScrollPane(tittle_panel);
-//        scrollPane.setSize(780, products_panel_height);
       scrollPane.setBorder(BorderFactory.createEmptyBorder());
       scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
       
@@ -155,6 +154,14 @@ public class UI_MyOrder extends JPanel{
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getVerticalScrollBar().setUnitIncrement(5);
         scrollPane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
+        
+        
+        // JPanel - buttons_panel
+      buttons_panel.setLayout(new BorderLayout());
+      buttons_panel.setBackground(Color.WHITE);
+      buttons_panel.add(orderStatus_btns, BorderLayout.NORTH);
+      buttons_panel.add(orders_panel, BorderLayout.CENTER);
+      
       // JPanel - this
       this.setBackground(Color.WHITE);
       this.setLayout(new BorderLayout());
@@ -163,34 +170,39 @@ public class UI_MyOrder extends JPanel{
  }
   
   private void OrderCard(ArrayList<OrderItem> order_items){
-        // orders
-      orders = new JButton[order_items.size()];
-      for (int i = 0; i < order_items.size(); i++) {
-          OrderItem order_item = order_items.get(i);
-          orders[i] = new JButton();
-          
-          ImageIcon productImg = new ImageIcon(order_item.getProduct().getProcuctPicture());
+      if(order_items.size() == 0) {
+          this.orders_panel.add(new JPanel().add(new JLabel("No order record")));
+          return;
+      }
+      else{
+          // orders
+            orders = new JButton[order_items.size()];
+            for (int i = 0; i < order_items.size(); i++) {
+                OrderItem order_item = order_items.get(i);
+                orders[i] = new JButton();
 
-          Image image = productImg.getImage();
-          Image scaleImage = image.getScaledInstance(154, 174, Image.SCALE_SMOOTH);
-          ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
-          
-          orders[i].setIcon(scaleImageIcon);
-          orders[i].setText("<html>"+ order_item.getProduct().getProductName() + "<br><br>Purchased on: " + order_item.getOrder().getOrderDateTime() + "</html>");
-          orders[i].setPreferredSize(new Dimension(737,202));
-          orders[i].setFocusPainted(false);
-          orders[i].setHorizontalAlignment(JLabel.LEFT);
-          orders[i].setVerticalAlignment(JLabel.CENTER);
-          orders[i].setHorizontalTextPosition(JLabel.RIGHT);
-          orders[i].setVerticalTextPosition(JLabel.TOP);
-          orders[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-          orders[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-          orders[i].setIconTextGap(30);
-          orders[i].setFont(new Font("MV Boli",Font.PLAIN,15));
-          orders[i].addActionListener(e -> {
-              OODMS_Main.previous_panel = Main_Frame.currentPanel;
-              OODMS_Main.frame.replacePanel(new UI_OrderDetails(order_item.getOrder()));
-          });
+                ImageIcon productImg = new ImageIcon(order_item.getProduct().getProcuctPicture());
+
+                Image image = productImg.getImage();
+                Image scaleImage = image.getScaledInstance(154, 174, Image.SCALE_SMOOTH);
+                ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
+
+                orders[i].setIcon(scaleImageIcon);
+                orders[i].setText("<html>"+ order_item.getProduct().getProductName() + "<br><br>Purchased on: " + order_item.getOrder().getOrderDateTime() + "</html>");
+                orders[i].setPreferredSize(new Dimension(737,202));
+                orders[i].setFocusPainted(false);
+                orders[i].setHorizontalAlignment(JLabel.LEFT);
+                orders[i].setVerticalAlignment(JLabel.CENTER);
+                orders[i].setHorizontalTextPosition(JLabel.RIGHT);
+                orders[i].setVerticalTextPosition(JLabel.TOP);
+                orders[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
+                orders[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                orders[i].setIconTextGap(30);
+                orders[i].setFont(new Font("MV Boli",Font.PLAIN,15));
+                orders[i].addActionListener(e -> {
+                    OODMS_Main.previous_panel = Main_Frame.currentPanel;
+                    OODMS_Main.frame.replacePanel(new UI_OrderDetails(order_item.getOrder()));
+                });
       }
       
         
@@ -209,11 +221,13 @@ public class UI_MyOrder extends JPanel{
       buttons_panel.setBackground(Color.WHITE);
       buttons_panel.add(orderStatus_btns, BorderLayout.NORTH);
       buttons_panel.add(orders_panel, BorderLayout.CENTER);
+      }
+        
   }
   
   private void filterByStatus(DeliveryStatus status){
-      this.order_items = OrderItemService.getOrderItemService().getOrderItemByStatus(status);
-      this.buttons_panel.removeAll();
+      this.order_items = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(status);
+      this.orders_panel.removeAll();
       OrderCard(this.order_items);
       this.repaint();
       this.revalidate();
