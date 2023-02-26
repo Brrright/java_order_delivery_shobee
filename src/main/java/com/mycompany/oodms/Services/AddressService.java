@@ -37,7 +37,6 @@ public class AddressService {
         List<FileRecord> address_record = address_file.FetchRecord();
 //        address_record.size() == 0
         address_record.forEach((record) -> {
-            System.out.println("testing printing record; " + record.getRecord());
             Address order_object = convertToObject(record);
             this.addresses.add(order_object);
         });
