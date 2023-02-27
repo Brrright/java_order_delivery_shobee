@@ -5,6 +5,7 @@
 package com.mycompany.oodms.Services;
 
 import com.mycompany.oodms.Delivery;
+import com.mycompany.oodms.DeliveryStaff;
 import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
@@ -77,16 +78,34 @@ public class OrderItemService {
         return order_items;
     }
     
-    public OrderItem getOrderItem(int orderId) {
+    public ArrayList<OrderItem> getOrderItem(int orderId) {
+        ArrayList<OrderItem> matchedOrderItem = new ArrayList<OrderItem>();
 //        System.out.println("in getOrderItem, received orderid : "  + orderId);
         for (OrderItem item : order_items) {
 //            System.out.println("found available order id in here: " + item.getOrder().getOrderID());
             if (item.getOrder().getOrderID() == orderId) {
-                return item;
+                matchedOrderItem.add(item);
             }
         }
-        System.out.println("No order found in order service");
-        return null;
+        if(matchedOrderItem.isEmpty()) {
+            System.out.println("[int oid] No order item matched this order");
+        }
+        return matchedOrderItem;
+    }
+    
+      public ArrayList<OrderItem> getOrderItem(ArrayList<Order> orders) {
+        ArrayList<OrderItem> matchedOrderItem = new ArrayList<OrderItem>();
+        for (OrderItem item : order_items) {
+            for(Order order : orders){
+                if(item.getOrder().getOrderID() == order.getOrderID()){
+                    matchedOrderItem.add(item);
+                }
+            }
+        }
+         if(matchedOrderItem.isEmpty()) {
+            System.out.println("[AL<Order>] No order item matched this order");
+        }
+        return matchedOrderItem;
     }
     
     public ArrayList<OrderItem> getOrderItemsOfCurrentMember(){
@@ -118,6 +137,17 @@ public class OrderItemService {
         }
         return retrievedItems;
     }
+    
+//    public ArrayList<OrderItem> getOrderItemByStatusForStaff(DeliveryStatus status){
+//        ArrayList<OrderItem> filteredStatusDeliveries = getOrderItemByStatus(status);
+//        ArrayList<OrderItem> filteredStaffDeliveries = new ArrayList<OrderItem>();
+//        for(OrderItem item : filteredStatusDeliveries){
+//            if(item.get == deliveryStaff.){
+//                filteredStaffDeliveries.add(item);
+//            }
+//        }
+//        return filteredStaffDeliveries;
+//    }
     
     public ArrayList<OrderItem> getOrderItemByStatusOfCurrentMember(DeliveryStatus status){
         ArrayList<OrderItem> retrievedItems = new ArrayList<OrderItem>();
