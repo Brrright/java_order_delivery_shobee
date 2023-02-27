@@ -62,53 +62,45 @@ public class UI_OrderDetails extends JPanel{
             return OrderService.getOrderService().getOrder(order.getOrderID());
     }
     
-    public OrderItem initialize_order_item_data(Order order){
-        //                System.out.println("UI_OrderDetails, order item: " + order_item.getProduct().getProductName());
-
-        return OrderItemService.getOrderItemService().getOrderItem(order.getOrderID());
-    }
     
     public Delivery initilize_delivery_data(Order order){
         //                        System.out.println("UI_OrderDetails, order: " + order.getOrderID());
-
         Delivery response = null;
         ArrayList<Delivery>  deliveries =DeliveryService.getDeliveryService().getDeliveries();
+        System.out.println("deliveries no found: " + deliveries.size());
         for (int i=0; i < deliveries.size(); i++) {
+//            if(deliveries.get(i).getStaff() == null){
+//                System.out.println("no staff found, handle jap UI_OrderDetails");
+//            }
+            System.out.println("delivery order id:  " + deliveries.get(i).getOrder().getOrderID());
+            System.out.println("received order id:  " + order.getOrderID());
             if(deliveries.get(i).getOrder().getOrderID() == order.getOrderID())
             {
+                System.out.println("found delivery match order");
                 return deliveries.get(i);
             }
         }
         return response;
     }
     
-    public UI_OrderDetails(Order receivedOrder) { 
-//        System.out.println("UI_OrderDetails, HI");
-        Order order = initialize_order_data(receivedOrder);
+    public UI_OrderDetails(OrderItem receivedOrderItem) { 
+        Order order = initialize_order_data(receivedOrderItem.getOrder());
 
-        if(order == null) {
-            OODMS_Main.frame.replacePanel(new UI_AllProducts());
-            JOptionPane.showMessageDialog(OODMS_Main.frame,"Record doesn't exist.","Oops",JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        OrderItem order_item = initialize_order_item_data(order);
-
-        if(order_item == null) {
-//                        System.out.println("fetching order item");
-
-            OODMS_Main.frame.replacePanel(new UI_AllProducts());
-            JOptionPane.showMessageDialog(OODMS_Main.frame,"Record doesn't exist.","Oops",JOptionPane.INFORMATION_MESSAGE);
+        if(receivedOrderItem == null) {
+            System.out.println("no order item found...");
+            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
+//            OODMS_Main.frame.replacePanel(new UI_AllProducts());
             return;
         }
         
         Delivery delivery = initilize_delivery_data(order);
-//                System.out.println("UI_OrderDetails, delivery : " + delivery.getDeliveryID());
+//            System.out.println("UI_OrderDetails, delivery : " + delivery.getDeliveryID());
 
         if(delivery == null) {
 //                        System.out.println("fetching delivery");
-
-            OODMS_Main.frame.replacePanel(new UI_AllProducts());
+            System.out.println("no delivery detail found...");
             JOptionPane.showMessageDialog(OODMS_Main.frame,"Record doesn't exist.","Oops",JOptionPane.INFORMATION_MESSAGE);
+//            OODMS_Main.frame.replacePanel(new UI_AllProducts());
             return;
         }
         
@@ -279,7 +271,7 @@ public class UI_OrderDetails extends JPanel{
         product_header.setBounds(160,455,180,20);
         
         // JLabel - product
-        product = new JLabel(": " + order_item.getProduct().getProductName());
+        product = new JLabel(": " + receivedOrderItem.getProduct().getProductName());
         product.setFont(new Font("MV Boli",Font.PLAIN,16));
         product.setBounds(367,455,550,20);
         
@@ -290,7 +282,7 @@ public class UI_OrderDetails extends JPanel{
         price_header.setBounds(160,499,180,20);
         
         // JLabel - price
-        price = new JLabel(": " + order_item.getPrice());
+        price = new JLabel(": " + receivedOrderItem.getPrice());
         price.setFont(new Font("MV Boli",Font.PLAIN,16));
         price.setBounds(367,499,550,20);
         
@@ -301,7 +293,7 @@ public class UI_OrderDetails extends JPanel{
         quantity_header.setBounds(160,543,180,20);
         
         // JLabel - Quantity
-        quantity = new JLabel(": " + order_item.getQuantity());
+        quantity = new JLabel(": " + receivedOrderItem.getQuantity());
         quantity.setFont(new Font("MV Boli",Font.PLAIN,16));
         quantity.setBounds(367,543,550,20);
         

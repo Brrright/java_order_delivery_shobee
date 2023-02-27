@@ -3,20 +3,14 @@ package com.mycompany.oodms.ui;
 
 import com.mycompany.oodms.Admin;
 import com.mycompany.oodms.DeliveryStaff;
-import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
-import com.mycompany.oodms.Services.Provider.Provider_Admin;
-import com.mycompany.oodms.Services.Provider.Provider_DeliveryStaff;
-import com.mycompany.oodms.Services.Provider.Provider_Member;
 import com.mycompany.oodms.Services.User.AdminService;
 import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.User;
-import com.mycompany.oodms.UserRole;
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class UI_Profile extends JPanel {
     JButton backBtn;
@@ -44,17 +38,14 @@ public class UI_Profile extends JPanel {
         switch(user.getRole()){
             case ADMIN -> {
                 Admin admin = (Admin) OODMS_Main.current_user;
-                Provider_Admin provider_admin = new Provider_Admin();
                 user  = AdminService.getAdminService().getAdmin(admin.getID());
             }
             case MEMBER -> {
                 Member member = (Member) OODMS_Main.current_user;
-                Provider_Member provider_admin = new Provider_Member();
                 user = MemberService.getMemberService().getMember(member.getID()); 
             }
             case DELIVERY_STAFF -> {
                 DeliveryStaff staff = (DeliveryStaff) OODMS_Main.current_user;
-                Provider_DeliveryStaff provider_staff = new Provider_DeliveryStaff();
                 user = DeliveryStaffService.getDeliveryStaffService().getStaff(staff.getID());
             }
             default -> {

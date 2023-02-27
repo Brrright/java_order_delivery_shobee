@@ -9,7 +9,6 @@ import com.mycompany.oodms.Product;
 import com.mycompany.oodms.Services.CartItemService;
 import com.mycompany.oodms.Services.CartService;
 import com.mycompany.oodms.Services.ProductService;
-import com.mycompany.oodms.Services.Provider.Provider_Product_Category;
 
 import javax.swing.*;
 import java.awt.*;

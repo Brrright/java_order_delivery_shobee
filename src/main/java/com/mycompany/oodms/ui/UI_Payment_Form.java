@@ -15,6 +15,7 @@ import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Order;
 import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Services.AddressService;
 import com.mycompany.oodms.Services.CartItemService;
 import com.mycompany.oodms.Services.DeliveryService;
 import com.mycompany.oodms.Services.OrderItemService;
@@ -192,19 +193,17 @@ public class UI_Payment_Form extends javax.swing.JPanel {
         // turn payment into order
         Order order = new Order(order_file.GenerateID(), LocalDateTime.now(), this.total_price, this.total_price, 0, (Member) OODMS_Main.current_user, this.address);
         OrderService.getOrderService().addOrder(order);
-        
         // turn cart item into order item, remove cart item
         // add delivery record
+        this.address = AddressService.getAddressService().getAddressByMemberId(OODMS_Main.current_user.getID());
         ArrayList<CartItem> cart_items = CartItemService.getCartItemService().getCartItems(OODMS_Main.current_user.getID());
         for(CartItem item :  cart_items) {
             OrderItem order_item = new OrderItem(item.getQuantity(), item.getProduct().getProductPrice(), item.getProduct(), order);
             OrderItemService.getOrderItemService().addOrderItem(order_item);
             CartItemService.getCartItemService().deleteCartItem(item);
-            Delivery delivery = new Delivery(delivery_file.GenerateID(), order , LocalDateTime.now(), null, DeliveryStatus.PACKING, -1, address, (Member) OODMS_Main.current_user);
+            Delivery delivery = new Delivery(delivery_file.GenerateID(), order , LocalDateTime.now(), null, DeliveryStatus.PACKING, -1,address , (Member) OODMS_Main.current_user);
             DeliveryService.getDeliveryService().addDelivery(delivery);
         }
-        
-        
         OODMS_Main.frame.replacePanel(new UI_SuccessPayment());
     }
 

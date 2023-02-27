@@ -9,8 +9,6 @@ import com.mycompany.oodms.CartItem;
 import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Services.AddressService;
 import com.mycompany.oodms.Services.CartItemService;
-import com.mycompany.oodms.Services.Provider.Provider_Address;
-import com.mycompany.oodms.Services.Provider.Provider_Cart;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
