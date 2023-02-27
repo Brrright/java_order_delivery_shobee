@@ -58,8 +58,7 @@ public class UI_OrderDetails extends JPanel{
     
     public Order initialize_order_data(Order order) 
     {
-        //            System.out.println("fetching order");
-            return OrderService.getOrderService().getOrder(order.getOrderID());
+        return OrderService.getOrderService().getOrder(order.getOrderID());
     }
     
     
@@ -89,12 +88,10 @@ public class UI_OrderDetails extends JPanel{
         if(receivedOrderItem == null) {
             System.out.println("no order item found...");
             OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
-//            OODMS_Main.frame.replacePanel(new UI_AllProducts());
             return;
         }
         
         Delivery delivery = initilize_delivery_data(order);
-//            System.out.println("UI_OrderDetails, delivery : " + delivery.getDeliveryID());
 
         if(delivery == null) {
 //                        System.out.println("fetching delivery");
