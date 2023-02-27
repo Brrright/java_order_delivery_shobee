@@ -6,6 +6,8 @@ package com.mycompany.oodms.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 /**
@@ -14,8 +16,10 @@ import javax.swing.JPanel;
  */
 public class Main_Frame extends JFrame{
      public static JPanel currentPanel;
-    
+
     public Main_Frame(JPanel panel) {
+        Image icon = Toolkit.getDefaultToolkit().getImage("src/main/java/com/mycompany/oodms/ui/pictures/logo.png");
+        this.setIconImage(icon);
         Main_Frame.currentPanel = panel;
         // set layout, and add it to this class, default operation, pack, set visible, location        
         this.setSize(1080,768);
