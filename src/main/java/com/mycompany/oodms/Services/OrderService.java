@@ -90,7 +90,7 @@ public class OrderService {
                 System.out.println("[received] delivery staff: " + staff.getName());
                 System.out.println("    ------------------------------    ");
                 if(order.getOrderID() == delivery.getOrder().getOrderID() &&
-                        delivery.getStaff() == staff){
+                        delivery.getStaff().getID() == staff.getID()){
                     matchedDeliveryOrder.add(order);
                 }
             }
