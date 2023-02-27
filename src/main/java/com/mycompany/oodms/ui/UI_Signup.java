@@ -1,14 +1,19 @@
 package com.mycompany.oodms.ui;
 
+import com.mycompany.oodms.Address;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Gender;
+import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
-import com.mycompany.oodms.Services.Provider.Provider_Member;
+import com.mycompany.oodms.Services.AddressService;
+import com.mycompany.oodms.Services.User.MemberService;
 import javax.swing.*;
 import java.awt.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UI_Signup extends JPanel{
     JButton back;
@@ -27,6 +32,7 @@ public class UI_Signup extends JPanel{
     JLabel email_header; 
     JLabel pwd_header;
     JLabel confirmPwd_header;
+    JLabel validateLabel;
     
     JTextField name;
     JComboBox gender;
@@ -122,7 +128,7 @@ public class UI_Signup extends JPanel{
         city.setBounds(140,426,240,48);
         
         // JLabel - state header
-        state_header = new JLabel("City :");
+        state_header = new JLabel("State :");
         state_header.setFont(new Font("MV Boli",Font.PLAIN,12));
         state_header.setBounds(416,406,240,20);
         
@@ -154,9 +160,21 @@ public class UI_Signup extends JPanel{
         email_header.setFont(new Font("MV Boli",Font.PLAIN,12));
         email_header.setBounds(414,505,100,20);
         
+//        JLabel - validate label
+        validateLabel = new JLabel("");
+        validateLabel.setFont(new Font("MV Boli",Font.PLAIN,17));
+        validateLabel.setForeground(Color.red);
+        validateLabel.setBounds(350,141,344,42);
+        
         // JTextField - Email
         email = new JTextField();
         email.setBounds(414,525,519,48);
+        
+        email.addKeyListener(new java.awt.event.KeyAdapter(){
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailTFKeyReleased(evt);
+            }
+         });
         
         // JLabel - Password header
         pwd_header = new JLabel("Password :");
@@ -166,6 +184,13 @@ public class UI_Signup extends JPanel{
         // JPasswordField - Password
         pwd = new JPasswordField();
         pwd.setBounds(140,610,378,48);
+        
+        pwd.addKeyListener(new java.awt.event.KeyAdapter(){
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordTFKeyReleased(evt);
+            }
+         });
+        
         // more than 7 words
         
         // JLabel - Confirm password header
@@ -190,11 +215,6 @@ public class UI_Signup extends JPanel{
         signup.setFont(new Font("MV Boli",Font.PLAIN,12));
         signup.setForeground(Color.WHITE);
         signup.addActionListener(e -> {
-             if(name.getText().isBlank() ||  phoneNo.getText().isBlank() || email.getText().isBlank() || pwd.getPassword().length < 8 || confirmPwd.getPassword().length < 8){
-                 JOptionPane.showMessageDialog(frame,"Please enter valid input. Make sure every field is filled and password is more then 7 character.","Oops",JOptionPane.WARNING_MESSAGE);
-                 return;
-             }
-             
             String input_name = name.getText();
             Gender input_gender = Gender.valueOf(String.valueOf(gender.getSelectedItem()));
             int input_age = Integer.parseInt(age.getText());
@@ -202,7 +222,28 @@ public class UI_Signup extends JPanel{
             String input_email = email.getText();
             String input_pw = String.valueOf(pwd.getPassword());
             String input_confirm_pw = String.valueOf(confirmPwd.getPassword());
-            signUp(input_name, input_gender, input_age, input_phonenum, input_email, input_pw, input_confirm_pw);
+            
+            String input_street = street.getText();
+            String input_city = city.getText();
+            String input_postcode = postcode.getText();
+            String input_state = state.getText();
+            
+             if(input_name.isBlank() 
+                     ||  phoneNo.getText().isBlank() 
+                     || email.getText().isBlank() 
+                     || pwd.getPassword().length < 8 
+                     || confirmPwd.getPassword().length < 8
+                     || street.getText().isBlank()
+                     || city.getText().isBlank()
+                     || postcode.getText().isBlank()
+                     || state.getText().isBlank()
+                ){
+                 JOptionPane.showMessageDialog(frame,"Please enter valid input. Make sure every field is filled and password is more then 7 character.","Oops",JOptionPane.WARNING_MESSAGE);
+                 return;
+             }
+             
+            
+            signUp(input_name, input_gender, input_age, input_phonenum, input_email, input_pw, input_confirm_pw, input_street, input_postcode, input_city, input_state);
         });
         
         ////////////////////////////////////////////////////////////////////////
@@ -240,11 +281,12 @@ public class UI_Signup extends JPanel{
         this.add(email);
         this.add(pwd);
         this.add(confirmPwd);
+        this.add(validateLabel);
         
         this.add(signup);
     }
     
-    public void signUp(String input_name, Gender input_gender, int input_age, String input_phonenum, String input_email, String input_pw, String input_confirm_pw){
+    public void signUp(String input_name, Gender input_gender, int input_age, String input_phonenum, String input_email, String input_pw, String input_confirm_pw, String street, String postcode, String city, String state){
         FileHandler fHandler = new FileHandler(FileName.MEMBER);
         FileRecord user_record = fHandler.FetchRecord(input_email, 2);
         if(user_record != null){
@@ -255,13 +297,45 @@ public class UI_Signup extends JPanel{
             JOptionPane.showMessageDialog(frame,"Password entered not matched.","Oops",JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
+        if(!"".equals(validateLabel.getText())){
+            JOptionPane.showMessageDialog(frame,"Invalid email / password.","Alert",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
        
         // write to text file
         int newMemberID = fHandler.GenerateID();
         String newMemberString = newMemberID + ";" + input_name + ";" + input_email + ";" + input_pw + ";" + input_age + ";" + input_gender + ";" + input_phonenum + ";" + default_profile_image_path;
         FileRecord newMemberRecord = new FileRecord(newMemberID, newMemberString);
         fHandler.InsertRecord(newMemberRecord);
+        
+        Member member = MemberService.getMemberService().getMember(newMemberID);
+        int newAddressID = AddressService.getAddressService().getNewID();
+        Address address = new Address(newAddressID, street, city, state, postcode, member);
+        AddressService.getAddressService().addAddress(address);
+
         JOptionPane.showMessageDialog(frame,"Sign up successfully.","Congratz",JOptionPane.INFORMATION_MESSAGE);
         frame.replacePanel(new UI_Login());
     }
+    
+    private void emailTFKeyReleased(java.awt.event.KeyEvent evt) {
+            String pattern = "^(.+)@(.+)$";
+            Pattern p = Pattern.compile(pattern);
+            Matcher match = p.matcher(email.getText());
+            if (!match.matches()) {
+                validateLabel.setText("Invalid email");
+            }
+            else {
+                validateLabel.setText("");
+            }
+        }
+      
+        private void passwordTFKeyReleased(java.awt.event.KeyEvent evt) {
+            if (pwd.getText().length() < 8) {
+                validateLabel.setText("Password need more than 7 character");
+            }
+            else {
+                validateLabel.setText("");
+            }
+        }
 }

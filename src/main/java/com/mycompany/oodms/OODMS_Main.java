@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  * @author mingl
  */ 
 public class OODMS_Main {
-    public static Main_Frame frame;
+    public static Main_Frame frame; 
     public static User current_user; // make user detail globally accessible
     public static JPanel previous_panel;
     public static boolean isLogIn;

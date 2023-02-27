@@ -31,14 +31,12 @@ public class UI_OrderDetails extends JPanel{
     JLabel orderStatus;
     JLabel currentLocation;
     
-    
     ImageIcon lineImg = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/Line.png");
     JLabel line;
     JLabel packingIndicator;
     JLabel packedIndicator;
     JLabel deliveringIndicator;
     JLabel deliveredIndicator;
-
     
     JLabel orderId_header;
     JLabel purchaseOn_header;
