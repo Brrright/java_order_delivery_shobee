@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class UI_ProductManagementProductEdit extends JPanel {
+    
+    ArrayList<Category> all_categories = initialize_category_data();
+    ArrayList<String> categories_name = new ArrayList<String>();
+
 
     JButton back;
     
@@ -49,8 +53,10 @@ public class UI_ProductManagementProductEdit extends JPanel {
     
     public UI_ProductManagementProductEdit(int product_id){
         
-        Product product = initialize_product_data(product_id);
-        ArrayList<Category> categories =  initialize_category_data();
+            Product product = initialize_product_data(product_id);
+            for(int y = 0; y < all_categories.size(); y++){
+                categories_name.add(all_categories.get(y).getCategoryName());
+        }
         
         // REQUIRED DATA
         // ID, PICTURE, NAME, GENDER, DOB, EMAIL, PHONE NO
@@ -62,6 +68,12 @@ public class UI_ProductManagementProductEdit extends JPanel {
         back.setBounds(68,70,45,11);
         back.setBorder(BorderFactory.createEmptyBorder());
         back.setFocusable(false);
+        back.setOpaque(false);
+        back.setBackground(new Color(0,0,0,0));
+        back.setOpaque(false);
+        back.setFocusPainted(false);
+        back.setContentAreaFilled(false);
+        back.setOpaque(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
         back.addActionListener(e -> {
             OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
@@ -87,7 +99,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
         category_header.setBounds(763,213,100,20);
         
         // JTextField - category
-        category = new JComboBox(categories.toArray(new Category[categories.size()]));
+        category = new JComboBox<>(categories_name.toArray(new String[categories_name.size()]));
         category.setBounds(759,233,174,48);
         category.setSelectedItem(product.getCategory());
 

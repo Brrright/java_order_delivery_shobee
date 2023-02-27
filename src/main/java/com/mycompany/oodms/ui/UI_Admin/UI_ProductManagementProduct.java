@@ -52,7 +52,7 @@ public class UI_ProductManagementProduct extends JPanel {
         backBtn.setContentAreaFilled(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backBtn.addActionListener(e -> {
-            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
+            OODMS_Main.frame.replacePanel(new UI_ProductManagement());
         });
         
 

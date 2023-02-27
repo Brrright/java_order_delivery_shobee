@@ -49,7 +49,6 @@ public class UI_ProductManagement extends JPanel{
 
     JTextField search_textfield;
     
-    JButton search_btn;
     ImageIcon searchBtn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/searchBtn.png");
 
     JComboBox productType;
@@ -199,18 +198,6 @@ public class UI_ProductManagement extends JPanel{
             }
         });
         
-        // JButton - search button
-        search_btn = new JButton(searchBtn);
-        search_btn.setPreferredSize(new Dimension(69,48));
-        search_btn.setOpaque(false);
-        search_btn.setBorder(BorderFactory.createEmptyBorder());
-        search_btn.setHorizontalAlignment(JLabel.CENTER);
-        search_btn.setVerticalAlignment(JLabel.CENTER);
-        search_btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        search_btn.addActionListener(e -> {
-            // search user
-        });
-        
         // JComboBox - product category
         productType = new JComboBox(categories_name.toArray(new String[categories_name.size()]));
         productType.setFont(new Font("MV Boli",Font.PLAIN,13));
@@ -227,7 +214,6 @@ public class UI_ProductManagement extends JPanel{
         search_panel.setBackground(Color.WHITE);
         search_panel.add(addProduct);
         search_panel.add(search_textfield);
-        search_panel.add(search_btn);
         search_panel.add(productType);
         
         // JButtons - products
