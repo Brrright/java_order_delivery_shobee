@@ -130,9 +130,6 @@ public class UI_Completed extends JPanel{
                         return String.class;
                 }
             }
-            
-            
-
         };
         
         

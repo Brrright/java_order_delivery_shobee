@@ -4,7 +4,16 @@
  */
 package com.mycompany.oodms.ui.UI_Delivery;
 
+import com.mycompany.oodms.Delivery;
+import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.DeliveryStatus;
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Order;
+import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Services.DeliveryService;
+import com.mycompany.oodms.Services.OrderItemService;
+import com.mycompany.oodms.Services.OrderService;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -39,21 +48,30 @@ public class UI_UpComing extends JPanel{
     JButton completedPage;
     JButton packOrder;
     
+    public ArrayList<Delivery> initialize_delivery_data(){
+        return DeliveryService.getDeliveryService().getDeliveryForStaffUpComing((DeliveryStaff) OODMS_Main.current_user);
+    }
+    
+    public ArrayList<Order> initialize_order_data(ArrayList<Delivery>deliveries){
+        return OrderService.getOrderService().getOrdersForDeliveryStaff(deliveries, (DeliveryStaff) OODMS_Main.current_user);
+    }
+    
+    public ArrayList<OrderItem> initialize_order_item_data(ArrayList<Order> orders){
+        return OrderItemService.getOrderItemService().getOrderItem(orders);
+    }
+    
     public UI_UpComing() {
-        
-        // required date
-        // 1. Cart object list of specific user
-        ArrayList<ArrayList<String>> inCart = new ArrayList<>();
-        ArrayList<String> inCartSingleProduct = new ArrayList<>();
-        
-        // create temp data
-        for (int i = 0; i < 10; i++) {
-            inCartSingleProduct.add("product name"); // product name
-            inCartSingleProduct.add("3"); // quantity
-            inCartSingleProduct.add("RM 3.50"); // price
-            inCart.add(inCartSingleProduct);
+        ArrayList<Delivery> deliveries = initialize_delivery_data();
+        ArrayList<Order> orders;
+        ArrayList<OrderItem> orderItems;
+        if(deliveries.isEmpty()){
+            orders = new ArrayList<Order>();
+            orderItems = new ArrayList<OrderItem>();
+        }else{
+            orders = initialize_order_data(deliveries);
+            orderItems = initialize_order_item_data(orders);
         }
-        
+       
         header = new UI_Header();
         header.setBounds(0,0,1080,50);
         
@@ -105,8 +123,6 @@ public class UI_UpComing extends JPanel{
                 frame.replacePanel(new UI_Completed());
         });
         
-        
-        
         // set JTable model
         DefaultTableModel model = new DefaultTableModel(){
             public Class<?> getColumnClass(int column)
@@ -135,20 +151,22 @@ public class UI_UpComing extends JPanel{
         cart.setModel(model);
         
         model.addColumn("Select");
-        model.addColumn("No");
-        model.addColumn("Product");
-        model.addColumn("Qty");
-        model.addColumn("Price");
+        model.addColumn("DeliveryID");
+        model.addColumn("OrderID");
+        model.addColumn("Status");
+        model.addColumn("AddressID");
 
         // set cart table row
         
-        for (int i = 0; i < inCart.size(); i++) {
+        for (int i = 0; i < deliveries.size(); i++) {
+            Delivery delivery = deliveries.get(i);
+            
             model.addRow(new Object[0]);
             model.setValueAt(false,i,0);
-            model.setValueAt(i+1, i, 1);
-            model.setValueAt(inCart.get(i).get(0), i, 2);
-            model.setValueAt(inCart.get(i).get(1), i, 3);
-            model.setValueAt(inCart.get(i).get(2), i, 4);
+            model.setValueAt(deliveries.get(i).getDeliveryID(), i, 1);
+            model.setValueAt(deliveries.get(i).getOrder().getOrderID(), i, 2);
+            model.setValueAt(deliveries.get(i).getStatus(), i, 3);
+            model.setValueAt(delivery.getAddress().toString(), i, 4);
         }
         
         // set column size
@@ -156,18 +174,25 @@ public class UI_UpComing extends JPanel{
         selectColumn.setPreferredWidth(5);
         selectColumn.setResizable(false);
         
-        TableColumn noColumn = cart.getColumnModel().getColumn(1);
-        noColumn.setPreferredWidth(5);
-        noColumn.setResizable(false);
+        TableColumn deliveryIDColumn = cart.getColumnModel().getColumn(1);
+        deliveryIDColumn.setPreferredWidth(10);
+        deliveryIDColumn.setResizable(false);
         
-        TableColumn productColumn = cart.getColumnModel().getColumn(2);
-        productColumn.setPreferredWidth(400);
-        productColumn.setResizable(false);
+        TableColumn orderIDColumn = cart.getColumnModel().getColumn(2);
+        orderIDColumn.setPreferredWidth(10);
+        orderIDColumn.setResizable(false);
+
+        TableColumn statusColumn = cart.getColumnModel().getColumn(2);
+        statusColumn.setPreferredWidth(10);
+        statusColumn.setResizable(false);
+        
+        TableColumn addressColumn = cart.getColumnModel().getColumn(2);
+        addressColumn.setPreferredWidth(10);
+        addressColumn.setResizable(false);
         
         // scrollpane for JTable
         JScrollPane scrollPane = new JScrollPane(cart);
         scrollPane.setBounds(193,245,700,290);
-        
         
         // JButton - Checkout
         packOrder = new JButton("Pack Order");
@@ -202,7 +227,6 @@ public class UI_UpComing extends JPanel{
 
         });
         
-       
         // this
         this.setSize(1080, 768);
         this.setBackground(Color.white);
@@ -217,7 +241,5 @@ public class UI_UpComing extends JPanel{
         
         this.add(scrollPane);
         this.add(packOrder);
-        
     }
-    
 }
