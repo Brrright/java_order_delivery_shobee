@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;
 
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.ui.Main_Frame;
 import com.mycompany.oodms.ui.UI_Header;
@@ -59,8 +60,11 @@ public class UI_AdminMain extends JPanel{
         generalManagementBtn.setBounds(198,300,183,235);
         generalManagementBtn.setFocusable(false);
         generalManagementBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        generalManagementBtn.setBorder(BorderFactory.createEmptyBorder());
         generalManagementBtn.setOpaque(false);
-        generalManagementBtn.setBorder(BorderFactory.createEmptyBorder()); 
+        generalManagementBtn.setFocusPainted(false);
+        generalManagementBtn.setContentAreaFilled(false);
+        generalManagementBtn.setOpaque(false);
         generalManagementBtn.addActionListener(e -> {
             frame.replacePanel(new UI_ProductManagement());
         });
@@ -80,7 +84,11 @@ public class UI_AdminMain extends JPanel{
         deliveryManagementBtn.setFocusable(false);
         deliveryManagementBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         deliveryManagementBtn.setOpaque(false);
-        deliveryManagementBtn.setBorder(BorderFactory.createEmptyBorder()); 
+        deliveryManagementBtn.setBorder(BorderFactory.createEmptyBorder());
+        deliveryManagementBtn.setOpaque(false);
+        deliveryManagementBtn.setFocusPainted(false);
+        deliveryManagementBtn.setContentAreaFilled(false);
+        deliveryManagementBtn.setOpaque(false);
         deliveryManagementBtn.addActionListener(e -> {
             frame = new Main_Frame(new UI_AdminDelivery());        
         });
@@ -100,9 +108,13 @@ public class UI_AdminMain extends JPanel{
         adminReportBtn.setFocusable(false);
         adminReportBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         adminReportBtn.setOpaque(false);
-        adminReportBtn.setBorder(BorderFactory.createEmptyBorder()); 
+        adminReportBtn.setBorder(BorderFactory.createEmptyBorder());
+        adminReportBtn.setOpaque(false);
+        adminReportBtn.setFocusPainted(false);
+        adminReportBtn.setContentAreaFilled(false);
+        adminReportBtn.setOpaque(false);
         adminReportBtn.addActionListener(e -> {
-            frame = new Main_Frame(new UI_AdminDelivery());        
+            OODMS_Main.frame.replacePanel(new UI_ReportOrders());
         });
         
         // this JPanel

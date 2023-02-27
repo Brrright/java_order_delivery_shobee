@@ -6,6 +6,7 @@ import static com.mycompany.oodms.UserRole.ADMIN;
 import static com.mycompany.oodms.UserRole.DELIVERY_STAFF;
 import static com.mycompany.oodms.UserRole.MEMBER;
 import com.mycompany.oodms.ui.UI_Admin.UI_AdminDelivery;
+import com.mycompany.oodms.ui.UI_Admin.UI_ReportOrders;
 import com.mycompany.oodms.ui.UI_Admin.UI_UserManagement;
 import com.mycompany.oodms.ui.UI_Delivery.UI_UpComing;
 import javax.swing.*;
@@ -33,6 +34,7 @@ public class UI_Header extends JPanel{
     // profile, logout (in registered user)
     JButton adminManagement;
     JButton adminDelivery;
+    JButton adminReport;
 
 
     public UI_Header() {
@@ -211,6 +213,22 @@ public class UI_Header extends JPanel{
             OODMS_Main.frame.replacePanel(new UI_AdminDelivery());
         });
         
+        // Admin report button
+        adminReport= new JButton();
+        adminReport.setText("Report");
+        adminReport.setBorder(BorderFactory.createEmptyBorder());
+        adminReport.setFocusable(false);
+        adminReport.setForeground(new Color(0, 0, 0));
+        adminReport.setFont(new Font("Sarif",Font.BOLD,15));
+        adminReport.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        adminReport.setOpaque(false);
+        adminReport.setFocusPainted(false);
+        adminReport.setContentAreaFilled(false);
+        adminReport.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_ReportOrders());
+        });
+        
         // profile, logout (in registered user section)
         
         
@@ -233,7 +251,6 @@ public class UI_Header extends JPanel{
             this.add(allProduct);
             this.add(login);
             this.add(signup);
-            return;
         }
         else 
         {
@@ -241,6 +258,7 @@ public class UI_Header extends JPanel{
                 case ADMIN -> {
                     this.add(adminManagement);
                     this.add(adminDelivery);
+                    this.add(adminReport);
                     this.add(profile);
                     this.add(logout);
                 }
