@@ -6,7 +6,6 @@ package com.mycompany.oodms.ui.UI_Admin;
 
 
 import com.mycompany.oodms.OODMS_Main;
-import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.UserRole;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -32,16 +31,13 @@ public class UI_UserManagementAdd extends JPanel{
     
     JLabel name_header;
     JLabel gender_header;
-    JLabel gender_validation;
     JLabel age_header;
-    JLabel age_validation;
+//    JLabel age_validation;
     JLabel phoneNo_header;
-    JLabel phoneNo_validation;
     JLabel email_header; 
-    JLabel phoneNo_validation;
+    JLabel email_validation;
     JLabel pwd_header;
-     JLabel phoneNo_validation;
-    JLabel confirmPwd_header;
+     JLabel pwd_validation;
     
     JTextField name;
     JComboBox gender;
@@ -49,7 +45,6 @@ public class UI_UserManagementAdd extends JPanel{
     JTextField phoneNo;
     JTextField email;
     JPasswordField pwd;
-    JPasswordField confirmPwd;
     
     JButton signup;
 
@@ -101,6 +96,11 @@ public class UI_UserManagementAdd extends JPanel{
         age_header.setFont(new Font("MV Boli",Font.PLAIN,12));
         age_header.setBounds(144,307,50,20);
         
+//        age_validation =new JLabel("");
+//        age_validation.setFont(new Font("MV Boli",Font.PLAIN,12));
+//        age_validation.setForeground(Color.red);
+//        age_validation.setBounds(244,307,100,20);
+        
         // JTextField - age
         age = new JTextField();
         age.setBounds(140,327,378,48);
@@ -119,27 +119,40 @@ public class UI_UserManagementAdd extends JPanel{
         email_header.setFont(new Font("MV Boli",Font.PLAIN,12));
         email_header.setBounds(144,406,100,20);
         
+        email_validation =new JLabel("");
+        email_validation.setFont(new Font("MV Boli",Font.PLAIN,12));
+        email_validation.setForeground(Color.red);
+        email_validation.setBounds(244,406,100,20);
+        
         // JTextField - Email
         email = new JTextField();
         email.setBounds(140,426,793,48);
         
+        email.addKeyListener(new java.awt.event.KeyAdapter(){
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailTFKeyReleased(evt);
+            }
+         });
+        
         // JLabel - Password header
         pwd_header = new JLabel("Password :");
         pwd_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        pwd_header.setBounds(144,505,100,20);
+        pwd_header.setBounds(144,505,50,20);
         
         // JPasswordField - Password
         pwd = new JPasswordField();
-        pwd.setBounds(140,525,378,48);
+        pwd.setBounds(140,525,793,48);
         
-        // JLabel - Confirm password header
-        confirmPwd_header = new JLabel("Confirm Password :");
-        confirmPwd_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        confirmPwd_header.setBounds(558,505,200,20);
+        pwd.addKeyListener(new java.awt.event.KeyAdapter(){
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordTFKeyReleased(evt);
+            }
+         });
         
-        // JPasswordField - Confirm password
-        confirmPwd = new JPasswordField();
-        confirmPwd.setBounds(554,525,378,48);
+        pwd_validation =new JLabel("");
+        pwd_validation.setFont(new Font("MV Boli",Font.PLAIN,12));
+        pwd_validation.setForeground(Color.red);
+        pwd_validation.setBounds(244,505,100,20);
         
         // JButton - sign up button
         signup = new JButton("Add User");
@@ -174,7 +187,6 @@ public class UI_UserManagementAdd extends JPanel{
         this.add(phoneNo_header);
         this.add(email_header);
         this.add(pwd_header);
-        this.add(confirmPwd_header);
         
         this.add(name);
         this.add(gender);
@@ -182,30 +194,33 @@ public class UI_UserManagementAdd extends JPanel{
         this.add(phoneNo);
         this.add(email);
         this.add(pwd);
-        this.add(confirmPwd);
         
         this.add(signup);
         
+        
+//        this.add(age_validation);
+        this.add(email_validation);
+        this.add(pwd_validation);
     }
     
           private void emailTFKeyReleased(java.awt.event.KeyEvent evt) {
             String pattern = "^(.+)@(.+)$";
             Pattern p = Pattern.compile(pattern);
-            Matcher match = p.matcher(emailTF.getText());
+            Matcher match = p.matcher(email.getText());
             if (!match.matches()) {
-                validateLabel.setText("Invalid");
+                email_validation.setText("Invalid");
             }
             else {
-                validateLabel.setText("");
+                email_validation.setText("");
             }
         }
       
         private void passwordTFKeyReleased(java.awt.event.KeyEvent evt) {
-            if (passwordTF.getText().length() < 8) {
-                validatePwLabel.setText("Invalid");
+            if (pwd.getText().length() < 8) {
+                pwd_validation.setText("Invalid");
             }
             else {
-                validatePwLabel.setText("");
+                pwd_validation.setText("");
             }
         }
 }
