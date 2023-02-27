@@ -49,7 +49,6 @@ public class UI_ProductManagement extends JPanel{
 
     JTextField search_textfield;
     
-    JButton search_btn;
     ImageIcon searchBtn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/searchBtn.png");
 
     JComboBox productType;
@@ -90,14 +89,13 @@ public class UI_ProductManagement extends JPanel{
         ArrayList<Category> all_categories = CategoryService.getCategoryService().getCategories();
         return all_categories;
     }
-     
     
     public UI_ProductManagement() {
         // add category
         categories_name.add("ALL");
         for(int y = 0; y < all_categories.size(); y++){
             categories_name.add(all_categories.get(y).getCategoryName());
-        }
+    }
 
         // heading
         heading = new UI_Header();
@@ -116,6 +114,12 @@ public class UI_ProductManagement extends JPanel{
         userManagementBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         userManagementBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         userManagementBtn.setForeground(Color.GRAY);
+        userManagementBtn.setBackground(new Color(0,0,0,0));
+        userManagementBtn.setOpaque(false);
+        userManagementBtn.setBorderPainted(false);
+        userManagementBtn.setFocusPainted(false);
+        userManagementBtn.setForeground(Color.GRAY);
+        userManagementBtn.setForeground(Color.GRAY);
         userManagementBtn.addActionListener(e -> {
             frame.replacePanel(new UI_UserManagement());
         });
@@ -129,6 +133,10 @@ public class UI_ProductManagement extends JPanel{
         productManagementBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         productManagementBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         productManagementBtn.setForeground(Color.WHITE);
+        productManagementBtn.setBackground(new Color(0,0,0,0));
+        productManagementBtn.setOpaque(false);
+        productManagementBtn.setBorderPainted(false);
+        productManagementBtn.setFocusPainted(false);
         
         
         // JButton - Category management button
@@ -140,6 +148,10 @@ public class UI_ProductManagement extends JPanel{
         categoryManagementBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         categoryManagementBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         categoryManagementBtn.setForeground(Color.GRAY);
+        categoryManagementBtn.setBackground(new Color(0,0,0,0));
+        categoryManagementBtn.setOpaque(false);
+        categoryManagementBtn.setBorderPainted(false);
+        categoryManagementBtn.setFocusPainted(false);
         categoryManagementBtn.addActionListener(e -> {
             frame.replacePanel(new UI_CategoryManagement());
         });
@@ -163,6 +175,10 @@ public class UI_ProductManagement extends JPanel{
         addProduct.setHorizontalAlignment(JLabel.CENTER);
         addProduct.setVerticalAlignment(JLabel.CENTER);
         addProduct.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        addProduct.setBackground(new Color(0,0,0,0));
+        addProduct.setOpaque(false);
+        addProduct.setBorderPainted(false);
+        addProduct.setFocusPainted(false);
         addProduct.addActionListener(e -> {
             frame.replacePanel(new UI_ProductManagementAdd());
         });
@@ -182,22 +198,14 @@ public class UI_ProductManagement extends JPanel{
             }
         });
         
-        // JButton - search button
-        search_btn = new JButton(searchBtn);
-        search_btn.setPreferredSize(new Dimension(69,48));
-        search_btn.setOpaque(false);
-        search_btn.setBorder(BorderFactory.createEmptyBorder());
-        search_btn.setHorizontalAlignment(JLabel.CENTER);
-        search_btn.setVerticalAlignment(JLabel.CENTER);
-        search_btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        search_btn.addActionListener(e -> {
-            // search user
-        });
-        
         // JComboBox - product category
         productType = new JComboBox(categories_name.toArray(new String[categories_name.size()]));
         productType.setFont(new Font("MV Boli",Font.PLAIN,13));
         productType.setPreferredSize(new Dimension(153,48));
+        productType.addActionListener(e -> {
+//            System.out.println(categories.getSelectedIndex());
+            filterByCategory();
+        });
         
         // JPanel - search panel (add, search, filter)
         search_panel = new JPanel();
@@ -206,7 +214,6 @@ public class UI_ProductManagement extends JPanel{
         search_panel.setBackground(Color.WHITE);
         search_panel.add(addProduct);
         search_panel.add(search_textfield);
-        search_panel.add(search_btn);
         search_panel.add(productType);
         
         // JButtons - products
@@ -272,9 +279,13 @@ public class UI_ProductManagement extends JPanel{
                 products[i].setVerticalTextPosition(JLabel.BOTTOM);
                 products[i].setBorder(BorderFactory.createEmptyBorder());
                 products[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                products[i].setBackground(new Color(0,0,0,0));
+                products[i].setOpaque(false);
+                products[i].setBorderPainted(false);
+                products[i].setFocusPainted(false);
                 products[i].addActionListener(e -> {
                     OODMS_Main.previous_panel = Main_Frame.currentPanel;
-                    OODMS_Main.frame.replacePanel(new UI_Product(product.getProductID()));
+                    OODMS_Main.frame.replacePanel(new UI_ProductManagementProduct(product.getProductID()));
                 });
             }
            for (JButton product : products){

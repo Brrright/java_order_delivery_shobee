@@ -1,8 +1,12 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 
+import com.mycompany.oodms.Category;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.CategoryService;
+import com.mycompany.oodms.Services.ProductService;
 import com.mycompany.oodms.ui.UI_Login;
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +15,10 @@ import java.util.ArrayList;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class UI_ProductManagementProductEdit extends JPanel {
+    
+    ArrayList<Category> all_categories = initialize_category_data();
+    ArrayList<String> categories_name = new ArrayList<String>();
+
 
     JButton back;
     
@@ -32,17 +40,26 @@ public class UI_ProductManagementProductEdit extends JPanel {
     JButton update;
     JButton cancel;
     
-    public UI_ProductManagementProductEdit(){
+    public Product initialize_product_data(int id){
+        Product product = ProductService.getProductService().getProduct(id);
+        return product;
+    }
+    
+    public ArrayList<Category> initialize_category_data()
+    {
+        ArrayList<Category> all_categories = CategoryService.getCategoryService().getCategories();
+        return all_categories;
+    }
+    
+    public UI_ProductManagementProductEdit(int product_id){
+        
+            Product product = initialize_product_data(product_id);
+            for(int y = 0; y < all_categories.size(); y++){
+                categories_name.add(all_categories.get(y).getCategoryName());
+        }
+        
         // REQUIRED DATA
         // ID, PICTURE, NAME, GENDER, DOB, EMAIL, PHONE NO
-        ArrayList<String> productDetails = new ArrayList<>();
-        productDetails.add("PRODUCT1");
-        productDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-        productDetails.add("Product name");
-        productDetails.add("Electronics");
-        productDetails.add("34.00"); // price
-        productDetails.add("23"); // stocks
-                        
 
         // JButton - back (to login page)
         back = new JButton("< back");
@@ -51,13 +68,19 @@ public class UI_ProductManagementProductEdit extends JPanel {
         back.setBounds(68,70,45,11);
         back.setBorder(BorderFactory.createEmptyBorder());
         back.setFocusable(false);
+        back.setOpaque(false);
+        back.setBackground(new Color(0,0,0,0));
+        back.setOpaque(false);
+        back.setFocusPainted(false);
+        back.setContentAreaFilled(false);
+        back.setOpaque(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
         back.addActionListener(e -> {
             OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
         
         // JLabel - title
-        title = new JLabel(productDetails.get(0));
+        title = new JLabel("ID: " + String.valueOf(product_id));
         title.setFont(new Font("MV Boli",Font.BOLD,30));
         title.setBounds(144,136,250,40);
         
@@ -67,9 +90,8 @@ public class UI_ProductManagementProductEdit extends JPanel {
         name_header.setBounds(144,213,150,20);        
         
         // JTextField - product name
-        name = new JTextField(productDetails.get(2));
+        name = new JTextField(product.getProductName());
         name.setBounds(140,233,587,48);
-        name.setText(productDetails.get(2));
         
         // JLabel - category header
         category_header = new JLabel("Category :");
@@ -77,21 +99,18 @@ public class UI_ProductManagementProductEdit extends JPanel {
         category_header.setBounds(763,213,100,20);
         
         // JTextField - category
-        String[] genderList = {"Electronics","Foods and beverage"};
-        category = new JComboBox(genderList);
+        category = new JComboBox<>(categories_name.toArray(new String[categories_name.size()]));
         category.setBounds(759,233,174,48);
-        category.setSelectedItem(productDetails.get(3));
+        category.setSelectedItem(product.getCategory());
 
-        
         // JLabel - price header
         price_header = new JLabel("Price :");
         price_header.setFont(new Font("MV Boli",Font.PLAIN,12));
         price_header.setBounds(144,307,50,20);
         
         // JTextField - price
-        price = new JTextField(productDetails.get(4));
+        price = new JTextField(String.valueOf(product.getProductPrice()));
         price.setBounds(140,327,793,48);
-        price.setText(productDetails.get(4));
         
         // JLabel - stock header
         stock_header = new JLabel("Stock :");
@@ -101,7 +120,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
         // JTextField - stock
         stock = new JTextField();
         stock.setBounds(140,426,793,48);
-        stock.setText(productDetails.get(5));
+        stock.setText(String.valueOf(product.getStockQty()));
                 
         // JLabel - product picture
         productPic_header = new JLabel("Product Picture :");
@@ -133,7 +152,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
         });
 
 
-        // JButton - sign up button
+        // JButton - update button
         update = new JButton("update");
         update.setBorder(BorderFactory.createEmptyBorder());
         update.setHorizontalTextPosition(JLabel.CENTER);
@@ -160,8 +179,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
         cancel.setFont(new Font("MV Boli",Font.PLAIN,12));
         cancel.setForeground(Color.WHITE);
         cancel.addActionListener(e -> {
-            frame.replacePanel(new UI_ProductManagementProduct());
-            // with profile object or id ??
+            frame.replacePanel(OODMS_Main.previous_panel);
         });
         
         ////////////////////////////////////////////////////////////////////////
