@@ -5,6 +5,8 @@
 package com.mycompany.oodms.Services;
 
 import com.mycompany.oodms.Address;
+import com.mycompany.oodms.Delivery;
+import com.mycompany.oodms.DeliveryStaff;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileName;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
@@ -75,6 +77,36 @@ public class OrderService {
     public ArrayList<Order> getOrders() {
         return orders;
     }
+    
+    public ArrayList<Order> getOrdersForDeliveryStaff(ArrayList<Delivery>deliveries, DeliveryStaff staff){
+        ArrayList<Order> matchedDeliveryOrder = new ArrayList<Order>();
+        for(Order order : orders){
+            for(Delivery delivery: deliveries) {
+                System.out.println("    ------------------------------    ");
+                System.out.println("[o] order id : "+ order.getOrderID());
+                System.out.println("[d] order id : "+ delivery.getOrder().getOrderID());
+                System.out.println("    ------------------------------    ");
+                System.out.println("[d] delivery staff: " + delivery.getStaff().getName());
+                System.out.println("[received] delivery staff: " + staff.getName());
+                System.out.println("    ------------------------------    ");
+                if(order.getOrderID() == delivery.getOrder().getOrderID() &&
+                        delivery.getStaff() == staff){
+                    matchedDeliveryOrder.add(order);
+                }
+            }
+        }
+        if(matchedDeliveryOrder.isEmpty()){
+            System.out.println("no order found for this delivery. either delivery order id wrong or cant find staff");
+        }
+        return matchedDeliveryOrder;
+    }
+    
+//    public ArrayList<Order> getOrdersForDeliveryStaff(ArrayList<Delivery> deliveries, int staffID) {
+//        ArrayList<Order> matchedDeliveryOrder = getOrdersForDelivery(deliveries);
+//        for (Order order : matchedDeliveryOrder){
+//            
+//        }
+//    }
     
     public Order getOrder(int orderId) {
         for (Order order : orders) {
