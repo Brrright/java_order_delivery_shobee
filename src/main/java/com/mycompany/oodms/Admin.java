@@ -98,7 +98,7 @@ public class Admin extends User{
     
     @Override
     public String getPhoneNum(){
-        return super.password;
+        return super.phoneNum;
     }
     
     @Override
