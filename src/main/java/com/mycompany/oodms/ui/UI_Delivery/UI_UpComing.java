@@ -43,6 +43,8 @@ public class UI_UpComing extends JPanel{
     ImageIcon grayCircle1 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
     ImageIcon grayCircle2 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
     
+    JLabel orderInfo;
+    
     JButton upComingPage;
     JButton onGoingPage;
     JButton completedPage;
@@ -64,7 +66,9 @@ public class UI_UpComing extends JPanel{
         ArrayList<Delivery> deliveries = initialize_delivery_data();
         ArrayList<Order> orders;
         ArrayList<OrderItem> orderItems;
+        String orderItemString = "<html>";
         if(deliveries.isEmpty()){
+            System.out.println("deliveries is empty in UI UPComing");
             orders = new ArrayList<Order>();
             orderItems = new ArrayList<OrderItem>();
         }else{
@@ -106,7 +110,7 @@ public class UI_UpComing extends JPanel{
         onGoingPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         onGoingPage.setForeground(Color.GRAY);
         onGoingPage.addActionListener(e -> {
-                frame.replacePanel(new UI_OnGoing());
+            frame.replacePanel(new UI_OnGoing());
         });
         
         // JButton - completed (direct to completed page)
@@ -153,9 +157,18 @@ public class UI_UpComing extends JPanel{
         model.addColumn("Select");
         model.addColumn("DeliveryID");
         model.addColumn("OrderID");
+        model.addColumn("City");
         model.addColumn("Status");
-        model.addColumn("AddressID");
-
+//        model.addColumn("Address");
+//        model.addColumn("Product ID and Quantity");
+        
+        // set order item string
+//        for(OrderItem item : orderItems){
+//            orderItemString = orderItemString + "ID: " +item.getProduct().getProductID()+ " [" +item.getProduct().getProductName() + "] x " + item.getQuantity() + "<br>";
+//            orderItemString = orderItemString + "[ID: " +item.getProduct().getProductID()+ " | " +  item.getProduct().getProductName() + "] x " + item.getQuantity() + "<br>";
+//        }
+//        orderItemString = orderItemString + "</html>";
+        
         // set cart table row
         
         for (int i = 0; i < deliveries.size(); i++) {
@@ -165,11 +178,14 @@ public class UI_UpComing extends JPanel{
             model.setValueAt(false,i,0);
             model.setValueAt(deliveries.get(i).getDeliveryID(), i, 1);
             model.setValueAt(deliveries.get(i).getOrder().getOrderID(), i, 2);
-            model.setValueAt(deliveries.get(i).getStatus(), i, 3);
-            model.setValueAt(delivery.getAddress().toString(), i, 4);
+            model.setValueAt(deliveries.get(i).getAddress().getCity(), i, 3);
+            model.setValueAt(deliveries.get(i).getStatus(), i, 4);
+ //            model.setValueAt(orderItemString, i, 3);
+//            model.setValueAt(delivery.getAddress().toString(), i, 5);
         }
         
         // set column size
+//        cart.setRowHeight(30);
         TableColumn selectColumn = cart.getColumnModel().getColumn(0);
         selectColumn.setPreferredWidth(5);
         selectColumn.setResizable(false);
@@ -192,7 +208,14 @@ public class UI_UpComing extends JPanel{
         
         // scrollpane for JTable
         JScrollPane scrollPane = new JScrollPane(cart);
-        scrollPane.setBounds(193,245,700,290);
+        scrollPane.setBounds(193,245,400,290);
+        
+        
+        // selected order information panel
+        orderInfo = new JLabel();
+        orderInfo.setBackground(Color.LIGHT_GRAY);
+        orderInfo.setOpaque(true);
+        orderInfo.setBounds(593,245,300,290); 
         
         // JButton - Checkout
         packOrder = new JButton("Pack Order");
@@ -206,6 +229,10 @@ public class UI_UpComing extends JPanel{
         packOrder.setFont(new Font("MV Boli",Font.PLAIN,12));
         packOrder.setForeground(Color.WHITE);
         packOrder.addActionListener(e -> {
+            if(!isSelected(cart)){
+                JOptionPane.showMessageDialog(null, "Please select a product.", "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             
             // checkout confirmation
             int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to checkout?", "Confirmation",
@@ -240,6 +267,18 @@ public class UI_UpComing extends JPanel{
         this.add(completedPage);
         
         this.add(scrollPane);
+        this.add(orderInfo);
         this.add(packOrder);
+    }
+    
+    public boolean isSelected(JTable cart){
+        for (int i = 0; i < cart.getRowCount(); i++)
+        {
+            if ((boolean)cart.getValueAt(i, 0) == true)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
