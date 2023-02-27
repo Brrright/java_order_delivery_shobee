@@ -75,7 +75,13 @@ public class DeliveryService {
     }
     
     private FileRecord convertToFileRecord(Delivery delivery){
-        String delivery_record_string = delivery.getDeliveryID() + ";" + delivery.getStatus() + ";" + delivery.getDateTime() +";" + delivery.getStaff().getID() +";" + delivery.getMember().getID() +";" + delivery.getOrder().getOrderID();
+        String delivery_record_string = "";
+        if(delivery.getStaff() == null) {
+            delivery_record_string = delivery.getDeliveryID() + ";" + delivery.getStatus() + ";" + "-1" + ";" + delivery.getDateTime() +";" + "-1" +";" + delivery.getMember().getID() +";" + delivery.getOrder().getOrderID();
+        }
+        else{
+            delivery_record_string = delivery.getDeliveryID() + ";" + delivery.getStatus() + ";" + delivery.getDeliveryRating() + ";" + delivery.getDateTime() +";" + delivery.getStaff().getID() +";" + delivery.getMember().getID() +";" + delivery.getOrder().getOrderID();
+        }
         return new FileRecord(delivery.getDeliveryID(), delivery_record_string);
     }
     

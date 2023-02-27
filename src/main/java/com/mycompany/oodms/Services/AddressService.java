@@ -58,6 +58,10 @@ public class AddressService {
          return new FileRecord(address.getAddressID(), address_record_string);
     }
     
+    public int getNewID(){
+        return address_file.GenerateID();
+    }
+    
     public ArrayList<Address> getAddresses() {
         return this.addresses;
     }
