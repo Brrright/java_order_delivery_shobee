@@ -20,12 +20,14 @@ public class UI_ProductManagementAdd extends JPanel {
     JLabel price_header;
     JLabel stock_header; 
     JLabel productPic_header;
+    JLabel description_header;
     JLabel productPic_fileName;
     
     JTextField name;
     JComboBox category;
     JTextField price;
     JTextField stock;
+    JTextField description;
     JButton productPic_upload;
     
     JButton update;
@@ -73,21 +75,30 @@ public class UI_ProductManagementAdd extends JPanel {
         // JLabel - price header
         price_header = new JLabel("Price :");
         price_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        price_header.setBounds(144,307,50,20);
+        price_header.setBounds(140,307,50,20);
         
         // JTextField - price
         price = new JTextField();
-        price.setBounds(140,327,793,48);
+        price.setBounds(140,327,378,48);
         
         // JLabel - stock header
         stock_header = new JLabel("Stock :");
         stock_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        stock_header.setBounds(144,406,100,20);
+        stock_header.setBounds(555,307,378,20);
         
         // JTextField - stock
         stock = new JTextField();
-        stock.setBounds(140,426,793,48);
-                
+        stock.setBounds(555,327,378,48);
+        
+        // JLabel - description header
+        description_header = new JLabel("Description :");
+        description_header.setFont(new Font("MV Boli",Font.PLAIN,12));
+        description_header.setBounds(140,406,100,20);
+        
+        // JTextField - description
+        description = new JTextField();
+        description.setBounds(140,426,793,48);                        
+        
         // JLabel - product picture
         productPic_header = new JLabel("Product Picture :");
         productPic_header.setFont(new Font("MV Boli",Font.PLAIN,12));

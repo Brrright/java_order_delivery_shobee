@@ -6,10 +6,12 @@ package com.mycompany.oodms.ui.UI_Admin;
 
 import com.mycompany.oodms.Admin;
 import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Services.User.AdminService;
 import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.UserRole;
+import com.mycompany.oodms.ui.Main_Frame;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,6 +29,7 @@ import javax.swing.*;
  */
 public class UI_UserManagement extends JPanel{
     UI_Header heading;
+    int currentSelectedUserRole;
     
     // first section (management selection)
     JLabel generalManagementIcon_label;
@@ -46,18 +49,12 @@ public class UI_UserManagement extends JPanel{
     ImageIcon addBtn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/addBtn.png");
 
     JTextField search_textfield;
-    
-    JButton search_btn;
-    ImageIcon searchBtn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/searchBtn.png");
 
     JComboBox userType;
     UserRole[] user_roles = {UserRole.DELIVERY_STAFF, UserRole.ADMIN};
     
     // 3rd section (users)
     JButton[] users;
-    ArrayList<ArrayList<String>> allUsers = new ArrayList<>();
-    ArrayList<String> user = new ArrayList<>();
-    
     ArrayList<Admin> all_admins = initialize_admin_data();
     ArrayList<DeliveryStaff> all_deliveryStaffs = initialize_deliveryStaff_data();
     final int imageWidth = 203;
@@ -87,6 +84,8 @@ public class UI_UserManagement extends JPanel{
      
     
     public UI_UserManagement() {
+        currentSelectedUserRole = 0; // 0 = dellivery staff
+        
         // heading
         heading = new UI_Header();
         
@@ -174,23 +173,37 @@ public class UI_UserManagement extends JPanel{
         // JTextField - search bar
         search_textfield = new JTextField();
         search_textfield.setPreferredSize(new Dimension(432,48));
-        
-        // JButton - search button
-        search_btn = new JButton(searchBtn);
-        search_btn.setPreferredSize(new Dimension(69,48));
-        search_btn.setOpaque(false);
-        search_btn.setBorder(BorderFactory.createEmptyBorder());
-        search_btn.setHorizontalAlignment(JLabel.CENTER);
-        search_btn.setVerticalAlignment(JLabel.CENTER);
-        search_btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        search_btn.addActionListener(e -> {
-            // search user
+        search_textfield.addKeyListener(new java.awt.event.KeyAdapter()  {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                System.out.println("triggered...");
+                if (currentSelectedUserRole == 0) {
+                    all_deliveryStaffs = initialize_deliveryStaff_data();
+                    users_panel.removeAll();
+                    searchDeliveryStaff(evt);
+                    users_panel.repaint();
+                    users_panel.revalidate();
+                }
+                else if (currentSelectedUserRole == 1) {
+                    all_admins = initialize_admin_data();
+                    users_panel.removeAll();
+                    searchAdmin(evt);
+                    users_panel.repaint();
+                    users_panel.revalidate();
+                }
+
+            }
         });
         
         // JComboBox - user role
         userType = new JComboBox(user_roles);
         userType.setFont(new Font("MV Boli",Font.PLAIN,13));
         userType.setPreferredSize(new Dimension(153,48));
+        userType.addActionListener(e -> {
+                replaceUserButton();
+                currentSelectedUserRole = userType.getSelectedIndex();
+                search_textfield.setText("");
+        });
         
         // JPanel - search panel (add, search, filter)
         search_panel = new JPanel();
@@ -199,63 +212,16 @@ public class UI_UserManagement extends JPanel{
         search_panel.setBackground(Color.WHITE);
         search_panel.add(addUser);
         search_panel.add(search_textfield);
-        search_panel.add(search_btn);
         search_panel.add(userType);
         
-        
-        // JButton[] - users
-        // create temp user 
-        for (int i = 0; i < 6; i++){
-            user.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-            user.add("username");
-            allUsers.add(user);
-        }
-        
-        users = new JButton[allUsers.size()];
-        
-        for (int i = 0; i < allUsers.size();i++){
-            
-            // image icon rescale
-            ImageIcon originalIcon = new ImageIcon(allUsers.get(i).get(0));
-            Image originalImage = originalIcon.getImage();
-            Image scaledImage = originalImage.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaledImage);
-            
-            // button (user)
-            users[i] = new JButton(scaledIcon);
-            users[i].setText(allUsers.get(i).get(1));
-            users[i].setPreferredSize(new Dimension(202,247));
-            users[i].setOpaque(false);
-            users[i].setBorder(BorderFactory.createEmptyBorder());
-            users[i].setHorizontalAlignment(JLabel.CENTER);
-            users[i].setVerticalAlignment(JLabel.CENTER);
-            users[i].setHorizontalTextPosition(JLabel.CENTER);
-            users[i].setVerticalTextPosition(JLabel.BOTTOM);
-            users[i].setIconTextGap(15); 
-            users[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            users[i].setOpaque(false);
-            users[i].setFocusPainted(false);
-            users[i].setContentAreaFilled(false);
-            users[i].setOpaque(false);
-            users[i].addActionListener(e -> {
-                frame.replacePanel(new UI_UserManagementProfile());
-            });
-        }
-        
-        // Panel for users
-        float rowCount = (float)allUsers.size()/3;
-        int users_panel_height = 300 * (int)Math.ceil(rowCount);
-        
+        // users panel (JButtons)
         users_panel = new JPanel();
         users_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
-        users_panel.setPreferredSize(new Dimension(700, users_panel_height));
         users_panel.setBackground(Color.WHITE);
         
-        for (JButton theUser : users){
-            users_panel.add(theUser);
-        }
-        
-        
+        // JButton[] - users
+        users = deliveryStaffCard(all_deliveryStaffs);
+
         // third container (search container)
         search_container = new JPanel();
         search_container.setLayout(new BorderLayout());
@@ -291,5 +257,154 @@ public class UI_UserManagement extends JPanel{
         this.add(main_container, BorderLayout.CENTER);
         this.setBackground(Color.WHITE);
     }
+    
+    // userCard (admin)
+        private JButton[] adminCard(ArrayList<Admin> admins){
+         
+        JButton[] admin_btn = new JButton[admins.size()];
+        
+        for (int i = 0; i < admins.size();i++){
+            
+            Admin currentAdmin = admins.get(i);
+            // image icon rescale
+            ImageIcon originalIcon = new ImageIcon(currentAdmin.getPicturePath());
+            Image originalImage = originalIcon.getImage();
+            Image scaledImage = originalImage.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            
+            // button (user)
+            admin_btn[i] = new JButton(scaledIcon);
+            admin_btn[i].setText(currentAdmin.getName());
+            admin_btn[i].setPreferredSize(new Dimension(202,247));
+            admin_btn[i].setOpaque(false);
+            admin_btn[i].setBorder(BorderFactory.createEmptyBorder());
+            admin_btn[i].setHorizontalAlignment(JLabel.CENTER);
+            admin_btn[i].setVerticalAlignment(JLabel.CENTER);
+            admin_btn[i].setHorizontalTextPosition(JLabel.CENTER);
+            admin_btn[i].setVerticalTextPosition(JLabel.BOTTOM);
+            admin_btn[i].setIconTextGap(15); 
+            admin_btn[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            admin_btn[i].setOpaque(false);
+            admin_btn[i].setFocusPainted(false);
+            admin_btn[i].setContentAreaFilled(false);
+            admin_btn[i].setOpaque(false);
+            admin_btn[i].addActionListener(e -> {
+                frame.replacePanel(new UI_UserManagementProfile("admin",currentAdmin.getID()));
+            });
+        }
+        
+         // Panel for users
+        float rowCount = (float)admins.size()/3;
+        int users_panel_height = 300 * (int)Math.ceil(rowCount);
+       
+        this.users_panel.setPreferredSize(new Dimension(700, users_panel_height));
 
+        for (JButton theAdmin : admin_btn){
+            this.users_panel.add(theAdmin);
+        }
+        
+        return admin_btn;
+    }
+        
+    // userCard (deliveryStaff)
+        private JButton[] deliveryStaffCard(ArrayList<DeliveryStaff> DeliveryStaff){
+         
+        JButton[] deliveryStaffs_btn = new JButton[DeliveryStaff.size()];
+        
+        for (int i = 0; i < DeliveryStaff.size();i++){
+            
+            DeliveryStaff currentStaff = DeliveryStaff.get(i);
+            // image icon rescale
+            ImageIcon originalIcon = new ImageIcon(currentStaff.getPicturePath());
+            Image originalImage = originalIcon.getImage();
+            Image scaledImage = originalImage.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            
+            // button (user)
+            deliveryStaffs_btn[i] = new JButton(scaledIcon);
+            deliveryStaffs_btn[i].setText(currentStaff.getName());
+            deliveryStaffs_btn[i].setPreferredSize(new Dimension(202,247));
+            deliveryStaffs_btn[i].setOpaque(false);
+            deliveryStaffs_btn[i].setBorder(BorderFactory.createEmptyBorder());
+            deliveryStaffs_btn[i].setHorizontalAlignment(JLabel.CENTER);
+            deliveryStaffs_btn[i].setVerticalAlignment(JLabel.CENTER);
+            deliveryStaffs_btn[i].setHorizontalTextPosition(JLabel.CENTER);
+            deliveryStaffs_btn[i].setVerticalTextPosition(JLabel.BOTTOM);
+            deliveryStaffs_btn[i].setIconTextGap(15); 
+            deliveryStaffs_btn[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            deliveryStaffs_btn[i].setOpaque(false);
+            deliveryStaffs_btn[i].setFocusPainted(false);
+            deliveryStaffs_btn[i].setContentAreaFilled(false);
+            deliveryStaffs_btn[i].setOpaque(false);
+            deliveryStaffs_btn[i].addActionListener(e -> {
+                OODMS_Main.previous_panel = Main_Frame.currentPanel;
+                OODMS_Main.frame.replacePanel(new UI_UserManagementProfile("staff", currentStaff.getID()));
+            });
+            }
+        
+            // Panel for users
+           float rowCount = (float)DeliveryStaff.size()/3;
+           int users_panel_height = 300 * (int)Math.ceil(rowCount);
+           
+           this.users_panel.setPreferredSize(new Dimension(700, users_panel_height));
+
+           for (JButton theStaff : deliveryStaffs_btn){
+               this.users_panel.add(theStaff);
+           }
+
+           return this.users;
+        }
+        
+        
+        
+        private void replaceUserButton() {
+            users_panel.removeAll();
+            
+            if(userType.getSelectedIndex() == 0)
+            {
+               deliveryStaffCard(all_deliveryStaffs);
+            } 
+            else if(userType.getSelectedIndex() == 1)
+            {
+               adminCard(all_admins);
+            }
+            
+            users_panel.repaint();
+            users_panel.revalidate();
+        }
+
+    
+    private ArrayList<Admin> searchAdmin(java.awt.event.KeyEvent evt){
+        ArrayList<Admin> matchedAdmin = new ArrayList<>();
+        String input =  search_textfield.getText();
+        for(int x = 0; x < this.all_admins.size(); x ++){
+            System.out.println("from file : " + this.all_admins.get(x).getName());
+            System.out.println("input : " +input);
+            String admin_name = this.all_admins.get(x).getName();
+            System.out.println("contain? : " +admin_name.contains(input) );
+            if(admin_name.toLowerCase().contains(input.toLowerCase())){
+                matchedAdmin.add(this.all_admins.get(x));
+            }
+        }
+        this.all_admins = matchedAdmin;
+        adminCard(this.all_admins);
+        return matchedAdmin;
+    }
+    
+    private ArrayList<DeliveryStaff> searchDeliveryStaff(java.awt.event.KeyEvent evt){
+        ArrayList<DeliveryStaff> matchedStaff = new ArrayList<>();
+        String input =  search_textfield.getText();
+        for(int x = 0; x < this.all_deliveryStaffs.size(); x ++){
+            System.out.println("from file : " + this.all_deliveryStaffs.get(x).getName());
+            System.out.println("input : " +input);
+            String staff_name = this.all_deliveryStaffs.get(x).getName();
+            System.out.println("contain? : " +staff_name.contains(input) );
+            if(staff_name.toLowerCase().contains(input.toLowerCase())){
+                matchedStaff.add(this.all_deliveryStaffs.get(x));
+            }
+        }
+        this.all_deliveryStaffs = matchedStaff;
+        deliveryStaffCard(this.all_deliveryStaffs);
+        return matchedStaff;
+    }
 }

@@ -11,6 +11,8 @@ import com.mycompany.oodms.UserRole;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -29,11 +31,16 @@ public class UI_UserManagementAdd extends JPanel{
 
     
     JLabel name_header;
-    JLabel gender_header; 
+    JLabel gender_header;
+    JLabel gender_validation;
     JLabel age_header;
+    JLabel age_validation;
     JLabel phoneNo_header;
+    JLabel phoneNo_validation;
     JLabel email_header; 
+    JLabel phoneNo_validation;
     JLabel pwd_header;
+     JLabel phoneNo_validation;
     JLabel confirmPwd_header;
     
     JTextField name;
@@ -134,7 +141,6 @@ public class UI_UserManagementAdd extends JPanel{
         confirmPwd = new JPasswordField();
         confirmPwd.setBounds(554,525,378,48);
         
-        
         // JButton - sign up button
         signup = new JButton("Add User");
         signup.setBorder(BorderFactory.createEmptyBorder());
@@ -181,5 +187,26 @@ public class UI_UserManagementAdd extends JPanel{
         this.add(signup);
         
     }
+    
+          private void emailTFKeyReleased(java.awt.event.KeyEvent evt) {
+            String pattern = "^(.+)@(.+)$";
+            Pattern p = Pattern.compile(pattern);
+            Matcher match = p.matcher(emailTF.getText());
+            if (!match.matches()) {
+                validateLabel.setText("Invalid");
+            }
+            else {
+                validateLabel.setText("");
+            }
+        }
+      
+        private void passwordTFKeyReleased(java.awt.event.KeyEvent evt) {
+            if (passwordTF.getText().length() < 8) {
+                validatePwLabel.setText("Invalid");
+            }
+            else {
+                validatePwLabel.setText("");
+            }
+        }
 }
 

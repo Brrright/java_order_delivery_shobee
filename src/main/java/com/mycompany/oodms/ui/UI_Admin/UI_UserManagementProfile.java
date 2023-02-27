@@ -1,8 +1,13 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 
+import com.mycompany.oodms.Admin;
+import com.mycompany.oodms.DeliveryStaff;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Services.User.AdminService;
+import com.mycompany.oodms.Services.User.DeliveryStaffService;
+import com.mycompany.oodms.ui.Main_Frame;
 import com.mycompany.oodms.ui.UI_Delivery.UI_Completed;
 import javax.swing.*;
 import java.awt.*;
@@ -26,21 +31,48 @@ public class UI_UserManagementProfile extends JPanel {
     JButton myOrder;
     JButton editProfile;
     JButton removeUser;
+    
+    String userName;
+    String userProfilePicture;
+    String userGender;
+    String userAge;
+    String userEmail;
+    String userPhoneNo;
 
     ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
 
-    public UI_UserManagementProfile(){
+    private Admin initialize_admin_data(int id){
+        Admin admin = AdminService.getAdminService().getAdmin(id);
+        return admin;
+    }
+    
+     private DeliveryStaff initialize_staff_data(int id){
+        DeliveryStaff staff = DeliveryStaffService.getDeliveryStaffService().getStaff(id);
+        return staff;
+    }
+    
+    public UI_UserManagementProfile(String role, int userId){
         // REQUIRED DATA
         // ID, PICTURE, NAME, GENDER, DOB, EMAIL, PHONE NO
-
-        ArrayList<String> profileDetails = new ArrayList<>();
-        profileDetails.add("PROFILE1");
-        profileDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-        profileDetails.add("Hong Wei");
-        profileDetails.add("Male");
-        profileDetails.add("24"); // age
-        profileDetails.add("hw@gmail.com");
-        profileDetails.add("0192583948"); //sold
+        
+        if ("staff".equals(role)){
+            DeliveryStaff staff = initialize_staff_data(userId);
+            userName = staff.getName();
+            userProfilePicture = staff.getPicturePath();
+            userGender = String.valueOf(staff.getGender());
+            userAge = String.valueOf(staff.getAge());
+            userEmail = String.valueOf(staff.getEmail());
+            userPhoneNo = String.valueOf(staff.getPhoneNum());     
+        }
+        else if ("admin".equals(role)){
+            Admin admin = initialize_admin_data(userId);
+            userName = admin.getName();
+            userProfilePicture = admin.getPicturePath();
+            userGender = String.valueOf(admin.getGender());
+            userAge = String.valueOf(admin.getAge());
+            userEmail = String.valueOf(admin.getEmail());
+            userPhoneNo = String.valueOf(admin.getPhoneNum());        
+        }
 
         // JLabel - back
         backBtn = new JButton("< back");
@@ -51,13 +83,13 @@ public class UI_UserManagementProfile extends JPanel {
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backBtn.addActionListener(e -> {
-            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
+            OODMS_Main.frame.replacePanel(new UI_UserManagement());
         });
                         
 
 
         //image
-        ImageIcon itemPic = new ImageIcon(profileDetails.get(1));
+        ImageIcon itemPic = new ImageIcon(userProfilePicture);
         Image image = itemPic.getImage();
         Image newImage = image.getScaledInstance(370, 426, Image.SCALE_SMOOTH);
         ImageIcon newIcon = new ImageIcon(newImage);
@@ -68,7 +100,7 @@ public class UI_UserManagementProfile extends JPanel {
         profilePic.setBounds(145,182,370,426);
 
         // JLabel - name
-        name = new JLabel(profileDetails.get(2));
+        name = new JLabel(userName);
         name.setFont(new Font("MV Boli",Font.BOLD,30));
         name.setBounds(577,189,342,35);
 
@@ -79,7 +111,7 @@ public class UI_UserManagementProfile extends JPanel {
         idHeader.setBounds(577,239,49,26);
 
         // JLabel - ID
-        id = new JLabel(profileDetails.get(0));
+        id = new JLabel(String.valueOf(userId));
         id.setFont(new Font("MV Boli",Font.PLAIN,16));
         id.setForeground(new Color(0, 0, 0, 255));
         id.setBounds(577,265,90,31);
@@ -91,7 +123,7 @@ public class UI_UserManagementProfile extends JPanel {
         genderHeader.setBounds(708,239,70,26);
 
         // Jlabel - gender
-        gender = new JLabel(profileDetails.get(3));
+        gender = new JLabel(userGender);
         gender.setFont(new Font("MV Boli",Font.PLAIN,16));
         gender.setForeground(new Color(0, 0, 0, 255));
         gender.setBounds(708,265,90,31);
@@ -105,7 +137,7 @@ public class UI_UserManagementProfile extends JPanel {
         dobHeader.setBounds(577,312,90,26);
 
         // Jlabel - dob
-        dob = new JLabel(profileDetails.get(4));
+        dob = new JLabel(userAge);
         dob.setFont(new Font("MV Boli",Font.PLAIN,16));
         dob.setForeground(new Color(0, 0, 0, 255));
         dob.setBounds(577,338,180,31);
@@ -117,7 +149,7 @@ public class UI_UserManagementProfile extends JPanel {
         emailHeader.setBounds(577,385,50,26);
 
         // JLabel - email
-        email = new JLabel(profileDetails.get(5));
+        email = new JLabel(userEmail);
         email.setFont(new Font("MV Boli",Font.PLAIN,16));
         email.setForeground(new Color(0, 0, 0));
         email.setBounds(577,411,340,31);
@@ -129,7 +161,7 @@ public class UI_UserManagementProfile extends JPanel {
         phoneNoHeader.setBounds(577,458,200,26);
 
         // JLabel - phoneNo
-        phoneNo = new JLabel(profileDetails.get(6));
+        phoneNo = new JLabel(userPhoneNo);
         phoneNo.setFont(new Font("MV Boli",Font.PLAIN,16));
         phoneNo.setForeground(new Color(0, 0, 0));
         phoneNo.setBounds(577,484,200,31);
@@ -168,7 +200,8 @@ public class UI_UserManagementProfile extends JPanel {
         editProfile.setFocusable(false);
         editProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
         editProfile.addActionListener(e -> {
-            frame.replacePanel(new UI_UserManagementProfileEdit());
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_UserManagementProfileEdit(role,userId));
         });
         
         // JButton - remove user

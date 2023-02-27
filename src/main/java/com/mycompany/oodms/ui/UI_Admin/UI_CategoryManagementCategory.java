@@ -4,8 +4,10 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;
 
+import com.mycompany.oodms.Category;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Services.CategoryService;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -26,9 +28,14 @@ public class UI_CategoryManagementCategory extends JPanel {
     JButton edit;
     JButton remove;
     
-    public UI_CategoryManagementCategory() {
+    private Category initialize_data(int id){
+        Category category = CategoryService.getCategoryService().getCategory(id);
+        return category;
+    }
+    
+    public UI_CategoryManagementCategory(int categotyId) {
         // temp date
-        String categotyName = "Food and Beverage";
+        Category thisCategory = initialize_data(categotyId);
 
         // JButton - back
         back = new JButton("< back");
@@ -38,13 +45,17 @@ public class UI_CategoryManagementCategory extends JPanel {
         back.setBorder(BorderFactory.createEmptyBorder());
         back.setFocusable(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        back.setOpaque(false);
+        back.setFocusPainted(false);
+        back.setContentAreaFilled(false);
+        back.setOpaque(false);
         back.addActionListener(e -> {
             OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
         
         
         // JLabel - category
-        category = new JLabel(categotyName);
+        category = new JLabel(thisCategory.getCategoryName());
         category.setFont(new Font("MV Boli",Font.BOLD,50));
         category.setBounds(180,270,710,100);
         
@@ -68,7 +79,7 @@ public class UI_CategoryManagementCategory extends JPanel {
                 // cancel clicked / null input
                 System.out.print("user clicked cancel");
             } 
-            else 
+            else
             {
                 // have to read if user entered or not
                 if (!"".equals(categotyInput))
@@ -76,9 +87,7 @@ public class UI_CategoryManagementCategory extends JPanel {
                     // Edit category
                     System.out.println("input: " + categotyInput);
                 }
-            
             } 
-
         });
         
         // JButton - remove
