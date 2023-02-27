@@ -77,16 +77,64 @@ public class DeliveryService {
     private FileRecord convertToFileRecord(Delivery delivery){
         String delivery_record_string = "";
         if(delivery.getStaff() == null) {
-            delivery_record_string = delivery.getDeliveryID() + ";" + delivery.getStatus() + ";" + "-1" + ";" + delivery.getDateTime() +";" + "-1" +";" + delivery.getMember().getID() +";" + delivery.getOrder().getOrderID();
+            delivery_record_string = delivery.getDeliveryID() + ";" + delivery.getStatus() + ";" + "-1" + ";" + delivery.getDateTime()  + ";" + delivery.getAddress().getAddressID() +";" + "-1" +";" + delivery.getMember().getID() +";" + delivery.getOrder().getOrderID();
         }
         else{
-            delivery_record_string = delivery.getDeliveryID() + ";" + delivery.getStatus() + ";" + delivery.getDeliveryRating() + ";" + delivery.getDateTime() +";" + delivery.getStaff().getID() +";" + delivery.getMember().getID() +";" + delivery.getOrder().getOrderID();
+            delivery_record_string = delivery.getDeliveryID() + ";" + delivery.getStatus() + ";" + delivery.getDeliveryRating() + ";" + delivery.getDateTime() + ";" + delivery.getAddress().getAddressID() +";" + delivery.getStaff().getID() +";" + delivery.getMember().getID() +";" + delivery.getOrder().getOrderID();
         }
         return new FileRecord(delivery.getDeliveryID(), delivery_record_string);
     }
     
     public ArrayList<Delivery> getDeliveries(){
         return this.deliveries;
+    }
+    
+    public ArrayList<Delivery> getDeliveryForStaffUpComing(DeliveryStaff staff) {
+        ArrayList<Delivery> fetched_deliveries = new ArrayList<Delivery>();
+        for(int i = 0; i < deliveries.size(); i++) {
+            Delivery delivery = deliveries.get(i);
+            if(delivery.getStatus() == DeliveryStatus.PACKING){
+                continue;
+            }
+            if(delivery.getStaff().getID() == staff.getID() 
+                    && delivery.getStatus() == DeliveryStatus.PACKED){
+                fetched_deliveries.add(delivery);
+            }
+        }
+        if(fetched_deliveries.size() == 0){
+            System.out.println("delivery service for upcoming is empty. [reminder]");
+        }
+        return fetched_deliveries;
+    }
+    
+    public ArrayList<Delivery> getDeliveryForStaffOnGoing(DeliveryStaff staff) {
+        ArrayList<Delivery> fetched_deliveries = new ArrayList<Delivery>();
+        for(int i = 0; i < deliveries.size(); i++) {
+            Delivery delivery = deliveries.get(i);
+            if(delivery.getStaff().getID() == staff.getID() 
+                    && delivery.getStatus() == DeliveryStatus.DELIVERING){
+                fetched_deliveries.add(delivery);
+            }
+        }
+        if(fetched_deliveries.size() == 0){
+            System.out.println("delivery service for upcoming is empty. [reminder]");
+        }
+        return fetched_deliveries;
+    }
+    
+    public ArrayList<Delivery> getDeliveryForStaffCompleted(DeliveryStaff staff) {
+        ArrayList<Delivery> fetched_deliveries = new ArrayList<Delivery>();
+        for(int i = 0; i < deliveries.size(); i++) {
+            Delivery delivery = deliveries.get(i);
+            if(delivery.getStaff().getID() == staff.getID() 
+                    && delivery.getStatus() == DeliveryStatus.DELIVERED){
+                fetched_deliveries.add(delivery);
+            }
+        }
+        if(fetched_deliveries.size() == 0){
+            System.out.println("delivery service for upcoming is empty. [reminder]");
+        }
+        return fetched_deliveries;
     }
     
     public Delivery getDelivery(int id){
@@ -105,8 +153,8 @@ public class DeliveryService {
     
     public void addDelivery(Delivery delivery) {
         deliveries.add(delivery);
-        FileRecord dellivery_record = convertToFileRecord(delivery);
-        delivery_file.InsertRecord(dellivery_record);
+        FileRecord delivery_record = convertToFileRecord(delivery);
+        delivery_file.InsertRecord(delivery_record);
     }
     
     public void updateDelivery(Delivery delivery) {
