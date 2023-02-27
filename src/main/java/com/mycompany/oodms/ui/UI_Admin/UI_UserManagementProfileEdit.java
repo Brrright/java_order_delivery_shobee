@@ -1,8 +1,12 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 
+import com.mycompany.oodms.Admin;
+import com.mycompany.oodms.DeliveryStaff;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Services.User.AdminService;
+import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.ui.UI_Login;
 import javax.swing.*;
 import java.awt.*;
@@ -31,21 +35,46 @@ public class UI_UserManagementProfileEdit extends JPanel {
     JTextField email;
     JButton profilePic_upload;
     
+    String userName;
+    String userProfilePicture;
+    String userGender;
+    String userAge;
+    String userEmail;
+    String userPhoneNo;
+    
     JButton update;
     JButton cancel;
     
-    public UI_UserManagementProfileEdit(){
+    private Admin initialize_admin_data(int id){
+        Admin admin = AdminService.getAdminService().getAdmin(id);
+        return admin;
+    }
+    
+    private DeliveryStaff initialize_staff_data(int id){
+        DeliveryStaff staff = DeliveryStaffService.getDeliveryStaffService().getStaff(id);
+        return staff;
+    }
+    
+    public UI_UserManagementProfileEdit(String role, int userId){
         // REQUIRED DATA
-        // ID, PICTURE, NAME, GENDER, DOB, EMAIL, PHONE NO
-        ArrayList<String> profileDetails = new ArrayList<>();
-        profileDetails.add("PROFILE1");
-        profileDetails.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-        profileDetails.add("Hong Wei");
-        profileDetails.add("Male");
-        profileDetails.add("24"); // age
-        profileDetails.add("hw@gmail.com");
-        profileDetails.add("0192583948");
-                        
+        if ("staff".equals(role)){
+            DeliveryStaff staff = initialize_staff_data(userId);
+            userName = staff.getName();
+            userProfilePicture = staff.getPicturePath();
+            userGender = String.valueOf(staff.getGender());
+            userAge = String.valueOf(staff.getAge());
+            userEmail = String.valueOf(staff.getEmail());
+            userPhoneNo = String.valueOf(staff.getPhoneNum());     
+        }
+        else if ("admin".equals(role)){
+            Admin admin = initialize_admin_data(userId);
+            userName = admin.getName();
+            userProfilePicture = admin.getPicturePath();
+            userGender = String.valueOf(admin.getGender());
+            userAge = String.valueOf(admin.getAge());
+            userEmail = String.valueOf(admin.getEmail());
+            userPhoneNo = String.valueOf(admin.getPhoneNum());        
+        }
 
         // JButton - back (to login page)
         back = new JButton("< back");
@@ -60,7 +89,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         });
         
         // JLabel - title
-        title = new JLabel(profileDetails.get(0));
+        title = new JLabel(String.valueOf(userId));
         title.setFont(new Font("MV Boli",Font.BOLD,30));
         title.setBounds(144,136,250,40);
         
@@ -72,7 +101,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         // JTextField - name
         name = new JTextField();
         name.setBounds(140,233,587,48);
-        name.setText(profileDetails.get(2));
+        name.setText(userName);
         
         // JLabel - gender header
         gender_header = new JLabel("Gender :");
@@ -83,7 +112,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         String[] genderList = {"Male","Female"};
         gender = new JComboBox(genderList);
         gender.setBounds(759,233,174,48);
-        gender.setSelectedItem(profileDetails.get(3));
+        gender.setSelectedItem(userGender);
 
         
         // JLabel - age header
@@ -94,7 +123,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         // JTextField - age
         age = new JTextField();
         age.setBounds(140,327,378,48);
-        age.setText(profileDetails.get(4));
+        age.setText(userAge);
         
         // JLabel - phone number header
         phoneNo_header = new JLabel("Phone number :");
@@ -104,7 +133,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         // JTextField - phone number
         phoneNo = new JTextField();
         phoneNo.setBounds(554,327,379,48);
-        phoneNo.setText(profileDetails.get(6));
+        phoneNo.setText(userPhoneNo);
 
         // JLabel - Email header
         email_header = new JLabel("Email :");
@@ -115,7 +144,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         email = new JTextField();
         email.setBounds(140,426,793,48);
         email.setEditable(false);
-        email.setText(profileDetails.get(5));
+        email.setText(userEmail);
         email.setForeground(Color.LIGHT_GRAY);
                 
         // JLabel - Profile picture
@@ -173,8 +202,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         cancel.setFont(new Font("MV Boli",Font.PLAIN,12));
         cancel.setForeground(Color.WHITE);
         cancel.addActionListener(e -> {
-            frame.replacePanel(new UI_UserManagementProfile());
-            // with profile object or id ??
+            frame.replacePanel(OODMS_Main.previous_panel);
         });
         
         ////////////////////////////////////////////////////////////////////////

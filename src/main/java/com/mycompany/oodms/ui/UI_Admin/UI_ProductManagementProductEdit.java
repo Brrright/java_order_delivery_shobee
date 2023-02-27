@@ -18,8 +18,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
     
     ArrayList<Category> all_categories = initialize_category_data();
     ArrayList<String> categories_name = new ArrayList<String>();
-
-
+    
     JButton back;
     
     JLabel title;
@@ -29,12 +28,14 @@ public class UI_ProductManagementProductEdit extends JPanel {
     JLabel price_header;
     JLabel stock_header; 
     JLabel productPic_header;
+    JLabel description_header;
     JLabel productPic_fileName;
     
     JTextField name;
     JComboBox category;
     JTextField price;
     JTextField stock;
+    JTextField description;
     JButton productPic_upload;
     
     JButton update;
@@ -53,9 +54,9 @@ public class UI_ProductManagementProductEdit extends JPanel {
     
     public UI_ProductManagementProductEdit(int product_id){
         
-            Product product = initialize_product_data(product_id);
-            for(int y = 0; y < all_categories.size(); y++){
-                categories_name.add(all_categories.get(y).getCategoryName());
+        Product product = initialize_product_data(product_id);
+        for(int y = 0; y < all_categories.size(); y++){
+            categories_name.add(all_categories.get(y).getCategoryName());
         }
         
         // REQUIRED DATA
@@ -87,7 +88,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
         // JLabel - name header
         name_header = new JLabel("Product Name :");
         name_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        name_header.setBounds(144,213,150,20);        
+        name_header.setBounds(140,213,150,20);        
         
         // JTextField - product name
         name = new JTextField(product.getProductName());
@@ -96,33 +97,43 @@ public class UI_ProductManagementProductEdit extends JPanel {
         // JLabel - category header
         category_header = new JLabel("Category :");
         category_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        category_header.setBounds(763,213,100,20);
+        category_header.setBounds(759,213,100,20);
         
         // JTextField - category
         category = new JComboBox<>(categories_name.toArray(new String[categories_name.size()]));
         category.setBounds(759,233,174,48);
         category.setSelectedItem(product.getCategory());
-
+        
         // JLabel - price header
         price_header = new JLabel("Price :");
         price_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        price_header.setBounds(144,307,50,20);
+        price_header.setBounds(140,307,50,20);
         
         // JTextField - price
         price = new JTextField(String.valueOf(product.getProductPrice()));
-        price.setBounds(140,327,793,48);
+        price.setBounds(140,327,378,48);
         
         // JLabel - stock header
         stock_header = new JLabel("Stock :");
         stock_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        stock_header.setBounds(144,406,100,20);
+        stock_header.setBounds(555,307,378,20);
         
         // JTextField - stock
         stock = new JTextField();
-        stock.setBounds(140,426,793,48);
+        stock.setBounds(555,327,378,48);
         stock.setText(String.valueOf(product.getStockQty()));
+        
+        // JLabel - description header
+        description_header = new JLabel("Description :");
+        description_header.setFont(new Font("MV Boli",Font.PLAIN,12));
+        description_header.setBounds(140,406,100,20);
+        
+        // JTextField - description
+        description = new JTextField();
+        description.setBounds(140,426,793,48);
+        description.setText(String.valueOf(product.getProductDescription()));
                 
-        // JLabel - product picture
+        // JLabel - product picture headder
         productPic_header = new JLabel("Product Picture :");
         productPic_header.setFont(new Font("MV Boli",Font.PLAIN,12));
         productPic_header.setBounds(144,505,100,20);
@@ -133,7 +144,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
         
         // JButton - Profile Picture
         productPic_upload = new JButton("Upload");
-        productPic_upload.setBounds(136,530,80,25);
+        productPic_upload.setBounds(143,530,80,25);
         productPic_upload.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "gif");
@@ -198,12 +209,14 @@ public class UI_ProductManagementProductEdit extends JPanel {
         this.add(price_header);
         this.add(stock_header);
         this.add(productPic_header);
+        this.add(description_header);
         this.add(productPic_fileName);
 
         this.add(name);
         this.add(category);
         this.add(price);
         this.add(stock);
+        this.add(description);
         this.add(productPic_upload);
         
         this.add(update);
