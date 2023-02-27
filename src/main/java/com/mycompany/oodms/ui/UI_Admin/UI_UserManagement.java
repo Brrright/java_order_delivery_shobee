@@ -4,7 +4,11 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;
 
+import com.mycompany.oodms.Admin;
+import com.mycompany.oodms.DeliveryStaff;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Services.User.AdminService;
+import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.UserRole;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.BorderLayout;
@@ -47,16 +51,17 @@ public class UI_UserManagement extends JPanel{
     ImageIcon searchBtn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/searchBtn.png");
 
     JComboBox userType;
-    UserRole[] user_roles = {UserRole.MEMBER, UserRole.DELIVERY_STAFF};
-    
+    UserRole[] user_roles = {UserRole.DELIVERY_STAFF, UserRole.ADMIN};
     
     // 3rd section (users)
     JButton[] users;
     ArrayList<ArrayList<String>> allUsers = new ArrayList<>();
     ArrayList<String> user = new ArrayList<>();
+    
+    ArrayList<Admin> all_admins = initialize_admin_data();
+    ArrayList<DeliveryStaff> all_deliveryStaffs = initialize_deliveryStaff_data();
     final int imageWidth = 203;
     final int imageHeight = 203;
-    
     
     // panels
      JPanel users_panel;
@@ -68,6 +73,17 @@ public class UI_UserManagement extends JPanel{
      JPanel selection_container;
      JPanel search_container;
      JScrollPane main_container;
+     
+     // initialize data (delivery and admin information)
+     ArrayList<DeliveryStaff> initialize_deliveryStaff_data() {
+        ArrayList<DeliveryStaff> all_deliveryStaff = DeliveryStaffService.getDeliveryStaffService().getStaffs();
+        return all_deliveryStaff;
+     }
+     
+     ArrayList<Admin> initialize_admin_data() {
+        ArrayList<Admin> all_Admin = AdminService.getAdminService().getAdmins();
+        return all_Admin;
+     }
      
     
     public UI_UserManagement() {
@@ -88,6 +104,11 @@ public class UI_UserManagement extends JPanel{
         userManagementBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         userManagementBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         userManagementBtn.setForeground(Color.WHITE);
+        userManagementBtn.setOpaque(false);
+        userManagementBtn.setFocusPainted(false);
+        userManagementBtn.setContentAreaFilled(false);
+        userManagementBtn.setOpaque(false);
+
         
         // JButton - Product management button
         productManagementBtn = new JButton("Product");
@@ -98,6 +119,10 @@ public class UI_UserManagement extends JPanel{
         productManagementBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         productManagementBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         productManagementBtn.setForeground(Color.GRAY);
+        productManagementBtn.setOpaque(false);
+        productManagementBtn.setFocusPainted(false);
+        productManagementBtn.setContentAreaFilled(false);
+        productManagementBtn.setOpaque(false);
         productManagementBtn.addActionListener(e -> {
             frame.replacePanel(new UI_ProductManagement());
         });
@@ -111,6 +136,10 @@ public class UI_UserManagement extends JPanel{
         categoryManagementBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         categoryManagementBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         categoryManagementBtn.setForeground(Color.GRAY);
+        categoryManagementBtn.setOpaque(false);
+        categoryManagementBtn.setFocusPainted(false);
+        categoryManagementBtn.setContentAreaFilled(false);
+        categoryManagementBtn.setOpaque(false);
         categoryManagementBtn.addActionListener(e -> {
             frame.replacePanel(new UI_CategoryManagement());
         });
@@ -134,6 +163,10 @@ public class UI_UserManagement extends JPanel{
         addUser.setHorizontalAlignment(JLabel.CENTER);
         addUser.setVerticalAlignment(JLabel.CENTER);
         addUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        addUser.setOpaque(false);
+        addUser.setFocusPainted(false);
+        addUser.setContentAreaFilled(false);
+        addUser.setOpaque(false);
         addUser.addActionListener(e -> {
             frame.replacePanel(new UI_UserManagementAdd());
         });
@@ -200,6 +233,10 @@ public class UI_UserManagement extends JPanel{
             users[i].setVerticalTextPosition(JLabel.BOTTOM);
             users[i].setIconTextGap(15); 
             users[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            users[i].setOpaque(false);
+            users[i].setFocusPainted(false);
+            users[i].setContentAreaFilled(false);
+            users[i].setOpaque(false);
             users[i].addActionListener(e -> {
                 frame.replacePanel(new UI_UserManagementProfile());
             });
