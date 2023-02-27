@@ -28,6 +28,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -98,6 +101,11 @@ public class UI_UpComing extends JPanel{
         upComingPage.setBounds(563,135,90,90);
         upComingPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         upComingPage.setForeground(Color.WHITE);
+        upComingPage.setOpaque(false);
+        upComingPage.setFocusPainted(false);
+        upComingPage.setContentAreaFilled(false);
+        upComingPage.setOpaque(false);
+
         
         // JButton - on going (direct to ongoing page)
         onGoingPage = new JButton("on going");
@@ -109,6 +117,10 @@ public class UI_UpComing extends JPanel{
         onGoingPage.setBounds(683,135,90,90);
         onGoingPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         onGoingPage.setForeground(Color.GRAY);
+        onGoingPage.setOpaque(false);
+        onGoingPage.setFocusPainted(false);
+        onGoingPage.setContentAreaFilled(false);
+        onGoingPage.setOpaque(false);
         onGoingPage.addActionListener(e -> {
             frame.replacePanel(new UI_OnGoing());
         });
@@ -123,6 +135,10 @@ public class UI_UpComing extends JPanel{
         completedPage.setBounds(803,135,90,90);
         completedPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         completedPage.setForeground(Color.GRAY);
+        completedPage.setOpaque(false);
+        completedPage.setFocusPainted(false);
+        completedPage.setContentAreaFilled(false);
+        completedPage.setOpaque(false);
         completedPage.addActionListener(e -> {
                 frame.replacePanel(new UI_Completed());
         });
@@ -147,12 +163,41 @@ public class UI_UpComing extends JPanel{
                         return String.class;
                 }
             }
+            
+             // set column other than 0  (select) uneditable
+            public boolean isCellEditable(int row, int column) {
+                return column == 0;
+            }
         };
         
         
         // JTable - cart
         JTable cart = new JTable();
         cart.setModel(model);
+        cart.getTableHeader().setReorderingAllowed(false);
+        ListSelectionModel selectionModel = cart.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = cart.getSelectedRow();
+                if (selectedRow != -1) {
+                    // get data of selected row from table (base on table column index)
+                    String deliveryId_display = String.valueOf(cart.getValueAt(selectedRow, 1));
+                    String orderId_display = String.valueOf(cart.getValueAt(selectedRow, 2));
+                    String city_display = String.valueOf(cart.getValueAt(selectedRow, 3));
+                    String status_display = String.valueOf(cart.getValueAt(selectedRow, 4));
+                   
+                    // set text to the JLabel
+                    orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
+                            "<br> Order ID : " + orderId_display + 
+                            "<br> City : " + city_display + 
+                            "<br> Status : " + status_display + 
+                            "<br> Products : ..." + 
+                            "</html>");
+                }
+            }
+        });
         
         model.addColumn("Select");
         model.addColumn("DeliveryID");
@@ -170,7 +215,6 @@ public class UI_UpComing extends JPanel{
 //        orderItemString = orderItemString + "</html>";
         
         // set cart table row
-        
         for (int i = 0; i < deliveries.size(); i++) {
             Delivery delivery = deliveries.get(i);
             
@@ -210,12 +254,13 @@ public class UI_UpComing extends JPanel{
         JScrollPane scrollPane = new JScrollPane(cart);
         scrollPane.setBounds(193,245,400,290);
         
-        
-        // selected order information panel
+        // JLabel - selected order information label
         orderInfo = new JLabel();
         orderInfo.setBackground(Color.LIGHT_GRAY);
         orderInfo.setOpaque(true);
         orderInfo.setBounds(593,245,300,290); 
+        orderInfo.setHorizontalAlignment(JLabel.LEFT);
+        orderInfo.setVerticalAlignment(JLabel.TOP);
         
         // JButton - Checkout
         packOrder = new JButton("Pack Order");
