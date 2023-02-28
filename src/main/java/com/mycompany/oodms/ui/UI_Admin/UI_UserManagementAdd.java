@@ -178,13 +178,13 @@ public class UI_UserManagementAdd extends JPanel{
                 return;
             }
             
-             String input_name = name.getText();
+            String input_name = name.getText();
             Gender input_gender = Gender.valueOf(String.valueOf(gender.getSelectedItem()));
             int input_age = Integer.parseInt(age.getText());
             String input_phonenum = phoneNo.getText();
             String input_email = email.getText();
             String input_pw = String.valueOf(pwd.getPassword());
-            String defaultPic = ""; //@hongwei put
+            String defaultPic = "src/main/java/com/mycompany/oodms/ui/pictures/defaultPP.png";
             if(input_name.isBlank() 
                      ||  phoneNo.getText().isBlank() 
                      || email.getText().isBlank() 

@@ -32,6 +32,7 @@ public class UI_ProductManagementAdd extends JPanel {
     JTextField stock;
     JTextField description;
     JButton productPic_upload;
+    String[] uploadImgDir;
     
     JButton update;
     JButton cancel;
@@ -116,20 +117,19 @@ public class UI_ProductManagementAdd extends JPanel {
         productPic_upload.setBounds(136,530,80,25);
         productPic_upload.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
+            
+            // set choosable file type
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "gif");
             fileChooser.setFileFilter(filter);
-            int result = fileChooser.showOpenDialog(null);
             
+            int result = fileChooser.showOpenDialog(null);
             if (result == JFileChooser.APPROVE_OPTION)
             {
-                File file = fileChooser.getSelectedFile();
-                productPic_fileName.setText(file.getName());
+                File file = fileChooser.getSelectedFile(); // get selected file
+                productPic_fileName.setText(file.getName()); // display the image name in JLabel
                 String selectedImagePath = file.getAbsolutePath();
                 System.out.println(selectedImagePath);
-                
-                // get file path
-                // imagePath[0] = file.getAbsolutePath();
-                // uploadImgDir = imagePath[0].split("\\.");
+                 uploadImgDir = selectedImagePath.split("\\.");
             }
         });
 
@@ -154,7 +154,13 @@ public class UI_ProductManagementAdd extends JPanel {
             String newName = name.getText();
             double newPrice = Double.parseDouble(price.getText());
             int newStock = Integer.parseInt(stock.getText());
+            
+            // product picture
             String newProPic = ""; // @hongwei upload image leave to u ya
+            
+            File productImgFolder = new File("src/main/java/com/mycompany/oodms/productImage/");
+            
+            
             String newProDescription = description.getText();
             
             Product newProduct = new Product(newProductID, newName, newPrice, newStock, newProPic, newCategory, newProDescription);
@@ -193,12 +199,14 @@ public class UI_ProductManagementAdd extends JPanel {
         this.add(price_header);
         this.add(stock_header);
         this.add(productPic_header);
+        this.add(description_header);
         this.add(productPic_fileName);
 
         this.add(name);
         this.add(category);
         this.add(price);
         this.add(stock);
+        this.add(description);
         this.add(productPic_upload);
         
         this.add(update);
