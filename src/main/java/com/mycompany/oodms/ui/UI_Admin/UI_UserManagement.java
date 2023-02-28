@@ -167,7 +167,8 @@ public class UI_UserManagement extends JPanel{
         addUser.setContentAreaFilled(false);
         addUser.setOpaque(false);
         addUser.addActionListener(e -> {
-            frame.replacePanel(new UI_UserManagementAdd());
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_UserManagementAdd());
         });
         
         // JTextField - search bar
@@ -289,7 +290,8 @@ public class UI_UserManagement extends JPanel{
             admin_btn[i].setContentAreaFilled(false);
             admin_btn[i].setOpaque(false);
             admin_btn[i].addActionListener(e -> {
-                frame.replacePanel(new UI_UserManagementProfile("admin",currentAdmin.getID()));
+                OODMS_Main.previous_panel = Main_Frame.currentPanel;
+                OODMS_Main.frame.replacePanel(new UI_UserManagementProfile("admin",currentAdmin.getID()));
             });
         }
         

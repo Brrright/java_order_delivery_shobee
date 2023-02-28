@@ -180,7 +180,8 @@ public class UI_ProductManagement extends JPanel{
         addProduct.setBorderPainted(false);
         addProduct.setFocusPainted(false);
         addProduct.addActionListener(e -> {
-            frame.replacePanel(new UI_ProductManagementAdd());
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_ProductManagementAdd());
         });
         
         // JTextField - search bar

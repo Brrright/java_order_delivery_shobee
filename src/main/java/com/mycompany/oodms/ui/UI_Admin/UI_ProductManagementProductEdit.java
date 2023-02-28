@@ -11,6 +11,10 @@ import com.mycompany.oodms.ui.UI_Login;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -37,9 +41,14 @@ public class UI_ProductManagementProductEdit extends JPanel {
     JTextField stock;
     JTextField description;
     JButton productPic_upload;
+    File file;
+    String selectedImagePath;
     
     JButton update;
     JButton cancel;
+    
+    double inputPrice;
+    int inputStock;
     
     public Product initialize_product_data(int id){
         Product product = ProductService.getProductService().getProduct(id);
@@ -149,19 +158,16 @@ public class UI_ProductManagementProductEdit extends JPanel {
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "gif");
             fileChooser.setFileFilter(filter);
+
             int result = fileChooser.showOpenDialog(null);
-            
             if (result == JFileChooser.APPROVE_OPTION)
             {
-                File file = fileChooser.getSelectedFile();
-                productPic_fileName.setText(file.getName());
-
-                // get file path
-                // imagePath[0] = file.getAbsolutePath();
-                // uploadImgDir = imagePath[0].split("\\.");
+                file = fileChooser.getSelectedFile(); // get selected file
+                productPic_fileName.setText(file.getName()); // display the image name in JLabel
+                selectedImagePath = file.getAbsolutePath();
             }
         });
-
+        
 
         // JButton - update button
         update = new JButton("update");
@@ -175,7 +181,52 @@ public class UI_ProductManagementProductEdit extends JPanel {
         update.setFont(new Font("MV Boli",Font.PLAIN,12));
         update.setForeground(Color.WHITE);
         update.addActionListener(e -> {
+            // validation
+            // make sure there is no empty value
+            if("".equals(price.getText()) || "".equals(name.getText())|| "".equals(stock.getText())||"".equals(description.getText())){
+                JOptionPane.showMessageDialog(frame,"Please ensure every required information is filled.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             
+            // make sure the price and stock input is valid
+            try {
+                inputPrice = Double.parseDouble(price.getText());
+                inputStock = Integer.parseInt(stock.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame,"invalid price or stock.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            // check if user uploaded new picture
+            // product picture
+            if (selectedImagePath != null){
+                 Path sourcePath = Paths.get(file.getAbsolutePath());
+                 Path destinationPath = Paths.get("src/main/java/com/mycompany/oodms/productImage/"+ product_id + file.getName());
+                 
+                try {
+                    Files.copy(sourcePath, destinationPath);
+                    // set Path into object
+                    product.setProductPicture("src/main/java/com/mycompany/oodms/productImage/"+ product_id + file.getName());
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(frame,"upload image failed.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
+            
+//            product.getProductName()
+            
+            // update data
+            product.setProductName(name.getText());
+            product.setCategory((Category) category.getSelectedItem());
+                        // how to set category
+                        // why there are 2 product set stock
+            product.setPrice(inputPrice);
+            product.setProductStock(inputStock);
+            product.setProductDescription(description.getText());
+            
+            
+         
+            JOptionPane.showMessageDialog(frame,"product is updated.","Alert",JOptionPane.INFORMATION_MESSAGE);
         });
         
         // JButton - cancel button

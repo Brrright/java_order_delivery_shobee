@@ -209,7 +209,6 @@ public class UI_CategoryManagement extends JPanel{
         category_panel.setBackground(Color.WHITE);
         categories_btn = refreshCategorybtn(all_categories);
 
-        
         // third container (search container)
         search_container = new JPanel();
         search_container.setLayout(new BorderLayout());
