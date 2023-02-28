@@ -1,12 +1,15 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 
+import com.mycompany.oodms.Category;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.CategoryService;
+import com.mycompany.oodms.Services.ProductService;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class UI_ProductManagementAdd extends JPanel {
@@ -121,7 +124,9 @@ public class UI_ProductManagementAdd extends JPanel {
             {
                 File file = fileChooser.getSelectedFile();
                 productPic_fileName.setText(file.getName());
-
+                String selectedImagePath = file.getAbsolutePath();
+                System.out.println(selectedImagePath);
+                
                 // get file path
                 // imagePath[0] = file.getAbsolutePath();
                 // uploadImgDir = imagePath[0].split("\\.");
@@ -141,7 +146,19 @@ public class UI_ProductManagementAdd extends JPanel {
         update.setFont(new Font("MV Boli",Font.PLAIN,12));
         update.setForeground(Color.WHITE);
         update.addActionListener(e -> {
+            String categoryName = String.valueOf(category.getSelectedItem());
+            int newCategoryID = CategoryService.getCategoryService().getNewCategoryID();
+            Category newCategory = new Category(newCategoryID, categoryName);
             
+            int newProductID = ProductService.getProductService().getProductNewID();
+            String newName = name.getText();
+            double newPrice = Double.parseDouble(price.getText());
+            int newStock = Integer.parseInt(stock.getText());
+            String newProPic = ""; // @hongwei upload image leave to u ya
+            String newProDescription = description.getText();
+            
+            Product newProduct = new Product(newProductID, newName, newPrice, newStock, newProPic, newCategory, newProDescription);
+            ProductService.getProductService().addProduct(newProduct);
         });
         
         // JButton - cancel button
@@ -156,7 +173,7 @@ public class UI_ProductManagementAdd extends JPanel {
         cancel.setFont(new Font("MV Boli",Font.PLAIN,12));
         cancel.setForeground(Color.WHITE);
         cancel.addActionListener(e -> {
-            frame.replacePanel(new UI_ProductManagement());
+            frame.replacePanel(new UI_ProductManagement()); //@hongwei back to previous page
             // with profile object or id ??
         });
         

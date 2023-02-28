@@ -64,6 +64,10 @@ public class AdminService {
          return new FileRecord(admin.getID(), admin_record_string);
     }
     
+    public int getNewAdminID(){
+        return this.admin_file.GenerateID();
+    }
+    
     public ArrayList<Admin> getAdmins(){
         return this.admins;
     }

@@ -82,6 +82,10 @@ public class DeliveryStaffService {
         return response;
     }
     
+    public int getNewStaffID(){
+        return this.staff_file.GenerateID();
+    }
+    
     public void addStaff(DeliveryStaff staff){
         this.delivery_staffs.add(staff);
         FileRecord staff_record = convertToFileRecord(staff);

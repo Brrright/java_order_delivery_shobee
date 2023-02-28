@@ -54,6 +54,10 @@ public class CategoryService {
          return new FileRecord(cate.getCategoryID(), category_record_string);
     }
     
+    public int getNewCategoryID(){
+        return this.category_file.GenerateID();
+    }
+    
     public ArrayList<Category> getCategories(){
         return this.categories;
     }

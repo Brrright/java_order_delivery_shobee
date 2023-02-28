@@ -67,6 +67,10 @@ public class ProductService {
         return new FileRecord(product.getProductID(), product_record_string);
     }
     
+    public int getProductNewID(){
+        return product_file.GenerateID();
+    }
+    
     public ArrayList<Product> getProducts(){
         return this.products;
     }

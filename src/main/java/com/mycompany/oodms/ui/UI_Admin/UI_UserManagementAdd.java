@@ -5,7 +5,13 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 
+import com.mycompany.oodms.Admin;
+import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.OODMS_Main;
+import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Services.User.AdminService;
+import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.UserRole;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -16,6 +22,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -87,7 +94,7 @@ public class UI_UserManagementAdd extends JPanel{
         gender_header.setBounds(763,213,100,20);
         
         // JTextField - gender
-        String[] genderList = {"Male","Female"};
+        String[] genderList = {Gender.MALE.name(),Gender.FEMALE.name()};
         gender = new JComboBox(genderList);
         gender.setBounds(759,233,174,48);
         
@@ -166,7 +173,32 @@ public class UI_UserManagementAdd extends JPanel{
         signup.setFont(new Font("MV Boli",Font.PLAIN,12));
         signup.setForeground(Color.WHITE);
         signup.addActionListener(e -> {
-            
+             String input_name = name.getText();
+            Gender input_gender = Gender.valueOf(String.valueOf(gender.getSelectedItem()));
+            int input_age = Integer.parseInt(age.getText());
+            String input_phonenum = phoneNo.getText();
+            String input_email = email.getText();
+            String input_pw = String.valueOf(pwd.getPassword());
+            String defaultPic = ""; //@hongwei put
+            if(input_name.isBlank() 
+                     ||  phoneNo.getText().isBlank() 
+                     || email.getText().isBlank() 
+                     || pwd.getPassword().length < 8 
+                ){
+                 JOptionPane.showMessageDialog(frame,"Please enter valid input. Make sure every field is filled and password is more then 7 character.","Oops",JOptionPane.WARNING_MESSAGE);
+                 return;
+             }
+             
+             if(UserRole.valueOf(String.valueOf(userType.getSelectedItem())) == UserRole.ADMIN){
+                 int id = AdminService.getAdminService().getNewAdminID();
+                 Admin newAdmin = new Admin(id, input_name, input_email, input_pw, input_age, input_gender, input_phonenum, defaultPic, UserRole.ADMIN);
+             }
+             else if(UserRole.valueOf(String.valueOf(userType.getSelectedItem())) == UserRole.DELIVERY_STAFF){
+                int id = DeliveryStaffService.getDeliveryStaffService().getNewStaffID();
+                 DeliveryStaff newStaff = new DeliveryStaff(id, input_name, input_email, input_pw, input_age, input_gender, input_phonenum, defaultPic, UserRole.DELIVERY_STAFF);
+             }
+             
+//            signUp(input_name, input_gender, input_age, input_phonenum, input_email, input_pw);
         });
         
         ////////////////////////////////////////////////////////////////////////
@@ -223,5 +255,37 @@ public class UI_UserManagementAdd extends JPanel{
                 pwd_validation.setText("");
             }
         }
+        
+//        public void signUp(String input_name, Gender input_gender, int input_age, String input_phonenum, String input_email, String input_pw, String input_confirm_pw, String street, String postcode, String city, String state){
+//        FileHandler fHandler = new FileHandler(FileName.MEMBER);
+//        FileRecord user_record = fHandler.FetchRecord(input_email, 2);
+//        if(user_record != null){
+//            JOptionPane.showMessageDialog(frame,"User email already registered.","Oops",JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+//        if(input_pw == null ? input_confirm_pw == null : !input_pw.equals(input_confirm_pw)){
+//            JOptionPane.showMessageDialog(frame,"Password entered not matched.","Oops",JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+//        
+//        if(!"".equals(validateLabel.getText())){
+//            JOptionPane.showMessageDialog(frame,"Invalid email / password.","Alert",JOptionPane.INFORMATION_MESSAGE);
+//            return;
+//        }
+//       
+//        // write to text file
+//        int newMemberID = fHandler.GenerateID();
+//        String newMemberString = newMemberID + ";" + input_name + ";" + input_email + ";" + input_pw + ";" + input_age + ";" + input_gender + ";" + input_phonenum + ";" + default_profile_image_path;
+//        FileRecord newMemberRecord = new FileRecord(newMemberID, newMemberString);
+//        fHandler.InsertRecord(newMemberRecord);
+//        
+//        Member member = MemberService.getMemberService().getMember(newMemberID);
+//        int newAddressID = AddressService.getAddressService().getNewID();
+//        Address address = new Address(newAddressID, street, city, state, postcode, member);
+//        AddressService.getAddressService().addAddress(address);
+//
+//        JOptionPane.showMessageDialog(frame,"Sign up successfully.","Congratz",JOptionPane.INFORMATION_MESSAGE);
+//        frame.replacePanel(new UI_Login());
+//    }
 }
 
