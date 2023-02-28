@@ -10,6 +10,12 @@ import com.mycompany.oodms.Services.ProductService;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class UI_ProductManagementAdd extends JPanel {
@@ -32,7 +38,9 @@ public class UI_ProductManagementAdd extends JPanel {
     JTextField stock;
     JTextField description;
     JButton productPic_upload;
-    String[] uploadImgDir;
+    File file;
+    String selectedImagePath;
+    String productImgPath = "src/main/java/com/mycompany/oodms/ui/pictures/comingSoon.png";
     
     JButton update;
     JButton cancel;
@@ -125,11 +133,9 @@ public class UI_ProductManagementAdd extends JPanel {
             int result = fileChooser.showOpenDialog(null);
             if (result == JFileChooser.APPROVE_OPTION)
             {
-                File file = fileChooser.getSelectedFile(); // get selected file
+                file = fileChooser.getSelectedFile(); // get selected file
                 productPic_fileName.setText(file.getName()); // display the image name in JLabel
-                String selectedImagePath = file.getAbsolutePath();
-                System.out.println(selectedImagePath);
-                 uploadImgDir = selectedImagePath.split("\\.");
+                selectedImagePath = file.getAbsolutePath();
             }
         });
 
@@ -156,15 +162,25 @@ public class UI_ProductManagementAdd extends JPanel {
             int newStock = Integer.parseInt(stock.getText());
             
             // product picture
-            String newProPic = ""; // @hongwei upload image leave to u ya
-            
-            File productImgFolder = new File("src/main/java/com/mycompany/oodms/productImage/");
-            
-            
+            if (selectedImagePath != null){
+                 Path sourcePath = Paths.get(file.getAbsolutePath());
+                 Path destinationPath = Paths.get("src/main/java/com/mycompany/oodms/productImage/" + file.getName());
+                 
+                try {
+                    Files.copy(sourcePath, destinationPath);
+                    productImgPath = "src/main/java/com/mycompany/oodms/productImage/" + file.getName();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(frame,"upload image failed.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                    Logger.getLogger(UI_ProductManagementAdd.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            String newProPic = productImgPath; // @hongwei upload image leave to u ya onzz
             String newProDescription = description.getText();
             
             Product newProduct = new Product(newProductID, newName, newPrice, newStock, newProPic, newCategory, newProDescription);
             ProductService.getProductService().addProduct(newProduct);
+            JOptionPane.showMessageDialog(frame,"Added  " + newName +" successfully.","Alert",JOptionPane.INFORMATION_MESSAGE);
         });
         
         // JButton - cancel button
