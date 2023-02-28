@@ -15,11 +15,13 @@ import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Order;
 import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Product;
 import com.mycompany.oodms.Services.AddressService;
 import com.mycompany.oodms.Services.CartItemService;
 import com.mycompany.oodms.Services.DeliveryService;
 import com.mycompany.oodms.Services.OrderItemService;
 import com.mycompany.oodms.Services.OrderService;
+import com.mycompany.oodms.Services.ProductService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -198,6 +200,9 @@ public class UI_Payment_Form extends javax.swing.JPanel {
         this.address = AddressService.getAddressService().getAddressByMemberId(OODMS_Main.current_user.getID());
         ArrayList<CartItem> cart_items = CartItemService.getCartItemService().getCartItems(OODMS_Main.current_user.getID());
         for(CartItem item :  cart_items) {
+            Product product  = ProductService.getProductService().getProduct(item.getProduct().getProductID());
+            product.setProductStock(product.getStockQty() - 1);
+            ProductService.getProductService().updateProduct(product);
             OrderItem order_item = new OrderItem(item.getQuantity(), item.getProduct().getProductPrice(), item.getProduct(), order);
             OrderItemService.getOrderItemService().addOrderItem(order_item);
             CartItemService.getCartItemService().deleteCartItem(item);
