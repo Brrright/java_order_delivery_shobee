@@ -162,6 +162,7 @@ public class OrderItemService {
                 if(delivery.getStatus() == status && delivery.getMember().getEmail().equals(OODMS_Main.current_user.getEmail())) {
                     System.out.println("delivery status: " + delivery.getStatus());
                     retrievedItems.add(item);
+                    break;
                 }
             }
         }

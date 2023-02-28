@@ -12,7 +12,9 @@ import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
+import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Order;
+import com.mycompany.oodms.OrderItem;
 import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.Services.User.MemberService;
 import java.time.LocalDateTime;
@@ -218,4 +220,18 @@ public class DeliveryService {
             }
         }
     }
+    
+//    public static void main(String[] args) {
+//        ArrayList<Delivery> d = DeliveryService.getDeliveryService().getDeliveries();
+////        for(Delivery x: d){
+////            System.out.println(x.getDeliveryID());
+////        }
+//        Member m = MemberService.getMemberService().getMember(2);
+//        OODMS_Main.current_user = m;
+//        ArrayList<OrderItem> oi = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.PACKING);
+//        for(OrderItem i : oi){
+//            System.out.println(i.getOrder().getOrderID());
+//            System.out.println(i.getProduct().getProductName());
+//        }
+//    }
 }
