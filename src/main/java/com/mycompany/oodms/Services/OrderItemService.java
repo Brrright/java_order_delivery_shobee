@@ -153,9 +153,11 @@ public class OrderItemService {
         ArrayList<OrderItem> retrievedItems = new ArrayList<OrderItem>();
         for(OrderItem item : order_items){
             int orderID = item.getOrder().getOrderID();
-            Delivery delivery = DeliveryService.getDeliveryService().getDelivery(orderID);
-            if(delivery.getStatus() == status && delivery.getMember().getEmail().equals(OODMS_Main.current_user.getEmail())) {
-                retrievedItems.add(item);
+            ArrayList<Delivery> deliveries = DeliveryService.getDeliveryService().getDeliveries(orderID);
+            for(Delivery delivery :  deliveries){
+                if(delivery.getStatus() == status && delivery.getMember().getEmail().equals(OODMS_Main.current_user.getEmail())) {
+                    retrievedItems.add(item);
+                }
             }
         }
         return retrievedItems;
