@@ -173,6 +173,11 @@ public class UI_UserManagementAdd extends JPanel{
         signup.setFont(new Font("MV Boli",Font.PLAIN,12));
         signup.setForeground(Color.WHITE);
         signup.addActionListener(e -> {
+            if(!"".equals(email_validation.getText()) && !"".equals(pwd_validation.getText())){
+                JOptionPane.showMessageDialog(frame,"Invalid input.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
              String input_name = name.getText();
             Gender input_gender = Gender.valueOf(String.valueOf(gender.getSelectedItem()));
             int input_age = Integer.parseInt(age.getText());
