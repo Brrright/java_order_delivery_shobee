@@ -67,7 +67,7 @@ public class ProductService {
     }
     
     private FileRecord convertToFileRecord(Product product){
-        String product_record_string = product.getProductID() + ";" + product.getProductName() + ";" + product.getProductPrice() + ";" + product.getStockQty() + ";" + product.getProcuctPicture() + ";" + product.getCategory().getCategoryID();
+        String product_record_string = product.getProductID() + ";" + product.getProductName() + ";" + product.getProductPrice() + ";" + product.getStockQty() + ";" + product.getProcuctPicture() + ";" + product.getCategory().getCategoryID() +";" +product.getProductDescription();
         return new FileRecord(product.getProductID(), product_record_string);
     }
     

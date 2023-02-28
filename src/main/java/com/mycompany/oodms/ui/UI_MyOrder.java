@@ -46,7 +46,7 @@ public class UI_MyOrder extends JPanel{
   JButton[] orders; // with product image, name and purchased quantity
   
   public ArrayList<OrderItem> initialize_data(){
-      return OrderItemService.getOrderItemService().getOrderItemsOfCurrentMember();
+      return OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.PACKING);
   }
   
   public UI_MyOrder() {
