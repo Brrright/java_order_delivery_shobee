@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -34,12 +36,12 @@ public class UI_Completed extends JPanel{
     ImageIcon grayCircle1 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
     ImageIcon grayCircle2 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
     
+    JLabel orderInfo;
+    
     JButton upComingPage;
     JButton onGoingPage;
     JButton completedPage;
-    JButton delete;
-    JButton checkout;
-    
+   
     public UI_Completed() {
         
         // required date
@@ -78,6 +80,11 @@ public class UI_Completed extends JPanel{
         upComingPage.setBounds(563,135,90,90);
         upComingPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         upComingPage.setForeground(Color.GRAY);
+        upComingPage.setOpaque(false);
+        upComingPage.setFocusPainted(false);
+        upComingPage.setContentAreaFilled(false);
+        upComingPage.setOpaque(false);
+
         upComingPage.addActionListener(e -> {
                 frame.replacePanel(new UI_UpComing());
         });
@@ -92,6 +99,10 @@ public class UI_Completed extends JPanel{
         onGoingPage.setBounds(683,135,90,90);
         onGoingPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         onGoingPage.setForeground(Color.GRAY);
+        onGoingPage.setOpaque(false);
+        onGoingPage.setFocusPainted(false);
+        onGoingPage.setContentAreaFilled(false);
+        onGoingPage.setOpaque(false);
         onGoingPage.addActionListener(e -> {
                 frame.replacePanel(new UI_OnGoing());
         });
@@ -106,6 +117,11 @@ public class UI_Completed extends JPanel{
         completedPage.setBounds(803,135,90,90);
         completedPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         completedPage.setForeground(Color.WHITE);
+        completedPage.setOpaque(false);
+        completedPage.setFocusPainted(false);
+        completedPage.setContentAreaFilled(false);
+        completedPage.setOpaque(false);
+
         
         
         
@@ -117,18 +133,23 @@ public class UI_Completed extends JPanel{
                 switch(column)
                 {
                     case 0:
-                        return Boolean.class;
+                        return String.class;
                     case 1:
                         return String.class;
                     case 2:
                         return String.class;
                     case 3:
                         return String.class;
-                    case 4:
-                        return String.class;
                     default:
                         return String.class;
                 }
+            }
+            // to make JTable uneditable accept the checkbox
+            @Override 
+            public boolean isCellEditable(int row, int column) 
+            {
+                // Make column other than checkbox read-only
+                return false;
             }
         };
         
@@ -136,8 +157,31 @@ public class UI_Completed extends JPanel{
         // JTable - cart
         JTable cart = new JTable();
         cart.setModel(model);
+        cart.getTableHeader().setReorderingAllowed(false);
+        ListSelectionModel selectionModel = cart.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = cart.getSelectedRow();
+                if (selectedRow != -1) {
+                    // get data of selected row from table (base on table column index)
+                    String deliveryId_display = String.valueOf(cart.getValueAt(selectedRow, 0));
+                    String orderId_display = String.valueOf(cart.getValueAt(selectedRow, 1));
+                    String city_display = String.valueOf(cart.getValueAt(selectedRow, 2));
+                    String status_display = String.valueOf(cart.getValueAt(selectedRow, 3));
+                   
+                    // set text to the JLabel
+                    orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
+                            "<br> Order ID : " + orderId_display + 
+                            "<br> City : " + city_display + 
+                            "<br> Status : " + status_display + 
+                            "<br> Products : ..." + 
+                            "</html>");
+                }
+            }
+        });
         
-        model.addColumn("Select");
         model.addColumn("No");
         model.addColumn("Product");
         model.addColumn("Qty");
@@ -147,31 +191,29 @@ public class UI_Completed extends JPanel{
         
         for (int i = 0; i < inCart.size(); i++) {
             model.addRow(new Object[0]);
-            model.setValueAt(false,i,0);
-            model.setValueAt(i+1, i, 1);
-            model.setValueAt(inCart.get(i).get(0), i, 2);
-            model.setValueAt(inCart.get(i).get(1), i, 3);
-            model.setValueAt(inCart.get(i).get(2), i, 4);
+            model.setValueAt(i+1, i, 0);
+            model.setValueAt(inCart.get(i).get(0), i, 1);
+            model.setValueAt(inCart.get(i).get(1), i, 2);
+            model.setValueAt(inCart.get(i).get(2), i, 3);
         }
         
-        // set column size
-        TableColumn selectColumn = cart.getColumnModel().getColumn(0);
-        selectColumn.setPreferredWidth(5);
-        selectColumn.setResizable(false);
-        
-        TableColumn noColumn = cart.getColumnModel().getColumn(1);
-        noColumn.setPreferredWidth(5);
-        noColumn.setResizable(false);
-        
-        TableColumn productColumn = cart.getColumnModel().getColumn(2);
-        productColumn.setPreferredWidth(400);
-        productColumn.setResizable(false);
-        
+        // set column size (if nessesary)
+        //        TableColumn selectColumn = cart.getColumnModel().getColumn(0);
+        //        selectColumn.setPreferredWidth(5);
+        //        selectColumn.setResizable(false);
+
         // scrollpane for JTable
         JScrollPane scrollPane = new JScrollPane(cart);
-        scrollPane.setBounds(193,245,700,290);
+        scrollPane.setBounds(193,245,400,290);
         
-     
+        // JLabel - selected order information label
+        orderInfo = new JLabel();
+        orderInfo.setBackground(Color.LIGHT_GRAY);
+        orderInfo.setOpaque(true);
+        orderInfo.setBounds(593,245,300,290); 
+        orderInfo.setHorizontalAlignment(JLabel.LEFT);
+        orderInfo.setVerticalAlignment(JLabel.TOP);
+        
         // this
         this.setSize(1080, 768);
         this.setBackground(Color.white);
@@ -185,6 +227,7 @@ public class UI_Completed extends JPanel{
         this.add(completedPage);
         
         this.add(scrollPane);
+        this.add(orderInfo);
         
     }
     

@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -33,6 +35,8 @@ public class UI_OnGoing extends JPanel{
     ImageIcon orangeCircle = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/orangeCircle.png");
     ImageIcon grayCircle1 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
     ImageIcon grayCircle2 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
+    
+     JLabel orderInfo;
     
     JButton upComingPage;
     JButton onGoingPage;
@@ -50,9 +54,10 @@ public class UI_OnGoing extends JPanel{
         
         // create temp data
         for (int i = 0; i < 10; i++) {
-            inCartSingleProduct.add("product name"); // product name
-            inCartSingleProduct.add("3"); // quantity
-            inCartSingleProduct.add("RM 3.50"); // price
+            inCartSingleProduct.add("tempdata"); // product name
+            inCartSingleProduct.add("tempdata"); // quantity
+            inCartSingleProduct.add("tempdata"); // price
+            inCartSingleProduct.add("Delivering"); // price
             inCart.add(inCartSingleProduct);
         }
         
@@ -79,6 +84,11 @@ public class UI_OnGoing extends JPanel{
         upComingPage.setBounds(563,135,90,90);
         upComingPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         upComingPage.setForeground(Color.GRAY);
+        upComingPage.setOpaque(false);
+        upComingPage.setFocusPainted(false);
+        upComingPage.setContentAreaFilled(false);
+        upComingPage.setOpaque(false);
+
         upComingPage.addActionListener(e -> {
                 frame.replacePanel(new UI_UpComing());
         });
@@ -93,6 +103,11 @@ public class UI_OnGoing extends JPanel{
         onGoingPage.setBounds(683,135,90,90);
         onGoingPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         onGoingPage.setForeground(Color.WHITE);
+        onGoingPage.setOpaque(false);
+        onGoingPage.setFocusPainted(false);
+        onGoingPage.setContentAreaFilled(false);
+        onGoingPage.setOpaque(false);
+
         
         // JButton - completed (direct to upcoming page)
         completedPage = new JButton("completed");
@@ -104,6 +119,11 @@ public class UI_OnGoing extends JPanel{
         completedPage.setBounds(803,135,90,90);
         completedPage.setFont(new Font("MV Boli",Font.PLAIN,12));
         completedPage.setForeground(Color.GRAY);
+        completedPage.setOpaque(false);
+        completedPage.setFocusPainted(false);
+        completedPage.setContentAreaFilled(false);
+        completedPage.setOpaque(false);
+
         completedPage.addActionListener(e -> {
                 frame.replacePanel(new UI_Completed());
         });
@@ -144,12 +164,36 @@ public class UI_OnGoing extends JPanel{
         // JTable - cart
         JTable cart = new JTable();
         cart.setModel(model);
+        cart.getTableHeader().setReorderingAllowed(false);
+        ListSelectionModel selectionModel = cart.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = cart.getSelectedRow();
+                if (selectedRow != -1) {
+                    // get data of selected row from table (base on table column index)
+                    String deliveryId_display = String.valueOf(cart.getValueAt(selectedRow, 1));
+                    String orderId_display = String.valueOf(cart.getValueAt(selectedRow, 2));
+                    String city_display = String.valueOf(cart.getValueAt(selectedRow, 3));
+                    String status_display = String.valueOf(cart.getValueAt(selectedRow, 4));
+                   
+                    // set text to the JLabel
+                    orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
+                            "<br> Order ID : " + orderId_display + 
+                            "<br> City : " + city_display + 
+                            "<br> Status : " + status_display + 
+                            "<br> Products : ..." + 
+                            "</html>");
+                }
+            }
+        });
         
         model.addColumn("Select");
-        model.addColumn("No");
-        model.addColumn("Product");
-        model.addColumn("Qty");
-        model.addColumn("Price");
+        model.addColumn("DeliveryID");
+        model.addColumn("OrderID");
+        model.addColumn("City");
+        model.addColumn("Status");
 
         // set cart table row
         
@@ -162,22 +206,23 @@ public class UI_OnGoing extends JPanel{
             model.setValueAt(inCart.get(i).get(2), i, 4);
         }
         
-        // set column size
-        TableColumn selectColumn = cart.getColumnModel().getColumn(0);
-        selectColumn.setPreferredWidth(5);
-        selectColumn.setResizable(false);
-        
-        TableColumn noColumn = cart.getColumnModel().getColumn(1);
-        noColumn.setPreferredWidth(5);
-        noColumn.setResizable(false);
-        
-        TableColumn productColumn = cart.getColumnModel().getColumn(2);
-        productColumn.setPreferredWidth(400);
-        productColumn.setResizable(false);
+        //// set column size (if nessesaary)
+        //        TableColumn selectColumn = cart.getColumnModel().getColumn(0);
+        //        selectColumn.setPreferredWidth(5);
+        //        selectColumn.setResizable(false);
+       
         
         // scrollpane for JTable
         JScrollPane scrollPane = new JScrollPane(cart);
-        scrollPane.setBounds(193,245,700,290);
+        scrollPane.setBounds(193,245,400,290);
+        
+        // JLabel - selected order information label
+        orderInfo = new JLabel();
+        orderInfo.setBackground(Color.LIGHT_GRAY);
+        orderInfo.setOpaque(true);
+        orderInfo.setBounds(593,245,300,290); 
+        orderInfo.setHorizontalAlignment(JLabel.LEFT);
+        orderInfo.setVerticalAlignment(JLabel.TOP);
         
         
         
@@ -201,6 +246,32 @@ public class UI_OnGoing extends JPanel{
             if (checkoutConfirmation == JOptionPane.OK_OPTION) {
                 
                 // User clicked the "OK" button
+                // triger ratings
+               String[] options = {"1", "2", "3", "4", "5"};
+                int result = JOptionPane.showOptionDialog(null, "Ratings of the delivery - worst (1), best (5)", "Selection", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+                switch (result) {
+                    case 0:
+                        System.out.println("You selected 1.");
+                        break;
+                    case 1:
+                        System.out.println("You selected 2.");
+                        break;
+                    case 2:
+                        System.out.println("You selected 3.");
+                        break;
+                    case 3:
+                        System.out.println("You selected 4.");
+                        break;
+                    case 4:
+                        System.out.println("You selected 5.");
+                        break;
+                    default:
+                        System.out.println("No selection made.");
+                        break;
+                }
+                
+                // code to get the selected row from table
                 for (int i = 0; i < cart.getRowCount(); i++)
                 {
                     if ((boolean)cart.getValueAt(i, 0) == true)
@@ -208,9 +279,6 @@ public class UI_OnGoing extends JPanel{
                         System.out.println(cart.getValueAt(i, 1) + " is true");
                     }
                 }
-                
-                // if something is picked (get the size of arraylist of what)
-                
                 
             }
 
@@ -230,6 +298,7 @@ public class UI_OnGoing extends JPanel{
         this.add(completedPage);
         
         this.add(scrollPane);
+        this.add(orderInfo);
         this.add(orderDelivered);
         
     }
