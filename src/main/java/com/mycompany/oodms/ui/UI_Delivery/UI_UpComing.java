@@ -62,14 +62,14 @@ public class UI_UpComing extends JPanel{
     }
     
     public ArrayList<OrderItem> initialize_order_item_data(ArrayList<Order> orders){
-        return OrderItemService.getOrderItemService().getOrderItem(orders);
+        return OrderItemService.getOrderItemService().getOrderItems(orders);
     }
     
     public UI_UpComing() {
         ArrayList<Delivery> deliveries = initialize_delivery_data();
         ArrayList<Order> orders;
         ArrayList<OrderItem> orderItems;
-        String orderItemString = "<html>";
+        
         if(deliveries.isEmpty()){
             System.out.println("deliveries is empty in UI UPComing");
             orders = new ArrayList<Order>();
@@ -170,30 +170,39 @@ public class UI_UpComing extends JPanel{
             }
         };
         
+                
         
-        // JTable - cart
-        JTable cart = new JTable();
-        cart.setModel(model);
-        cart.getTableHeader().setReorderingAllowed(false);
-        ListSelectionModel selectionModel = cart.getSelectionModel();
+        // JTable - deliveryTablle
+        JTable deliveryTable = new JTable();
+        deliveryTable.setModel(model);
+        deliveryTable.getTableHeader().setReorderingAllowed(false);
+        ListSelectionModel selectionModel = deliveryTable.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
             if (!e.getValueIsAdjusting()) {
-                int selectedRow = cart.getSelectedRow();
+                int selectedRow = deliveryTable.getSelectedRow();
                 if (selectedRow != -1) {
                     // get data of selected row from table (base on table column index)
-                    String deliveryId_display = String.valueOf(cart.getValueAt(selectedRow, 1));
-                    String orderId_display = String.valueOf(cart.getValueAt(selectedRow, 2));
-                    String city_display = String.valueOf(cart.getValueAt(selectedRow, 3));
-                    String status_display = String.valueOf(cart.getValueAt(selectedRow, 4));
-                   
+                    String deliveryId_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 1));
+                    String orderId_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 2));
+                    String status_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 4));
+                    String address = DeliveryService.getDeliveryService().getDelivery(Integer.parseInt(deliveryId_display)).getAddress().toString();
+                    ArrayList<OrderItem> tempOrderItems = OrderItemService.getOrderItemService().getOrderItems(Integer.parseInt(orderId_display));
+                    String tempOrderItemString = "<html>";
+                     // set order item string
+                    for(OrderItem item : tempOrderItems){
+                            tempOrderItemString = tempOrderItemString + "<br>[ID: " +item.getProduct().getProductID()+ "]  " +  item.getProduct().getProductName() + " x " + item.getQuantity();
+                    }
+                    tempOrderItemString = tempOrderItemString + "</html>";
+
+            
                     // set text to the JLabel
                     orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
                             "<br> Order ID : " + orderId_display + 
-                            "<br> City : " + city_display + 
+                            "<br> Address : " + address + 
                             "<br> Status : " + status_display + 
-                            "<br> Products : ..." + 
+                            "<br> Products : " + tempOrderItemString + 
                             "</html>");
                 }
             }
@@ -204,58 +213,48 @@ public class UI_UpComing extends JPanel{
         model.addColumn("OrderID");
         model.addColumn("City");
         model.addColumn("Status");
-//        model.addColumn("Address");
-//        model.addColumn("Product ID and Quantity");
-        
-        // set order item string
-//        for(OrderItem item : orderItems){
-//            orderItemString = orderItemString + "ID: " +item.getProduct().getProductID()+ " [" +item.getProduct().getProductName() + "] x " + item.getQuantity() + "<br>";
-//            orderItemString = orderItemString + "[ID: " +item.getProduct().getProductID()+ " | " +  item.getProduct().getProductName() + "] x " + item.getQuantity() + "<br>";
-//        }
-//        orderItemString = orderItemString + "</html>";
         
         // set cart table row
         for (int i = 0; i < deliveries.size(); i++) {
             Delivery delivery = deliveries.get(i);
-            
+           
+                    
             model.addRow(new Object[0]);
             model.setValueAt(false,i,0);
-            model.setValueAt(deliveries.get(i).getDeliveryID(), i, 1);
-            model.setValueAt(deliveries.get(i).getOrder().getOrderID(), i, 2);
-            model.setValueAt(deliveries.get(i).getAddress().getCity(), i, 3);
-            model.setValueAt(deliveries.get(i).getStatus(), i, 4);
- //            model.setValueAt(orderItemString, i, 3);
-//            model.setValueAt(delivery.getAddress().toString(), i, 5);
+            model.setValueAt(delivery.getDeliveryID(), i, 1);
+            model.setValueAt(delivery.getOrder().getOrderID(), i, 2);
+            model.setValueAt(delivery.getAddress().getCity(), i, 3);
+            model.setValueAt(delivery.getStatus(), i, 4);
         }
         
         // set column size
-//        cart.setRowHeight(30);
-        TableColumn selectColumn = cart.getColumnModel().getColumn(0);
+        deliveryTable.setRowHeight(30);
+        TableColumn selectColumn = deliveryTable.getColumnModel().getColumn(0);
         selectColumn.setPreferredWidth(5);
         selectColumn.setResizable(false);
         
-        TableColumn deliveryIDColumn = cart.getColumnModel().getColumn(1);
+        TableColumn deliveryIDColumn = deliveryTable.getColumnModel().getColumn(1);
         deliveryIDColumn.setPreferredWidth(10);
         deliveryIDColumn.setResizable(false);
         
-        TableColumn orderIDColumn = cart.getColumnModel().getColumn(2);
+        TableColumn orderIDColumn = deliveryTable.getColumnModel().getColumn(2);
         orderIDColumn.setPreferredWidth(10);
         orderIDColumn.setResizable(false);
 
-        TableColumn statusColumn = cart.getColumnModel().getColumn(2);
+        TableColumn statusColumn = deliveryTable.getColumnModel().getColumn(2);
         statusColumn.setPreferredWidth(10);
         statusColumn.setResizable(false);
         
-        TableColumn addressColumn = cart.getColumnModel().getColumn(2);
+        TableColumn addressColumn = deliveryTable.getColumnModel().getColumn(2);
         addressColumn.setPreferredWidth(10);
         addressColumn.setResizable(false);
         
         // scrollpane for JTable
-        JScrollPane scrollPane = new JScrollPane(cart);
+        JScrollPane scrollPane = new JScrollPane(deliveryTable);
         scrollPane.setBounds(193,245,400,290);
         
         // JLabel - selected order information label
-        orderInfo = new JLabel();
+        orderInfo = new JLabel("Select a row to view the details");
         orderInfo.setBackground(Color.LIGHT_GRAY);
         orderInfo.setOpaque(true);
         orderInfo.setBounds(593,245,300,290); 
@@ -274,29 +273,30 @@ public class UI_UpComing extends JPanel{
         packOrder.setFont(new Font("MV Boli",Font.PLAIN,12));
         packOrder.setForeground(Color.WHITE);
         packOrder.addActionListener(e -> {
-            if(!isSelected(cart)){
+            if(!isSelected(deliveryTable)){
                 JOptionPane.showMessageDialog(null, "Please select a product.", "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             
             // checkout confirmation
-            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to checkout?", "Confirmation",
+            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to deliver the selected order? \n Please make sure you've get the item according to the details.", "Confirmation",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             if (checkoutConfirmation == JOptionPane.OK_OPTION) {
                 // User clicked the "OK" button
-                for (int i = 0; i < cart.getRowCount(); i++)
+                for (int i = 0; i < deliveryTable.getRowCount(); i++)
                 {
-                    if ((boolean)cart.getValueAt(i, 0) == true)
+                    if ((boolean)deliveryTable.getValueAt(i, 0) == true)
                     {
-                        System.out.print(cart.getValueAt(i, 1) + " is ture");
+                        int delivery_id = (int) deliveryTable.getValueAt(i, 1);
+                        Delivery delivery = DeliveryService.getDeliveryService().getDelivery(delivery_id);
+                        delivery.setStatus(DeliveryStatus.DELIVERING);
+                        DeliveryService.getDeliveryService().updateDelivery(delivery);
+                        OODMS_Main.frame.replacePanel(new UI_UpComing());
+//                        OODMS_Main.frame.replacePanel(new UI_OnGoing());
                     }
                 }
-                // get the selected product
-                //direct to checkout page
-                System.out.println("go to checkout page");
             }
-
         });
         
         // this

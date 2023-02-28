@@ -4,12 +4,22 @@
  */
 package com.mycompany.oodms.ui.UI_Delivery;
 
+import com.mycompany.oodms.Delivery;
+import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.DeliveryStatus;
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Order;
+import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Services.DeliveryService;
+import com.mycompany.oodms.Services.OrderItemService;
+import com.mycompany.oodms.Services.OrderService;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -45,21 +55,44 @@ public class UI_OnGoing extends JPanel{
     
     boolean isSelected = false;
     
+    public ArrayList<Delivery> initialize_delivery_data(){
+        return DeliveryService.getDeliveryService().getDeliveryForStaffOnGoing((DeliveryStaff) OODMS_Main.current_user);
+    }
+    
+    public ArrayList<Order> initialize_order_data(ArrayList<Delivery>deliveries){
+        return OrderService.getOrderService().getOrdersForDeliveryStaff(deliveries, (DeliveryStaff) OODMS_Main.current_user);
+    }
+    
+    public ArrayList<OrderItem> initialize_order_item_data(ArrayList<Order> orders){
+        return OrderItemService.getOrderItemService().getOrderItems(orders);
+    }
+    
     public UI_OnGoing() {
+        ArrayList<Delivery> deliveries = initialize_delivery_data();
+        ArrayList<Order> orders;
+        ArrayList<OrderItem> orderItems;
+        if(deliveries.isEmpty()){
+            System.out.println("deliveries is empty in UI UPComing");
+            orders = new ArrayList<Order>();
+            orderItems = new ArrayList<OrderItem>();
+        }else{
+            orders = initialize_order_data(deliveries);
+            orderItems = initialize_order_item_data(orders);
+        }
         
         // required date
         // 1. Cart object list of specific user
-        ArrayList<ArrayList<String>> inCart = new ArrayList<>();
-        ArrayList<String> inCartSingleProduct = new ArrayList<>();
+//        ArrayList<ArrayList<String>> inCart = new ArrayList<>();
+//        ArrayList<String> inCartSingleProduct = new ArrayList<>();
         
         // create temp data
-        for (int i = 0; i < 10; i++) {
-            inCartSingleProduct.add("tempdata"); // product name
-            inCartSingleProduct.add("tempdata"); // quantity
-            inCartSingleProduct.add("tempdata"); // price
-            inCartSingleProduct.add("Delivering"); // price
-            inCart.add(inCartSingleProduct);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            inCartSingleProduct.add("tempdata"); // product name
+//            inCartSingleProduct.add("tempdata"); // quantity
+//            inCartSingleProduct.add("tempdata"); // price
+//            inCartSingleProduct.add("Delivering"); // price
+//            inCart.add(inCartSingleProduct);
+//        }
         
         
         header = new UI_Header();
@@ -162,28 +195,35 @@ public class UI_OnGoing extends JPanel{
         
         
         // JTable - cart
-        JTable cart = new JTable();
-        cart.setModel(model);
-        cart.getTableHeader().setReorderingAllowed(false);
-        ListSelectionModel selectionModel = cart.getSelectionModel();
+        JTable deliveryTable = new JTable();
+        deliveryTable.setModel(model);
+        deliveryTable.getTableHeader().setReorderingAllowed(false);
+        ListSelectionModel selectionModel = deliveryTable.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
             if (!e.getValueIsAdjusting()) {
-                int selectedRow = cart.getSelectedRow();
+                int selectedRow = deliveryTable.getSelectedRow();
                 if (selectedRow != -1) {
                     // get data of selected row from table (base on table column index)
-                    String deliveryId_display = String.valueOf(cart.getValueAt(selectedRow, 1));
-                    String orderId_display = String.valueOf(cart.getValueAt(selectedRow, 2));
-                    String city_display = String.valueOf(cart.getValueAt(selectedRow, 3));
-                    String status_display = String.valueOf(cart.getValueAt(selectedRow, 4));
+                    String deliveryId_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 1));
+                    String orderId_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 2));
+                    String status_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 4));
+                    String address = DeliveryService.getDeliveryService().getDelivery(Integer.parseInt(deliveryId_display)).getAddress().toString();
+                    ArrayList<OrderItem> tempOrderItems = OrderItemService.getOrderItemService().getOrderItems(Integer.parseInt(orderId_display));
+                    String tempOrderItemString = "<html>";
+                     // set order item string
+                    for(OrderItem item : tempOrderItems){
+                            tempOrderItemString = tempOrderItemString + "<br>[ID: " +item.getProduct().getProductID()+ "]  " +  item.getProduct().getProductName() + " x " + item.getQuantity();
+                    }
+                    tempOrderItemString = tempOrderItemString + "</html>";
                    
-                    // set text to the JLabel
+                     // set text to the JLabel
                     orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
                             "<br> Order ID : " + orderId_display + 
-                            "<br> City : " + city_display + 
+                            "<br> Address : " + address + 
                             "<br> Status : " + status_display + 
-                            "<br> Products : ..." + 
+                            "<br> Products : " + tempOrderItemString + 
                             "</html>");
                 }
             }
@@ -197,27 +237,43 @@ public class UI_OnGoing extends JPanel{
 
         // set cart table row
         
-        for (int i = 0; i < inCart.size(); i++) {
+        for (int i = 0; i < deliveries.size(); i++) {
+            Delivery delivery = deliveries.get(i);
             model.addRow(new Object[0]);
             model.setValueAt(false,i,0);
-            model.setValueAt(i+1, i, 1);
-            model.setValueAt(inCart.get(i).get(0), i, 2);
-            model.setValueAt(inCart.get(i).get(1), i, 3);
-            model.setValueAt(inCart.get(i).get(2), i, 4);
+            model.setValueAt(delivery.getDeliveryID(), i, 1);
+            model.setValueAt(delivery.getOrder().getOrderID(), i, 2);
+            model.setValueAt(delivery.getAddress().getCity(), i, 3);
+            model.setValueAt(delivery.getStatus(), i, 4);
         }
         
-        //// set column size (if nessesaary)
-        //        TableColumn selectColumn = cart.getColumnModel().getColumn(0);
-        //        selectColumn.setPreferredWidth(5);
-        //        selectColumn.setResizable(false);
-       
+        deliveryTable.setRowHeight(30);
+        TableColumn selectColumn = deliveryTable.getColumnModel().getColumn(0);
+        selectColumn.setPreferredWidth(5);
+        selectColumn.setResizable(false);
+        
+        TableColumn deliveryIDColumn = deliveryTable.getColumnModel().getColumn(1);
+        deliveryIDColumn.setPreferredWidth(10);
+        deliveryIDColumn.setResizable(false);
+        
+        TableColumn orderIDColumn = deliveryTable.getColumnModel().getColumn(2);
+        orderIDColumn.setPreferredWidth(10);
+        orderIDColumn.setResizable(false);
+
+        TableColumn statusColumn = deliveryTable.getColumnModel().getColumn(2);
+        statusColumn.setPreferredWidth(10);
+        statusColumn.setResizable(false);
+        
+        TableColumn addressColumn = deliveryTable.getColumnModel().getColumn(2);
+        addressColumn.setPreferredWidth(10);
+        addressColumn.setResizable(false);
         
         // scrollpane for JTable
-        JScrollPane scrollPane = new JScrollPane(cart);
+        JScrollPane scrollPane = new JScrollPane(deliveryTable);
         scrollPane.setBounds(193,245,400,290);
         
         // JLabel - selected order information label
-        orderInfo = new JLabel();
+        orderInfo = new JLabel("Select a row to view the details");
         orderInfo.setBackground(Color.LIGHT_GRAY);
         orderInfo.setOpaque(true);
         orderInfo.setBounds(593,245,300,290); 
@@ -238,9 +294,12 @@ public class UI_OnGoing extends JPanel{
         orderDelivered.setFont(new Font("MV Boli",Font.PLAIN,12));
         orderDelivered.setForeground(Color.WHITE);
         orderDelivered.addActionListener(e -> {
-            
+            if(!isSelected(deliveryTable)){
+                JOptionPane.showMessageDialog(null, "Please select a product.", "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             // deliver product confirmation
-            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to deliver?", "Confirmation",
+            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Delivered the products?", "Confirmation",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             if (checkoutConfirmation == JOptionPane.OK_OPTION) {
@@ -248,7 +307,7 @@ public class UI_OnGoing extends JPanel{
                 // User clicked the "OK" button
                 // triger ratings
                String[] options = {"1", "2", "3", "4", "5"};
-                int result = JOptionPane.showOptionDialog(null, "Ratings of the delivery - worst (1), best (5)", "Selection", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+                int result = JOptionPane.showOptionDialog(null, "Ratings of the delivery  (worst (1), best (5))", "CUSTOMER FEEDBACK - For customer to fill in ", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
                 switch (result) {
                     case 0:
@@ -272,24 +331,27 @@ public class UI_OnGoing extends JPanel{
                 }
                 
                 // code to get the selected row from table
-                for (int i = 0; i < cart.getRowCount(); i++)
+                for (int i = 0; i < deliveryTable.getRowCount(); i++)
                 {
-                    if ((boolean)cart.getValueAt(i, 0) == true)
+                    if ((boolean)deliveryTable.getValueAt(i, 0) == true)
                     {
-                        System.out.println(cart.getValueAt(i, 1) + " is true");
+                        int delivery_id = (int) deliveryTable.getValueAt(i, 1);
+                         Delivery delivery = DeliveryService.getDeliveryService().getDelivery(delivery_id);
+                        delivery.setStatus(DeliveryStatus.DELIVERED);
+                        delivery.setDeliveryRating(result);
+                        delivery.setDateTime(LocalDateTime.now() );
+                        DeliveryService.getDeliveryService().updateDelivery(delivery);
+                        OODMS_Main.frame.replacePanel(new UI_OnGoing());
+//                        OODMS_Main.frame.replacePanel(new UI_Completed());
                     }
                 }
-                
             }
-
         });
-        
        
         // this
         this.setSize(1080, 768);
         this.setBackground(Color.white);
         this.setLayout(null);
-        
         
         this.add(header);
         this.add(title);
@@ -300,7 +362,16 @@ public class UI_OnGoing extends JPanel{
         this.add(scrollPane);
         this.add(orderInfo);
         this.add(orderDelivered);
-        
     }
     
+     public boolean isSelected(JTable cart){
+        for (int i = 0; i < cart.getRowCount(); i++)
+        {
+            if ((boolean)cart.getValueAt(i, 0) == true)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

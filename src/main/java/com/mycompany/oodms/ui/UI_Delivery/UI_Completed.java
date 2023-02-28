@@ -4,7 +4,15 @@
  */
 package com.mycompany.oodms.ui.UI_Delivery;
 
+import com.mycompany.oodms.Delivery;
+import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Order;
+import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Services.DeliveryService;
+import com.mycompany.oodms.Services.OrderItemService;
+import com.mycompany.oodms.Services.OrderService;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -41,22 +49,32 @@ public class UI_Completed extends JPanel{
     JButton upComingPage;
     JButton onGoingPage;
     JButton completedPage;
+    
+     public ArrayList<Delivery> initialize_delivery_data(){
+        return DeliveryService.getDeliveryService().getDeliveryForStaffCompleted((DeliveryStaff) OODMS_Main.current_user);
+    }
+    
+    public ArrayList<Order> initialize_order_data(ArrayList<Delivery>deliveries){
+        return OrderService.getOrderService().getOrdersForDeliveryStaff(deliveries, (DeliveryStaff) OODMS_Main.current_user);
+    }
+    
+    public ArrayList<OrderItem> initialize_order_item_data(ArrayList<Order> orders){
+        return OrderItemService.getOrderItemService().getOrderItems(orders);
+    }
    
     public UI_Completed() {
+        ArrayList<Delivery> deliveries = initialize_delivery_data();
+        ArrayList<Order> orders;
+        ArrayList<OrderItem> orderItems;
         
-        // required date
-        // 1. Cart object list of specific user
-        ArrayList<ArrayList<String>> inCart = new ArrayList<>();
-        ArrayList<String> inCartSingleProduct = new ArrayList<>();
-        
-        // create temp data
-        for (int i = 0; i < 100; i++) {
-            inCartSingleProduct.add("product name"); // product name
-            inCartSingleProduct.add("3"); // quantity
-            inCartSingleProduct.add("RM 3.50"); // price
-            inCart.add(inCartSingleProduct);
+        if(deliveries.isEmpty()){
+            System.out.println("deliveries is empty in UI UPComing");
+            orders = new ArrayList<Order>();
+            orderItems = new ArrayList<OrderItem>();
+        }else{
+            orders = initialize_order_data(deliveries);
+            orderItems = initialize_order_item_data(orders);
         }
-        
         
         header = new UI_Header();
         header.setBounds(0,0,1080,50);
@@ -155,59 +173,87 @@ public class UI_Completed extends JPanel{
         
         
         // JTable - cart
-        JTable cart = new JTable();
-        cart.setModel(model);
-        cart.getTableHeader().setReorderingAllowed(false);
-        ListSelectionModel selectionModel = cart.getSelectionModel();
+        JTable deliveryTable = new JTable();
+        deliveryTable.setModel(model);
+        deliveryTable.getTableHeader().setReorderingAllowed(false);
+        ListSelectionModel selectionModel = deliveryTable.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
             if (!e.getValueIsAdjusting()) {
-                int selectedRow = cart.getSelectedRow();
+                int selectedRow = deliveryTable.getSelectedRow();
                 if (selectedRow != -1) {
-                    // get data of selected row from table (base on table column index)
-                    String deliveryId_display = String.valueOf(cart.getValueAt(selectedRow, 0));
-                    String orderId_display = String.valueOf(cart.getValueAt(selectedRow, 1));
-                    String city_display = String.valueOf(cart.getValueAt(selectedRow, 2));
-                    String status_display = String.valueOf(cart.getValueAt(selectedRow, 3));
+                     // get data of selected row from table (base on table column index)
+                    String deliveryId_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 1));
+                    String orderId_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 2));
+                    String status_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 4));
+                    String address = DeliveryService.getDeliveryService().getDelivery(Integer.parseInt(deliveryId_display)).getAddress().toString();
+                    ArrayList<OrderItem> tempOrderItems = OrderItemService.getOrderItemService().getOrderItems(Integer.parseInt(orderId_display));
+                    String tempOrderItemString = "<html>";
+                     // set order item string
+                    for(OrderItem item : tempOrderItems){
+                            tempOrderItemString = tempOrderItemString + "<br>[ID: " +item.getProduct().getProductID()+ "]  " +  item.getProduct().getProductName() + " x " + item.getQuantity();
+                    }
+                    tempOrderItemString = tempOrderItemString + "</html>";
                    
-                    // set text to the JLabel
+                    /// set text to the JLabel
                     orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
                             "<br> Order ID : " + orderId_display + 
-                            "<br> City : " + city_display + 
+                            "<br> Address : " + address + 
                             "<br> Status : " + status_display + 
-                            "<br> Products : ..." + 
+                            "<br> Products : " + tempOrderItemString + 
                             "</html>");
                 }
             }
         });
         
-        model.addColumn("No");
-        model.addColumn("Product");
-        model.addColumn("Qty");
-        model.addColumn("Price");
+       model.addColumn("Select");
+        model.addColumn("DeliveryID");
+        model.addColumn("OrderID");
+        model.addColumn("City");
+        model.addColumn("Status");
 
         // set cart table row
         
-        for (int i = 0; i < inCart.size(); i++) {
+        for (int i = 0; i < deliveries.size(); i++) {
+            Delivery delivery = deliveries.get(i);
             model.addRow(new Object[0]);
             model.setValueAt(i+1, i, 0);
-            model.setValueAt(inCart.get(i).get(0), i, 1);
-            model.setValueAt(inCart.get(i).get(1), i, 2);
-            model.setValueAt(inCart.get(i).get(2), i, 3);
+            model.setValueAt(delivery.getDeliveryID(), i, 1);
+            model.setValueAt(delivery.getOrder().getOrderID(), i, 2);
+            model.setValueAt(delivery.getAddress().getCity(), i, 3);
+            model.setValueAt(delivery.getStatus(), i, 4);
         }
         
-        // set column size (if nessesary)
-        //        TableColumn selectColumn = cart.getColumnModel().getColumn(0);
-        //        selectColumn.setPreferredWidth(5);
-        //        selectColumn.setResizable(false);
+        
+        // set column size
+        deliveryTable.setRowHeight(30);
+         TableColumn selectColumn = deliveryTable.getColumnModel().getColumn(0);
+        selectColumn.setPreferredWidth(5);
+        selectColumn.setResizable(false);
+        
+        TableColumn deliveryIDColumn = deliveryTable.getColumnModel().getColumn(1);
+        deliveryIDColumn.setPreferredWidth(10);
+        deliveryIDColumn.setResizable(false);
+        
+        TableColumn orderIDColumn = deliveryTable.getColumnModel().getColumn(2);
+        orderIDColumn.setPreferredWidth(10);
+        orderIDColumn.setResizable(false);
+
+        TableColumn statusColumn = deliveryTable.getColumnModel().getColumn(2);
+        statusColumn.setPreferredWidth(10);
+        statusColumn.setResizable(false);
+        
+        TableColumn addressColumn = deliveryTable.getColumnModel().getColumn(2);
+        addressColumn.setPreferredWidth(10);
+        addressColumn.setResizable(false);
 
         // scrollpane for JTable
-        JScrollPane scrollPane = new JScrollPane(cart);
+        JScrollPane scrollPane = new JScrollPane(deliveryTable);
         scrollPane.setBounds(193,245,400,290);
         
         // JLabel - selected order information label
-        orderInfo = new JLabel();
+        orderInfo = new JLabel("Select a row to view the details");
         orderInfo.setBackground(Color.LIGHT_GRAY);
         orderInfo.setOpaque(true);
         orderInfo.setBounds(593,245,300,290); 

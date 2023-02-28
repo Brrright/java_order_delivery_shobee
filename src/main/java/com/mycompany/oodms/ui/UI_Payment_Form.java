@@ -201,7 +201,7 @@ public class UI_Payment_Form extends javax.swing.JPanel {
             OrderItem order_item = new OrderItem(item.getQuantity(), item.getProduct().getProductPrice(), item.getProduct(), order);
             OrderItemService.getOrderItemService().addOrderItem(order_item);
             CartItemService.getCartItemService().deleteCartItem(item);
-            Delivery delivery = new Delivery(delivery_file.GenerateID(), order , LocalDateTime.now(), null, DeliveryStatus.PACKING, -1,address , (Member) OODMS_Main.current_user);
+            Delivery delivery = new Delivery(DeliveryService.getDeliveryService().getNewDeliveryID(), order , LocalDateTime.now(), null, DeliveryStatus.PACKING, -1,address , (Member) OODMS_Main.current_user);
             DeliveryService.getDeliveryService().addDelivery(delivery);
         }
         OODMS_Main.frame.replacePanel(new UI_SuccessPayment());

@@ -57,7 +57,7 @@ public class DeliveryService {
             
         // Delivery data
         int delivery_id  = d.getID();
-        LocalDateTime delivery_date_time = LocalDateTime.parse(delivery_data[3]);
+        LocalDateTime delivery_date_time = LocalDateTime.parse(delivery_data[3]);;
         DeliveryStatus status = DeliveryStatus.valueOf(delivery_data[1]);
         int rating = Integer.parseInt(delivery_data[2]);
         int address_id = Integer.parseInt(delivery_data[4]);
@@ -89,10 +89,20 @@ public class DeliveryService {
         return this.deliveries;
     }
     
+    public int getNewDeliveryID(){
+        return this.delivery_file.GenerateID();
+    }
+    
     public ArrayList<Delivery> getDeliveryForStaffUpComing(DeliveryStaff staff) {
         ArrayList<Delivery> fetched_deliveries = new ArrayList<Delivery>();
         for(int i = 0; i < deliveries.size(); i++) {
             Delivery delivery = deliveries.get(i);
+             if(delivery == null){
+                continue;
+            }
+            if(delivery.getStaff() == null) {
+                continue;
+            }
             if(delivery.getStatus() == DeliveryStatus.PACKING){
                 continue;
             }
@@ -111,6 +121,12 @@ public class DeliveryService {
         ArrayList<Delivery> fetched_deliveries = new ArrayList<Delivery>();
         for(int i = 0; i < deliveries.size(); i++) {
             Delivery delivery = deliveries.get(i);
+            if(delivery == null){
+                continue;
+            }
+            if(delivery.getStaff() == null) {
+                continue;
+            }
             if(delivery.getStaff().getID() == staff.getID() 
                     && delivery.getStatus() == DeliveryStatus.DELIVERING){
                 fetched_deliveries.add(delivery);
@@ -126,6 +142,12 @@ public class DeliveryService {
         ArrayList<Delivery> fetched_deliveries = new ArrayList<Delivery>();
         for(int i = 0; i < deliveries.size(); i++) {
             Delivery delivery = deliveries.get(i);
+            if(delivery == null) {
+                continue;
+            }
+            if(delivery.getStaff() == null) {
+                continue;
+            }
             if(delivery.getStaff().getID() == staff.getID() 
                     && delivery.getStatus() == DeliveryStatus.DELIVERED){
                 fetched_deliveries.add(delivery);
@@ -137,10 +159,10 @@ public class DeliveryService {
         return fetched_deliveries;
     }
     
-    public Delivery getDelivery(int id){
+    public Delivery getDelivery(int delivery_id){
         Delivery response = null;
         for(int i = 0; i < deliveries.size(); i ++) {
-            if(deliveries.get(i).getDeliveryID() == id){
+            if(deliveries.get(i).getDeliveryID() == delivery_id){
                 response = deliveries.get(i);
                 break;
             }
@@ -149,6 +171,20 @@ public class DeliveryService {
             System.out.println("not such record in this \"deliveries\".  FIND A WAY TO HANDLE**");
         }
         return response;
+    }
+    
+    public ArrayList<Delivery> getDeliveries(int order_id) {
+        ArrayList<Delivery> fetched_deliveries = new ArrayList<Delivery>();
+        for(int i = 0; i < deliveries.size(); i++) {
+            Delivery delivery = deliveries.get(i);
+            if(delivery.getOrder().getOrderID() == order_id){
+                fetched_deliveries.add(delivery);
+            }
+        }
+        if(fetched_deliveries.size() == 0){
+            System.out.println("delivery for this order doesnt exist [reminder]");
+        }
+        return fetched_deliveries;
     }
     
     public void addDelivery(Delivery delivery) {

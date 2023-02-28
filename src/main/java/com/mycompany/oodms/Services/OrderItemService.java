@@ -78,7 +78,7 @@ public class OrderItemService {
         return order_items;
     }
     
-    public ArrayList<OrderItem> getOrderItem(int orderId) {
+    public ArrayList<OrderItem> getOrderItems(int orderId) {
         ArrayList<OrderItem> matchedOrderItem = new ArrayList<OrderItem>();
 //        System.out.println("in getOrderItem, received orderid : "  + orderId);
         for (OrderItem item : order_items) {
@@ -93,7 +93,7 @@ public class OrderItemService {
         return matchedOrderItem;
     }
     
-      public ArrayList<OrderItem> getOrderItem(ArrayList<Order> orders) {
+      public ArrayList<OrderItem> getOrderItems(ArrayList<Order> orders) {
         ArrayList<OrderItem> matchedOrderItem = new ArrayList<OrderItem>();
         for (OrderItem item : order_items) {
             for(Order order : orders){
