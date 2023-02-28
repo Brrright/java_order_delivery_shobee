@@ -197,8 +197,6 @@ public class UI_UserManagementAdd extends JPanel{
                 int id = DeliveryStaffService.getDeliveryStaffService().getNewStaffID();
                  DeliveryStaff newStaff = new DeliveryStaff(id, input_name, input_email, input_pw, input_age, input_gender, input_phonenum, defaultPic, UserRole.DELIVERY_STAFF);
              }
-             
-//            signUp(input_name, input_gender, input_age, input_phonenum, input_email, input_pw);
         });
         
         ////////////////////////////////////////////////////////////////////////
