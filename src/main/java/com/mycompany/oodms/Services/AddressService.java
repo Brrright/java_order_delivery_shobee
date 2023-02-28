@@ -29,6 +29,10 @@ public class AddressService {
         return AddressService.address_service;
     }
     
+    public static void offAddressService(){
+        AddressService.address_service = null;
+    }
+    
     private ArrayList<Address> addresses;
     FileHandler address_file = new FileHandler(FileName.MEMBER_ADDRESS);
     

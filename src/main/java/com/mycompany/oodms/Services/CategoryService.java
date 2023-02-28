@@ -28,6 +28,10 @@ public class CategoryService {
         
         return category_service;
     }
+     
+     public static void offCategoryService(){
+         CategoryService.category_service = null;
+     }
     
     private ArrayList<Category> categories;
     FileHandler category_file = new FileHandler(FileName.CATEGORY);

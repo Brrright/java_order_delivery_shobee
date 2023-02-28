@@ -36,6 +36,10 @@ public class OrderService {
         return OrderService.order_service;
     }
     
+    public static void offOrderService(){
+         OrderService.order_service = null;
+     }
+    
      private ArrayList<Order> orders;
     FileHandler order_file = new FileHandler(FileName.ORDER);
 

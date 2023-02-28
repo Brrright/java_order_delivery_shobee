@@ -30,6 +30,10 @@ public class MemberService {
         return member_service;
     }
      
+      public static void offMemberService(){
+         MemberService.member_service = null;
+     }
+     
     private ArrayList<Member> members;
     FileHandler member_file = new FileHandler(FileName.MEMBER);
     

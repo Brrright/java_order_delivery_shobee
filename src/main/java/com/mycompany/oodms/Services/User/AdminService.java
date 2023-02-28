@@ -29,6 +29,10 @@ public class AdminService {
         }
         return admin_service;
     }
+     
+      public static void offAdminService(){
+         AdminService.admin_service = null;
+     }
     
     private ArrayList<Admin> admins;
     FileHandler admin_file = new FileHandler(FileName.ADMIN);

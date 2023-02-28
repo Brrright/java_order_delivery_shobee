@@ -32,6 +32,10 @@ public class CartItemService {
         }
         return cart_item_service;
     }
+     
+     public static void offCartItemService(){
+        CartItemService.cart_item_service = null;
+    }
     
     private ArrayList<CartItem> cart_items;
     FileHandler cart_item_file = new FileHandler(FileName.CART_ITEM);

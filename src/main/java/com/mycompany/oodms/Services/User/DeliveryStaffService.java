@@ -29,6 +29,10 @@ public class DeliveryStaffService {
         }
         return delivery_staff_service;
     }
+     
+      public static void offDeliveryStaffService(){
+         DeliveryStaffService.delivery_staff_service = null;
+     }
     
     private ArrayList<DeliveryStaff> delivery_staffs;
     FileHandler staff_file = new FileHandler(FileName.DELIVERY_STAFF);

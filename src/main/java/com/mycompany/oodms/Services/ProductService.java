@@ -29,6 +29,10 @@ public class ProductService {
         return ProductService.product_service;
     }
     
+     public static void offProductService(){
+         ProductService.product_service = null;
+     }
+    
     private ArrayList<Product> products;
     FileHandler product_file = new FileHandler(FileName.PRODUCT);
 

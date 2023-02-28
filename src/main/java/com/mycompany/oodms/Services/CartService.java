@@ -33,6 +33,10 @@ public class CartService { //might no use le, since 1 person 1 cart, no place fo
         
         return cart_service;
     }
+     
+     public static void offCartService(){
+        CartService.cart_service = null;
+    }
     
     private ArrayList<Cart> carts;
     FileHandler cart_file = new FileHandler(FileName.CART);

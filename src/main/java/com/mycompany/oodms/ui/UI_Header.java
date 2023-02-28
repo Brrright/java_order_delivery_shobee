@@ -1,6 +1,17 @@
 package com.mycompany.oodms.ui;
 
 import com.mycompany.oodms.OODMS_Main;
+import com.mycompany.oodms.Services.AddressService;
+import com.mycompany.oodms.Services.CartItemService;
+import com.mycompany.oodms.Services.CartService;
+import com.mycompany.oodms.Services.CategoryService;
+import com.mycompany.oodms.Services.DeliveryService;
+import com.mycompany.oodms.Services.OrderItemService;
+import com.mycompany.oodms.Services.OrderService;
+import com.mycompany.oodms.Services.ProductService;
+import com.mycompany.oodms.Services.User.AdminService;
+import com.mycompany.oodms.Services.User.DeliveryStaffService;
+import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.User;
 import static com.mycompany.oodms.UserRole.ADMIN;
 import static com.mycompany.oodms.UserRole.DELIVERY_STAFF;
@@ -150,6 +161,17 @@ public class UI_Header extends JPanel{
             OODMS_Main.previous_panel = null;
             OODMS_Main.current_user = null;
             OODMS_Main.isLogIn = false;
+            AddressService.offAddressService();
+            CartItemService.offCartItemService();
+            CartService.offCartService();
+            CategoryService.offCategoryService();
+            DeliveryService.offDeliveryService();
+            OrderItemService.offOrderItemService();
+            OrderService.offOrderService();
+            ProductService.offProductService();
+            AdminService.offAdminService();
+            DeliveryStaffService.offDeliveryStaffService();
+            MemberService.offMemberService();
             OODMS_Main.frame.replacePanel(new UI_Login());
         });
                 

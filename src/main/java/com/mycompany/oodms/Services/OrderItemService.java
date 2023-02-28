@@ -36,6 +36,10 @@ public class OrderItemService {
         return OrderItemService.order_item_service;
     }
     
+     public static void offOrderItemService(){
+         OrderItemService.order_item_service = null;
+     }
+    
     private ArrayList<OrderItem> order_items;
     FileHandler order_item_file = new FileHandler(FileName.ORDER_ITEM);
     

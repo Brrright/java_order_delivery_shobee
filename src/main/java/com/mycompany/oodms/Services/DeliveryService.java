@@ -35,6 +35,10 @@ public class DeliveryService {
         return DeliveryService.delivery_service;
     }
     
+     public static void offDeliveryService(){
+         DeliveryService.delivery_service = null;
+     }
+    
 //    public static boolean isCreated = false;
     private ArrayList<Delivery> deliveries;
     FileHandler delivery_file = new FileHandler(FileName.DELIVERY);
