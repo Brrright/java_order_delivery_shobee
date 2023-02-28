@@ -30,7 +30,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -170,8 +169,6 @@ public class UI_UpComing extends JPanel{
             }
         };
         
-                
-        
         // JTable - deliveryTablle
         JTable deliveryTable = new JTable();
         deliveryTable.setModel(model);
@@ -189,13 +186,13 @@ public class UI_UpComing extends JPanel{
                     String status_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 4));
                     String address = DeliveryService.getDeliveryService().getDelivery(Integer.parseInt(deliveryId_display)).getAddress().toString();
                     ArrayList<OrderItem> tempOrderItems = OrderItemService.getOrderItemService().getOrderItems(Integer.parseInt(orderId_display));
+                    
                     String tempOrderItemString = "<html>";
                      // set order item string
                     for(OrderItem item : tempOrderItems){
                             tempOrderItemString = tempOrderItemString + "<br>[ID: " +item.getProduct().getProductID()+ "]  " +  item.getProduct().getProductName() + " x " + item.getQuantity();
                     }
                     tempOrderItemString = tempOrderItemString + "</html>";
-
             
                     // set text to the JLabel
                     orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
@@ -288,10 +285,12 @@ public class UI_UpComing extends JPanel{
                 {
                     if ((boolean)deliveryTable.getValueAt(i, 0) == true)
                     {
-                        int delivery_id = (int) deliveryTable.getValueAt(i, 1);
-                        Delivery delivery = DeliveryService.getDeliveryService().getDelivery(delivery_id);
-                        delivery.setStatus(DeliveryStatus.DELIVERING);
-                        DeliveryService.getDeliveryService().updateDelivery(delivery);
+                        int orderID = (int) deliveryTable.getValueAt(i, 2);
+                        ArrayList<Delivery> fetched_deliveries = DeliveryService.getDeliveryService().getDeliveries(orderID);
+                        for (Delivery delivery : fetched_deliveries){
+                            delivery.setStatus(DeliveryStatus.DELIVERING);
+                            DeliveryService.getDeliveryService().updateDelivery(delivery);
+                        }   
                         OODMS_Main.frame.replacePanel(new UI_UpComing());
 //                        OODMS_Main.frame.replacePanel(new UI_OnGoing());
                     }

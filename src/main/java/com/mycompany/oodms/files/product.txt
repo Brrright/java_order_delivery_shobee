@@ -1,2 +1,2 @@
-1;Maggie;100;1;src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg;1;Maggie is good. Very good. Within 3 minutes, enjoy MAGIE!!!!
-2;NewProduct;100;102;src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg;2;This product is very new, kind of new, super new!
+1;Maggie;100.0;-9;src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg;1;Maggie is good. Very good. Within 3 minutes, enjoy MAGIE!!!!
+2;NewProduct;100.0;96;src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg;2;This product is very new, kind of new, super new!

@@ -108,7 +108,7 @@ public class Member extends User {
     
     @Override
     public String getPhoneNum(){
-        return super.password;
+        return super.phoneNum;
     }
     
     @Override
