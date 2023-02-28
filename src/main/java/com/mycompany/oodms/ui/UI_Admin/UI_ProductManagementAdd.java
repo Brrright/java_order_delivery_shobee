@@ -41,6 +41,8 @@ public class UI_ProductManagementAdd extends JPanel {
     File file;
     String selectedImagePath;
     String productImgPath = "src/main/java/com/mycompany/oodms/ui/pictures/comingSoon.png";
+    int newStock;
+    double newPrice;
     
     JButton update;
     JButton cancel;
@@ -158,25 +160,38 @@ public class UI_ProductManagementAdd extends JPanel {
             
             int newProductID = ProductService.getProductService().getProductNewID();
             String newName = name.getText();
-            double newPrice = Double.parseDouble(price.getText());
-            int newStock = Integer.parseInt(stock.getText());
+            try {
+                 newPrice = Double.parseDouble(price.getText());
+                 newStock = Integer.parseInt(stock.getText());
+            } catch (NumberFormatException ex){
+                 JOptionPane.showMessageDialog(frame,"invalid price or stock.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                 return;
+            }
+
             
             // product picture
             if (selectedImagePath != null){
                  Path sourcePath = Paths.get(file.getAbsolutePath());
-                 Path destinationPath = Paths.get("src/main/java/com/mycompany/oodms/productImage/" + file.getName());
+                 Path destinationPath = Paths.get("src/main/java/com/mycompany/oodms/productImage/"+ newProductID + file.getName());
                  
                 try {
                     Files.copy(sourcePath, destinationPath);
-                    productImgPath = "src/main/java/com/mycompany/oodms/productImage/" + file.getName();
+                    productImgPath = "src/main/java/com/mycompany/oodms/productImage/"+ newProductID + file.getName();
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(frame,"upload image failed.","Alert",JOptionPane.INFORMATION_MESSAGE);
                     Logger.getLogger(UI_ProductManagementAdd.class.getName()).log(Level.SEVERE, null, ex);
+                    return;
                 }
             }
-
+            
             String newProPic = productImgPath; // @hongwei upload image leave to u ya onzz
             String newProDescription = description.getText();
+            
+            // validation
+            if ("".equals(newName) || "".equals(newProDescription)){
+                 JOptionPane.showMessageDialog(frame,"invalid name or description.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                 return;
+            }
             
             Product newProduct = new Product(newProductID, newName, newPrice, newStock, newProPic, newCategory, newProDescription);
             ProductService.getProductService().addProduct(newProduct);

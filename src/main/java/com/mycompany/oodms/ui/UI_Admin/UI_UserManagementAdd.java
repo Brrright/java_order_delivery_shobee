@@ -54,6 +54,7 @@ public class UI_UserManagementAdd extends JPanel{
     JPasswordField pwd;
     
     JButton signup;
+    int input_age;
 
     public UI_UserManagementAdd(){
         
@@ -180,7 +181,13 @@ public class UI_UserManagementAdd extends JPanel{
             
             String input_name = name.getText();
             Gender input_gender = Gender.valueOf(String.valueOf(gender.getSelectedItem()));
-            int input_age = Integer.parseInt(age.getText());
+            try {
+                 input_age = Integer.parseInt(age.getText());
+            } catch(NumberFormatException ex){
+                 JOptionPane.showMessageDialog(frame,"invalid age.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                 return;
+            }
+            
             String input_phonenum = phoneNo.getText();
             String input_email = email.getText();
             String input_pw = String.valueOf(pwd.getPassword());
@@ -197,10 +204,14 @@ public class UI_UserManagementAdd extends JPanel{
              if(UserRole.valueOf(String.valueOf(userType.getSelectedItem())) == UserRole.ADMIN){
                  int id = AdminService.getAdminService().getNewAdminID();
                  Admin newAdmin = new Admin(id, input_name, input_email, input_pw, input_age, input_gender, input_phonenum, defaultPic, UserRole.ADMIN);
+                 AdminService.getAdminService().addAdmin(newAdmin);
+                 JOptionPane.showMessageDialog(frame,"new admin added.","Alert",JOptionPane.INFORMATION_MESSAGE);
              }
              else if(UserRole.valueOf(String.valueOf(userType.getSelectedItem())) == UserRole.DELIVERY_STAFF){
-                int id = DeliveryStaffService.getDeliveryStaffService().getNewStaffID();
+                 int id = DeliveryStaffService.getDeliveryStaffService().getNewStaffID();
                  DeliveryStaff newStaff = new DeliveryStaff(id, input_name, input_email, input_pw, input_age, input_gender, input_phonenum, defaultPic, UserRole.DELIVERY_STAFF);
+                 DeliveryStaffService.getDeliveryStaffService().addStaff(newStaff);                 
+                 JOptionPane.showMessageDialog(frame,"new delivery staff added.","Alert",JOptionPane.INFORMATION_MESSAGE);
              }
         });
         
