@@ -30,6 +30,7 @@ public class UI_Header extends JPanel{
     JButton allProduct;
     JButton login;
     JButton signup;
+    JButton myOrder;
     
     // Registered user
     // all products (in unregistered user)
@@ -144,6 +145,22 @@ public class UI_Header extends JPanel{
         cart.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_Cart());
+        });
+        
+        // order button
+        myOrder = new JButton();
+        myOrder.setText("My Order");
+        myOrder.setBorder(BorderFactory.createEmptyBorder());
+        myOrder.setFocusable(false);
+        myOrder.setForeground(new Color(0, 0, 0));
+        myOrder.setFont(new Font("Sarif",Font.BOLD,15));
+        myOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        myOrder.setOpaque(false);
+        myOrder.setFocusPainted(false);
+        myOrder.setContentAreaFilled(false);
+        myOrder.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_MyOrder());
         });
         
         // logout button
@@ -284,6 +301,7 @@ public class UI_Header extends JPanel{
                     this.add(allProduct);
                     this.add(cart);
                     this.add(profile);
+                    this.add(myOrder);
                     this.add(logout);
                 }
                 case DELIVERY_STAFF -> {
