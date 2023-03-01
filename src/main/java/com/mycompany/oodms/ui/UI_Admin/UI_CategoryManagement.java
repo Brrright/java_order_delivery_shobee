@@ -265,6 +265,10 @@ public class UI_CategoryManagement extends JPanel{
             categories_btn2[i].setVerticalTextPosition(JLabel.CENTER);
             categories_btn2[i].setIconTextGap(40);
             categories_btn2[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            categories_btn2[i].setOpaque(false);
+            categories_btn2[i].setFocusPainted(false);
+            categories_btn2[i].setContentAreaFilled(false);
+            categories_btn2[i].setOpaque(false);
             categories_btn2[i].addActionListener(e -> {
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
                 OODMS_Main.frame.replacePanel(new UI_CategoryManagementCategory(currentCategory.getCategoryID()));
