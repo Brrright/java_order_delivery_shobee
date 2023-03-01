@@ -19,7 +19,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -60,7 +59,7 @@ public class UI_ReportPayments extends JPanel{
     ArrayList<String> memberEmails = new ArrayList<String>();
     
     // panels
-     JPanel report_panel;
+     JPanel report_panel = new JPanel();
      JPanel search_panel;
      JPanel reportSelection_panel;
      
@@ -76,11 +75,8 @@ public class UI_ReportPayments extends JPanel{
      
     public UI_ReportPayments() {
         orders = initializeOrderData();
-        System.out.println("order size" + orders.size());
         memberEmails = MemberService.getMemberService().getMemberEmails();
-        System.out.println("member size" + memberEmails.size());
 
-        
         if(orders.size() == 0){
             report_panel.add(new JLabel("No records"));
         }
@@ -161,6 +157,17 @@ public class UI_ReportPayments extends JPanel{
         
         OrderCard(orders);
         
+         // Panel for report
+        int product_panel_height = (150 * orders.size()) + 30;
+        
+        report_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
+        report_panel.setPreferredSize(new Dimension(700, product_panel_height));
+        report_panel.setBackground(Color.WHITE);
+        
+        for (JButton theCategory : reports){
+            report_panel.add(theCategory);
+        }
+        
         // third container (search container)
         search_container = new JPanel();
         search_container.setLayout(new BorderLayout());
@@ -194,7 +201,7 @@ public class UI_ReportPayments extends JPanel{
         this.setBackground(Color.WHITE);
     }
     
-    private void OrderCard(ArrayList<Order> newOrders){
+    private  JButton[] OrderCard(ArrayList<Order> newOrders){
          // JButton[] - users
         reports = new JButton[newOrders.size()];
         
@@ -220,6 +227,10 @@ public class UI_ReportPayments extends JPanel{
             });
         }
         
+        for (JButton x : reports){
+            report_panel.add(x);
+        }
+        
         // Panel for report
         int product_panel_height = (150 * newOrders.size()) + 30;
         
@@ -228,9 +239,7 @@ public class UI_ReportPayments extends JPanel{
         report_panel.setPreferredSize(new Dimension(700, product_panel_height));
         report_panel.setBackground(Color.WHITE);
         
-        for (JButton theCategory : reports){
-            report_panel.add(theCategory);
-        }
+        return reports;
     }
     
     private ArrayList<Order> searchOrder(java.awt.event.ActionEvent evt){
@@ -239,6 +248,9 @@ public class UI_ReportPayments extends JPanel{
         for(int x = 0; x < this.orders.size(); x++) {
             String member_email = orders.get(x).getCustomer().getEmail();
             if(member_email == input){
+                System.out.println("\nmatch");
+                System.out.println("fetched : " + member_email);
+                System.out.println("input :" + input);
                 newOrders.add(orders.get(x));
             }
         }
