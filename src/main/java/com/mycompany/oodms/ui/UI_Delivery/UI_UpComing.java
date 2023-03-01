@@ -46,6 +46,7 @@ public class UI_UpComing extends JPanel{
     ImageIcon grayCircle2 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
     
     JLabel orderInfo;
+    JScrollPane orderInfo_scrollPane;
     
     JButton upComingPage;
     JButton onGoingPage;
@@ -195,11 +196,11 @@ public class UI_UpComing extends JPanel{
                     tempOrderItemString = tempOrderItemString + "</html>";
             
                     // set text to the JLabel
-                    orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
-                            "<br> Order ID : " + orderId_display + 
-                            "<br> Address : " + address + 
-                            "<br> Status : " + status_display + 
-                            "<br> Products : " + tempOrderItemString + 
+                    orderInfo.setText("<html>Delivery ID : <br>" + deliveryId_display + 
+                            "<br><br> Order ID : <br>" + orderId_display + 
+                            "<br><br> Address : <br>" + address + 
+                            "<br><br> Status : <br>" + status_display + 
+                            "<br><br> Products : " + tempOrderItemString + 
                             "</html>");
                 }
             }
@@ -252,11 +253,16 @@ public class UI_UpComing extends JPanel{
         
         // JLabel - selected order information label
         orderInfo = new JLabel("Select a row to view the details");
-        orderInfo.setBackground(Color.LIGHT_GRAY);
+        orderInfo.setBackground(new Color(217,217,217));
         orderInfo.setOpaque(true);
-        orderInfo.setBounds(593,245,300,290); 
         orderInfo.setHorizontalAlignment(JLabel.LEFT);
         orderInfo.setVerticalAlignment(JLabel.TOP);
+        
+        // JScrollPane - for orderInfo
+        orderInfo_scrollPane = new JScrollPane(orderInfo);
+        orderInfo_scrollPane.setBounds(593,245,300,290); 
+        orderInfo_scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        
         
         // JButton - Checkout
         packOrder = new JButton("Pack Order");
