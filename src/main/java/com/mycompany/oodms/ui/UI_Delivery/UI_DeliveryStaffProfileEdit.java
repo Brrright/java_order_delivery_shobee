@@ -1,16 +1,13 @@
-package com.mycompany.oodms.ui;
+package com.mycompany.oodms.ui.UI_Delivery;
 
 
 import com.mycompany.oodms.Admin;
 import com.mycompany.oodms.DeliveryStaff;
 import com.mycompany.oodms.Gender;
-import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Services.User.AdminService;
 import com.mycompany.oodms.Services.User.DeliveryStaffService;
-import com.mycompany.oodms.Services.User.MemberService;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -18,10 +15,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class UI_ProfileEdit extends JPanel {
+public class UI_DeliveryStaffProfileEdit extends JPanel {
 
     JButton back;
     
@@ -42,6 +38,12 @@ public class UI_ProfileEdit extends JPanel {
     JTextField email;
     JButton profilePic_upload;
     
+    String userName;
+    String userProfilePicture;
+    Gender userGender;
+    String userAge;
+    String userEmail;
+    String userPhoneNo;
     
     File file;
     String selectedImagePath;
@@ -50,18 +52,24 @@ public class UI_ProfileEdit extends JPanel {
     JButton update;
     JButton cancel;
     
-    Member member;
+    DeliveryStaff staff;
     
     
-    private Member initialize_member_data(int id){
-        return MemberService.getMemberService().getMember(id);
+    private DeliveryStaff initialize_staff_data(int id){
+        DeliveryStaff tempStaff = DeliveryStaffService.getDeliveryStaffService().getStaff(id);
+        return tempStaff;
     }
-
     
-    public UI_ProfileEdit(int userId){
+    public UI_DeliveryStaffProfileEdit(int userId){
         // REQUIRED DATA
-        member = initialize_member_data(userId);
-      
+        staff = initialize_staff_data(userId);
+        userName = staff.getName();
+        userGender = staff.getGender();
+        userAge = String.valueOf(staff.getAge());
+        userEmail = String.valueOf(staff.getEmail());
+        userPhoneNo = String.valueOf(staff.getPhoneNum());     
+
+
         // JButton - back (to login page)
         back = new JButton("< back");
         back.setFont(new Font("MV Boli",Font.PLAIN,12));
@@ -70,6 +78,10 @@ public class UI_ProfileEdit extends JPanel {
         back.setBorder(BorderFactory.createEmptyBorder());
         back.setFocusable(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        back.setOpaque(false);
+        back.setFocusPainted(false);
+        back.setContentAreaFilled(false);
+        back.setOpaque(false);
         back.addActionListener(e -> {
             OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
@@ -87,7 +99,7 @@ public class UI_ProfileEdit extends JPanel {
         // JTextField - name
         name = new JTextField();
         name.setBounds(140,233,587,48);
-        name.setText(member.getName());
+        name.setText(userName);
         
         // JLabel - gender header
         gender_header = new JLabel("Gender :");
@@ -98,7 +110,7 @@ public class UI_ProfileEdit extends JPanel {
         Gender[] genderList = {Gender.MALE, Gender.FEMALE};
         gender = new JComboBox(genderList);
         gender.setBounds(759,233,174,48);
-        gender.setSelectedItem(member.getGender());
+        gender.setSelectedItem(userGender);
 
         
         // JLabel - age header
@@ -109,7 +121,7 @@ public class UI_ProfileEdit extends JPanel {
         // JTextField - age
         age = new JTextField();
         age.setBounds(140,327,378,48);
-        age.setText(String.valueOf(member.getAge()));
+        age.setText(userAge);
         
         // JLabel - phone number header
         phoneNo_header = new JLabel("Phone number :");
@@ -119,7 +131,7 @@ public class UI_ProfileEdit extends JPanel {
         // JTextField - phone number
         phoneNo = new JTextField();
         phoneNo.setBounds(554,327,379,48);
-        phoneNo.setText(member.getPhoneNum());
+        phoneNo.setText(userPhoneNo);
 
         // JLabel - Email header
         email_header = new JLabel("Email :");
@@ -130,7 +142,7 @@ public class UI_ProfileEdit extends JPanel {
         email = new JTextField();
         email.setBounds(140,426,793,48);
         email.setEditable(false);
-        email.setText(member.getEmail());
+        email.setText(userEmail);
         email.setForeground(Color.LIGHT_GRAY);
                 
         // JLabel - Profile picture
@@ -191,20 +203,15 @@ public class UI_ProfileEdit extends JPanel {
             // product picture
             if (selectedImagePath != null){
                  Path sourcePath = Paths.get(file.getAbsolutePath());
-                 userProfilePicture = "src/main/java/com/mycompany/oodms/userImage/"+ role + String.valueOf(userId)+ file.getName();
+                 userProfilePicture = "src/main/java/com/mycompany/oodms/userImage/" + String.valueOf(userId)+ file.getName();
                  Path destinationPath = Paths.get(userProfilePicture);
 
                 try {
                     Files.copy(sourcePath, destinationPath);
-                    // set Path into object
-                    if ("staff".equals(role)){
-                            staff.setPicturePath(userProfilePicture);           
-                    }
-                    else if ("admin".equals(role)){
-                             admin.setPicturePath(userProfilePicture);  
-                     }
+                    staff.setPicturePath(userProfilePicture);           
+                    
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(frame,"upload image failed(rename your image and submit again).","Alert",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame,"upload image failed (Rename your image and submit again).","Alert",JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
             }
@@ -212,23 +219,13 @@ public class UI_ProfileEdit extends JPanel {
             Gender input_gender = Gender.valueOf(String.valueOf(gender.getSelectedItem()));
             
             // update information
-            if ("staff".equals(role)){
-                staff.setName(name.getText());
-                staff.setGender(input_gender);
-                staff.setAge(inputAge);
-                staff.setPhoneNum(phoneNo.getText());
-                OODMS_Main.frame.replacePanel(new UI_UserManagementProfile("staff",staff.getID()));
-                DeliveryStaffService.getDeliveryStaffService().updateStaff(staff);
-            }
-            else if ("admin".equals(role)){
-                admin.setName(userName);
-                admin.setGender(input_gender);
-                admin.setAge(inputAge);
-                admin.setPhoneNum(userPhoneNo);
-                AdminService.getAdminService().updateAdmin(admin);                 
-                OODMS_Main.frame.replacePanel(new UI_UserManagementProfile("admin",admin.getID()));
-                JOptionPane.showMessageDialog(frame,"Updated successfully","Alert",JOptionPane.INFORMATION_MESSAGE);
-            }
+            staff.setName(name.getText());
+            staff.setGender(input_gender);
+            staff.setAge(inputAge);
+            staff.setPhoneNum(phoneNo.getText());
+            OODMS_Main.frame.replacePanel(new UI_DeliveryStaffProfile());
+            DeliveryStaffService.getDeliveryStaffService().updateStaff(staff);
+            JOptionPane.showMessageDialog(frame,"Updated successfully","Alert",JOptionPane.INFORMATION_MESSAGE);
         });
         
         // JButton - cancel button

@@ -1,4 +1,4 @@
-package com.mycompany.oodms.ui;
+package com.mycompany.oodms.ui.UI_Admin;
 
 
 import com.mycompany.oodms.Admin;
@@ -9,10 +9,11 @@ import com.mycompany.oodms.Services.User.AdminService;
 import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.User;
+import com.mycompany.oodms.ui.Main_Frame;
 import javax.swing.*;
 import java.awt.*;
 
-public class UI_Profile extends JPanel {
+public class UI_AdminProfile extends JPanel {
     JButton backBtn;
     JLabel profilePic;
     JLabel name;
@@ -27,32 +28,16 @@ public class UI_Profile extends JPanel {
     JLabel phoneNoHeader;
     JLabel phoneNo;
 
-    JButton myOrder;
     JButton editProfile;
     
     
     ImageIcon orangeRect = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangeRectanger.png");
 
-    public UI_Profile(){
-         User user = OODMS_Main.current_user;
-        switch(user.getRole()){
-            case ADMIN -> {
-                Admin admin = (Admin) OODMS_Main.current_user;
-                user  = AdminService.getAdminService().getAdmin(admin.getID());
-            }
-            case MEMBER -> {
-                Member member = (Member) OODMS_Main.current_user;
-                user = MemberService.getMemberService().getMember(member.getID()); 
-            }
-            case DELIVERY_STAFF -> {
-                DeliveryStaff staff = (DeliveryStaff) OODMS_Main.current_user;
-                user = DeliveryStaffService.getDeliveryStaffService().getStaff(staff.getID());
-            }
-            default -> {
-                System.out.println("no user role selected");
-                return;
-            }
-        }
+    public UI_AdminProfile(){
+        User user = OODMS_Main.current_user;
+        Admin admin = (Admin) OODMS_Main.current_user;
+        user  = AdminService.getAdminService().getAdmin(admin.getID());
+
 
         // JLabel - back
         backBtn = new JButton("< back");
@@ -62,8 +47,12 @@ public class UI_Profile extends JPanel {
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backBtn.setOpaque(false);
+        backBtn.setFocusPainted(false);
+        backBtn.setContentAreaFilled(false);
+        backBtn.setOpaque(false);
         backBtn.addActionListener(e -> {
-            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
+            OODMS_Main.frame.replacePanel(new UI_AdminMain());
         });
 
         //image
@@ -149,20 +138,6 @@ public class UI_Profile extends JPanel {
         ///////////////////////////////////////////////////////////////////////////
 
         // JButton - myOrder
-        myOrder = new JButton("<html><body>My<br>order</html>");
-        myOrder.setFont(new Font("MV Boli",Font.PLAIN,12));
-        myOrder.setForeground(new Color(255, 255, 255));
-        myOrder.setIcon(orangeRect);
-        myOrder.setHorizontalTextPosition(JLabel.CENTER);
-        myOrder.setVerticalAlignment(JLabel.CENTER);
-        myOrder.setHorizontalAlignment(JLabel.CENTER);
-        myOrder.setBounds(577,555,112,53);
-        myOrder.setBorder(BorderFactory.createEmptyBorder());
-        myOrder.setFocusable(false);
-        myOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        myOrder.addActionListener(e -> {
-            OODMS_Main.frame.replacePanel(new UI_MyOrder());
-        });
         
         // JButton - editProfile
         editProfile = new JButton("<html><body>Edit<br>profile</html>");
@@ -172,12 +147,13 @@ public class UI_Profile extends JPanel {
         editProfile.setHorizontalTextPosition(JLabel.CENTER);
         editProfile.setVerticalAlignment(JLabel.CENTER);
         editProfile.setHorizontalAlignment(JLabel.CENTER);
-        editProfile.setBounds(770,555,112,53);
+        editProfile.setBounds(577,555,112,53);
         editProfile.setBorder(BorderFactory.createEmptyBorder());
         editProfile.setFocusable(false);
         editProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
         editProfile.addActionListener(e -> {
-//            OODMS_Main.frame.replacePanel(new UI_Profile());
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_AdminProfileEdit(admin.getID()));
         });
 
 
@@ -202,7 +178,6 @@ public class UI_Profile extends JPanel {
         this.add(phoneNoHeader);
         this.add(phoneNo);
 
-        this.add(myOrder);
         this.add(editProfile);
 
     }
