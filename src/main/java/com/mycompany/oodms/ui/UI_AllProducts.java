@@ -96,6 +96,10 @@ public class UI_AllProducts extends JPanel {
         searchBtn.setPreferredSize(new Dimension(45,45));
         searchBtn.setFocusPainted(false);
         searchBtn.setBorderPainted(false);
+        searchBtn.setOpaque(false);
+        searchBtn.setFocusPainted(false);
+        searchBtn.setContentAreaFilled(false);
+        searchBtn.setOpaque(false);
         searchBtn.addActionListener(e -> {
             // no need handle
         });
@@ -179,6 +183,10 @@ public class UI_AllProducts extends JPanel {
                 products[i].setVerticalTextPosition(JLabel.BOTTOM);
                 products[i].setBorder(BorderFactory.createEmptyBorder());
                 products[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                products[i].setOpaque(false);
+                products[i].setFocusPainted(false);
+                products[i].setContentAreaFilled(false);
+                products[i].setOpaque(false);
                 products[i].addActionListener(e -> {
                     OODMS_Main.previous_panel = Main_Frame.currentPanel;
                     OODMS_Main.frame.replacePanel(new UI_Product(product.getProductID()));

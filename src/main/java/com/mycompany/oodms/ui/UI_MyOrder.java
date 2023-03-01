@@ -70,6 +70,10 @@ public class UI_MyOrder extends JPanel{
       packing.setVerticalAlignment(JLabel.CENTER);
       packing.setHorizontalTextPosition(JLabel.CENTER);
       packing.setVerticalTextPosition(JLabel.CENTER);
+      packing.setOpaque(false);
+      packing.setFocusPainted(false);
+      packing.setContentAreaFilled(false);
+      packing.setOpaque(false);
       packing.addActionListener(e -> {
           filterByStatus(DeliveryStatus.PACKING);
       });
@@ -86,6 +90,10 @@ public class UI_MyOrder extends JPanel{
       packed.setVerticalAlignment(JLabel.CENTER);
       packed.setHorizontalTextPosition(JLabel.CENTER);
       packed.setVerticalTextPosition(JLabel.CENTER);
+      packed.setOpaque(false);
+      packed.setFocusPainted(false);
+      packed.setContentAreaFilled(false);
+      packed.setOpaque(false);
       packed.addActionListener(e -> {
           filterByStatus(DeliveryStatus.PACKED);
       });
@@ -102,6 +110,10 @@ public class UI_MyOrder extends JPanel{
       delivering.setVerticalAlignment(JLabel.CENTER);
       delivering.setHorizontalTextPosition(JLabel.CENTER);
       delivering.setVerticalTextPosition(JLabel.CENTER);
+      delivering.setOpaque(false);
+      delivering.setFocusPainted(false);
+      delivering.setContentAreaFilled(false);
+      delivering.setOpaque(false);
       delivering.addActionListener(e -> {
           filterByStatus(DeliveryStatus.DELIVERING);
       });
@@ -118,6 +130,10 @@ public class UI_MyOrder extends JPanel{
       delivered.setVerticalAlignment(JLabel.CENTER);
       delivered.setHorizontalTextPosition(JLabel.CENTER);
       delivered.setVerticalTextPosition(JLabel.CENTER);
+      delivered.setOpaque(false);
+      delivered.setFocusPainted(false);
+      delivered.setContentAreaFilled(false);
+      delivered.setOpaque(false);
       delivered.addActionListener(e -> {
           filterByStatus(DeliveryStatus.DELIVERED);
       });
@@ -197,6 +213,10 @@ public class UI_MyOrder extends JPanel{
                 orders[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
                 orders[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 orders[i].setIconTextGap(30);
+                orders[i].setOpaque(false);
+                orders[i].setFocusPainted(false);
+                orders[i].setContentAreaFilled(false);
+                orders[i].setOpaque(false);
                 orders[i].setFont(new Font("MV Boli",Font.PLAIN,15));
                 orders[i].addActionListener(e -> {
                     OODMS_Main.previous_panel = Main_Frame.currentPanel;

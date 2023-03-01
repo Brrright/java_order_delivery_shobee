@@ -17,7 +17,7 @@ import com.mycompany.oodms.ui.UI_Login;
 import com.mycompany.oodms.ui.UI_MyOrder;
 import com.mycompany.oodms.ui.UI_OrderDetails;
 import com.mycompany.oodms.ui.UI_Payment;
-import com.mycompany.oodms.ui.UI_Profile;
+import com.mycompany.oodms.ui.UI_MemberProfile;
 import javax.swing.JOptionPane;
 
 /**

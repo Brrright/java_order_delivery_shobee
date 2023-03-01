@@ -82,7 +82,7 @@ public class UI_Signup extends JPanel{
         // JLabel - name header
         name_header = new JLabel("Name :");
         name_header.setFont(new Font("MV Boli",Font.PLAIN,12));
-        name_header.setBounds(144,213,50,20);
+        name_header.setBounds(140,213,50,20);
         
         // JTextField - name
         name = new JTextField();
