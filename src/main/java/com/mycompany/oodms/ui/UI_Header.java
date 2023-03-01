@@ -17,8 +17,10 @@ import static com.mycompany.oodms.UserRole.ADMIN;
 import static com.mycompany.oodms.UserRole.DELIVERY_STAFF;
 import static com.mycompany.oodms.UserRole.MEMBER;
 import com.mycompany.oodms.ui.UI_Admin.UI_AdminDelivery;
+import com.mycompany.oodms.ui.UI_Admin.UI_AdminProfile;
 import com.mycompany.oodms.ui.UI_Admin.UI_ReportOrders;
 import com.mycompany.oodms.ui.UI_Admin.UI_UserManagement;
+import com.mycompany.oodms.ui.UI_Delivery.UI_DeliveryStaffProfile;
 import com.mycompany.oodms.ui.UI_Delivery.UI_UpComing;
 import javax.swing.*;
 import java.awt.*;
@@ -34,19 +36,21 @@ public class UI_Header extends JPanel{
     
     // Registered user
     // all products (in unregistered user)
-    JButton profile;
+    JButton memberProfile;
     JButton cart;
     JButton logout;
     
     // Delivery man
     // profile, logout (in registered user)
     JButton delivery;
+    JButton deliveryProfile;
     
     // Admin
     // profile, logout (in registered user)
     JButton adminManagement;
     JButton adminDelivery;
     JButton adminReport;
+    JButton adminProfile;
 
 
     public UI_Header() {
@@ -116,19 +120,19 @@ public class UI_Header extends JPanel{
         // all products (in unregistered user section)
         
         // profile button
-        profile = new JButton();
-        profile.setText("Profile");
-        profile.setBorder(BorderFactory.createEmptyBorder());
-        profile.setFocusable(false);
-        profile.setForeground(new Color(0, 0, 0));
-        profile.setFont(new Font("Sarif",Font.BOLD,15));
-        profile.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        profile.setOpaque(false);
-        profile.setFocusPainted(false);
-        profile.setContentAreaFilled(false);
-        profile.addActionListener(e -> {
+        memberProfile = new JButton();
+        memberProfile.setText("Profile");
+        memberProfile.setBorder(BorderFactory.createEmptyBorder());
+        memberProfile.setFocusable(false);
+        memberProfile.setForeground(new Color(0, 0, 0));
+        memberProfile.setFont(new Font("Sarif",Font.BOLD,15));
+        memberProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        memberProfile.setOpaque(false);
+        memberProfile.setFocusPainted(false);
+        memberProfile.setContentAreaFilled(false);
+        memberProfile.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
-            OODMS_Main.frame.replacePanel(new UI_Profile());
+            OODMS_Main.frame.replacePanel(new UI_MemberProfile());
         });
         
         // cart button
@@ -213,8 +217,23 @@ public class UI_Header extends JPanel{
             OODMS_Main.frame.replacePanel(new UI_UpComing());
         });
         
-        // profile, logout (in registered user section)
+        // delivery profile
+        deliveryProfile = new JButton();
+        deliveryProfile.setText("Profile");
+        deliveryProfile.setBorder(BorderFactory.createEmptyBorder());
+        deliveryProfile.setFocusable(false);
+        deliveryProfile.setForeground(new Color(0, 0, 0));
+        deliveryProfile.setFont(new Font("Sarif",Font.BOLD,15));
+        deliveryProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        deliveryProfile.setOpaque(false);
+        deliveryProfile.setFocusPainted(false);
+        deliveryProfile.setContentAreaFilled(false);
+        deliveryProfile.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_DeliveryStaffProfile());
+        });
         
+        // profile, logout (in registered user section)
         
         ////////////////////////////////////////////////////////////////////////
         //////////////////////////// - Admin  - ////////////////////////////////
@@ -268,6 +287,21 @@ public class UI_Header extends JPanel{
             OODMS_Main.frame.replacePanel(new UI_ReportOrders());
         });
         
+        adminProfile = new JButton();
+        adminProfile.setText("Profile");
+        adminProfile.setBorder(BorderFactory.createEmptyBorder());
+        adminProfile.setFocusable(false);
+        adminProfile.setForeground(new Color(0, 0, 0));
+        adminProfile.setFont(new Font("Sarif",Font.BOLD,15));
+        adminProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        adminProfile.setOpaque(false);
+        adminProfile.setFocusPainted(false);
+        adminProfile.setContentAreaFilled(false);
+        adminProfile.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_AdminProfile());
+        });
+        
         // profile, logout (in registered user section)
         
         ////////////////////////////////////////////////////////////////////////
@@ -294,21 +328,22 @@ public class UI_Header extends JPanel{
                     this.add(adminManagement);
                     this.add(adminDelivery);
                     this.add(adminReport);
-                    this.add(profile);
+                    this.add(adminProfile);
                     this.add(logout);
                 }
                 case MEMBER -> {
                     this.add(allProduct);
                     this.add(cart);
-                    this.add(profile);
                     this.add(myOrder);
+                    this.add(memberProfile);
                     this.add(logout);
                 }
                 case DELIVERY_STAFF -> {
                     this.add(delivery);
-                    this.add(profile);
+                    this.add(deliveryProfile);
                     this.add(logout);
                 }
+
             }
         }
     }
