@@ -1,14 +1,16 @@
-package com.mycompany.oodms.ui.UI_Admin;
+package com.mycompany.oodms.ui;
 
 
 import com.mycompany.oodms.Admin;
 import com.mycompany.oodms.DeliveryStaff;
 import com.mycompany.oodms.Gender;
+import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Services.User.AdminService;
 import com.mycompany.oodms.Services.User.DeliveryStaffService;
-import com.mycompany.oodms.ui.UI_Login;
+import com.mycompany.oodms.Services.User.MemberService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -19,7 +21,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class UI_UserManagementProfileEdit extends JPanel {
+public class UI_ProfileEdit extends JPanel {
 
     JButton back;
     
@@ -40,12 +42,6 @@ public class UI_UserManagementProfileEdit extends JPanel {
     JTextField email;
     JButton profilePic_upload;
     
-    String userName;
-    String userProfilePicture;
-    Gender userGender;
-    String userAge;
-    String userEmail;
-    String userPhoneNo;
     
     File file;
     String selectedImagePath;
@@ -54,39 +50,18 @@ public class UI_UserManagementProfileEdit extends JPanel {
     JButton update;
     JButton cancel;
     
-    DeliveryStaff staff;
-    Admin admin;
+    Member member;
     
     
-    private Admin initialize_admin_data(int id){
-        Admin tempAdmin = AdminService.getAdminService().getAdmin(id);
-        return tempAdmin;
+    private Member initialize_member_data(int id){
+        return MemberService.getMemberService().getMember(id);
     }
-    
-    private DeliveryStaff initialize_staff_data(int id){
-        DeliveryStaff tempStaff = DeliveryStaffService.getDeliveryStaffService().getStaff(id);
-        return tempStaff;
-    }
-    
-    public UI_UserManagementProfileEdit(String role, int userId){
-        // REQUIRED DATA
-        if ("staff".equals(role)){
-            staff = initialize_staff_data(userId);
-            userName = staff.getName();
-            userGender = staff.getGender();
-            userAge = String.valueOf(staff.getAge());
-            userEmail = String.valueOf(staff.getEmail());
-            userPhoneNo = String.valueOf(staff.getPhoneNum());     
-        }
-        else if ("admin".equals(role)){
-            admin = initialize_admin_data(userId);
-            userName = admin.getName();
-            userGender = admin.getGender();
-            userAge = String.valueOf(admin.getAge());
-            userEmail = String.valueOf(admin.getEmail());
-            userPhoneNo = String.valueOf(admin.getPhoneNum());        
-        }
 
+    
+    public UI_ProfileEdit(int userId){
+        // REQUIRED DATA
+        member = initialize_member_data(userId);
+      
         // JButton - back (to login page)
         back = new JButton("< back");
         back.setFont(new Font("MV Boli",Font.PLAIN,12));
@@ -112,7 +87,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         // JTextField - name
         name = new JTextField();
         name.setBounds(140,233,587,48);
-        name.setText(userName);
+        name.setText(member.getName());
         
         // JLabel - gender header
         gender_header = new JLabel("Gender :");
@@ -123,7 +98,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         Gender[] genderList = {Gender.MALE, Gender.FEMALE};
         gender = new JComboBox(genderList);
         gender.setBounds(759,233,174,48);
-        gender.setSelectedItem(userGender);
+        gender.setSelectedItem(member.getGender());
 
         
         // JLabel - age header
@@ -134,7 +109,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         // JTextField - age
         age = new JTextField();
         age.setBounds(140,327,378,48);
-        age.setText(userAge);
+        age.setText(String.valueOf(member.getAge()));
         
         // JLabel - phone number header
         phoneNo_header = new JLabel("Phone number :");
@@ -144,7 +119,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         // JTextField - phone number
         phoneNo = new JTextField();
         phoneNo.setBounds(554,327,379,48);
-        phoneNo.setText(userPhoneNo);
+        phoneNo.setText(member.getPhoneNum());
 
         // JLabel - Email header
         email_header = new JLabel("Email :");
@@ -155,7 +130,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         email = new JTextField();
         email.setBounds(140,426,793,48);
         email.setEditable(false);
-        email.setText(userEmail);
+        email.setText(member.getEmail());
         email.setForeground(Color.LIGHT_GRAY);
                 
         // JLabel - Profile picture
@@ -246,10 +221,10 @@ public class UI_UserManagementProfileEdit extends JPanel {
                 DeliveryStaffService.getDeliveryStaffService().updateStaff(staff);
             }
             else if ("admin".equals(role)){
-                admin.setName(name.getText());
+                admin.setName(userName);
                 admin.setGender(input_gender);
                 admin.setAge(inputAge);
-                admin.setPhoneNum(phoneNo.getText());
+                admin.setPhoneNum(userPhoneNo);
                 AdminService.getAdminService().updateAdmin(admin);                 
                 OODMS_Main.frame.replacePanel(new UI_UserManagementProfile("admin",admin.getID()));
                 JOptionPane.showMessageDialog(frame,"Updated successfully","Alert",JOptionPane.INFORMATION_MESSAGE);

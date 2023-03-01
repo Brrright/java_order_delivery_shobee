@@ -129,7 +129,10 @@ public class UI_ProductManagementProduct extends JPanel {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
                 if (removeConfirmation == JOptionPane.OK_OPTION) {
-                    // remove product
+                    // Remove product
+                    ProductService.getProductService().deleteProduct(product);
+                    JOptionPane.showMessageDialog(frame,"Product remove successfully.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                    OODMS_Main.frame.replacePanel(new UI_ProductManagement());
                 }
         });
 

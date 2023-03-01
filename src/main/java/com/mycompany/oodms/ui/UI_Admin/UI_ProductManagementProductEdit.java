@@ -108,7 +108,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
         category_header.setFont(new Font("MV Boli",Font.PLAIN,12));
         category_header.setBounds(759,213,100,20);
         
-        // JTextField - category
+        // JComboBox - category
         category = new JComboBox<>(categories_name.toArray(new String[categories_name.size()]));
         category.setBounds(759,233,174,48);
         category.setSelectedItem(product.getCategory());
@@ -217,14 +217,21 @@ public class UI_ProductManagementProductEdit extends JPanel {
             
             // update data
             product.setProductName(name.getText());
-            product.setCategory((Category) category.getSelectedItem());
+
+// change category name
+//            int categoryId = product.getCategory().getCategoryID();
+//            Category categoryClass = CategoryService.getCategoryService().getCategory(categoryId);
+//            categoryClass.setCategoryName((String) category.getSelectedItem());
+//            CategoryService.getCategoryService().updateCategory(categoryClass);
                         // how to set category
                         // why there are 2 product set stock
+            int categoryId = category.getSelectedIndex() + 1;           
+            Category modifiedCategory = CategoryService.getCategoryService().getCategory(categoryId); // new category
+            product.setCategory(modifiedCategory);
             product.setProductPrice(inputPrice);
             product.setProductStock(inputStock);
             product.setProductDescription(description.getText());
-            
-            
+            ProductService.getProductService().updateProduct(product);
          
             JOptionPane.showMessageDialog(frame,"product is updated.","Alert",JOptionPane.INFORMATION_MESSAGE);
         });

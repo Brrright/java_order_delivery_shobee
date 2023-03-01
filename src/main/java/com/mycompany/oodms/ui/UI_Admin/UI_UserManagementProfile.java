@@ -222,7 +222,18 @@ public class UI_UserManagementProfile extends JPanel {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
                 if (removeConfirmation == JOptionPane.OK_OPTION) {
-                    // remove user
+                  if ("staff".equals(role)){
+                        DeliveryStaff removeStaff = DeliveryStaffService.getDeliveryStaffService().getStaff(userId);
+                        DeliveryStaffService.getDeliveryStaffService().deleteStaff(removeStaff);
+                        JOptionPane.showMessageDialog(frame,"Delivery staff remove successfully.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                        OODMS_Main.frame.replacePanel(new UI_UserManagement());
+                    }
+                    else if ("admin".equals(role)){
+                           Admin removeAdmin = AdminService.getAdminService().getAdmin(userId);
+                           AdminService.getAdminService().deleteAdmin(removeAdmin);
+                           JOptionPane.showMessageDialog(frame,"Admin remove successfully.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                           OODMS_Main.frame.replacePanel(new UI_UserManagement());
+                    }
                 }
         });
 

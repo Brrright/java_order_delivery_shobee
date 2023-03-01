@@ -14,11 +14,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class UI_ProductManagementAdd extends JPanel {
+    
+    ArrayList<Category> all_categories = initialize_category_data();
+    ArrayList<String> categories_name = new ArrayList<>();
 
     JButton back;
     
@@ -47,7 +51,18 @@ public class UI_ProductManagementAdd extends JPanel {
     JButton update;
     JButton cancel;
     
+    public ArrayList<Category> initialize_category_data()
+    {
+        ArrayList<Category> all_categories = CategoryService.getCategoryService().getCategories();
+        return all_categories;
+    }
+
     public UI_ProductManagementAdd(){
+        
+        for(int y = 0; y < all_categories.size(); y++){
+            categories_name.add(all_categories.get(y).getCategoryName());
+        }
+        
 
         // JButton - back (to login page)
         back = new JButton("< back");
@@ -81,11 +96,9 @@ public class UI_ProductManagementAdd extends JPanel {
         category_header.setBounds(763,213,100,20);
         
         // JTextField - category
-        String[] genderList = {"Electronics","Foods and beverage"};
-        category = new JComboBox(genderList);
+        category = new JComboBox<>(categories_name.toArray(new String[categories_name.size()]));
         category.setBounds(759,233,174,48);
 
-        
         // JLabel - price header
         price_header = new JLabel("Price :");
         price_header.setFont(new Font("MV Boli",Font.PLAIN,12));
@@ -155,9 +168,13 @@ public class UI_ProductManagementAdd extends JPanel {
         update.setForeground(Color.WHITE);
         update.addActionListener(e -> {
             String categoryName = String.valueOf(category.getSelectedItem());
-            int newCategoryID = CategoryService.getCategoryService().getNewCategoryID();
-            Category newCategory = new Category(newCategoryID, categoryName);
+//            int newCategoryID = CategoryService.getCategoryService().getNewCategoryID();
+//            Category newCategory = new Category(newCategoryID, categoryName);
             
+            int categoryId = category.getSelectedIndex() + 1;           
+            Category modifiedCategory = CategoryService.getCategoryService().getCategory(categoryId); // new category
+
+
             int newProductID = ProductService.getProductService().getProductNewID();
             String newName = name.getText();
             try {
@@ -193,7 +210,7 @@ public class UI_ProductManagementAdd extends JPanel {
                  return;
             }
             
-            Product newProduct = new Product(newProductID, newName, newPrice, newStock, newProPic, newCategory, newProDescription);
+            Product newProduct = new Product(newProductID, newName, newPrice, newStock, newProPic, modifiedCategory, newProDescription);
             ProductService.getProductService().addProduct(newProduct);
             JOptionPane.showMessageDialog(frame,"Added  " + newName +" successfully.","Alert",JOptionPane.INFORMATION_MESSAGE);
         });
