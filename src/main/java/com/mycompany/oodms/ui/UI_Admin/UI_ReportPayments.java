@@ -221,6 +221,10 @@ public class UI_ReportPayments extends JPanel{
             reports[i].setVerticalTextPosition(JLabel.CENTER);
             reports[i].setIconTextGap(40);
             reports[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+             reports[i].setOpaque(false);
+             reports[i].setFocusPainted(false);
+             reports[i].setContentAreaFilled(false);
+             reports[i].setOpaque(false);
             reports[i].addActionListener(e -> {
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
                 OODMS_Main.frame.replacePanel(new UI_ReportPayment());        
