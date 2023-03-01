@@ -15,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -53,6 +54,7 @@ public class UI_MyOrder extends JPanel{
   }
   
   public UI_MyOrder() {
+      DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
       
       // JLabel - title
       title = new JLabel("My order");
@@ -238,7 +240,7 @@ public class UI_MyOrder extends JPanel{
                 ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
 
                 orders[i].setIcon(scaleImageIcon);
-                orders[i].setText("<html>"+ order_item.getProduct().getProductName() + "<br><br>Purchased on: " + order_item.getOrder().getOrderDateTime() + "</html>");
+                orders[i].setText("<html>"+ order_item.getProduct().getProductName() + "<br><br>Purchased on: " + order_item.getOrder().getOrderDateTime().format(format) + "</html>");
                 orders[i].setPreferredSize(new Dimension(737,202));
                 orders[i].setFocusPainted(false);
                 orders[i].setHorizontalAlignment(JLabel.LEFT);
