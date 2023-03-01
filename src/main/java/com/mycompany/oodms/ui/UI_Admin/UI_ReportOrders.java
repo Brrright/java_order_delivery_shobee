@@ -69,8 +69,6 @@ public class UI_ReportOrders extends JPanel{
      Delivery matchedDelivery = null;
     Order matchedOrder = null;
     
-    Product product = null;
-     
      public ArrayList<OrderItem> initializeOrderItemData(){
          return OrderItemService.getOrderItemService().getOrderItems();
      }
@@ -210,6 +208,8 @@ public class UI_ReportOrders extends JPanel{
         reports = new JButton[newOrderItems.size()];
         
         for (int i = 0; i < newOrderItems.size();i++){
+            Order order = newOrderItems.get(i).getOrder();
+            Product product = newOrderItems.get(i).getProduct();
 //            *******************************
             deliveries = DeliveryService.getDeliveryService().getDeliveries(newOrderItems.get(i).getOrder().getOrderID());
             
@@ -240,8 +240,6 @@ public class UI_ReportOrders extends JPanel{
             Image originalImage = originalIcon.getImage();
             Image scaledImage = originalImage.getScaledInstance(105, 110, Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
-            product = newOrderItems.get(i).getProduct();
-
             // button (order)
             reports[i] = new JButton(scaledIcon);
             reports[i].setText("<html>"
@@ -267,7 +265,9 @@ public class UI_ReportOrders extends JPanel{
             reports[i].setOpaque(false);
             reports[i].addActionListener(e -> {
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
-                OODMS_Main.frame.replacePanel(new UI_ReportOrder(matchedOrder, product));        
+//                System.out.println("orderidkID ; " + orderIDK.getOrderID());
+//                System.out.println("productID; " + product.getProductID());
+                OODMS_Main.frame.replacePanel(new UI_ReportOrder(order, product));        
             });
         }
         for (JButton report : reports){
