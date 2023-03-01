@@ -22,6 +22,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -69,12 +70,17 @@ public class UI_ReportOrders extends JPanel{
      Delivery matchedDelivery = null;
     Order matchedOrder = null;
     
+    DateTimeFormatter format;
+    
      public ArrayList<OrderItem> initializeOrderItemData(){
          return OrderItemService.getOrderItemService().getOrderItems();
      }
      
      
     public UI_ReportOrders() {
+        
+         format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
+
         orderItems = initializeOrderItemData();
         if(orderItems.size() == 0){
             report_panel.add(new JLabel("No records"));
@@ -254,7 +260,7 @@ public class UI_ReportOrders extends JPanel{
             reports[i].setText("<html>"
                     + " Order ID       : " + newOrderItems.get(i).getOrder().getOrderID()
                     + "<br> ProductID      : " +newOrderItems.get(i).getProduct().getProductID() 
-                    + "<br> Order date     : " + matchedOrder.getOrderDateTime() 
+                    + "<br> Order date     : " + matchedOrder.getOrderDateTime().format(format)
                     + "<br> Status            : " + matchedDelivery.getStatus() 
                     + "<br> Staff in charge: " + deliveryStaffName
                     + "<br> Ordered By    : " +matchedOrder.getCustomer().getEmail());

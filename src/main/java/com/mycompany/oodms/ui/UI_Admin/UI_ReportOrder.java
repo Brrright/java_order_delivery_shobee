@@ -17,6 +17,7 @@ import com.mycompany.oodms.ui.Main_Frame;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -57,6 +58,8 @@ public class UI_ReportOrder extends JPanel{
     JLabel viewOrderDetails;
     OrderItem matchedItem =null;
     
+    DateTimeFormatter format;
+    
     String orderedItemString = "";
     
     public ArrayList<Delivery> intializeDeliveryData(Order order){
@@ -68,6 +71,9 @@ public class UI_ReportOrder extends JPanel{
     }
     
     public UI_ReportOrder(Order order, Product passedProduct) {
+        
+        format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
+
         ArrayList<Delivery> deliveries = intializeDeliveryData(order);
         ArrayList<OrderItem> items =  fetchOrderItems( order);
         for(OrderItem item : items){
@@ -234,7 +240,7 @@ public class UI_ReportOrder extends JPanel{
         purchaseOn_header.setBounds(160,411,180,20);
         
         // JLabel - pruchase date
-        purchaseOn = new JLabel(": " + order.getOrderDateTime());
+        purchaseOn = new JLabel(": " + order.getOrderDateTime().format(format));
         purchaseOn.setFont(new Font("MV Boli",Font.PLAIN,16));
         purchaseOn.setBounds(367,411,550,20);
         

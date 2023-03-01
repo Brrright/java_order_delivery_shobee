@@ -43,6 +43,8 @@ public class UI_MyOrder extends JPanel{
   JButton delivered;
   ArrayList<OrderItem> order_items = initialize_data();
   
+  DateTimeFormatter format;
+  
   // orders
 //  ArrayList<ArrayList<String>> tempOrder = new ArrayList<>();
 //  ArrayList<String> tempContainer = new ArrayList<>();
@@ -54,7 +56,7 @@ public class UI_MyOrder extends JPanel{
   }
   
   public UI_MyOrder() {
-      DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
+      format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
       
       // JLabel - title
       title = new JLabel("My order");
@@ -238,7 +240,7 @@ public class UI_MyOrder extends JPanel{
                 Image image = productImg.getImage();
                 Image scaleImage = image.getScaledInstance(154, 174, Image.SCALE_SMOOTH);
                 ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
-
+                
                 orders[i].setIcon(scaleImageIcon);
                 orders[i].setText("<html>"+ order_item.getProduct().getProductName() + "<br><br>Purchased on: " + order_item.getOrder().getOrderDateTime().format(format) + "</html>");
                 orders[i].setPreferredSize(new Dimension(737,202));

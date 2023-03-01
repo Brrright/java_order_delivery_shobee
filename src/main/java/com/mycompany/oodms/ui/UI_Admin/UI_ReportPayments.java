@@ -19,6 +19,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -61,13 +62,17 @@ public class UI_ReportPayments extends JPanel{
      JPanel selection_container;
      JPanel search_container;
      JScrollPane main_container;
-
      
+     DateTimeFormatter format;
+
     public ArrayList<Order> initializeOrderData(){
         return OrderService.getOrderService().getOrders();
     }
      
     public UI_ReportPayments() {
+        
+        format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
+        
         orders = initializeOrderData();
         memberEmails = MemberService.getMemberService().getMemberEmails();
 
@@ -215,7 +220,7 @@ public class UI_ReportPayments extends JPanel{
             // button (order)
             reports[i] = new JButton();
             reports[i].setText("<html>Order / Payment ID : " + newOrders.get(i).getOrderID() 
-                    + "<br>Payment date : " + newOrders.get(i).getOrderDateTime()
+                    + "<br>Payment date : " + newOrders.get(i).getOrderDateTime().format(format)
                     + "<br>Amount : RM " + newOrders.get(i).getTotalPrice()
                     + "<br> Ordered by: " + newOrders.get(i).getCustomer().getEmail());
             

@@ -17,6 +17,7 @@ import com.mycompany.oodms.Services.User.MemberService;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -54,6 +55,8 @@ public class UI_OrderDetails extends JPanel{
     JLabel paymentMethod;
     JLabel billingAddress;
     
+    DateTimeFormatter format;
+    
     public Order initialize_order_data(Order order) 
     {
         return OrderService.getOrderService().getOrder(order.getOrderID());
@@ -80,7 +83,8 @@ public class UI_OrderDetails extends JPanel{
         return response;
     }
     
-    public UI_OrderDetails(OrderItem receivedOrderItem) { 
+    public UI_OrderDetails(OrderItem receivedOrderItem) {
+        format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
         Order order = initialize_order_data(receivedOrderItem.getOrder());
 
         if(receivedOrderItem == null) {
@@ -259,7 +263,7 @@ public class UI_OrderDetails extends JPanel{
         purchaseOn_header.setBounds(160,411,180,20);
         
         // JLabel - pruchase date
-        purchaseOn = new JLabel(": "  + delivery.getDateTime());
+        purchaseOn = new JLabel(": "  + delivery.getDateTime().format(format));
         purchaseOn.setFont(new Font("MV Boli",Font.PLAIN,16));
         purchaseOn.setBounds(367,411,550,20);
         
