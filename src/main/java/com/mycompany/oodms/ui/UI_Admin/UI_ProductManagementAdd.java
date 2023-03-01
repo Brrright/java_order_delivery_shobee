@@ -72,6 +72,10 @@ public class UI_ProductManagementAdd extends JPanel {
         back.setBorder(BorderFactory.createEmptyBorder());
         back.setFocusable(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        back.setOpaque(false);
+        back.setFocusPainted(false);
+        back.setContentAreaFilled(false);
+        back.setOpaque(false);
         back.addActionListener(e -> {
             OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });

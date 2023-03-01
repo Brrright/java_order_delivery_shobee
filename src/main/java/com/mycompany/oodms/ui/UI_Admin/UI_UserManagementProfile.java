@@ -82,6 +82,10 @@ public class UI_UserManagementProfile extends JPanel {
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setFocusable(false);
         backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backBtn.setOpaque(false);
+        backBtn.setFocusPainted(false);
+        backBtn.setContentAreaFilled(false);
+        backBtn.setOpaque(false);
         backBtn.addActionListener(e -> {
             OODMS_Main.frame.replacePanel(new UI_UserManagement());
         });

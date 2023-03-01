@@ -95,6 +95,10 @@ public class UI_UserManagementProfileEdit extends JPanel {
         back.setBorder(BorderFactory.createEmptyBorder());
         back.setFocusable(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        back.setOpaque(false);
+        back.setFocusPainted(false);
+        back.setContentAreaFilled(false);
+        back.setOpaque(false);
         back.addActionListener(e -> {
             OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
         });
@@ -244,6 +248,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
                 staff.setPhoneNum(phoneNo.getText());
                 OODMS_Main.frame.replacePanel(new UI_UserManagementProfile("staff",staff.getID()));
                 DeliveryStaffService.getDeliveryStaffService().updateStaff(staff);
+                JOptionPane.showMessageDialog(frame,"Updated successfully","Alert",JOptionPane.INFORMATION_MESSAGE);
             }
             else if ("admin".equals(role)){
                 admin.setName(name.getText());

@@ -15,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -31,6 +32,9 @@ public class UI_MyOrder extends JPanel{
   JLabel title;
   
   ImageIcon orangeCircle = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/orangecircle.png");
+  ImageIcon grayCircle1 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
+  ImageIcon grayCircle2 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
+  ImageIcon grayCircle3 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
   JPanel buttons_panel = new JPanel();
   JPanel orderStatus_btns;
   JButton packing;
@@ -50,6 +54,7 @@ public class UI_MyOrder extends JPanel{
   }
   
   public UI_MyOrder() {
+      DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
       
       // JLabel - title
       title = new JLabel("My order");
@@ -76,14 +81,22 @@ public class UI_MyOrder extends JPanel{
       packing.setOpaque(false);
       packing.addActionListener(e -> {
           filterByStatus(DeliveryStatus.PACKING);
+          packing.setIcon(orangeCircle);
+          packing.setForeground(Color.WHITE);
+          packed.setIcon(grayCircle1);
+          packed.setForeground(Color.GRAY);
+          delivering.setIcon(grayCircle2);
+          delivering.setForeground(Color.GRAY);
+          delivered.setIcon(grayCircle3);
+          delivered.setForeground(Color.GRAY);
       });
       
       // JButton - packed
       packed = new JButton("Packed");
-      packed.setForeground(Color.WHITE);
-      packed.setIcon(orangeCircle);
+      packed.setIcon(grayCircle1);
       packed.setFocusPainted(false);
       packed.setBorderPainted(false);
+      packed.setForeground(Color.GRAY);
       packed.setFont(new Font("MV Boli",Font.PLAIN,15));
       packed.setPreferredSize(new Dimension(153,153));
       packed.setHorizontalAlignment(JLabel.CENTER);
@@ -96,12 +109,20 @@ public class UI_MyOrder extends JPanel{
       packed.setOpaque(false);
       packed.addActionListener(e -> {
           filterByStatus(DeliveryStatus.PACKED);
+          packing.setIcon(grayCircle1);
+          packing.setForeground(Color.GRAY);
+          packed.setIcon(orangeCircle);
+          packed.setForeground(Color.WHITE);
+          delivering.setIcon(grayCircle2);
+          delivering.setForeground(Color.GRAY);
+          delivered.setIcon(grayCircle3);
+          delivered.setForeground(Color.GRAY);
       });
       
       // JButton - delivering
       delivering = new JButton("Delivering");
-      delivering.setForeground(Color.WHITE);
-      delivering.setIcon(orangeCircle);
+      delivering.setIcon(grayCircle2);
+      delivering.setForeground(Color.GRAY);
       delivering.setFocusPainted(false);
       delivering.setBorderPainted(false);
       delivering.setFont(new Font("MV Boli",Font.PLAIN,15));
@@ -116,12 +137,20 @@ public class UI_MyOrder extends JPanel{
       delivering.setOpaque(false);
       delivering.addActionListener(e -> {
           filterByStatus(DeliveryStatus.DELIVERING);
+          packing.setIcon(grayCircle1);
+          packing.setForeground(Color.GRAY);
+          packed.setIcon(grayCircle2);
+          packed.setForeground(Color.GRAY);
+          delivering.setIcon(orangeCircle);
+          delivering.setForeground(Color.WHITE);
+          delivered.setIcon(grayCircle3);
+          delivered.setForeground(Color.GRAY);
       });
       
       // JButton - delivered
       delivered = new JButton("Delivered");
-      delivered.setForeground(Color.WHITE);
-      delivered.setIcon(orangeCircle);
+      delivered.setIcon(grayCircle3);
+      delivered.setForeground(Color.GRAY);
       delivered.setFocusPainted(false);
       delivered.setBorderPainted(false);
       delivered.setFont(new Font("MV Boli",Font.PLAIN,15));
@@ -136,6 +165,14 @@ public class UI_MyOrder extends JPanel{
       delivered.setOpaque(false);
       delivered.addActionListener(e -> {
           filterByStatus(DeliveryStatus.DELIVERED);
+          packing.setIcon(grayCircle1);
+          packing.setForeground(Color.GRAY);
+          packed.setIcon(grayCircle2);
+          packed.setForeground(Color.GRAY);
+          delivering.setIcon(grayCircle3);
+          delivering.setForeground(Color.GRAY);
+          delivered.setIcon(orangeCircle);
+          delivered.setForeground(Color.WHITE);
       });
       
       
@@ -203,7 +240,7 @@ public class UI_MyOrder extends JPanel{
                 ImageIcon scaleImageIcon = new ImageIcon(scaleImage);
 
                 orders[i].setIcon(scaleImageIcon);
-                orders[i].setText("<html>"+ order_item.getProduct().getProductName() + "<br><br>Purchased on: " + order_item.getOrder().getOrderDateTime() + "</html>");
+                orders[i].setText("<html>"+ order_item.getProduct().getProductName() + "<br><br>Purchased on: " + order_item.getOrder().getOrderDateTime().format(format) + "</html>");
                 orders[i].setPreferredSize(new Dimension(737,202));
                 orders[i].setFocusPainted(false);
                 orders[i].setHorizontalAlignment(JLabel.LEFT);

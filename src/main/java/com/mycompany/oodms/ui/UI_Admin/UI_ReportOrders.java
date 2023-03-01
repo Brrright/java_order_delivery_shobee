@@ -100,6 +100,11 @@ public class UI_ReportOrders extends JPanel{
         orderBtn.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,0)));
         orderBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         orderBtn.setForeground(Color.WHITE);
+        orderBtn.setOpaque(false);
+        orderBtn.setFocusPainted(false);
+        orderBtn.setContentAreaFilled(false);
+        orderBtn.setOpaque(false);
+
         
         // JButton - payment button
         paymentBtn = new JButton("Payment");
@@ -111,6 +116,10 @@ public class UI_ReportOrders extends JPanel{
         paymentBtn.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,0)));
         paymentBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         paymentBtn.setForeground(Color.GRAY);
+        paymentBtn.setOpaque(false);
+        paymentBtn.setFocusPainted(false);
+        paymentBtn.setContentAreaFilled(false);
+        paymentBtn.setOpaque(false);
         paymentBtn.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             frame.replacePanel(new UI_ReportPayments());
