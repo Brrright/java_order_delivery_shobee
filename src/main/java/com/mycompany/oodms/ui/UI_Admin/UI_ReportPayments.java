@@ -61,6 +61,10 @@ public class UI_ReportPayments extends JPanel{
      JPanel selection_container;
      JPanel search_container;
      JScrollPane main_container;
+
+     
+     Order order =  null;
+
      
     public ArrayList<Order> initializeOrderData(){
         return OrderService.getOrderService().getOrders();
@@ -202,6 +206,7 @@ public class UI_ReportPayments extends JPanel{
         reports = new JButton[newOrders.size()];
         
         for (int i = 0; i < newOrders.size();i++){
+            order = newOrders.get(i);
             // button (order)
             reports[i] = new JButton();
             reports[i].setText("<html>Order / Payment ID : " + newOrders.get(i).getOrderID() 
@@ -224,7 +229,7 @@ public class UI_ReportPayments extends JPanel{
              reports[i].setOpaque(false);
             reports[i].addActionListener(e -> {
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
-                OODMS_Main.frame.replacePanel(new UI_ReportPayment());        
+                OODMS_Main.frame.replacePanel(new UI_ReportPayment(order));        
             });
         }
         

@@ -4,41 +4,25 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;;
 
+import javax.swing.*;
+import com.mycompany.oodms.OrderItem;
+import java.util.ArrayList;
+import com.mycompany.oodms.Order;
 import com.mycompany.oodms.OODMS_Main;
-import static com.mycompany.oodms.OODMS_Main.frame;
-import com.mycompany.oodms.ui.Main_Frame;
+import com.mycompany.oodms.Services.OrderItemService;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.*;
+import com.mycompany.oodms.OrderItem;
+import java.util.ArrayList;
+import com.mycompany.oodms.Order;
+import com.mycompany.oodms.OODMS_Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import javax.swing.*;
-import static com.mycompany.oodms.OODMS_Main.frame;
-import com.mycompany.oodms.ui.Main_Frame;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import javax.swing.*;
 
 /**
  *
@@ -65,7 +49,9 @@ public class UI_ReportPayment extends JPanel {
     JPanel panel;
 
    
-   public UI_ReportPayment(){
+   public UI_ReportPayment(Order order){
+//       ArrayList<OrderItem> orderItems = OrderItemService.getOrderItemService().getOrderItems(order.getOrderID());
+       
        
        // JButton - back
        back = new JButton("< back");
@@ -83,13 +69,13 @@ public class UI_ReportPayment extends JPanel {
        
        
        // JLabel - order amount header
-       orderAmt_header = new JLabel("Order amount");
+       orderAmt_header = new JLabel("Order ID");
        orderAmt_header.setForeground(new Color(255,166,101));
        orderAmt_header.setFont(new Font("Sarif",Font.PLAIN,15));
        orderAmt_header.setBounds(206, 174, 161, 27);
        
        // JLabel - order amount
-       orderAmt = new JLabel("" + "4");
+       orderAmt = new JLabel(String.valueOf(order.getOrderID()));
        orderAmt.setForeground(Color.BLACK);
        orderAmt.setFont(new Font("Sarif",Font.PLAIN,15));
        orderAmt.setBounds(480, 174, 430, 27);
@@ -101,7 +87,7 @@ public class UI_ReportPayment extends JPanel {
        price_header.setBounds(206, 234, 161, 27);
        
        // JLabel - price
-       price = new JLabel("RM " + "23.00");
+       price = new JLabel("RM " + order.getTotalPrice());
        price.setForeground(Color.BLACK);
        price.setFont(new Font("Sarif",Font.PLAIN,15));
        price.setBounds(480, 234, 430, 27);
@@ -126,7 +112,7 @@ public class UI_ReportPayment extends JPanel {
        
        
         // JLabel - Total price
-       totalPrice = new JLabel("RM 5.00" + " + RM 23.00");
+       totalPrice = new JLabel("RM 5.00" + " +  RM " +  order.getTotalPrice());
        totalPrice.setForeground(Color.BLACK);
        totalPrice.setFont(new Font("Sarif",Font.BOLD,15));
        totalPrice.setBounds(480, 354, 430, 27);
@@ -150,7 +136,7 @@ public class UI_ReportPayment extends JPanel {
        billingAddress_header.setBounds(206, 474, 161, 27);
        
         // JLabel - Billing address
-       billingAddress = new JLabel("<html>"+"57 Jalan SP 4/6 Taman Segar Perdana 43200, Cheras, Selangor" + "</html>");
+       billingAddress = new JLabel(order.getAddress().toString());
        billingAddress.setForeground(Color.BLACK);
        billingAddress.setFont(new Font("Sarif",Font.PLAIN,15));
        billingAddress.setBounds(480, 474, 380, 60);
