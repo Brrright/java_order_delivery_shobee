@@ -246,10 +246,10 @@ public class UI_UserManagementProfileEdit extends JPanel {
                 DeliveryStaffService.getDeliveryStaffService().updateStaff(staff);
             }
             else if ("admin".equals(role)){
-                admin.setName(userName);
+                admin.setName(name.getText());
                 admin.setGender(input_gender);
                 admin.setAge(inputAge);
-                admin.setPhoneNum(userPhoneNo);
+                admin.setPhoneNum(phoneNo.getText());
                 AdminService.getAdminService().updateAdmin(admin);                 
                 OODMS_Main.frame.replacePanel(new UI_UserManagementProfile("admin",admin.getID()));
                 JOptionPane.showMessageDialog(frame,"Updated successfully","Alert",JOptionPane.INFORMATION_MESSAGE);
