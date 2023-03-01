@@ -4,7 +4,16 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;
 
+import com.mycompany.oodms.Delivery;
+import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.OODMS_Main;
+import com.mycompany.oodms.Order;
+import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Product;
+import com.mycompany.oodms.Services.DeliveryService;
+import com.mycompany.oodms.Services.OrderItemService;
+import com.mycompany.oodms.Services.ProductService;
+import com.mycompany.oodms.ui.Main_Frame;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -45,21 +54,27 @@ public class UI_ReportOrder extends JPanel{
     JLabel price;
     JLabel quantity;
     JLabel paymentMethod;
-    JLabel billingAddress;
+    JLabel viewOrderDetails;
+    OrderItem matchedItem =null;
     
-    ArrayList<String> orderDetails = new ArrayList<>();
+    String orderedItemString = "";
     
-    public UI_ReportOrder() { 
-        // adding information (temp)
-        orderDetails.add("Delivered");
-        orderDetails.add("Shobee's warehouse");
-        orderDetails.add("ORD001");
-        orderDetails.add("23/1/2023");
-        orderDetails.add("Milo");
-        orderDetails.add("RM 23.00");
-        orderDetails.add("4");
-        orderDetails.add("credit/debit card");
-        orderDetails.add("57 Jalan SP 4/5 Taman Segar Perdana 43200 Cheras Selangor");
+    public ArrayList<Delivery> intializeDeliveryData(Order order){
+        return DeliveryService.getDeliveryService().getDeliveries(order.getOrderID());
+    }
+    
+    public ArrayList<OrderItem> fetchOrderItems(Order order){
+        return OrderItemService.getOrderItemService().getOrderItems(order.getOrderID());
+    }
+    
+    public UI_ReportOrder(Order order, Product passedProduct) {
+        ArrayList<Delivery> deliveries = intializeDeliveryData(order);
+        ArrayList<OrderItem> items =  fetchOrderItems( order);
+        for(OrderItem item : items){
+            if (item.getProduct().getProductID() == passedProduct.getProductID()){
+                matchedItem = item;
+            }
+        }
         
         // JButton - back button
         back = new JButton("< back");
@@ -70,19 +85,17 @@ public class UI_ReportOrder extends JPanel{
         back.setFocusable(false);
         back.setCursor(new Cursor(Cursor.HAND_CURSOR));
         back.addActionListener(e -> {
-            OODMS_Main.frame.replacePanel(OODMS_Main.previous_panel);
+            OODMS_Main.frame.replacePanel(new UI_ReportOrders());
         });
         
-        
         // JLabel - title (order status)
-        orderStatus = new JLabel(orderDetails.get(0));
+        orderStatus = new JLabel(String.valueOf(deliveries.get(0).getStatus()));
         orderStatus.setFont(new Font("MV Boli",Font.BOLD,27));
         orderStatus.setForeground(Color.BLACK);
         orderStatus.setBounds(158,112,300,25);
         
-        
         // JLabel - current Location 
-        currentLocation = new JLabel("Locating at : " + orderDetails.get(1));
+        currentLocation = new JLabel("Order Status");
         currentLocation.setFont(new Font("MV Boli",Font.BOLD,13));
         currentLocation.setForeground(new Color(255, 151, 98, 255));
         currentLocation.setBounds(158,154,500,15);
@@ -100,7 +113,7 @@ public class UI_ReportOrder extends JPanel{
         // JLabel - PACKING indicator
         packingIndicator = new JLabel("Packing");
         
-        if ("Packing".equals(orderDetails.get(0))) 
+        if (DeliveryStatus.PACKING.equals(deliveries.get(0).getStatus())) 
         {
             ImageIcon packingIndicatorOn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/on.png");
             packingIndicator.setIcon(packingIndicatorOn);
@@ -124,7 +137,7 @@ public class UI_ReportOrder extends JPanel{
         // JLabel - PACKED indicator
         packedIndicator = new JLabel("Preparing to deliver");
         
-        if ("Packed".equals(orderDetails.get(0))) 
+        if (DeliveryStatus.PACKED.equals(deliveries.get(0).getStatus())) 
         {
             ImageIcon packingIndicatorOn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/on.png");
             packedIndicator.setIcon(packingIndicatorOn);
@@ -148,7 +161,7 @@ public class UI_ReportOrder extends JPanel{
         // JLabel - DELIVERING indicator
         deliveringIndicator = new JLabel("Out of delivery");
         
-        if ("Delivering".equals(orderDetails.get(0))) 
+        if (DeliveryStatus.DELIVERING.equals(deliveries.get(0).getStatus())) 
         {
             ImageIcon packingIndicatorOn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/on.png");
             deliveringIndicator.setIcon(packingIndicatorOn);
@@ -172,7 +185,7 @@ public class UI_ReportOrder extends JPanel{
         // JLabel - DELIVERED indicator
         deliveredIndicator = new JLabel("Delivered");
         
-        if ("Delivered".equals(orderDetails.get(0))) 
+        if (DeliveryStatus.DELIVERED.equals(deliveries.get(0).getStatus())) 
         {
             ImageIcon packingIndicatorOn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/pictures/on.png");
             deliveredIndicator.setIcon(packingIndicatorOn);
@@ -206,7 +219,7 @@ public class UI_ReportOrder extends JPanel{
         
         
         // JLabel - order Id
-        orderId = new JLabel(": " + orderDetails.get(2));
+        orderId = new JLabel(": " + order.getOrderID());
         orderId.setFont(new Font("MV Boli",Font.PLAIN,16));
         orderId.setBounds(367,367,550,20);
         
@@ -217,67 +230,55 @@ public class UI_ReportOrder extends JPanel{
         purchaseOn_header.setBounds(160,411,180,20);
         
         // JLabel - pruchase date
-        purchaseOn = new JLabel(": " + orderDetails.get(3));
+        purchaseOn = new JLabel(": " + order.getOrderDateTime());
         purchaseOn.setFont(new Font("MV Boli",Font.PLAIN,16));
         purchaseOn.setBounds(367,411,550,20);
         
         // JLabel - product header
-        product_header = new JLabel("Product");
+        product_header = new JLabel("Total Paid");
         product_header.setFont(new Font("MV Boli",Font.PLAIN,16));
         product_header.setForeground(Color.LIGHT_GRAY);
         product_header.setBounds(160,455,180,20);
         
         // JLabel - product
-        product = new JLabel(": " + orderDetails.get(4));
+        product = new JLabel(": RM" + order.getPaid());
         product.setFont(new Font("MV Boli",Font.PLAIN,16));
         product.setBounds(367,455,550,20);
         
         // JLabel - price header
-        price_header = new JLabel("Price");
+        price_header = new JLabel("Payment Method");
         price_header.setFont(new Font("MV Boli",Font.PLAIN,16));
         price_header.setForeground(Color.LIGHT_GRAY);
         price_header.setBounds(160,499,180,20);
         
         // JLabel - price
-        price = new JLabel(": " + orderDetails.get(5));
+        price = new JLabel(": credit / debit card");
         price.setFont(new Font("MV Boli",Font.PLAIN,16));
         price.setBounds(367,499,550,20);
         
         // JLabel - Quantity header
-        quantity_header = new JLabel("Quantity");
+        quantity_header = new JLabel("Billing Address");
         quantity_header.setFont(new Font("MV Boli",Font.PLAIN,16));
         quantity_header.setForeground(Color.LIGHT_GRAY);
         quantity_header.setBounds(160,543,180,20);
         
         // JLabel - Quantity
-        quantity = new JLabel(": " + orderDetails.get(6));
+        quantity = new JLabel(": " + order.getAddress().toString());
         quantity.setFont(new Font("MV Boli",Font.PLAIN,16));
         quantity.setBounds(367,543,550,20);
         
-        // JLabel - Payment method header
-        paymentMethod_header = new JLabel("Payment Method");
-        paymentMethod_header.setFont(new Font("MV Boli",Font.PLAIN,16));
-        paymentMethod_header.setForeground(Color.LIGHT_GRAY);
-        paymentMethod_header.setBounds(160,587,180,20);
-        
-        // JLabel - Payment method
-        paymentMethod = new JLabel(": " + orderDetails.get(7));
-        paymentMethod.setFont(new Font("MV Boli",Font.PLAIN,16));
-        paymentMethod.setBounds(367,587,550,20);
-        
         // JLabel - Billing Address header
-        billingAddress_header = new JLabel("Billing Address");
+        billingAddress_header = new JLabel("Ordered item");
         billingAddress_header.setFont(new Font("MV Boli",Font.PLAIN,16));
         billingAddress_header.setForeground(Color.LIGHT_GRAY);
-        billingAddress_header.setBounds(160,631,180,20);
+        billingAddress_header.setBounds(160,587,180,20);
         
         // JLabel - Billing Address
-        billingAddress = new JLabel(": " + orderDetails.get(8));
-        billingAddress.setFont(new Font("MV Boli",Font.PLAIN,16));
-        billingAddress.setBounds(367,631,550,20);
-        
-        
-        
+        viewOrderDetails = new JLabel(": " + passedProduct.getProductName() + " x " + matchedItem.getQuantity());
+        viewOrderDetails.setFont(new Font("MV Boli",Font.PLAIN,16));
+        viewOrderDetails.setForeground(Color.LIGHT_GRAY);
+        viewOrderDetails.setBounds(367,587,550,30);
+       
         
         
         // ------------------------------ this main JPanel ------------------------------ //
@@ -300,7 +301,6 @@ public class UI_ReportOrder extends JPanel{
         this.add(product_header);
         this.add(price_header);
         this.add(quantity_header);
-        this.add(paymentMethod_header);
         this.add(billingAddress_header);
         
         this.add(orderId);
@@ -308,8 +308,7 @@ public class UI_ReportOrder extends JPanel{
         this.add(product);
         this.add(price);
         this.add(quantity);
-        this.add(paymentMethod);
-        this.add(billingAddress);
+        this.add(viewOrderDetails);
         
     }
 }

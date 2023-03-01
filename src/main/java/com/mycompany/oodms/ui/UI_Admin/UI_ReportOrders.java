@@ -9,6 +9,7 @@ import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Order;
 import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Product;
 import com.mycompany.oodms.Services.DeliveryService;
 import com.mycompany.oodms.Services.OrderItemService;
 import com.mycompany.oodms.Services.User.MemberService;
@@ -65,7 +66,10 @@ public class UI_ReportOrders extends JPanel{
      JPanel selection_container;
      JPanel search_container;
      JScrollPane main_container;
-     
+     Delivery matchedDelivery = null;
+    Order matchedOrder = null;
+    
+    Product product = null;
      
      public ArrayList<OrderItem> initializeOrderItemData(){
          return OrderItemService.getOrderItemService().getOrderItems();
@@ -209,8 +213,7 @@ public class UI_ReportOrders extends JPanel{
 //            *******************************
             deliveries = DeliveryService.getDeliveryService().getDeliveries(newOrderItems.get(i).getOrder().getOrderID());
             
-            Delivery matchedDelivery = null;
-            Order matchedOrder = null;
+            
             for(Delivery delivery: deliveries){
                 if(delivery.getOrder().getOrderID() == newOrderItems.get(i).getOrder().getOrderID()) {
                     matchedDelivery = delivery;
@@ -237,7 +240,8 @@ public class UI_ReportOrders extends JPanel{
             Image originalImage = originalIcon.getImage();
             Image scaledImage = originalImage.getScaledInstance(105, 110, Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
-            
+            product = newOrderItems.get(i).getProduct();
+
             // button (order)
             reports[i] = new JButton(scaledIcon);
             reports[i].setText("<html>"
@@ -263,7 +267,7 @@ public class UI_ReportOrders extends JPanel{
             reports[i].setOpaque(false);
             reports[i].addActionListener(e -> {
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
-                OODMS_Main.frame.replacePanel(new UI_ReportOrder());        
+                OODMS_Main.frame.replacePanel(new UI_ReportOrder(matchedOrder, product));        
             });
         }
         for (JButton report : reports){
