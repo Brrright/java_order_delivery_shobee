@@ -14,12 +14,10 @@ import java.util.List;
 public class Category {
     private int categoryID;
     private String categoryName;
-    private ArrayList<Product> products;
     
     public Category(int id,String name){
         this.categoryID = id;
         this.categoryName = name;
-        this.products = new ArrayList<>();
     }
     
     public int getCategoryID(){
@@ -30,25 +28,11 @@ public class Category {
         return this.categoryName;
     }
     
-    public ArrayList<Product> getProducts(){
-        return this.products;
-    }
-    
     public void setCategoryID(int id){
         this.categoryID = id;
     }
     
     public void setCategoryName(String name){
         this.categoryName = name;
-    }
-    
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
-    }
-
-    // method to add a product to the category
-    public void addProduct(Product product) {
-        this.products.add(product);
-        product.setCategory(this);
     }
 }

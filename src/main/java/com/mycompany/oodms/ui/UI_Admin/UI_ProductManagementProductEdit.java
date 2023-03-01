@@ -220,7 +220,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
             product.setCategory((Category) category.getSelectedItem());
                         // how to set category
                         // why there are 2 product set stock
-            product.setPrice(inputPrice);
+            product.setProductPrice(inputPrice);
             product.setProductStock(inputStock);
             product.setProductDescription(description.getText());
             

@@ -21,7 +21,7 @@ public class OODMS_Main {
     public static JPanel previous_panel;
     public static boolean isLogIn;
     
-     public void initialize(){
+     private void initialize(){
         // setup UI screen
         // Customer interface
         // unregistered

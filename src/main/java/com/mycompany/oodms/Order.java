@@ -22,9 +22,6 @@ public class Order {
     private Member customer;
     private Address address;
     
-    private ArrayList<OrderItem> orderItems;
-    private ArrayList<Delivery> deliveries;
-    
     public Order(int orderID, LocalDateTime date_time, double totalPrice, double paid, double change, Member customer, Address address){
         this.orderID = orderID;
         this.date_time = date_time;

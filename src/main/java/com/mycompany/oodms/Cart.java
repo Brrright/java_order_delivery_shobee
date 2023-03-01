@@ -41,11 +41,4 @@ public class Cart {
         return this.member;
     }
     
-//     public void addItem(CartItem item) {
-//        cart_items.add(item);
-//    }
-     
-//     public void removeItem(CartItem item) {
-//        cart_items.remove(item);
-//    }
 }
