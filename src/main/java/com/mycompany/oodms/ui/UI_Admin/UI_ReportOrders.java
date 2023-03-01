@@ -5,7 +5,6 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 import com.mycompany.oodms.Delivery;
-import com.mycompany.oodms.Member;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Order;
