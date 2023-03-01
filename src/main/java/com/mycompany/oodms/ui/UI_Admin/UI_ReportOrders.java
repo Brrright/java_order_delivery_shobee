@@ -73,12 +73,12 @@ public class UI_ReportOrders extends JPanel{
          return OrderItemService.getOrderItemService().getOrderItems();
      }
      
-     public ArrayList<OrderItem> filterOrderItemByCustomerEmail() {
-         return orderItems;
-     }
      
     public UI_ReportOrders() {
         orderItems = initializeOrderItemData();
+        if(orderItems.size() == 0){
+            report_panel.add(new JLabel("No records"));
+        }
         memberEmails = MemberService.getMemberService().getMemberEmails();
         
         // heading
@@ -151,7 +151,7 @@ public class UI_ReportOrders extends JPanel{
         search_panel.add(search_textfield);
         search_panel.add(search_btn);
         
-       JButton[] reports = OrderCard(this.orderItems);
+       JButton[] reports = OrderItemCard(this.orderItems);
         
         // Panel for report
         int product_panel_height = (180 * orderItems.size()) + 30;
@@ -197,7 +197,7 @@ public class UI_ReportOrders extends JPanel{
         this.setBackground(Color.WHITE);
     }
     
-    private JButton[] OrderCard(ArrayList<OrderItem> newOrderItems){
+    private JButton[] OrderItemCard(ArrayList<OrderItem> newOrderItems){
          // JButton[] - users
         reports = new JButton[newOrderItems.size()];
         
@@ -253,6 +253,10 @@ public class UI_ReportOrders extends JPanel{
             reports[i].setVerticalTextPosition(JLabel.CENTER);
             reports[i].setIconTextGap(40);
             reports[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            reports[i].setOpaque(false);
+            reports[i].setFocusPainted(false);
+            reports[i].setContentAreaFilled(false);
+            reports[i].setOpaque(false);
             reports[i].addActionListener(e -> {
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
                 OODMS_Main.frame.replacePanel(new UI_ReportOrder());        
@@ -271,20 +275,15 @@ public class UI_ReportOrders extends JPanel{
     }
     
     private ArrayList<OrderItem> searchOrder(java.awt.event.ActionEvent evt){
-        System.out.println("invoked");
         ArrayList<OrderItem> newOrderItems = new ArrayList<OrderItem>();
         String input = (String) search_textfield.getSelectedItem();
-                    System.out.println("selected input " + input);
-
         for(int x = 0; x < this.orderItems.size(); x++) {
             String member_email = orderItems.get(x).getOrder().getCustomer().getEmail();
-            System.out.println("input " + input);
-            System.out.println("member_email: " + member_email);
             if(member_email == input){
                 newOrderItems.add(orderItems.get(x));
             }
         }
-        OrderCard(newOrderItems);
+        OrderItemCard(newOrderItems);
         return newOrderItems;
     }
 }
