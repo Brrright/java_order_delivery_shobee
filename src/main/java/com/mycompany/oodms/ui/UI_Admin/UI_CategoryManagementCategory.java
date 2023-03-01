@@ -77,7 +77,7 @@ public class UI_CategoryManagementCategory extends JPanel {
             if (categotyInput == null || categotyInput.trim().isEmpty())
             {
                 // cancel clicked / null input
-                System.out.print("user clicked cancel");
+                System.out.print("Cancel clicked");
             } 
             else
             {
@@ -85,7 +85,10 @@ public class UI_CategoryManagementCategory extends JPanel {
                 if (!"".equals(categotyInput))
                 {
                     // Edit category
-                    System.out.println("input: " + categotyInput);
+                    thisCategory.setCategoryName(categotyInput);
+                    CategoryService.getCategoryService().updateCategory(thisCategory);
+                    JOptionPane.showMessageDialog(frame,"Category  is updated.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                    OODMS_Main.frame.replacePanel(new UI_CategoryManagement());
                 }
             } 
         });
@@ -107,7 +110,9 @@ public class UI_CategoryManagementCategory extends JPanel {
 
             if (checkoutConfirmation == JOptionPane.OK_OPTION) {
                 // remove category
-                
+                CategoryService.getCategoryService().deleteCategory(thisCategory);
+                JOptionPane.showMessageDialog(frame,"Category remove successfully.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                OODMS_Main.frame.replacePanel(new UI_CategoryManagement());
             }
         });
         

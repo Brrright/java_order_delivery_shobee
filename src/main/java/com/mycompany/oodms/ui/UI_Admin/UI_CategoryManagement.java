@@ -169,8 +169,13 @@ public class UI_CategoryManagement extends JPanel{
                 {
                     // create new category
                     System.out.println("input: " + categotyInput);
+                    int newCategoryId = CategoryService.getCategoryService().getNewCategoryID();
+                    Category newCategory = new Category(newCategoryId,categotyInput);
+                    CategoryService.getCategoryService().addCategory(newCategory);
+                    JOptionPane.showMessageDialog(frame,categotyInput + " is added.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                    OODMS_Main.frame.replacePanel(new UI_AdminMain());
+                    OODMS_Main.frame.replacePanel(new UI_CategoryManagement());   
                 }
-            
             } 
         });
         
