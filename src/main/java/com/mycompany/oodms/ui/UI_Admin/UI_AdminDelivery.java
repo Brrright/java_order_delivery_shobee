@@ -6,9 +6,13 @@ package com.mycompany.oodms.ui.UI_Admin;
 
 import com.mycompany.oodms.Delivery;
 import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.OrderItem;
 import com.mycompany.oodms.Services.DeliveryService;
+import com.mycompany.oodms.Services.OrderItemService;
+import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -16,6 +20,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -43,17 +48,33 @@ public class UI_AdminDelivery extends JPanel{
     JLabel deliveryMan_header;
     JComboBox deliveryMan;
     JButton assignOrder;
+    JScrollPane orderInfo_scrollPane;
+    Dimension orderInfoSize;
+    ArrayList<String> deliveryStaff_id_name;
+    boolean haveSelectedOrder;
     
     public ArrayList<Delivery> initialize_delivery_data(){
-//        return DeliveryService.getDeliveryService().getDeliveryForStaffUpComing((DeliveryStaff) OODMS_Main.current_user);
-        return DeliveryService.getDeliveryService().getDeliveries(); // just to display 
+        return DeliveryService.getDeliveryService().getDeliveries();
+    }
+    
+    public ArrayList<DeliveryStaff> initialize_deliveryStaff_data(){
+        return DeliveryStaffService.getDeliveryStaffService().getStaffs();
     }
     
     public UI_AdminDelivery() {
         // Required data
+        ArrayList<DeliveryStaff> all_deliveryStaffs = initialize_deliveryStaff_data();
         ArrayList<Delivery> deliveries = initialize_delivery_data();
-
+        ArrayList<Delivery> packingDeliveries = new ArrayList<>();
+        haveSelectedOrder = false;
         
+        for (int i = 0; i < deliveries.size();i++){
+            Delivery theDelivery = deliveries.get(i);
+            if (theDelivery.getStatus() == DeliveryStatus.PACKING){
+                packingDeliveries.add(theDelivery);
+            }
+        }
+
         header = new UI_Header();
         header.setBounds(0,0,1080,50);
         
@@ -73,8 +94,12 @@ public class UI_AdminDelivery extends JPanel{
         deliveryMan_header.setVerticalAlignment(JLabel.BOTTOM);
         
         // JComboBox - deliveryman
-        String[] deliveryman = {"Deliveryman 1","Deliveryman 2", "Deliveryman 3"};
-        deliveryMan = new JComboBox(deliveryman);
+        deliveryStaff_id_name = new ArrayList<>();
+        for (int i = 0; i < all_deliveryStaffs.size(); i++){
+            deliveryStaff_id_name.add("Id: " + all_deliveryStaffs.get(i).getID() + " " + all_deliveryStaffs.get(i).getName());
+        }
+        
+        deliveryMan = new JComboBox(deliveryStaff_id_name.toArray(String[]::new));
         deliveryMan.setBounds(598,180,300,35);
         
         
@@ -122,26 +147,34 @@ public class UI_AdminDelivery extends JPanel{
                     String deliveryId_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 1));
                     String orderId_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 2));
                     String status_display = String.valueOf(deliveryTable.getValueAt(selectedRow, 4));
-//                    String address = DeliveryService.getDeliveryService().getDelivery(Integer.parseInt(deliveryId_display)).getAddress().toString();
-//                    ArrayList<OrderItem> tempOrderItems = OrderItemService.getOrderItemService().getOrderItems(Integer.parseInt(orderId_display));
-//   
-//                    String tempOrderItemString = "<html>";
-//                     // set order item string
-//                    for(OrderItem item : tempOrderItems){
-//                            tempOrderItemString = tempOrderItemString + "<br>[ID: " +item.getProduct().getProductID()+ "]  " +  item.getProduct().getProductName() + " x " + item.getQuantity();
-//                    }
-//                    tempOrderItemString = tempOrderItemString + "</html>";
-//
-//                     set text to the JLabel
-//                    orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
-//                            "<br> Order ID : " + orderId_display + 
-//                            "<br> Address : " + address + 
-//                            "<br> Status : " + status_display + 
-//                            "<br> Products : " + tempOrderItemString + 
-//                            "</html>");
+                    String address = DeliveryService.getDeliveryService().getDelivery(Integer.parseInt(deliveryId_display)).getAddress().toString();
+                    ArrayList<OrderItem> tempOrderItems = OrderItemService.getOrderItemService().getOrderItems(Integer.parseInt(orderId_display));
 
-                    // testing (remove this)
-                    orderInfo.setText(orderId_display);
+                    String tempOrderItemString = "<html>";
+                     // set order item string
+                    for(OrderItem item : tempOrderItems){
+                            tempOrderItemString = tempOrderItemString + "<br>[ID: " +item.getProduct().getProductID()+ "]  " +  item.getProduct().getProductName() + " x " + item.getQuantity();
+                    }
+                    tempOrderItemString = tempOrderItemString + "</html>";
+
+//                     set text to the JLabel
+                    orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
+                            "<br> Order ID : " + orderId_display + 
+                            "<br> Address : " + address + 
+                            "<br> Status : " + status_display + 
+                            "<br> Products : " + tempOrderItemString + 
+                            "</html>");
+                    
+                    // set text to the JLabel
+                    orderInfo.setText("<html>Delivery ID : <br>" + deliveryId_display + 
+                            "<br><br> Order ID : <br>" + orderId_display + 
+                            "<br><br> Address : <br>" + address + 
+                            "<br><br> Status : <br>" + status_display + 
+                            "<br><br> Products : " + tempOrderItemString + 
+                            "</html>");
+                    orderInfoSize.height = 250 +  (18 * tempOrderItems.size());
+                    orderInfo.setPreferredSize(orderInfoSize);
+
                 }
             }
         });
@@ -154,8 +187,8 @@ public class UI_AdminDelivery extends JPanel{
 
         // set cart table row
         
-        for (int i = 0; i < deliveries.size(); i++) {
-            Delivery delivery = deliveries.get(i);
+        for (int i = 0; i < packingDeliveries.size(); i++) {
+            Delivery delivery = packingDeliveries.get(i);
             
             model.addRow(new Object[0]);
             model.setValueAt(false,i,0);
@@ -193,11 +226,20 @@ public class UI_AdminDelivery extends JPanel{
         
         // JLabel - selected order information label
         orderInfo = new JLabel("Select a row to view the details");
-        orderInfo.setBackground(Color.LIGHT_GRAY);
+        orderInfoSize = orderInfo.getPreferredSize();
+        orderInfoSize.width = 300;
+        orderInfo.setPreferredSize(orderInfoSize);
+        orderInfo.setBackground(new Color(240,240,240));
         orderInfo.setOpaque(true);
-        orderInfo.setBounds(593,245,300,290); 
         orderInfo.setHorizontalAlignment(JLabel.LEFT);
         orderInfo.setVerticalAlignment(JLabel.TOP);
+        
+        // JScrollPane - for orderInfo
+        orderInfo_scrollPane = new JScrollPane(orderInfo);
+        orderInfo_scrollPane.setBounds(593,245,300,290); 
+        orderInfo.setOpaque(true);
+        orderInfo_scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        orderInfo_scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         
         // JButton - assign order
         assignOrder = new JButton("Pack & Assign order");
@@ -224,12 +266,30 @@ public class UI_AdminDelivery extends JPanel{
                 {
                     if ((boolean)deliveryTable.getValueAt(i, 0) == true)
                     {
-                        System.out.print(deliveryTable.getValueAt(i, 1) + " is ture");
+                        haveSelectedOrder = true;
+                        System.out.println("Selected deliveryMan index : " + deliveryMan.getSelectedIndex());
+                        System.out.println("Selected deliveryMan name : " + all_deliveryStaffs.get(deliveryMan.getSelectedIndex()).getName());
+                        System.out.println(deliveryTable.getValueAt(i, 1) + " is true"); // DeliveryID
+                        System.out.println(deliveryTable.getValueAt(i, 2) + " is true"); // OrderID
+                        System.out.println(deliveryTable.getValueAt(i, 3) + " is true"); // City
+                        System.out.println(deliveryTable.getValueAt(i, 4) + " is true"); // Status
+                        
+                        // change delivery staff & status
+                        String selectedDeliveryId = String.valueOf(deliveryTable.getValueAt(i, 1));
+                        Delivery selectedDelivery = DeliveryService.getDeliveryService().getDelivery(Integer.parseInt(selectedDeliveryId));
+                        selectedDelivery.setStaff( all_deliveryStaffs.get(deliveryMan.getSelectedIndex()));
+                        selectedDelivery.setStatus(DeliveryStatus.PACKED);
+                        DeliveryService.getDeliveryService().updateDelivery(selectedDelivery);
                     }
                 }
-                // get the selected product
-                //direct to checkout page
-                System.out.println("go to checkout page");
+                if (haveSelectedOrder){
+                         JOptionPane.showMessageDialog(frame,"Order assigned successfully.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                        OODMS_Main.frame.replacePanel(new UI_AdminMain());
+                        OODMS_Main.frame.replacePanel(new UI_AdminDelivery());
+                } else {
+                         JOptionPane.showMessageDialog(frame,"No order is selected.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                }
+
             }
 
         });
@@ -247,7 +307,7 @@ public class UI_AdminDelivery extends JPanel{
         this.add(deliveryMan);
         
         this.add(scrollPane);
-        this.add(orderInfo);
+        this.add(orderInfo_scrollPane);
         this.add(assignOrder);
         
     }
