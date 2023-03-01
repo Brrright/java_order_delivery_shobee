@@ -234,7 +234,7 @@ public class UI_ReportPayments extends JPanel{
     }
     
     private ArrayList<Order> searchOrder(java.awt.event.ActionEvent evt){
-        ArrayList<Order> newOrders = new ArrayList<OrderItem>();
+        ArrayList<Order> newOrders = new ArrayList<Order>();
         String input = (String) search_textfield.getSelectedItem();
         for(int x = 0; x < this.orders.size(); x++) {
             String member_email = orders.get(x).getCustomer().getEmail();
