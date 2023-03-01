@@ -123,6 +123,27 @@ public class DeliveryService {
         return fetched_deliveries;
     }
     
+    public ArrayList<Delivery> getDeliveryForRating(){
+        ArrayList<Delivery> fetched_deliveries = new ArrayList<Delivery>();
+            for(int i = 0; i < deliveries.size(); i++) {
+                Delivery delivery = deliveries.get(i);
+                if(delivery  == null) {
+                    continue;
+                }
+                if(delivery.getDeliveryRating() == -1){
+                    continue;
+                }
+                if(delivery.getStatus() == DeliveryStatus.DELIVERED){
+                    fetched_deliveries.add(delivery);
+                }
+            }
+         if(fetched_deliveries.size() == 0){
+            System.out.println("delivery service for rating is empty. [reminder]");
+        }
+        return fetched_deliveries;
+
+    }
+    
     public ArrayList<Delivery> getDeliveryForStaffOnGoing(DeliveryStaff staff) {
         ArrayList<Delivery> fetched_deliveries = new ArrayList<Delivery>();
         for(int i = 0; i < deliveries.size(); i++) {
