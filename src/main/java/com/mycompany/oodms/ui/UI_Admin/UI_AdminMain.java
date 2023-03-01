@@ -92,7 +92,7 @@ public class UI_AdminMain extends JPanel{
         deliveryManagementBtn.setOpaque(false);
         deliveryManagementBtn.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
-            frame = new Main_Frame(new UI_AdminDelivery());        
+            frame.replacePanel(new UI_AdminDelivery());
         });
         
         
