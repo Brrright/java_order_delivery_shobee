@@ -350,7 +350,7 @@ public class UI_OnGoing extends JPanel{
                         int delivery_id = (int) deliveryTable.getValueAt(i, 1);
                          Delivery delivery = DeliveryService.getDeliveryService().getDelivery(delivery_id);
                         delivery.setStatus(DeliveryStatus.DELIVERED);
-                        delivery.setDeliveryRating(result);
+                        delivery.setDeliveryRating(result +1);
                         delivery.setDateTime(LocalDateTime.now() );
                         DeliveryService.getDeliveryService().updateDelivery(delivery);
                         OODMS_Main.frame.replacePanel(new UI_OnGoing());
