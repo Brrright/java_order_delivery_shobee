@@ -3,6 +3,7 @@ package com.mycompany.oodms.ui.UI_Admin;
 
 import com.mycompany.oodms.Admin;
 import com.mycompany.oodms.DeliveryStaff;
+import com.mycompany.oodms.Gender;
 import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.Services.User.AdminService;
@@ -11,6 +12,10 @@ import com.mycompany.oodms.ui.UI_Login;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -37,40 +42,46 @@ public class UI_UserManagementProfileEdit extends JPanel {
     
     String userName;
     String userProfilePicture;
-    String userGender;
+    Gender userGender;
     String userAge;
     String userEmail;
     String userPhoneNo;
     
+    File file;
+    String selectedImagePath;
+    int inputAge;
+    
     JButton update;
     JButton cancel;
     
+    DeliveryStaff staff;
+    Admin admin;
+    
+    
     private Admin initialize_admin_data(int id){
-        Admin admin = AdminService.getAdminService().getAdmin(id);
-        return admin;
+        Admin tempAdmin = AdminService.getAdminService().getAdmin(id);
+        return tempAdmin;
     }
     
     private DeliveryStaff initialize_staff_data(int id){
-        DeliveryStaff staff = DeliveryStaffService.getDeliveryStaffService().getStaff(id);
-        return staff;
+        DeliveryStaff tempStaff = DeliveryStaffService.getDeliveryStaffService().getStaff(id);
+        return tempStaff;
     }
     
     public UI_UserManagementProfileEdit(String role, int userId){
         // REQUIRED DATA
         if ("staff".equals(role)){
-            DeliveryStaff staff = initialize_staff_data(userId);
+            staff = initialize_staff_data(userId);
             userName = staff.getName();
-            userProfilePicture = staff.getPicturePath();
-            userGender = String.valueOf(staff.getGender());
+            userGender = staff.getGender();
             userAge = String.valueOf(staff.getAge());
             userEmail = String.valueOf(staff.getEmail());
             userPhoneNo = String.valueOf(staff.getPhoneNum());     
         }
         else if ("admin".equals(role)){
-            Admin admin = initialize_admin_data(userId);
+            admin = initialize_admin_data(userId);
             userName = admin.getName();
-            userProfilePicture = admin.getPicturePath();
-            userGender = String.valueOf(admin.getGender());
+            userGender = admin.getGender();
             userAge = String.valueOf(admin.getAge());
             userEmail = String.valueOf(admin.getEmail());
             userPhoneNo = String.valueOf(admin.getPhoneNum());        
@@ -89,7 +100,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         });
         
         // JLabel - title
-        title = new JLabel(String.valueOf(userId));
+        title = new JLabel("ID: " + String.valueOf(userId));
         title.setFont(new Font("MV Boli",Font.BOLD,30));
         title.setBounds(144,136,250,40);
         
@@ -109,7 +120,7 @@ public class UI_UserManagementProfileEdit extends JPanel {
         gender_header.setBounds(763,213,100,20);
         
         // JTextField - gender
-        String[] genderList = {"Male","Female"};
+        Gender[] genderList = {Gender.MALE, Gender.FEMALE};
         gender = new JComboBox(genderList);
         gender.setBounds(759,233,174,48);
         gender.setSelectedItem(userGender);
@@ -163,19 +174,18 @@ public class UI_UserManagementProfileEdit extends JPanel {
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "gif");
             fileChooser.setFileFilter(filter);
+
             int result = fileChooser.showOpenDialog(null);
-            
-            if (result == JFileChooser.APPROVE_OPTION){
-                    File file = fileChooser.getSelectedFile();
-                    profilePic_fileName.setText(file.getName());
-                    // get file path
-//                    imagePath[0] = file.getAbsolutePath();
-//                    uploadImgDir = imagePath[0].split("\\.");
-                }
+            if (result == JFileChooser.APPROVE_OPTION)
+            {
+                file = fileChooser.getSelectedFile(); // get selected file
+                profilePic_fileName.setText(file.getName()); // display the image name in JLabel
+                selectedImagePath = file.getAbsolutePath();
+            }
         });
 
 
-        // JButton - sign up button
+        // JButton - update button
         update = new JButton("update");
         update.setBorder(BorderFactory.createEmptyBorder());
         update.setHorizontalTextPosition(JLabel.CENTER);
@@ -187,7 +197,63 @@ public class UI_UserManagementProfileEdit extends JPanel {
         update.setFont(new Font("MV Boli",Font.PLAIN,12));
         update.setForeground(Color.WHITE);
         update.addActionListener(e -> {
+            // validation
+            // make sure there is no empty value
+            if("".equals(name.getText()) || "".equals(age.getText())|| "".equals(phoneNo.getText())){
+                JOptionPane.showMessageDialog(frame,"Please ensure every required information is filled.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             
+            // make sure the age input is valid
+            try {
+                inputAge = Integer.parseInt(age.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame,"invalid age.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            // check if user uploaded new picture
+            // product picture
+            if (selectedImagePath != null){
+                 Path sourcePath = Paths.get(file.getAbsolutePath());
+                 userProfilePicture = "src/main/java/com/mycompany/oodms/userImage/"+ role + String.valueOf(userId)+ file.getName();
+                 Path destinationPath = Paths.get(userProfilePicture);
+
+                try {
+                    Files.copy(sourcePath, destinationPath);
+                    // set Path into object
+                    if ("staff".equals(role)){
+                            staff.setPicturePath(userProfilePicture);           
+                    }
+                    else if ("admin".equals(role)){
+                             admin.setPicturePath(userProfilePicture);  
+                     }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(frame,"upload image failed(rename your image and submit again).","Alert",JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
+            
+            Gender input_gender = Gender.valueOf(String.valueOf(gender.getSelectedItem()));
+            
+            // update information
+            if ("staff".equals(role)){
+                staff.setName(name.getText());
+                staff.setGender(input_gender);
+                staff.setAge(inputAge);
+                staff.setPhoneNum(phoneNo.getText());
+                OODMS_Main.frame.replacePanel(new UI_UserManagementProfile("staff",staff.getID()));
+                DeliveryStaffService.getDeliveryStaffService().updateStaff(staff);
+            }
+            else if ("admin".equals(role)){
+                admin.setName(userName);
+                admin.setGender(input_gender);
+                admin.setAge(inputAge);
+                admin.setPhoneNum(userPhoneNo);
+                AdminService.getAdminService().updateAdmin(admin);                 
+                OODMS_Main.frame.replacePanel(new UI_UserManagementProfile("admin",admin.getID()));
+                JOptionPane.showMessageDialog(frame,"Updated successfully","Alert",JOptionPane.INFORMATION_MESSAGE);
+            }
         });
         
         // JButton - cancel button
