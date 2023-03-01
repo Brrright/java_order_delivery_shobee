@@ -51,8 +51,6 @@ public class UI_ReportOrders extends JPanel{
     
     // 3rd section (users)
     JButton[] reports;
-//    ArrayList<ArrayList<String>> allReports = new ArrayList<>();
-//    ArrayList<String> report = new ArrayList<>();
     ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
     ArrayList<Delivery> deliveries = new ArrayList<Delivery>();
     ArrayList<String> memberEmails = new ArrayList<String>();
@@ -142,6 +140,12 @@ public class UI_ReportOrders extends JPanel{
         search_btn.setHorizontalAlignment(JLabel.CENTER);
         search_btn.setVerticalAlignment(JLabel.CENTER);
         search_btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        search_btn.addActionListener(e -> {
+            report_panel.removeAll();
+            searchOrder(e);
+            report_panel.repaint();
+            report_panel.revalidate();
+        });
         
         // JPanel - search panel (search)
         search_panel = new JPanel();

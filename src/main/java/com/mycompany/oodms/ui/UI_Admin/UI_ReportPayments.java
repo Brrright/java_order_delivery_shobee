@@ -33,25 +33,18 @@ public class UI_ReportPayments extends JPanel{
     JLabel generalManagementIcon_label;
     ImageIcon generalManagementIcon = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/reportIcon.png");
     
-    
     JButton orderBtn;
     JButton paymentBtn;
     ImageIcon orangeCircle = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/orangeCircle.png");
     ImageIcon grayCircle1 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
     
-    
     // 2nd section (search, add, filter-customer,delivery)
-
     JComboBox search_textfield;
-    
     JButton search_btn;
     ImageIcon searchBtn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/searchBtn.png");
     
-    
     // 3rd section (users)
     JButton[] reports;
-    ArrayList<ArrayList<String>> allOrders = new ArrayList<>();
-    ArrayList<String> report = new ArrayList<>();
     
 //    ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
 //    ArrayList<Delivery> deliveries = new ArrayList<Delivery>();
@@ -144,7 +137,10 @@ public class UI_ReportPayments extends JPanel{
         search_btn.setVerticalAlignment(JLabel.CENTER);
         search_btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         search_btn.addActionListener(e -> {
-            // search user
+            report_panel.removeAll();
+            searchOrder(e);
+            report_panel.repaint();
+            report_panel.revalidate();
         });
         
         // JPanel - search panel (search)
@@ -155,10 +151,10 @@ public class UI_ReportPayments extends JPanel{
         search_panel.add(search_textfield);
         search_panel.add(search_btn);
         
-        OrderCard(orders);
+        JButton[] reports = OrderCard(orders);
         
          // Panel for report
-        int product_panel_height = (150 * orders.size()) + 30;
+        int product_panel_height = (180 * orders.size()) + 30;
         
         report_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
         report_panel.setPreferredSize(new Dimension(700, product_panel_height));
@@ -201,7 +197,7 @@ public class UI_ReportPayments extends JPanel{
         this.setBackground(Color.WHITE);
     }
     
-    private  JButton[] OrderCard(ArrayList<Order> newOrders){
+    private JButton[] OrderCard(ArrayList<Order> newOrders){
          // JButton[] - users
         reports = new JButton[newOrders.size()];
         
@@ -212,6 +208,7 @@ public class UI_ReportPayments extends JPanel{
                     + "<br>Payment date : " + newOrders.get(i).getOrderDateTime()
                     + "<br>Amount : RM " + newOrders.get(i).getTotalPrice()
                     + "<br> Ordered by: " + newOrders.get(i).getCustomer().getEmail());
+            
             reports[i].setPreferredSize(new Dimension(600,120));
             reports[i].setBackground(new Color(0, 0, 0, 0));
             reports[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
@@ -236,9 +233,8 @@ public class UI_ReportPayments extends JPanel{
         }
         
         // Panel for report
-        int product_panel_height = (150 * newOrders.size()) + 30;
+        int product_panel_height = (180 * newOrders.size()) + 30;
         
-        report_panel = new JPanel();
         report_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
         report_panel.setPreferredSize(new Dimension(700, product_panel_height));
         report_panel.setBackground(Color.WHITE);
@@ -252,14 +248,10 @@ public class UI_ReportPayments extends JPanel{
         for(int x = 0; x < this.orders.size(); x++) {
             String member_email = orders.get(x).getCustomer().getEmail();
             if(member_email == input){
-                System.out.println("\nmatch");
-                System.out.println("fetched : " + member_email);
-                System.out.println("input :" + input);
                 newOrders.add(orders.get(x));
             }
         }
         OrderCard(newOrders);
         return newOrders;
     }
-
 }
