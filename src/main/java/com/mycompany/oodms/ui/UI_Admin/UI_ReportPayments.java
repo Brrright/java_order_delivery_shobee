@@ -4,6 +4,7 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;
 
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
 import com.mycompany.oodms.ui.Main_Frame;
 import com.mycompany.oodms.ui.UI_Header;
@@ -81,6 +82,7 @@ public class UI_ReportPayments extends JPanel{
         orderBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         orderBtn.setForeground(Color.GRAY);
         orderBtn.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
             frame.replacePanel(new UI_ReportOrders());
         });
         
@@ -160,6 +162,7 @@ public class UI_ReportPayments extends JPanel{
             reports[i].setIconTextGap(40);
             reports[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             reports[i].addActionListener(e -> {
+                OODMS_Main.previous_panel = Main_Frame.currentPanel;
                 frame = new Main_Frame(new UI_ReportPayment());        
             });
         }

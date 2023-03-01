@@ -87,6 +87,14 @@ public class MemberService {
         return response;
     }
     
+    public ArrayList<String> getMemberEmails(){
+        ArrayList<String> member_emails = new ArrayList<String>();
+         for(Member m : members){
+             member_emails.add(m.getEmail());
+         }
+         return member_emails;
+    }
+    
     public void addMember(Member member){
         this.members.add(member);
         FileRecord member_record = convertToFileRecord(member);

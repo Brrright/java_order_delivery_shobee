@@ -46,7 +46,8 @@ public class UI_Header extends JPanel{
     // profile, logout (in registered user)
     JButton adminManagement;
     JButton adminDelivery;
-    JButton adminReport;
+    JButton adminRecord;
+//    JButton adminReport;
 
 
     public UI_Header() {
@@ -253,20 +254,35 @@ public class UI_Header extends JPanel{
         });
         
         // Admin report button
-        adminReport= new JButton();
-        adminReport.setText("Report");
-        adminReport.setBorder(BorderFactory.createEmptyBorder());
-        adminReport.setFocusable(false);
-        adminReport.setForeground(new Color(0, 0, 0));
-        adminReport.setFont(new Font("Sarif",Font.BOLD,15));
-        adminReport.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        adminReport.setOpaque(false);
-        adminReport.setFocusPainted(false);
-        adminReport.setContentAreaFilled(false);
-        adminReport.addActionListener(e -> {
+        adminRecord= new JButton();
+        adminRecord.setText("Record");
+        adminRecord.setBorder(BorderFactory.createEmptyBorder());
+        adminRecord.setFocusable(false);
+        adminRecord.setForeground(new Color(0, 0, 0));
+        adminRecord.setFont(new Font("Sarif",Font.BOLD,15));
+        adminRecord.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        adminRecord.setOpaque(false);
+        adminRecord.setFocusPainted(false);
+        adminRecord.setContentAreaFilled(false);
+        adminRecord.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_ReportOrders());
         });
+        
+//        adminReport= new JButton();
+//        adminReport.setText("Report");
+//        adminReport.setBorder(BorderFactory.createEmptyBorder());
+//        adminReport.setFocusable(false);
+//        adminReport.setForeground(new Color(0, 0, 0));
+//        adminReport.setFont(new Font("Sarif",Font.BOLD,15));
+//        adminReport.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//        adminReport.setOpaque(false);
+//        adminReport.setFocusPainted(false);
+//        adminReport.setContentAreaFilled(false);
+//        adminReport.addActionListener(e -> {
+//            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+////            OODMS_Main.frame.replacePanel(new UI_ReportOrders());
+//        });
         
         // profile, logout (in registered user section)
         
@@ -293,7 +309,8 @@ public class UI_Header extends JPanel{
                 case ADMIN -> {
                     this.add(adminManagement);
                     this.add(adminDelivery);
-                    this.add(adminReport);
+                    this.add(adminRecord);
+//                    this.add(adminReport);
                     this.add(profile);
                     this.add(logout);
                 }

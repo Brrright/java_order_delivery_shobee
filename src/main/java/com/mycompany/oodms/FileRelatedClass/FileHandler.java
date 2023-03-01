@@ -19,7 +19,7 @@ public class FileHandler {
     private String filePath;
 
     public FileHandler(String fileName) {
-        this.records = new ArrayList<>();
+        this.records = new ArrayList<FileRecord>();
         this.filePath = FILE_PATH_PREFIX +fileName+".txt";
         LoadRecords();
     }

@@ -4,7 +4,15 @@
  */
 package com.mycompany.oodms.ui.UI_Admin;
 
+import com.mycompany.oodms.Delivery;
+import com.mycompany.oodms.Member;
+import com.mycompany.oodms.OODMS_Main;
 import static com.mycompany.oodms.OODMS_Main.frame;
+import com.mycompany.oodms.Order;
+import com.mycompany.oodms.OrderItem;
+import com.mycompany.oodms.Services.DeliveryService;
+import com.mycompany.oodms.Services.OrderItemService;
+import com.mycompany.oodms.Services.User.MemberService;
 import com.mycompany.oodms.ui.Main_Frame;
 import com.mycompany.oodms.ui.UI_Header;
 import java.awt.BorderLayout;
@@ -37,19 +45,21 @@ public class UI_ReportOrders extends JPanel{
     
     // 2nd section (search, add, filter-customer,delivery)
 
-    JTextField search_textfield;
+    JComboBox search_textfield;
     
     JButton search_btn;
     ImageIcon searchBtn = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Admin/pictures/searchBtn.png");
     
-    
     // 3rd section (users)
     JButton[] reports;
-    ArrayList<ArrayList<String>> allReports = new ArrayList<>();
-    ArrayList<String> report = new ArrayList<>();
+//    ArrayList<ArrayList<String>> allReports = new ArrayList<>();
+//    ArrayList<String> report = new ArrayList<>();
+    ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
+    ArrayList<Delivery> deliveries = new ArrayList<Delivery>();
+    ArrayList<String> memberEmails = new ArrayList<String>();
     
     // panels
-     JPanel report_panel;
+    JPanel report_panel = new JPanel();
      JPanel search_panel;
      JPanel reportSelection_panel;
      
@@ -59,8 +69,19 @@ public class UI_ReportOrders extends JPanel{
      JPanel search_container;
      JScrollPane main_container;
      
-    
+     
+     public ArrayList<OrderItem> initializeOrderItemData(){
+         return OrderItemService.getOrderItemService().getOrderItems();
+     }
+     
+     public ArrayList<OrderItem> filterOrderItemByCustomerEmail() {
+         return orderItems;
+     }
+     
     public UI_ReportOrders() {
+        orderItems = initializeOrderItemData();
+        memberEmails = MemberService.getMemberService().getMemberEmails();
+        
         // heading
         heading = new UI_Header();
         
@@ -92,6 +113,7 @@ public class UI_ReportOrders extends JPanel{
         paymentBtn.setFont(new Font("MV Boli",Font.BOLD,12));
         paymentBtn.setForeground(Color.GRAY);
         paymentBtn.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
             frame.replacePanel(new UI_ReportPayments());
         });
         
@@ -104,8 +126,14 @@ public class UI_ReportOrders extends JPanel{
         reportSelection_panel.add(paymentBtn);
         
         // JTextField - search bar
-        search_textfield = new JTextField();
+        search_textfield = new JComboBox(memberEmails.toArray(new String[memberEmails.size()]));
         search_textfield.setPreferredSize(new Dimension(432,48));
+        search_textfield.addActionListener(e -> {
+                report_panel.removeAll();
+                searchOrder(e);
+                report_panel.repaint();
+                report_panel.revalidate();
+        });
         
         // JButton - search button
         search_btn = new JButton(searchBtn);
@@ -115,9 +143,6 @@ public class UI_ReportOrders extends JPanel{
         search_btn.setHorizontalAlignment(JLabel.CENTER);
         search_btn.setVerticalAlignment(JLabel.CENTER);
         search_btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        search_btn.addActionListener(e -> {
-            // search user
-        });
         
         // JPanel - search panel (search)
         search_panel = new JPanel();
@@ -127,46 +152,11 @@ public class UI_ReportOrders extends JPanel{
         search_panel.add(search_textfield);
         search_panel.add(search_btn);
         
-        // JButton[] - users
-        // create temp user 
-        for (int i = 0; i < 5; i++){
-            report.add("ORD001");
-            report.add("2/2/2022"); // order date
-            report.add("packed"); // status
-            report.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg"); // picture
-            allReports.add(report);
-        }
-        
-        reports = new JButton[allReports.size()];
-        
-        for (int i = 0; i < allReports.size();i++){
-            
-            ImageIcon originalIcon = new ImageIcon(allReports.get(i).get(3));
-            Image originalImage = originalIcon.getImage();
-            Image scaledImage = originalImage.getScaledInstance(105, 110, Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaledImage);
-            
-            // button (order)
-            reports[i] = new JButton(scaledIcon);
-            reports[i].setText("<html>Order ID : " + allReports.get(i).get(0) + "<br>Order date : " + allReports.get(i).get(1) + "<br>Status : " + allReports.get(i).get(2));
-            reports[i].setPreferredSize(new Dimension(600,120));
-            reports[i].setBackground(new Color(0, 0, 0, 0));
-            reports[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-            reports[i].setHorizontalAlignment(JLabel.LEFT);
-            reports[i].setVerticalAlignment(JLabel.CENTER);
-            reports[i].setHorizontalTextPosition(JLabel.RIGHT);
-            reports[i].setVerticalTextPosition(JLabel.CENTER);
-            reports[i].setIconTextGap(40);
-            reports[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            reports[i].addActionListener(e -> {
-                frame = new Main_Frame(new UI_ReportOrder());        
-            });
-        }
+       JButton[] reports = OrderCard(this.orderItems);
         
         // Panel for report
-        int product_panel_height = (150 * allReports.size()) + 30;
+        int product_panel_height = (180 * orderItems.size()) + 30;
         
-        report_panel = new JPanel();
         report_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
         report_panel.setPreferredSize(new Dimension(700, product_panel_height));
         report_panel.setBackground(Color.WHITE);
@@ -207,5 +197,95 @@ public class UI_ReportOrders extends JPanel{
         this.add(main_container, BorderLayout.CENTER);
         this.setBackground(Color.WHITE);
     }
+    
+    private JButton[] OrderCard(ArrayList<OrderItem> newOrderItems){
+         // JButton[] - users
+        reports = new JButton[newOrderItems.size()];
+        
+        for (int i = 0; i < newOrderItems.size();i++){
+//            *******************************
+            deliveries = DeliveryService.getDeliveryService().getDeliveries(newOrderItems.get(i).getOrder().getOrderID());
+            
+            Delivery matchedDelivery = null;
+            Order matchedOrder = null;
+            for(Delivery delivery: deliveries){
+                if(delivery.getOrder().getOrderID() == newOrderItems.get(i).getOrder().getOrderID()) {
+                    matchedDelivery = delivery;
+                    matchedOrder = delivery.getOrder();
+                    break;
+                }
+            }
+            
+            String deliveryStaffName = "Haven't assign";
+            if(matchedDelivery.getStaff() == null) {
+                deliveryStaffName = "Haven't assign";
+            }
+            else{
+                deliveryStaffName = matchedDelivery.getStaff().getEmail();
+            }
+            
+//            *******************************************
+            
+            if(matchedOrder == null || matchedDelivery ==null){
+                System.out.println("no order or delivery matched this order item (impossible)");
+            }
+            
+            ImageIcon originalIcon = new ImageIcon(newOrderItems.get(i).getProduct().getProcuctPicture());
+            Image originalImage = originalIcon.getImage();
+            Image scaledImage = originalImage.getScaledInstance(105, 110, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            
+            // button (order)
+            reports[i] = new JButton(scaledIcon);
+            reports[i].setText("<html>"
+                    + " Order ID       : " + newOrderItems.get(i).getOrder().getOrderID()
+                    + "<br> ProductID      : " +newOrderItems.get(i).getProduct().getProductID() 
+                    + "<br> Order date     : " + matchedOrder.getOrderDateTime() 
+                    + "<br> Status            : " + matchedDelivery.getStatus() 
+                    + "<br> Staff in charge: " + deliveryStaffName
+                    + "<br> Ordered By    : " +matchedOrder.getCustomer().getEmail());
+            
+            reports[i].setPreferredSize(new Dimension(600,140));
+            reports[i].setBackground(new Color(0, 0, 0, 0));
+            reports[i].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
+            reports[i].setHorizontalAlignment(JLabel.LEFT);
+            reports[i].setVerticalAlignment(JLabel.CENTER);
+            reports[i].setHorizontalTextPosition(JLabel.RIGHT);
+            reports[i].setVerticalTextPosition(JLabel.CENTER);
+            reports[i].setIconTextGap(40);
+            reports[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            reports[i].addActionListener(e -> {
+                OODMS_Main.previous_panel = Main_Frame.currentPanel;
+                OODMS_Main.frame.replacePanel(new UI_ReportOrder());        
+            });
+        }
+        for (JButton report : reports){
+            report_panel.add(report);
+        }
+        // Panel for report
+        int product_panel_height = (180 * newOrderItems.size()) + 30;
+        
+        report_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 75, 25));
+        report_panel.setPreferredSize(new Dimension(700, product_panel_height));
+        report_panel.setBackground(Color.WHITE);
+        return reports;
+    }
+    
+    private ArrayList<OrderItem> searchOrder(java.awt.event.ActionEvent evt){
+        System.out.println("invoked");
+        ArrayList<OrderItem> newOrderItems = new ArrayList<OrderItem>();
+        String input = (String) search_textfield.getSelectedItem();
+                    System.out.println("selected input " + input);
 
+        for(int x = 0; x < this.orderItems.size(); x++) {
+            String member_email = orderItems.get(x).getOrder().getCustomer().getEmail();
+            System.out.println("input " + input);
+            System.out.println("member_email: " + member_email);
+            if(member_email == input){
+                newOrderItems.add(orderItems.get(x));
+            }
+        }
+        OrderCard(newOrderItems);
+        return newOrderItems;
+    }
 }

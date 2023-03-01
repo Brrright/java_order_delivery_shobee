@@ -66,6 +66,7 @@ public class UI_AdminMain extends JPanel{
         generalManagementBtn.setContentAreaFilled(false);
         generalManagementBtn.setOpaque(false);
         generalManagementBtn.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
             frame.replacePanel(new UI_ProductManagement());
         });
         
@@ -90,6 +91,7 @@ public class UI_AdminMain extends JPanel{
         deliveryManagementBtn.setContentAreaFilled(false);
         deliveryManagementBtn.setOpaque(false);
         deliveryManagementBtn.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
             frame = new Main_Frame(new UI_AdminDelivery());        
         });
         
@@ -114,6 +116,7 @@ public class UI_AdminMain extends JPanel{
         adminReportBtn.setContentAreaFilled(false);
         adminReportBtn.setOpaque(false);
         adminReportBtn.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_ReportOrders());
         });
         

@@ -5,8 +5,6 @@
 package com.mycompany.oodms.ui.UI_Admin;
 
 import com.mycompany.oodms.OODMS_Main;
-import static com.mycompany.oodms.OODMS_Main.frame;
-import com.mycompany.oodms.ui.Main_Frame;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;

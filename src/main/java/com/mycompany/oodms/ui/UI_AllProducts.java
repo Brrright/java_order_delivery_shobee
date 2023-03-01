@@ -73,7 +73,6 @@ public class UI_AllProducts extends JPanel {
         searchBar.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         searchBar.addKeyListener(new java.awt.event.KeyAdapter()  {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                System.out.println("triggered...");
                 all_products = initialize_product_data();
                 products_panel.removeAll();
                 searchProduct(evt);

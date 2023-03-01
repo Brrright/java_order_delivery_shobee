@@ -22,7 +22,7 @@ public class OODMS_Main {
     public static boolean isLogIn;
     
      private void initialize(){
-        // setup UI screen
+        // setup UI screen  
         // Customer interface
         // unregistered
         frame = new Main_Frame(new UI_Login());
