@@ -47,6 +47,7 @@ public class UI_UpComing extends JPanel{
     
     JLabel orderInfo;
     JScrollPane orderInfo_scrollPane;
+    Dimension orderInfoSize;
     
     JButton upComingPage;
     JButton onGoingPage;
@@ -202,6 +203,8 @@ public class UI_UpComing extends JPanel{
                             "<br><br> Status : <br>" + status_display + 
                             "<br><br> Products : " + tempOrderItemString + 
                             "</html>");
+                    orderInfoSize.height = 250 +  (18 * tempOrderItems.size());
+                    orderInfo.setPreferredSize(orderInfoSize);
                 }
             }
         });
@@ -216,7 +219,6 @@ public class UI_UpComing extends JPanel{
         for (int i = 0; i < deliveries.size(); i++) {
             Delivery delivery = deliveries.get(i);
            
-                    
             model.addRow(new Object[0]);
             model.setValueAt(false,i,0);
             model.setValueAt(delivery.getDeliveryID(), i, 1);
@@ -253,7 +255,10 @@ public class UI_UpComing extends JPanel{
         
         // JLabel - selected order information label
         orderInfo = new JLabel("Select a row to view the details");
-        orderInfo.setBackground(new Color(217,217,217));
+        orderInfoSize = orderInfo.getPreferredSize();
+        orderInfoSize.width = 300;
+        orderInfo.setPreferredSize(orderInfoSize);
+        orderInfo.setBackground(new Color(240,240,240));
         orderInfo.setOpaque(true);
         orderInfo.setHorizontalAlignment(JLabel.LEFT);
         orderInfo.setVerticalAlignment(JLabel.TOP);
@@ -261,9 +266,11 @@ public class UI_UpComing extends JPanel{
         // JScrollPane - for orderInfo
         orderInfo_scrollPane = new JScrollPane(orderInfo);
         orderInfo_scrollPane.setBounds(593,245,300,290); 
-        orderInfo_scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        orderInfo.setOpaque(true);
+        orderInfo_scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        orderInfo_scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         
-        
+
         // JButton - Checkout
         packOrder = new JButton("Pack Order");
         packOrder.setBorder(BorderFactory.createEmptyBorder());
@@ -317,7 +324,7 @@ public class UI_UpComing extends JPanel{
         this.add(completedPage);
         
         this.add(scrollPane);
-        this.add(orderInfo);
+        this.add(orderInfo_scrollPane);
         this.add(packOrder);
     }
     

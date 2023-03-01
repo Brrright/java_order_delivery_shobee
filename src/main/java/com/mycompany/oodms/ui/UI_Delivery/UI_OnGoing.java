@@ -47,6 +47,8 @@ public class UI_OnGoing extends JPanel{
     ImageIcon grayCircle2 = new ImageIcon("src/main/java/com/mycompany/oodms/ui/UI_Delivery/pictures/grayCircle.png");
     
      JLabel orderInfo;
+    JScrollPane orderInfo_scrollPane;
+    Dimension orderInfoSize;
     
     JButton upComingPage;
     JButton onGoingPage;
@@ -218,13 +220,15 @@ public class UI_OnGoing extends JPanel{
                     }
                     tempOrderItemString = tempOrderItemString + "</html>";
                    
-                     // set text to the JLabel
-                    orderInfo.setText("<html>Delivery ID : " + deliveryId_display + 
-                            "<br> Order ID : " + orderId_display + 
-                            "<br> Address : " + address + 
-                            "<br> Status : " + status_display + 
-                            "<br> Products : " + tempOrderItemString + 
+                     /// set text to the JLabel
+                    orderInfo.setText("<html>Delivery ID : <br>" + deliveryId_display + 
+                            "<br><br> Order ID : <br>" + orderId_display + 
+                            "<br><br> Address : <br>" + address + 
+                            "<br><br> Status : <br>" + status_display + 
+                            "<br><br> Products : " + tempOrderItemString + 
                             "</html>");
+                    orderInfoSize.height = 250 +  (18 * tempOrderItems.size());
+                    orderInfo.setPreferredSize(orderInfoSize);
                 }
             }
         });
@@ -274,12 +278,20 @@ public class UI_OnGoing extends JPanel{
         
         // JLabel - selected order information label
         orderInfo = new JLabel("Select a row to view the details");
-        orderInfo.setBackground(Color.LIGHT_GRAY);
+        orderInfoSize = orderInfo.getPreferredSize();
+        orderInfoSize.width = 300;
+        orderInfo.setPreferredSize(orderInfoSize);
+        orderInfo.setBackground(new Color(240,240,240));
         orderInfo.setOpaque(true);
-        orderInfo.setBounds(593,245,300,290); 
         orderInfo.setHorizontalAlignment(JLabel.LEFT);
         orderInfo.setVerticalAlignment(JLabel.TOP);
         
+        // JScrollPane - for orderInfo
+        orderInfo_scrollPane = new JScrollPane(orderInfo);
+        orderInfo_scrollPane.setBounds(593,245,300,290); 
+        orderInfo.setOpaque(true);
+        orderInfo_scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        orderInfo_scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         
         
         // JButton - order delivered
@@ -360,7 +372,7 @@ public class UI_OnGoing extends JPanel{
         this.add(completedPage);
         
         this.add(scrollPane);
-        this.add(orderInfo);
+        this.add(orderInfo_scrollPane);
         this.add(orderDelivered);
     }
     
