@@ -38,7 +38,6 @@ public class UI_Staff_Rating extends javax.swing.JPanel {
         ArrayList<DeliveryStaff> staffs = DeliveryStaffService.getDeliveryStaffService().getStaffs();
         
         DefaultTableModel model = (DefaultTableModel) staffTable.getModel();
-        
         for(int i = 0; i < staffs.size(); i++){
             int numR1 = 0;
             int numR2 = 0;
@@ -49,7 +48,6 @@ public class UI_Staff_Rating extends javax.swing.JPanel {
              for(int x = 0; x < deliveries.size(); x++){
                  if(deliveries.get(x).getStaff().getID() == staffs.get(i).getID()){
                     int rating = deliveries.get(x).getDeliveryRating();
-                     
                     switch(rating) {
                         case 1 -> {
                             numR1 += 1;
@@ -69,16 +67,18 @@ public class UI_Staff_Rating extends javax.swing.JPanel {
                     }
                  }
              }
+             
              if(numR1 == 0 && numR2 == 0 && numR3 == 0 && numR4 == 0 && numR5 == 0){
-                 break;
+                 continue;
              }
-                model.addRow(new Object[0]);
-                model.setValueAt(deliveries.get(i).getStaff().getEmail(), i, 0);
-                model.setValueAt(numR5, i, 1);
-                model.setValueAt(numR4, i, 2);
-                model.setValueAt(numR3, i, 3);
-                model.setValueAt(numR2, i, 4);
-                model.setValueAt(numR1, i, 5);
+             
+            model.addRow(new Object[staffs.size()]);
+            model.setValueAt(staffs.get(i).getEmail(), i, 0);
+            model.setValueAt(numR5, i, 1);
+            model.setValueAt(numR4, i, 2);
+            model.setValueAt(numR3, i, 3);
+            model.setValueAt(numR2, i, 4);
+            model.setValueAt(numR1, i, 5);
         }
     }
 
