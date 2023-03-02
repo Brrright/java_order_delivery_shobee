@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  * @author mingl
  */
 
-public abstract class User {
+public class User {
     protected int userId;
     protected String userName;
     protected String userEmail;

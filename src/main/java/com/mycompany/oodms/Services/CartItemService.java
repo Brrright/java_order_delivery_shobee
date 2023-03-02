@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author User
  */
-public class CartItemService {
+public class CartItemService extends Service{
     private static CartItemService cart_item_service;
     
      public static CartItemService getCartItemService()
@@ -152,5 +152,10 @@ public class CartItemService {
                 break;
             }
         }
+    }
+
+    @Override
+    int getNewID() {
+        return cart_item_file.GenerateID();
     }
 }

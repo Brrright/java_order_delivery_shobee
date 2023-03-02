@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author mingl
  */
-public class AddressService {
+public class AddressService extends Service{
     private static AddressService address_service;
     
     public static AddressService getAddressService()
@@ -62,6 +62,7 @@ public class AddressService {
          return new FileRecord(address.getAddressID(), address_record_string);
     }
     
+    @Override
     public int getNewID(){
         return address_file.GenerateID();
     }

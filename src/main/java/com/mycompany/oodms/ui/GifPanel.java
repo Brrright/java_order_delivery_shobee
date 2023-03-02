@@ -14,8 +14,6 @@ public class GifPanel extends JLabel {
 
     public GifPanel() {
         Icon icon = new ImageIcon("src\\main\\java\\com\\mycompany\\oodms\\ui\\pictures\\cat-payment-success.gif");
-
-
         setText(null);
         setIcon(icon);
         setHorizontalAlignment(CENTER);

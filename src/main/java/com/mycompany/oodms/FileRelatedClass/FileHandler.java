@@ -158,10 +158,6 @@ public class FileHandler {
         SaveRecord();
     }
     
-    public void UpdateRecordForOrderItem(FileRecord record){
-        //
-    }
-
     public void InsertRecord(FileRecord record) {
         records.add(record);
         SaveRecord();
@@ -198,10 +194,6 @@ public class FileHandler {
         SaveRecord();
     }
     
-    public void DeleteRecordForOrderItem(FileRecord record){
-        //
-    }
-
     private void LoadRecords() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;

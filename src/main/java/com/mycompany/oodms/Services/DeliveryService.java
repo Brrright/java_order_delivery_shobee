@@ -12,9 +12,7 @@ import com.mycompany.oodms.DeliveryStatus;
 import com.mycompany.oodms.FileRelatedClass.FileHandler;
 import com.mycompany.oodms.FileRelatedClass.FileRecord;
 import com.mycompany.oodms.Member;
-import com.mycompany.oodms.OODMS_Main;
 import com.mycompany.oodms.Order;
-import com.mycompany.oodms.OrderItem;
 import com.mycompany.oodms.Services.User.DeliveryStaffService;
 import com.mycompany.oodms.Services.User.MemberService;
 import java.time.LocalDateTime;
@@ -242,42 +240,42 @@ public class DeliveryService {
         }
     }
     
-    public static void main(String[] args) {
-//        ArrayList<Delivery> d = DeliveryService.getDeliveryService().getDeliveries();
-//        for(Delivery x: d){
-//            System.out.println("\n-delivery data-");
-//            System.out.println("did: " + x.getDeliveryID());
-//            System.out.println(x.getStatus());
-//        }
-
-        Member m = MemberService.getMemberService().getMember(2);
-        OODMS_Main.current_user = m;
-         ArrayList<OrderItem> oipakcing = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.PACKING);
-        for(OrderItem i : oipakcing){
-            System.out.println("\n[packing] orderid: "+i.getOrder().getOrderID());
-            System.out.println("pid: " + i.getProduct().getProductID());
-            System.out.println(i.getProduct().getProductName());
-        }
-        
-//        ArrayList<OrderItem> oipacked = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.PACKED);
-//        for(OrderItem i : oipacked){
-//            System.out.println("\n[packed] orderid: "+i.getOrder().getOrderID());
+//    public static void main(String[] args) {
+////        ArrayList<Delivery> d = DeliveryService.getDeliveryService().getDeliveries();
+////        for(Delivery x: d){
+////            System.out.println("\n-delivery data-");
+////            System.out.println("did: " + x.getDeliveryID());
+////            System.out.println(x.getStatus());
+////        }
+//
+//        Member m = MemberService.getMemberService().getMember(2);
+//        OODMS_Main.current_user = m;
+//         ArrayList<OrderItem> oipakcing = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.PACKING);
+//        for(OrderItem i : oipakcing){
+//            System.out.println("\n[packing] orderid: "+i.getOrder().getOrderID());
 //            System.out.println("pid: " + i.getProduct().getProductID());
 //            System.out.println(i.getProduct().getProductName());
 //        }
 //        
-//        ArrayList<OrderItem> oideliverying = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.DELIVERING);
-//         for(OrderItem i : oideliverying){
-//            System.out.println("\n[delivering] orderid: "+i.getOrder().getOrderID());
-//            System.out.println("pid: " + i.getProduct().getProductID());
-//            System.out.println(i.getProduct().getProductName());
-//        }
-//         
-//         ArrayList<OrderItem> oidelivered = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.DELIVERED);
-//         for(OrderItem i : oidelivered){
-//            System.out.println("\n[delivered] orderid: "+i.getOrder().getOrderID());
-//            System.out.println("pid: " + i.getProduct().getProductID());
-//            System.out.println(i.getProduct().getProductName());
-//        }
-    }
+////        ArrayList<OrderItem> oipacked = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.PACKED);
+////        for(OrderItem i : oipacked){
+////            System.out.println("\n[packed] orderid: "+i.getOrder().getOrderID());
+////            System.out.println("pid: " + i.getProduct().getProductID());
+////            System.out.println(i.getProduct().getProductName());
+////        }
+////        
+////        ArrayList<OrderItem> oideliverying = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.DELIVERING);
+////         for(OrderItem i : oideliverying){
+////            System.out.println("\n[delivering] orderid: "+i.getOrder().getOrderID());
+////            System.out.println("pid: " + i.getProduct().getProductID());
+////            System.out.println(i.getProduct().getProductName());
+////        }
+////         
+////         ArrayList<OrderItem> oidelivered = OrderItemService.getOrderItemService().getOrderItemByStatusOfCurrentMember(DeliveryStatus.DELIVERED);
+////         for(OrderItem i : oidelivered){
+////            System.out.println("\n[delivered] orderid: "+i.getOrder().getOrderID());
+////            System.out.println("pid: " + i.getProduct().getProductID());
+////            System.out.println(i.getProduct().getProductName());
+////        }
+//    }
 }

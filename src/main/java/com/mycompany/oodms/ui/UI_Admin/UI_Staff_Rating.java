@@ -73,7 +73,7 @@ public class UI_Staff_Rating extends javax.swing.JPanel {
                  break;
              }
                 model.addRow(new Object[0]);
-                model.setValueAt(deliveries.get(i).getStaff().getID(), i, 0);
+                model.setValueAt(deliveries.get(i).getStaff().getEmail(), i, 0);
                 model.setValueAt(numR5, i, 1);
                 model.setValueAt(numR4, i, 2);
                 model.setValueAt(numR3, i, 3);
