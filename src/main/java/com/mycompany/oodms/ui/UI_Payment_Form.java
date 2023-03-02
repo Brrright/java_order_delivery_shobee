@@ -35,12 +35,14 @@ import javax.swing.JPanel;
 public class UI_Payment_Form extends javax.swing.JPanel {
     double total_price;
     Address address;
+    ArrayList<CartItem> items;
     /**
      * Creates new form UI_Payment_Form
      */
-    public UI_Payment_Form(double total_price, Address address) {
+    public UI_Payment_Form(double total_price, Address address, ArrayList<CartItem> items) {
         this.total_price = total_price;
         this.address = address;
+        this.items = items;
         initComponents();
     }
 
@@ -186,10 +188,10 @@ public class UI_Payment_Form extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(frame,"Please enter valid input","Oops",JOptionPane.WARNING_MESSAGE);
             return;
         }        
-        payment();
+        payment(this.items);
     }//GEN-LAST:event_confirmBtnActionPerformed
 
-    private void payment(){
+    private void payment(ArrayList<CartItem> items){
         FileHandler order_file = new FileHandler(FileName.ORDER);
         FileHandler delivery_file = new FileHandler(FileName.DELIVERY);
         // turn payment into order
@@ -198,8 +200,7 @@ public class UI_Payment_Form extends javax.swing.JPanel {
         // turn cart item into order item, remove cart item
         // add delivery record
         this.address = AddressService.getAddressService().getAddressByMemberId(OODMS_Main.current_user.getID());
-        ArrayList<CartItem> cart_items = CartItemService.getCartItemService().getCartItems(OODMS_Main.current_user.getID());
-        for(CartItem item :  cart_items) {
+        for(CartItem item :  items) {
             Product product  = ProductService.getProductService().getProduct(item.getProduct().getProductID());
             product.setProductStock(product.getStockQty() - 1);
             ProductService.getProductService().updateProduct(product);

@@ -145,7 +145,7 @@ public class UI_Payment extends JPanel {
        paymentBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
        paymentBtn.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
-            OODMS_Main.frame.replacePanel(new UI_Payment_Form(total_price, address));
+            OODMS_Main.frame.replacePanel(new UI_Payment_Form(total_price, address, cart_items));
        });
        
        // JPanel - container
