@@ -28,7 +28,6 @@ public class UI_UserManagementProfile extends JPanel {
     JLabel phoneNoHeader;
     JLabel phoneNo;
 
-    JButton myOrder;
     JButton editProfile;
     JButton removeUser;
     
@@ -176,20 +175,20 @@ public class UI_UserManagementProfile extends JPanel {
         ///////////////////////////////////////////////////////////////////////////
 
         // JButton - myOrder
-        myOrder = new JButton("<html><body>Delivery<br>list</html>");
-        myOrder.setFont(new Font("MV Boli",Font.PLAIN,12));
-        myOrder.setForeground(new Color(255, 255, 255));
-        myOrder.setIcon(orangeRect);
-        myOrder.setHorizontalTextPosition(JLabel.CENTER);
-        myOrder.setVerticalAlignment(JLabel.CENTER);
-        myOrder.setHorizontalAlignment(JLabel.CENTER);
-        myOrder.setBounds(577,555,112,53);
-        myOrder.setBorder(BorderFactory.createEmptyBorder());
-        myOrder.setFocusable(false);
-        myOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        myOrder.addActionListener(e -> {
-            frame.replacePanel(new UI_UserManagementProfileDeliveryList());
-        });
+//        myOrder = new JButton("<html><body>Delivery<br>list</html>");
+//        myOrder.setFont(new Font("MV Boli",Font.PLAIN,12));
+//        myOrder.setForeground(new Color(255, 255, 255));
+//        myOrder.setIcon(orangeRect);
+//        myOrder.setHorizontalTextPosition(JLabel.CENTER);
+//        myOrder.setVerticalAlignment(JLabel.CENTER);
+//        myOrder.setHorizontalAlignment(JLabel.CENTER);
+//        myOrder.setBounds(577,555,112,53);
+//        myOrder.setBorder(BorderFactory.createEmptyBorder());
+//        myOrder.setFocusable(false);
+//        myOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//        myOrder.addActionListener(e -> {
+//            frame.replacePanel(new UI_UserManagementProfileDeliveryList());
+//        });
         
         // JButton - editProfile
         editProfile = new JButton("<html><body>Edit<br>profile</html>");
@@ -263,7 +262,6 @@ public class UI_UserManagementProfile extends JPanel {
         this.add(phoneNoHeader);
         this.add(phoneNo);
 
-        this.add(myOrder);
         this.add(editProfile);
         this.add(removeUser);
 

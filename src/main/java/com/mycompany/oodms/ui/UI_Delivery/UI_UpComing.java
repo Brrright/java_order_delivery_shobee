@@ -272,7 +272,7 @@ public class UI_UpComing extends JPanel{
         
 
         // JButton - Checkout
-        packOrder = new JButton("Pack Order");
+        packOrder = new JButton("Collect Order");
         packOrder.setBorder(BorderFactory.createEmptyBorder());
         packOrder.setHorizontalTextPosition(JLabel.CENTER);
         packOrder.setVerticalTextPosition(JLabel.CENTER);
