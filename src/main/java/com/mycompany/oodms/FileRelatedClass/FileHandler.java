@@ -195,6 +195,15 @@ public class FileHandler {
     }
     
     private void LoadRecords() {
+        File f = new File(filePath);
+        if(!f.exists()) { 
+            try{
+                f.createNewFile();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
