@@ -267,12 +267,12 @@ public class UI_AdminDelivery extends JPanel{
                     if ((boolean)deliveryTable.getValueAt(i, 0) == true)
                     {
                         haveSelectedOrder = true;
-                        System.out.println("Selected deliveryMan index : " + deliveryMan.getSelectedIndex());
-                        System.out.println("Selected deliveryMan name : " + all_deliveryStaffs.get(deliveryMan.getSelectedIndex()).getName());
-                        System.out.println(deliveryTable.getValueAt(i, 1) + " is true"); // DeliveryID
-                        System.out.println(deliveryTable.getValueAt(i, 2) + " is true"); // OrderID
-                        System.out.println(deliveryTable.getValueAt(i, 3) + " is true"); // City
-                        System.out.println(deliveryTable.getValueAt(i, 4) + " is true"); // Status
+//                        System.out.println("Selected deliveryMan index : " + deliveryMan.getSelectedIndex());
+//                        System.out.println("Selected deliveryMan name : " + all_deliveryStaffs.get(deliveryMan.getSelectedIndex()).getName());
+//                        System.out.println(deliveryTable.getValueAt(i, 1) + " is true"); // DeliveryID
+//                        System.out.println(deliveryTable.getValueAt(i, 2) + " is true"); // OrderID
+//                        System.out.println(deliveryTable.getValueAt(i, 3) + " is true"); // City
+//                        System.out.println(deliveryTable.getValueAt(i, 4) + " is true"); // Status
                         
                         // change delivery staff & status
                         String selectedDeliveryId = String.valueOf(deliveryTable.getValueAt(i, 1));

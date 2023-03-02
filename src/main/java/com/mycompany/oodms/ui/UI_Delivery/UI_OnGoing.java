@@ -321,26 +321,6 @@ public class UI_OnGoing extends JPanel{
                String[] options = {"1", "2", "3", "4", "5"};
                 int result = JOptionPane.showOptionDialog(null, "Ratings of the delivery  (worst (1), best (5))", "CUSTOMER FEEDBACK - For customer to fill in ", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
-                switch (result) {
-                    case 0:
-                        System.out.println("You selected 1.");
-                        break;
-                    case 1:
-                        System.out.println("You selected 2.");
-                        break;
-                    case 2:
-                        System.out.println("You selected 3.");
-                        break;
-                    case 3:
-                        System.out.println("You selected 4.");
-                        break;
-                    case 4:
-                        System.out.println("You selected 5.");
-                        break;
-                    default:
-                        System.out.println("No selection made.");
-                        break;
-                }
                 
                 // code to get the selected row from table
                 for (int i = 0; i < deliveryTable.getRowCount(); i++)

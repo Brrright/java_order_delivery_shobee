@@ -86,13 +86,13 @@ public class OrderService {
         ArrayList<Order> matchedDeliveryOrder = new ArrayList<Order>();
         for(Order order : orders){
             for(Delivery delivery: deliveries) {
-                System.out.println("    ------------------------------    ");
-                System.out.println("[o] order id : "+ order.getOrderID());
-                System.out.println("[d] order id : "+ delivery.getOrder().getOrderID());
-                System.out.println("    ------------------------------    ");
-                System.out.println("[d] delivery staff: " + delivery.getStaff().getName());
-                System.out.println("[received] delivery staff: " + staff.getName());
-                System.out.println("    ------------------------------    ");
+//                System.out.println("    ------------------------------    ");
+//                System.out.println("[o] order id : "+ order.getOrderID());
+//                System.out.println("[d] order id : "+ delivery.getOrder().getOrderID());
+//                System.out.println("    ------------------------------    ");
+//                System.out.println("[d] delivery staff: " + delivery.getStaff().getName());
+//                System.out.println("[received] delivery staff: " + staff.getName());
+//                System.out.println("    ------------------------------    ");
                 if(order.getOrderID() == delivery.getOrder().getOrderID() &&
                         delivery.getStaff().getID() == staff.getID()){
                     matchedDeliveryOrder.add(order);

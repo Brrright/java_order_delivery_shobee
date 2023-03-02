@@ -26,7 +26,6 @@ public class OODMS_Main {
         // setup UI screen  
         // Customer interface
         // unregistered
-//        frame = new Main_Frame(new UI_Report());
         frame = new Main_Frame(new UI_Login());
 //        frame = new Main_Frame(new UI_Signup());
 //        frame = new Main_Frame(new UI_AllProducts());
@@ -55,6 +54,7 @@ public class OODMS_Main {
 //        frame = new Main_Frame(new UI_UserManagementProfileOrderList());        
 //        frame = new Main_Frame(new UI_UserManagementAdd());
 
+
 //        frame = new Main_Frame(new UI_ProductManagement());        
 //        frame = new Main_Frame(new UI_ProductManagementProduct());        
 //        frame = new Main_Frame(new UI_ProductManagementProductEdit());        
@@ -67,6 +67,7 @@ public class OODMS_Main {
 //          frame = new Main_Frame(new UI_AdminDelivery());
 
           // reports
+          //        frame = new Main_Frame(new UI_Report());
 //          frame = new Main_Frame(new UI_ReportOrders());
 //          frame = new Main_Frame(new UI_ReportOrder());
 //          frame = new Main_Frame(new UI_ReportPayments());

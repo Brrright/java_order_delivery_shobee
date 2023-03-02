@@ -160,7 +160,7 @@ public class OrderItemService {
             ArrayList<Delivery> deliveries = DeliveryService.getDeliveryService().getDeliveries(orderID);
             for(Delivery delivery :  deliveries){
                 if(delivery.getStatus() == status && delivery.getMember().getEmail().equals(OODMS_Main.current_user.getEmail())) {
-                    System.out.println("delivery status: " + delivery.getStatus());
+//                    System.out.println("delivery status: " + delivery.getStatus());
                     retrievedItems.add(item);
                     break;
                 }

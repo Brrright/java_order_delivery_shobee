@@ -72,8 +72,8 @@ public class UI_OrderDetails extends JPanel{
 //            if(deliveries.get(i).getStaff() == null){
 //                System.out.println("no staff found, handle jap UI_OrderDetails");
 //            }
-            System.out.println("delivery order id:  " + deliveries.get(i).getOrder().getOrderID());
-            System.out.println("received order id:  " + order.getOrderID());
+//            System.out.println("delivery order id:  " + deliveries.get(i).getOrder().getOrderID());
+//            System.out.println("received order id:  " + order.getOrderID());
             if(deliveries.get(i).getOrder().getOrderID() == order.getOrderID())
             {
                 System.out.println("found delivery match order");
