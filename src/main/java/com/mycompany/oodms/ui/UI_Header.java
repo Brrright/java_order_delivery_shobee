@@ -18,6 +18,7 @@ import static com.mycompany.oodms.UserRole.DELIVERY_STAFF;
 import static com.mycompany.oodms.UserRole.MEMBER;
 import com.mycompany.oodms.ui.UI_Admin.UI_AdminDelivery;
 import com.mycompany.oodms.ui.UI_Admin.UI_AdminProfile;
+import com.mycompany.oodms.ui.UI_Admin.UI_Report;
 import com.mycompany.oodms.ui.UI_Admin.UI_ReportOrders;
 import com.mycompany.oodms.ui.UI_Admin.UI_UserManagement;
 import com.mycompany.oodms.ui.UI_Delivery.UI_DeliveryStaffProfile;
@@ -50,6 +51,7 @@ public class UI_Header extends JPanel{
     JButton adminManagement;
     JButton adminDelivery;
     JButton adminRecord;
+    JButton adminReport;
     JButton adminProfile;
 
 
@@ -271,7 +273,7 @@ public class UI_Header extends JPanel{
             OODMS_Main.frame.replacePanel(new UI_AdminDelivery());
         });
         
-        // Admin report button
+        // Admin record button
         adminRecord= new JButton();
         adminRecord.setText("Record");
         adminRecord.setBorder(BorderFactory.createEmptyBorder());
@@ -285,6 +287,21 @@ public class UI_Header extends JPanel{
         adminRecord.addActionListener(e -> {
             OODMS_Main.previous_panel = Main_Frame.currentPanel;
             OODMS_Main.frame.replacePanel(new UI_ReportOrders());
+        });
+        
+        adminReport  = new JButton();
+        adminReport.setText("Report");
+        adminReport.setBorder(BorderFactory.createEmptyBorder());
+        adminReport.setFocusable(false);
+        adminReport.setForeground(new Color(0, 0, 0));
+        adminReport.setFont(new Font("Sarif",Font.BOLD,15));
+        adminReport.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        adminReport.setOpaque(false);
+        adminReport.setFocusPainted(false);
+        adminReport.setContentAreaFilled(false);
+        adminReport.addActionListener(e -> {
+            OODMS_Main.previous_panel = Main_Frame.currentPanel;
+            OODMS_Main.frame.replacePanel(new UI_Report());
         });
         
         adminProfile = new JButton();
@@ -328,6 +345,7 @@ public class UI_Header extends JPanel{
                     this.add(adminManagement);
                     this.add(adminDelivery);
                     this.add(adminRecord);
+                    this.add(adminReport);
                     this.add(adminProfile);
                     this.add(logout);
                 }
