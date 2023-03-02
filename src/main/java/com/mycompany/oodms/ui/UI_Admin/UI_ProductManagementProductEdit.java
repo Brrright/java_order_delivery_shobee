@@ -234,6 +234,7 @@ public class UI_ProductManagementProductEdit extends JPanel {
             ProductService.getProductService().updateProduct(product);
          
             JOptionPane.showMessageDialog(frame,"product is updated.","Alert",JOptionPane.INFORMATION_MESSAGE);
+            OODMS_Main.frame.replacePanel(new UI_ProductManagement());
         });
         
         // JButton - cancel button

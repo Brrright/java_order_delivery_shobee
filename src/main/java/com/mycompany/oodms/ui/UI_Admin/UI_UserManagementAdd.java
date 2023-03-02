@@ -216,6 +216,8 @@ public class UI_UserManagementAdd extends JPanel{
                  DeliveryStaff newStaff = new DeliveryStaff(id, input_name, input_email, input_pw, input_age, input_gender, input_phonenum, defaultPic, UserRole.DELIVERY_STAFF);
                  DeliveryStaffService.getDeliveryStaffService().addStaff(newStaff);                 
                  JOptionPane.showMessageDialog(frame,"new delivery staff added.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                OODMS_Main.frame.replacePanel(new UI_UserManagement());
+
              }
         });
         

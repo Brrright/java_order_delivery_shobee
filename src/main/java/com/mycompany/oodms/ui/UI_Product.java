@@ -31,16 +31,6 @@ public class UI_Product extends JPanel {
 
     public UI_Product(int product_id){
         Product product = initialize_data(product_id);
-        
-        
-//        ArrayList<String> product = new ArrayList<>(); 
-//        product.add("ITEM1");
-//        product.add("src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg");
-//        product.add("Nameg");
-//        product.add("Lorem ipsum dolor sit amet consectetur. Non habitant volutpat fames vel amet mollis. Massa sed sem diam tortor praesento");
-//        product.add("22"); // stock
-//        product.add("45.50");
-//        product.add("10"); //sold
 
         // JLabel - back
         backBtn = new JButton("< back");

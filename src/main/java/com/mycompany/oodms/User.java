@@ -136,7 +136,8 @@ public class User {
         int user_id = user_record.getID();
         String[] splitted_user_record = user_record.getRecordList();
         
-        if(!(email == null ? splitted_user_record[2] == null : email.equals(splitted_user_record[2]) && password == null ? splitted_user_record[3] == null : password.equals(splitted_user_record[3])))
+        if(!(email == null ? splitted_user_record[2] == null : email.equals(splitted_user_record[2]) 
+                && password == null ? splitted_user_record[3] == null : password.equals(splitted_user_record[3])))
         {
             JOptionPane.showMessageDialog(frame,"Login credential incorrect.","Oops",JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -172,11 +173,6 @@ public class User {
                 OODMS_Main.previous_panel = Main_Frame.currentPanel;
 //                 temporary testing for user related ui (after login)
                     frame.replacePanel(new UI_AllProducts());
-//                    frame.replacePanel(new UI_Cart());
-//                    frame.replacePanel(new UI_MyOrder());
-//                    frame.replacePanel(new UI_Profile());
-//                    frame.replacePanel(new UI_OrderDetails());
-//                    frame.replacePanel(new UI_Payment());
             }
             case FileName.DELIVERY_STAFF -> {              
                 OODMS_Main.current_user.setRole(UserRole.DELIVERY_STAFF);

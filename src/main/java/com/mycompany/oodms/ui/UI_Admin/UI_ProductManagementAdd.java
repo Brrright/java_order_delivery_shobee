@@ -217,6 +217,7 @@ public class UI_ProductManagementAdd extends JPanel {
             Product newProduct = new Product(newProductID, newName, newPrice, newStock, newProPic, modifiedCategory, newProDescription);
             ProductService.getProductService().addProduct(newProduct);
             JOptionPane.showMessageDialog(frame,"Added  " + newName +" successfully.","Alert",JOptionPane.INFORMATION_MESSAGE);
+            OODMS_Main.frame.replacePanel(new UI_ProductManagement());
         });
         
         // JButton - cancel button
