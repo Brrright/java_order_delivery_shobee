@@ -48,6 +48,7 @@ public class UI_Payment extends JPanel {
         for(int i = 0; i < cart_items.size(); i++){
             total += cart_items.get(i).getTotal();
         }
+        total += 5;
         return total;
     }
 
