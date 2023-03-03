@@ -91,7 +91,6 @@ public class ProductService {
         for(int i = 0; i < products.size(); i ++) {
             if(products.get(i).getCategory() == category){
                 response.add(products.get(i));
-                break;
             }
         }
         return response;
