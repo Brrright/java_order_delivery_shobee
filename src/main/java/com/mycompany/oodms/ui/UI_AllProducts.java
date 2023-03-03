@@ -166,7 +166,7 @@ public class UI_AllProducts extends JPanel {
                 products[i] = new JButton();
 
                 // add product name, price
-                products[i].setText(all_products.get(i).getProductName()+ " " + all_products.get(i).getProductPrice());
+                products[i].setText(all_products.get(i).getProductName()+ " RM" + all_products.get(i).getProductPrice() + "0");
 
                 // add image
                 ImageIcon productImg = new ImageIcon(all_products.get(i).getProcuctPicture());

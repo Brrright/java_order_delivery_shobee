@@ -136,7 +136,9 @@ public class UI_ReportPayment extends JPanel {
        billingAddress_header.setBounds(206, 474, 161, 27);
        
         // JLabel - Billing address
-       billingAddress = new JLabel(order.getAddress().toString());
+       billingAddress = new JLabel(order.getAddress().getStreetName() + "\n" 
+               + order.getAddress().getCity() + "\n" 
+               + order.getAddress().getPostcode() + order.getAddress().getState());
        billingAddress.setForeground(Color.BLACK);
        billingAddress.setFont(new Font("Sarif",Font.PLAIN,15));
        billingAddress.setBounds(480, 474, 380, 60);

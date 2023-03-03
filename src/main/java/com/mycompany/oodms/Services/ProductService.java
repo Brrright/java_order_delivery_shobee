@@ -36,7 +36,7 @@ public class ProductService {
     private ArrayList<Product> products;
     FileHandler product_file = new FileHandler(FileName.PRODUCT);
 
-    public ProductService(){
+    private ProductService(){
         this.products = new ArrayList<Product>();
         List<FileRecord> product_records = product_file.FetchRecord();
         product_records.forEach((record) -> {
@@ -63,11 +63,16 @@ public class ProductService {
         // Category object
             Category category = CategoryService.getCategoryService().getCategory(product_cate_id);
             
-            return new Product(product_id, product_name, product_price, product_stock, product_picture, category, product_description);
+            return new Product(product_id, product_name, 
+                    product_price, product_stock, 
+                    product_picture, category, product_description);
     }
     
     private FileRecord convertToFileRecord(Product product){
-        String product_record_string = product.getProductID() + ";" + product.getProductName() + ";" + product.getProductPrice() + ";" + product.getStockQty() + ";" + product.getProcuctPicture() + ";" + product.getCategory().getCategoryID() +";" +product.getProductDescription();
+        String product_record_string = product.getProductID() + ";" + product.getProductName() + 
+                ";" + product.getProductPrice() + ";" + product.getStockQty() + 
+                ";" + product.getProcuctPicture() + ";" + product.getCategory().getCategoryID() +
+                ";" +product.getProductDescription();
         return new FileRecord(product.getProductID(), product_record_string);
     }
     

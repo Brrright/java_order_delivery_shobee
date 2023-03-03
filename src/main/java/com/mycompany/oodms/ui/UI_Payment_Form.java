@@ -195,19 +195,31 @@ public class UI_Payment_Form extends javax.swing.JPanel {
         FileHandler order_file = new FileHandler(FileName.ORDER);
         FileHandler delivery_file = new FileHandler(FileName.DELIVERY);
         // turn payment into order
-        Order order = new Order(order_file.GenerateID(), LocalDateTime.now(), this.total_price, this.total_price, 0, (Member) OODMS_Main.current_user, this.address);
+        Order order = new Order(order_file.GenerateID(), 
+                LocalDateTime.now(), 
+                this.total_price, 
+                this.total_price, 0, 
+                (Member) OODMS_Main.current_user, 
+                this.address);
         OrderService.getOrderService().addOrder(order);
         // turn cart item into order item, remove cart item
         // add delivery record
-        this.address = AddressService.getAddressService().getAddressByMemberId(OODMS_Main.current_user.getID());
+        this.address = AddressService.getAddressService().getAddressByMemberId(
+                OODMS_Main.current_user.getID());
         for(CartItem item :  items) {
             Product product  = ProductService.getProductService().getProduct(item.getProduct().getProductID());
             product.setProductStock(product.getStockQty() - 1);
             ProductService.getProductService().updateProduct(product);
-            OrderItem order_item = new OrderItem(item.getQuantity(), item.getProduct().getProductPrice(), item.getProduct(), order);
+            OrderItem order_item = new OrderItem(
+                    item.getQuantity(), 
+                    item.getProduct().getProductPrice(), 
+                    item.getProduct(), order);
             OrderItemService.getOrderItemService().addOrderItem(order_item);
             CartItemService.getCartItemService().deleteCartItem(item);
-            Delivery delivery = new Delivery(DeliveryService.getDeliveryService().getNewDeliveryID(), order , LocalDateTime.now(), null, DeliveryStatus.PACKING, -1,address , (Member) OODMS_Main.current_user);
+            Delivery delivery = new Delivery(DeliveryService.getDeliveryService().getNewDeliveryID(), 
+                    order , LocalDateTime.now(), 
+                    null, DeliveryStatus.PACKING, 
+                    -1,address , (Member) OODMS_Main.current_user);
             DeliveryService.getDeliveryService().addDelivery(delivery);
         }
         OODMS_Main.frame.replacePanel(new UI_SuccessPayment());

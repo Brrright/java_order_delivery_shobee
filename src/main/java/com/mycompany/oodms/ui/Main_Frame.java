@@ -18,7 +18,8 @@ public class Main_Frame extends JFrame{
      public static JPanel currentPanel;
 
     public Main_Frame(JPanel panel) {
-        Image icon = Toolkit.getDefaultToolkit().getImage("src/main/java/com/mycompany/oodms/ui/pictures/logo.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage(
+                "src/main/java/com/mycompany/oodms/ui/pictures/logo.png");
         this.setIconImage(icon);
         Main_Frame.currentPanel = panel;
         // set layout, and add it to this class, default operation, pack, set visible, location        
@@ -44,16 +45,9 @@ public class Main_Frame extends JFrame{
         // get the content pane of JFrame
         Container contentPane = this.getContentPane();
         contentPane.removeAll();
-        
-        //  Refresh the JFrame to reflect the changes
         this.revalidate();
         this.repaint();
-        
-        
         this.add(new_panel);
         this.setVisible(true);
-        // set bg color
-        // refresh jpanel, adjust panel size and change the element
-        // set panel position to middle
     }
 }

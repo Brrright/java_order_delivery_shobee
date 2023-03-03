@@ -253,11 +253,11 @@ public class UI_AdminDelivery extends JPanel{
         assignOrder.setFont(new Font("MV Boli",Font.PLAIN,12));
         assignOrder.setForeground(Color.WHITE);
         assignOrder.addActionListener(e -> {
-            
-            
-            
             // assign delivery man
-            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to assign orders to " + deliveryMan.getSelectedItem() + "?", "Confirmation",
+            int checkoutConfirmation = JOptionPane.showOptionDialog(
+                    null, 
+                    "Confirm to assign orders to " + deliveryMan.getSelectedItem() + "?", 
+                    "Confirmation",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             if (checkoutConfirmation == JOptionPane.OK_OPTION) {
@@ -267,12 +267,6 @@ public class UI_AdminDelivery extends JPanel{
                     if ((boolean)deliveryTable.getValueAt(i, 0) == true)
                     {
                         haveSelectedOrder = true;
-//                        System.out.println("Selected deliveryMan index : " + deliveryMan.getSelectedIndex());
-//                        System.out.println("Selected deliveryMan name : " + all_deliveryStaffs.get(deliveryMan.getSelectedIndex()).getName());
-//                        System.out.println(deliveryTable.getValueAt(i, 1) + " is true"); // DeliveryID
-//                        System.out.println(deliveryTable.getValueAt(i, 2) + " is true"); // OrderID
-//                        System.out.println(deliveryTable.getValueAt(i, 3) + " is true"); // City
-//                        System.out.println(deliveryTable.getValueAt(i, 4) + " is true"); // Status
                         
                         // change delivery staff & status
                         String selectedDeliveryId = String.valueOf(deliveryTable.getValueAt(i, 1));
@@ -283,11 +277,13 @@ public class UI_AdminDelivery extends JPanel{
                     }
                 }
                 if (haveSelectedOrder){
-                         JOptionPane.showMessageDialog(frame,"Order assigned successfully.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                         JOptionPane.showMessageDialog(frame,"Order assigned successfully.",
+                                 "Alert",JOptionPane.INFORMATION_MESSAGE);
                         OODMS_Main.frame.replacePanel(new UI_AdminMain());
                         OODMS_Main.frame.replacePanel(new UI_AdminDelivery());
                 } else {
-                         JOptionPane.showMessageDialog(frame,"No order is selected.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                         JOptionPane.showMessageDialog(frame,"No order is selected.",
+                                 "Alert",JOptionPane.INFORMATION_MESSAGE);
                 }
 
             }

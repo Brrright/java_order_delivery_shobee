@@ -179,7 +179,7 @@ public class DeliveryService {
             }
         }
         if(fetched_deliveries.size() == 0){
-            System.out.println("delivery service for upcoming is empty. [reminder]");
+            System.out.println("delivery service for completed is empty. [reminder]");
         }
         return fetched_deliveries;
     }

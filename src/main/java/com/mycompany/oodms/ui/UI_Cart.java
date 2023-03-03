@@ -125,8 +125,10 @@ public class UI_Cart extends JPanel{
         delete.setForeground(Color.WHITE);
         delete.addActionListener(e -> {
             if(isSelected(cartTable)){
-                int removeConfirmation = JOptionPane.showOptionDialog(null, "Confirm to remove selected product?", "Confirmation",
-            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                int removeConfirmation = JOptionPane.showOptionDialog(null, 
+                        "Confirm to remove selected product?", "Confirmation",
+            JOptionPane.OK_CANCEL_OPTION, 
+            JOptionPane.QUESTION_MESSAGE, null, null, null);
             
                 if (removeConfirmation == JOptionPane.OK_OPTION) {
                     // User clicked the "OK" button
@@ -137,7 +139,8 @@ public class UI_Cart extends JPanel{
                         if ((boolean)cartTable.getValueAt(i, 0) == true)
                         {
                             int p_id = (int) cartTable.getValueAt(i, 1);
-                            CartItem cart_item = CartItemService.getCartItemService().getCartItem(OODMS_Main.current_user.getID(), p_id);
+                            CartItem cart_item = CartItemService.getCartItemService().getCartItem(
+                                    OODMS_Main.current_user.getID(), p_id);
                             CartItemService.getCartItemService().deleteCartItem(cart_item);
                             cartTable.removeAll();
                             OODMS_Main.frame.replacePanel(new UI_Cart());
@@ -147,7 +150,8 @@ public class UI_Cart extends JPanel{
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Please select a product.", "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please select a product.", 
+                        "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         
@@ -167,8 +171,12 @@ public class UI_Cart extends JPanel{
             
             if(isSelected(cartTable)){
                 // checkout confirmation
-                int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to checkout?", "Confirmation",
-            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                int checkoutConfirmation = JOptionPane.showOptionDialog(
+                        null, 
+                        "Confirm to checkout?", 
+                        "Confirmation",
+            JOptionPane.OK_CANCEL_OPTION, 
+            JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (checkoutConfirmation == JOptionPane.OK_OPTION) {
                     // User clicked the "OK" button
                     ArrayList<CartItem> selected_cart_items = new ArrayList<CartItem>();
@@ -177,7 +185,8 @@ public class UI_Cart extends JPanel{
                         if ((boolean)cartTable.getValueAt(i, 0) == true)
                         {
                             int p_id = (int) cartTable.getValueAt(i, 1);
-                            CartItem cart_item = CartItemService.getCartItemService().getCartItem(OODMS_Main.current_user.getID(), p_id);
+                            CartItem cart_item = CartItemService.getCartItemService().getCartItem(
+                                    OODMS_Main.current_user.getID(), p_id);
                             selected_cart_items.add(cart_item);
                         }
                     }
@@ -190,7 +199,8 @@ public class UI_Cart extends JPanel{
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Please select a product.", "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please select a product.", 
+                        "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         

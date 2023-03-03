@@ -1,4 +1,4 @@
-1;Maggie;100.0;-9;src/main/java/com/mycompany/oodms/productImage/1Screenshot_20221219_024828.png;1;Maggie is good. Very good. Within 3 minutes, enjoy MAGIE!!!!
+1;Maggie;100.0;-10;src/main/java/com/mycompany/oodms/productImage/1Screenshot_20221219_024828.png;1;Maggie is good. Very good. Within 3 minutes, enjoy MAGIE!!!!
 2;NewProduct;100.0;94;src/main/java/com/mycompany/oodms/ui/pictures/hudao.jpg;2;This product is very new, kind of new, super new!
 3;Cola;2.0;11109;src/main/java/com/mycompany/oodms/productImage/3Screenshot_20230210_024028.png;3;Cola is cola, kuala is kuala, Kit is very yeng
 4;Milk;6.0;15;src/main/java/com/mycompany/oodms/productImage/4Screenshot_20230225_103233.png;3;Milk comes from cow, nice milk

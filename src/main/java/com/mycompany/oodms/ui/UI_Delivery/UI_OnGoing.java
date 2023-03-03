@@ -307,19 +307,32 @@ public class UI_OnGoing extends JPanel{
         orderDelivered.setForeground(Color.WHITE);
         orderDelivered.addActionListener(e -> {
             if(!isSelected(deliveryTable)){
-                JOptionPane.showMessageDialog(null, "Please select a product.", "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, 
+                        "Please select a product.", 
+                        "Nothing selected", 
+                        JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             // deliver product confirmation
-            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Delivered the products?", "Confirmation",
-            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int checkoutConfirmation = JOptionPane.showOptionDialog(
+                    null, 
+                    "Delivered the products?", 
+                    "Confirmation",
+            JOptionPane.OK_CANCEL_OPTION, 
+            JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             if (checkoutConfirmation == JOptionPane.OK_OPTION) {
                 
                 // User clicked the "OK" button
                 // triger ratings
                String[] options = {"1", "2", "3", "4", "5"};
-                int result = JOptionPane.showOptionDialog(null, "Ratings of the delivery  (worst (1), best (5))", "CUSTOMER FEEDBACK - For customer to fill in ", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+                int result = JOptionPane.showOptionDialog(
+                        null, 
+                        "Ratings of the delivery  (worst (1), best (5))", 
+                        "CUSTOMER FEEDBACK - For customer to fill in ", 
+                        JOptionPane.DEFAULT_OPTION, 
+                        JOptionPane.PLAIN_MESSAGE, 
+                        null, options, options[0]);
 
                 
                 // code to get the selected row from table

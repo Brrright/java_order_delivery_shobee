@@ -284,12 +284,16 @@ public class UI_UpComing extends JPanel{
         packOrder.setForeground(Color.WHITE);
         packOrder.addActionListener(e -> {
             if(!isSelected(deliveryTable)){
-                JOptionPane.showMessageDialog(null, "Please select a product.", "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please select a product.", 
+                        "Nothing selected", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             
             // checkout confirmation
-            int checkoutConfirmation = JOptionPane.showOptionDialog(null, "Confirm to deliver the selected order? \n Please make sure you've get the item according to the details.", "Confirmation",
+            int checkoutConfirmation = JOptionPane.showOptionDialog(null, 
+                    "Confirm to deliver the selected order?"
+                            + " \n Please make sure you've get the item according to the details.", 
+                    "Confirmation",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             if (checkoutConfirmation == JOptionPane.OK_OPTION) {

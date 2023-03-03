@@ -87,7 +87,8 @@ public class UI_CategoryManagementCategory extends JPanel {
                     // Edit category
                     thisCategory.setCategoryName(categotyInput);
                     CategoryService.getCategoryService().updateCategory(thisCategory);
-                    JOptionPane.showMessageDialog(frame,"Category  is updated.","Alert",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame,"Category  is updated.",
+                            "Alert",JOptionPane.INFORMATION_MESSAGE);
                     OODMS_Main.frame.replacePanel(new UI_CategoryManagement());
                 }
             } 
