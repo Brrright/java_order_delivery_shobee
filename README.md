@@ -31,9 +31,9 @@ This system consists of 4 roles which are: guest, customer, delivery staff, and 
 ## What's special for our program?
 ### Backend side
 - we have implemented singleton design pattern (first try xD), for handling front end request and return the wanted objects.
--- 'Services' - we have a lot of services such as AddressService, MemberService, OrderService, DeliveryService... to serve front end with backend object
--- in Services, it handle converting text file content to usable objects and vice versa.
--- all service will have only 1 instance
+ -'Services' - we have a lot of services such as AddressService, MemberService, OrderService, DeliveryService... to serve front end with backend object
+ - in Services, it handle converting text file content to usable objects and vice versa.
+ - all service will have only 1 instance
 
 ### Frontend side
 - in our system, we will only have a frame with several panels, routing to pages will only replace the panels, which makes the user experience better.
