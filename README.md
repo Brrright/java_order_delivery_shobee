@@ -4,7 +4,7 @@ AUTHOR: CHIAH MING LIANG TP061801, CHAN HONG WEI TP060647
 SHOBEE is an online order and delivery management system that created for our assignment (OODJ - Asia Pacific University)
 This system consists of 4 roles which are: guest, customer, delivery staff, and admin.
 
-##Main requirement:
+## Main requirement:
 ### 1. Admin will be able to:
 - manage admin and staff account
 - edit all user profile
